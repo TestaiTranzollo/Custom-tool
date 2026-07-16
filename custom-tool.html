@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Custom Tool &mdash; Personalizzazione Racchetta</title>
+<style>
+:root{--bg-primary:#0b0f19;--bg-secondary:rgba(17,24,39,0.7);--border-color:rgba(255,255,255,0.08);--text-primary:#f3f4f6;--text-secondary:#9ca3af;--accent-cyan:#06b6d4;--accent-cyan-glow:rgba(6,182,212,0.3);--accent-amber:#f59e0b;--accent-amber-glow:rgba(245,158,11,0.3);--accent-red:#ef4444;--accent-green:#10b981;--card-shadow:0 8px 32px 0 rgba(0,0,0,0.37);--transition-speed:0.2s}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background-color:var(--bg-primary);background-image:radial-gradient(at 10% 20%,rgba(6,182,212,0.05) 0px,transparent 50%),radial-gradient(at 90% 80%,rgba(245,158,11,0.03) 0px,transparent 50%);color:var(--text-primary);min-height:100vh;min-height:100dvh;line-height:1.5;padding:20px}
+.container{max-width:900px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid var(--border-color);margin-bottom:25px}
+header h1{font-size:1.6rem;font-weight:700;background:linear-gradient(135deg,#fff 0%,var(--accent-cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:10px}
+header p{color:var(--text-secondary);font-size:0.85rem}
+.panel{background:rgba(17,24,39,0.85);border:1px solid var(--border-color);border-radius:16px;padding:25px;box-shadow:var(--card-shadow)}
+.panel h2{font-size:1.25rem;font-weight:600;margin-bottom:20px;border-bottom:1px solid var(--border-color);padding-bottom:10px;color:#fff;display:flex;align-items:center;gap:10px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-bottom:20px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+label{font-size:0.85rem;color:var(--text-secondary);font-weight:500}
+input[type="number"],select{background:rgba(255,255,255,0.05);border:1px solid var(--border-color);border-radius:8px;color:#fff;padding:10px 12px;font-size:0.95rem;outline:none;transition:all var(--transition-speed);width:100%}
+select option{background:#1a202c;color:#e2e8f0}
+input[type="number"]:focus,select:focus{border-color:var(--accent-cyan);background:rgba(255,255,255,0.08);box-shadow:0 0 0 2px var(--accent-cyan-glow)}
+.btn{background:linear-gradient(135deg,var(--accent-cyan) 0%,#0891b2 100%);border:none;border-radius:8px;color:#fff;padding:13px 20px;font-size:0.95rem;font-weight:600;cursor:pointer;touch-action:manipulation;transition:all var(--transition-speed) ease;display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;-webkit-tap-highlight-color:transparent;-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-appearance:button;appearance:button}
+.btn:hover{filter:brightness(1.1)}
+.btn:active{filter:brightness(1.3)}
+.btn-secondary{background:rgba(255,255,255,0.05);border:1px solid var(--border-color);color:var(--text-primary);width:auto;cursor:pointer;touch-action:manipulation}
+.btn-secondary:hover{background:rgba(255,255,255,0.1);box-shadow:none}
+.data-table-container{overflow-x:auto;border-radius:8px;border:1px solid var(--border-color);-webkit-overflow-scrolling:touch}
+.data-table{width:100%;border-collapse:collapse;font-size:0.9rem;text-align:left}
+.data-table th{background:rgba(255,255,255,0.05);padding:10px 14px;font-weight:600;color:#fff;border-bottom:1px solid var(--border-color)}
+.data-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-secondary)}
+.data-table tr:hover td{color:var(--text-primary);background:rgba(255,255,255,0.01)}
+.help-text{font-size:0.8rem;color:var(--text-secondary);margin-top:4px;line-height:1.3}
+
+.modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#111827;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:30px;max-width:520px;width:90%;max-height:90vh;max-height:90dvh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:modalIn 0.25s ease;-webkit-overflow-scrolling:touch}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-box h2{font-size:1.15rem;font-weight:600;margin-bottom:16px;color:#fff;display:flex;align-items:center;gap:8px;border:none;padding:0}
+.modal-canvas-wrap{background:#0f1322;border:1px solid var(--border-color);border-radius:12px;overflow:hidden;margin-bottom:16px;width:100%;max-width:400px;margin-left:auto;margin-right:auto}
+.modal-canvas-wrap canvas{display:block;width:100%;height:auto}
+.weight-detail-list{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.weight-detail-item{background:rgba(255,255,255,0.03);border:1px solid var(--border-color);border-radius:8px;padding:10px 14px;font-size:0.85rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center}
+.weight-detail-item strong{color:#fff}
+.modal-actions{display:flex;gap:10px}
+.modal-actions .btn{flex:1}
+
+.history-item:hover{background:rgba(255,255,255,0.06)!important}
+.history-item:active{transform:scale(0.98)}
+
+@media(max-width:700px){
+body{padding:12px}
+.panel{padding:18px}
+.panel h2{font-size:1.1rem;margin-bottom:15px}
+.form-grid{grid-template-columns:1fr;gap:12px}
+header{flex-direction:column;gap:6px;text-align:center;padding-bottom:15px;margin-bottom:20px}
+header h1{font-size:1.3rem}
+header p{font-size:0.8rem}
+.data-table{font-size:0.82rem}
+.data-table th,.data-table td{padding:8px 10px}
+.modal-box{padding:20px;border-radius:16px;width:95%}
+.modal-box h2{font-size:1rem;margin-bottom:12px}
+.modal-canvas-wrap{max-width:320px}
+.weight-detail-item{flex-direction:column;align-items:flex-start;gap:4px;padding:8px 12px}
+}
+@media(max-width:400px){
+body{padding:8px}
+.panel{padding:14px}
+.panel h2{font-size:1rem}
+.btn{padding:10px 14px;font-size:0.9rem}
+input[type="number"],select{padding:8px 10px;font-size:0.9rem}
+.modal-box{padding:14px;width:98%}
+.modal-actions{flex-direction:column}
+.modal-actions .btn{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<div>
+<h1>&#x1f3be; Custom Tool</h1>
+<p>Trova la disposizione ottimale dei pesi per raggiungere il parametro desiderato</p>
+</div>
+</header>
+
+<div class="tab-bar" style="display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid var(--border-color)">
+<button class="tab-btn active" data-tab="personalizzazione" onclick="switchTab('personalizzazione')" style="flex:1;padding:10px 16px;font-size:0.85rem;font-weight:600;background:none;border:none;border-bottom:2px solid var(--accent-cyan);color:var(--accent-cyan);cursor:pointer;transition:all 0.15s">&#x1f527; Personalizzazione</button>
+<button class="tab-btn" data-tab="misura-sw" onclick="switchTab('misura-sw')" style="flex:1;padding:10px 16px;font-size:0.85rem;font-weight:600;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-secondary);cursor:pointer;transition:all 0.15s">&#x23f1; Misura SW</button>
+</div>
+<div data-tab="personalizzazione" class="tab-pane">
+<div class="panel">
+<h2>&#x1f4cb; Specifiche Racchetta</h2>
+<div style="background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.15);border-radius:10px;padding:15px;margin-bottom:18px">
+<h3 style="font-size:0.95rem;color:var(--accent-cyan);margin-bottom:12px">&#x1f4d0; Dati Base</h3>
+<div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr))">
+<div class="form-group"><label for="goal-mass">Massa (g)</label><input type="number" id="goal-mass" value="300" step="0.1" min="100" max="500"></div>
+<div class="form-group"><label for="goal-balance">Bilanciamento (cm)</label><input type="number" id="goal-balance" value="32.0" step="0.05" min="20" max="45"></div>
+<div class="form-group"><label for="goal-sw">Swingweight (kg&middot;cm&sup2;)</label><input type="number" id="goal-sw" value="315" step="0.5" min="200" max="450"></div>
+<div class="form-group"><label for="goal-tw">Twistweight (kg&middot;cm&sup2;)</label><input type="number" id="goal-tw" value="14.0" step="0.1" min="5" max="30"></div>
+<div class="form-group"><label for="goal-length">Lunghezza (cm)</label><input type="number" id="goal-length" value="68.58" step="0.01" min="60" max="80"></div>
+</div></div>
+<div class="form-grid">
+<div class="form-group" style="grid-column:1/-1">
+<label>Obiettivi (in ordine di priorit&agrave;)</label>
+<div id="goal-list">
+<div class="goal-row" style="display:flex;gap:6px;margin-bottom:6px;align-items:center">
+<select class="goal-param" style="flex:2;padding:6px 8px;font-size:0.82rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff">
+<option value="sw">Swingweight</option><option value="rw">Recoilweight</option><option value="mgri">MGR/I</option>
+<option value="balance">Bilanciamento</option><option value="hl">Punti HL</option><option value="tw">Twistweight</option><option value="mass">Massa</option>
+</select>
+<input class="goal-target" type="number" value="340" step="0.1" min="0" style="flex:1;padding:6px 8px;font-size:0.82rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff;width:80px">
+<span class="goal-current" style="font-size:0.72rem;color:var(--text-secondary);white-space:nowrap"></span>
+<button class="btn btn-secondary" onclick="removeGoalRow(this)" style="padding:2px 8px;font-size:0.7rem;flex-shrink:0">&times;</button>
+</div>
+</div>
+<button class="btn btn-secondary" id="btn-add-goal" onclick="addGoalRow()" style="font-size:0.78rem;padding:4px 12px;margin-top:4px">+ Aggiungi obiettivo</button>
+</div>
+<div class="form-group"><label for="goal-max-weights">Max punti in cui aggiungere massa</label>
+<select id="goal-max-weights"><option value="1">1 massa</option><option value="2">2 masse</option><option value="3">3 masse</option><option value="4" selected>4 masse</option></select></div>
+<div class="form-group">
+<label style="font-size:0.85rem;color:var(--text-secondary);cursor:pointer" onclick="toggleLimitsZone(this)">&#x2699; Limiti massa per zona <span class="ml-status">(inattivi)</span> <span style="font-size:0.7rem">&#x25bc;</span></label>
+<div style="display:none;margin-top:6px">
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<label style="font-size:0.78rem;color:var(--text-secondary)">Manico (&le;20cm): <input type="number" id="limit-manico" step="0.5" min="0" value="40" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"></label>
+<label style="font-size:0.78rem;color:var(--text-secondary)">Cuore (23-35cm): <input type="number" id="limit-cuore" step="0.5" min="0" value="10" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"></label>
+<label style="font-size:0.78rem;color:var(--text-secondary)">Ovale/testa (&ge;35cm): <input type="number" id="limit-ovale" step="0.5" min="0" value="10" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"></label>
+</div>
+</div>
+</div>
+</div>
+<div class="form-grid" style="margin-top:12px">
+<div class="form-group" style="grid-column:1/-1">
+<label style="font-size:0.85rem;color:var(--text-secondary);cursor:pointer" onclick="toggleConstraints(this)">&#x2699; Vincoli <span style="font-size:0.7rem">&#x25bc;</span></label>
+<div id="constraint-list" style="display:block;margin-top:6px">
+<button class="btn btn-secondary" id="btn-add-constraint" onclick="addConstraintRow()" style="font-size:0.78rem;padding:4px 12px;margin-top:2px">+ Aggiungi vincolo</button>
+</div>
+</div>
+</div>
+<button class="btn" onclick="runOptimizer()" style="margin-top:16px">&#x1f50d; Trova Configurazione Ottimale</button>
+<div id="goal-sort-bar" style="margin-top:18px;display:none;margin-bottom:10px">
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<label for="sort-select" style="font-size:0.8rem;white-space:nowrap">Ordina per:</label>
+<select id="sort-select" onchange="reSortResults()" style="flex:1;min-width:140px;padding:6px 10px;font-size:0.82rem">
+<option value="precision">Precisione</option>
+<option value="mass-asc">Massa aggiunta &#8593;</option>
+<option value="sw-asc">SW aggiunto &#8593;</option>
+<option value="sw-desc">SW aggiunto &#8595;</option>
+<option value="tw-asc">TW aggiunto &#8593;</option>
+<option value="tw-desc">TW aggiunto &#8595;</option>
+<option value="mgri-desc">MGR/I &#8595;</option>
+<option value="mgri-asc">MGR/I &#8593;</option>
+<option value="ico-desc">ICO &#8595;</option>
+<option value="ico-asc">ICO &#8593;</option>
+<option value="rw-desc">Recoilweight &#8595;</option>
+<option value="rw-asc">Recoilweight &#8593;</option>
+</select></div></div>
+<div id="goal-results" style="margin-top:25px;display:none"><div id="goal-solutions-container"></div></div>
+<div id="goal-no-results" style="margin-top:25px;display:none">
+<div style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);border-radius:8px;padding:12px;text-align:center">
+<div style="color:var(--accent-red);font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Nessuna soluzione trovata</div>
+<div style="font-size:0.9rem;color:var(--text-secondary)">Prova a modificare il target o a permettere pi&ugrave; punti di applicazione.</div>
+</div></div>
+</div>
+
+<div class="panel" style="margin-top:20px">
+<h2>&#x1f4ca; Confronto Parametri</h2>
+<div class="data-table-container">
+<table class="data-table">
+<thead><tr><th>Parametro</th><th>Originale</th><th style="color:var(--accent-cyan)">Personalizzato</th></tr></thead>
+<tbody>
+<tr><td>Massa</td><td id="cmp-mass-o">300.0 g</td><td id="cmp-mass-c" style="color:var(--accent-cyan);font-weight:bold">300.0 g</td></tr>
+<tr><td>Bilanciamento</td><td id="cmp-bal-o">32.00 cm</td><td id="cmp-bal-c" style="color:var(--accent-cyan);font-weight:bold">32.00 cm</td></tr>
+<tr><td>Punti HL</td><td id="cmp-hl-o">7.2 HL</td><td id="cmp-hl-c" style="color:var(--accent-cyan);font-weight:bold">7.2 HL</td></tr>
+<tr><td>Swingweight</td><td id="cmp-sw-o">315.0</td><td id="cmp-sw-c" style="color:var(--accent-cyan);font-weight:bold">315.0</td></tr>
+<tr><td>Twistweight</td><td id="cmp-tw-o">14.00</td><td id="cmp-tw-c" style="color:var(--accent-cyan);font-weight:bold">14.00</td></tr>
+<tr><td>Recoilweight</td><td id="cmp-rw-o">270.0</td><td id="cmp-rw-c" style="color:var(--accent-cyan);font-weight:bold">270.0</td></tr>
+<tr><td>Rapporto MGR/I</td><td id="cmp-mgri-o">18.50</td><td id="cmp-mgri-c" style="color:var(--accent-cyan);font-weight:bold">18.50</td></tr>
+<tr><td>ICO</td><td id="cmp-pol-o">0.9000</td><td id="cmp-pol-c" style="color:var(--accent-cyan);font-weight:bold">0.9000</td></tr>
+</tbody>
+</table></div></div>
+
+<div class="panel" style="margin-top:20px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<h2 style="font-size:1rem;margin:0;border:none;padding:0">&#x1f4dc; Cronologia Analisi</h2>
+<button class="btn btn-secondary" style="padding:4px 10px;font-size:0.7rem" onclick="clearHistory()">Cancella</button>
+</div>
+<div id="history-list" style="max-height:250px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border-color) transparent"><div class="help-text" style="text-align:center;padding:15px;color:var(--text-secondary)">Nessuna cronologia.</div></div>
+<div class="help-text" style="margin-top:8px;font-size:0.75rem">Clicca su un elemento per ripristinare i dati. Le analisi vengono salvate automaticamente.</div>
+</div>
+
+</div> <!-- /personalizzazione -->
+
+<div data-tab="misura-sw" class="tab-pane" style="display:none">
+<div class="panel" style="margin-top:0">
+<h2 style="font-size:1rem;margin:0;padding:0;border:none;display:flex;align-items:center;gap:8px"><span style="font-size:0.85rem;background:var(--accent-cyan);color:#fff;border-radius:5px;padding:1px 8px;font-weight:700">SW</span> Misura con Pendolo</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+<div><label style="display:block;font-size:0.72rem;color:var(--text-secondary);margin-bottom:2px">Massa racchetta (g)</label><input id="pend-mass" type="number" value="300" step="0.1" style="width:100%;padding:6px 8px;font-size:0.85rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff"></div>
+<div><label style="display:block;font-size:0.72rem;color:var(--text-secondary);margin-bottom:2px">Bilanciamento (cm)</label><input id="pend-balance" type="number" value="32" step="0.01" style="width:100%;padding:6px 8px;font-size:0.85rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff"></div>
+<div><label style="display:block;font-size:0.72rem;color:var(--text-secondary);margin-bottom:2px">Sospensione Y (cm)</label><input id="pend-hang" type="number" value="64.3" step="0.1" style="width:100%;padding:6px 8px;font-size:0.85rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff"></div>
+<div><label style="display:block;font-size:0.72rem;color:var(--text-secondary);margin-bottom:2px">N. oscillazioni</label><input id="pend-nswings" type="number" value="40" step="1" min="1" style="width:100%;padding:6px 8px;font-size:0.85rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff"></div>
+<div><label style="display:block;font-size:0.72rem;color:var(--text-secondary);margin-bottom:2px">Tempo (s)</label><input id="pend-time" type="number" value="56.8" step="0.1" style="width:100%;padding:6px 8px;font-size:0.85rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff"></div>
+<div><label style="display:block;font-size:0.72rem;color:var(--text-secondary);margin-bottom:2px">TW (opzionale, kg&#xb7;cm&#xb2;)</label><input id="pend-tw" type="number" step="0.01" style="width:100%;padding:6px 8px;font-size:0.85rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff"></div>
+</div>
+<button class="btn" style="margin-top:10px;width:100%;font-size:0.95rem" onclick="calcPendulum()"><strong style="font-size:1.1rem">SW</strong> &mdash; Calcola Swingweight</button>
+<div id="pend-results" style="display:none;margin-top:12px">
+<div style="background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(6,182,212,0.05));border:2px solid var(--accent-cyan);border-radius:12px;padding:16px;text-align:center;margin-bottom:12px">
+<div style="font-size:0.7rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">&#x1f3af; Swingweight Rilevato</div>
+<div id="pend-r-sw" style="font-size:2.2rem;font-weight:700;color:#fff;line-height:1.2">---</div>
+<div style="font-size:0.7rem;color:var(--text-secondary);margin-top:2px">kg&#xb7;cm&#xb2;</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:7px;text-align:center">
+<div style="font-size:0.6rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">RW</div>
+<div id="pend-r-rw" style="font-size:0.85rem;font-weight:600;color:var(--text-primary);margin-top:1px">---</div>
+</div>
+<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:7px;text-align:center">
+<div style="font-size:0.6rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">MGR/I</div>
+<div id="pend-r-mgri" style="font-size:0.85rem;font-weight:600;color:var(--text-primary);margin-top:1px">---</div>
+</div>
+<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:7px;text-align:center">
+<div style="font-size:0.6rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">ICO</div>
+<div id="pend-r-ico" style="font-size:0.85rem;font-weight:600;color:var(--text-primary);margin-top:1px">---</div>
+</div>
+<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:7px;text-align:center">
+<div style="font-size:0.6rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">Massa</div>
+<div id="pend-r-mass" style="font-size:0.85rem;font-weight:600;color:var(--text-primary);margin-top:1px">---</div>
+</div>
+<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:7px;text-align:center">
+<div style="font-size:0.6rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">Bil.</div>
+<div id="pend-r-bal" style="font-size:0.85rem;font-weight:600;color:var(--text-primary);margin-top:1px">---</div>
+</div>
+<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:7px;text-align:center">
+<div style="font-size:0.6rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">HL</div>
+<div id="pend-r-hl" style="font-size:0.85rem;font-weight:600;color:var(--text-primary);margin-top:1px">---</div>
+</div>
+<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:7px;text-align:center">
+<div style="font-size:0.6rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">TW</div>
+<div id="pend-r-tw" style="font-size:0.85rem;font-weight:600;color:var(--text-primary);margin-top:1px">---</div>
+</div>
+</div></div>
+<div style="margin-top:14px;border-top:1px solid var(--border-color);padding-top:12px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+<h3 style="font-size:0.85rem;margin:0;color:var(--text-secondary)">&#x1f4dc; Cronologia Misure SW</h3>
+<button class="btn btn-secondary" style="padding:2px 8px;font-size:0.65rem" onclick="clearPendHistory()">Cancella</button>
+</div>
+<div id="pend-history-list" style="max-height:180px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border-color) transparent"></div>
+</div>
+</div></div>
+
+<div id="modal-overlay" class="modal-overlay">
+<div class="modal-box">
+<h2>&#x1f4cd; Posiziona i Pesi</h2>
+<div class="modal-canvas-wrap"><canvas id="popup-canvas" width="390" height="520"></canvas></div>
+<div id="popup-weight-list" class="weight-detail-list"></div>
+<div class="modal-actions">
+<button class="btn btn-secondary" onclick="closeSolutionPopup()">Annulla</button>
+<button class="btn" onclick="confirmSolution()">Conferma Applicazione</button>
+</div></div></div>
+
+<script>
+try{document.body.insertAdjacentHTML('afterbegin','<div id=\"js-check\" style=\"background:#059669;color:#fff;padding:8px;text-align:center;font-size:14px;font-weight:600\">JavaScript OK</div>')}catch(e){}
+class Racket{constructor(mass,balance,swingweight,twistweight,length=68.58){this.mass=parseFloat(mass);this.balance=parseFloat(balance);this.swingweight=parseFloat(swingweight);this.twistweight=parseFloat(twistweight);this.length=parseFloat(length)}
+get mass_kg(){return this.mass/1000}
+get recoilweight(){return this.swingweight-this.mass_kg*Math.pow(this.balance-10,2)}
+get polarization_index(){return this.recoilweight/this.mass}
+get moment_of_inertia_handle(){return this.swingweight+20*this.balance*this.mass_kg-100*this.mass_kg}
+get mgr_i(){const i0=this.moment_of_inertia_handle;return i0===0?0:(this.mass_kg*980.5*this.balance)/i0}
+get points_hl(){return(this.length/2-this.balance)/0.3175}}
+let baseRacket=new Racket(300,32,315,14,68.58);let appliedStrips=[];let racketExtension={cm:0,mass:0,y:0}
+const HOOP_A=16.75;const HOOP_B=12;const N_SEG=1000;let hoopSegs=[];let totalPerimeter=0;let yCentre=0
+function buildHoopGeometry(l){yCentre=l-HOOP_A;hoopSegs=[];let cum=0;const pts=[];for(let i=0;i<=N_SEG;i++){const t=i*2*Math.PI/N_SEG;pts.push({x:HOOP_B*Math.sin(t),y:yCentre+HOOP_A*Math.cos(t),t})}
+for(let i=0;i<N_SEG;i++){const p1=pts[i],p2=pts[i+1];const ds=Math.hypot(p2.x-p1.x,p2.y-p1.y);hoopSegs.push({xMid:(p1.x+p2.x)/2,yMid:(p1.y+p2.y)/2,tMid:(p1.t+p2.t)/2,ds,sStart:cum});cum+=ds}
+totalPerimeter=cum;return cum}
+function computeCustomSpecs(){let cur=baseRacket
+if(racketExtension.cm>0){const ext=racketExtension.cm;const em=racketExtension.mass;const ey=racketExtension.y;const nM=cur.mass+em;const wS=cur.mass*(cur.balance+ext)+em*ey;const nB=wS/nM;const iB=cur.recoilweight+cur.mass_kg*Math.pow(cur.balance+ext,2);const iA=(em/1000)*ey*ey;const iT=iB+iA;const nR=iT-(nM/1000)*nB*nB;const nS=nR+(nM/1000)*Math.pow(nB-10,2);cur=new Racket(nM,nB,nS,cur.twistweight,cur.length+ext)}
+let m=cur.mass;let wY=cur.balance*cur.mass;let sw=cur.swingweight;let tw=cur.twistweight;for(const s of appliedStrips){m+=s.mass;wY+=s.mass*s.y;sw+=s.sw_added;tw+=s.tw_added}
+return new Racket(m,wY/m,sw,tw,cur.length)}
+function getGoals(){return[...document.querySelectorAll('#goal-list .goal-row')].map(row=>({param:row.querySelector('.goal-param').value,target:parseFloat(row.querySelector('.goal-target').value)})).filter(g=>!isNaN(g.target))}
+function getConstraints(){return[...document.querySelectorAll('#constraint-list .constraint-row')].map(row=>({type:row.querySelector('.constraint-type').value,yMin:parseFloat(row.querySelector('.constraint-min').value),yMax:parseFloat(row.querySelector('.constraint-max').value)})).filter(c=>!isNaN(c.yMin)&&!isNaN(c.yMax)&&c.yMin<c.yMax)}
+function addConstraintRow(t,mn,mx){const row=document.createElement('div');row.className='constraint-row';row.style.cssText='display:flex;gap:6px;margin-bottom:6px;align-items:center';row.innerHTML='<select class="constraint-type" style="flex:1;padding:6px 8px;font-size:0.82rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff"><option value="exclude" '+(t==='include'?'':'selected')+'>Non mettere tra</option><option value="include" '+(t==='include'?'selected':'')+'>Metti almeno 1 tra</option></select><input class="constraint-min" type="number" value="'+(mn||5)+'" step="0.5" min="0" max="80" style="width:60px;padding:6px 8px;font-size:0.82rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff"><span style="color:var(--text-secondary);font-size:0.8rem">e</span><input class="constraint-max" type="number" value="'+(mx||10)+'" step="0.5" min="0" max="80" style="width:60px;padding:6px 8px;font-size:0.82rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff"><span style="color:var(--text-secondary);font-size:0.78rem">cm</span><button class="btn btn-secondary" onclick="removeConstraintRow(this)" style="padding:2px 8px;font-size:0.7rem;flex-shrink:0">&times;</button>';document.getElementById('constraint-list').insertBefore(row,document.getElementById('constraint-list').lastElementChild)}
+function removeConstraintRow(el){el.closest('.constraint-row').remove()}
+function getFilteredPositions(constraints){let pos=[...getOptimizerPositions()];for(const c of constraints){if(c.type==='exclude')pos=pos.filter(p=>p.y<c.yMin||p.y>c.yMax)}return pos}
+function combosPassInclude(combos,constraints){if(!constraints||constraints.length===0)return combos;return combos.filter(combo=>{for(const c of constraints){if(c.type==='include'&&!combo.some(p=>p.y>=c.yMin&&p.y<=c.yMax))return false}return true})}
+function applyConstraints(solutions){return solutions}
+function updateGoalTarget(el){const p=el.value;const v=getParamValue(getGoalBaseRacket(),p);el.closest('.goal-row').querySelector('.goal-target').value=v.toFixed(getParamDecimals(p));updateGoalCurrentValues()}
+function addGoalRow(p,t){const row=document.createElement('div');row.className='goal-row';row.style.cssText='display:flex;gap:6px;margin-bottom:6px;align-items:center';const dp=p||'sw';if(t==null){t=getParamValue(getGoalBaseRacket(),dp)}const opts=['sw','rw','mgri','ico','balance','hl','tw','mass'];const lbs=['Swingweight','Recoilweight','MGR/I','ICO','Bilanciamento','Punti HL','Twistweight','Massa'];row.innerHTML='<select class="goal-param" onchange="updateGoalTarget(this)" style="flex:2;padding:6px 8px;font-size:0.82rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff">'+opts.map((o,i)=>'<option value="'+o+'"'+(dp===o?' selected':'')+'>'+lbs[i]+'</option>').join('')+'</select><input class="goal-target" type="number" value="'+(t.toFixed?t.toFixed(getParamDecimals(dp)):t)+'" step="0.1" min="0" style="flex:1;padding:6px 8px;font-size:0.82rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff;width:80px"><span class="goal-current" style="font-size:0.72rem;color:var(--text-secondary);white-space:nowrap"></span><button class="btn btn-secondary" onclick="removeGoalRow(this)" style="padding:2px 8px;font-size:0.7rem;flex-shrink:0">&times;</button>';document.getElementById('goal-list').appendChild(row);updateGoalCurrentValues()}
+function removeGoalRow(el){const rows=document.querySelectorAll('#goal-list .goal-row');if(rows.length<=1){el.closest('.goal-row').querySelector('.goal-target').value='';return}el.closest('.goal-row').remove();updateGoalCurrentValues()}
+function updateGoalCurrentValues(){const r=getGoalBaseRacket();document.querySelectorAll('#goal-list .goal-row').forEach(row=>{const p=row.querySelector('.goal-param').value;const v=getParamValue(r,p);row.querySelector('.goal-current').textContent=v.toFixed(getParamDecimals(p))+' '+getParamUnit(p)})}
+function updateComparison(){const c=computeCustomSpecs();const b=baseRacket;const f=(v,d)=>v.toFixed(d);const df=(a,b,d,u)=>{const v=a-b;return v===0?'':' ('+(v>0?'+':'')+v.toFixed(d)+(u||'')+')'}
+document.getElementById('cmp-mass-o').textContent=f(b.mass,1)+' g';document.getElementById('cmp-mass-c').textContent=f(c.mass,1)+' g'+df(c.mass,b.mass,1,'g');document.getElementById('cmp-bal-o').textContent=f(b.balance,2)+' cm';document.getElementById('cmp-bal-c').textContent=f(c.balance,2)+' cm'+df(c.balance,b.balance,2);const hO=b.points_hl,hC=c.points_hl;document.getElementById('cmp-hl-o').textContent=Math.abs(hO).toFixed(1)+' '+(hO>=0?'HL':'HH');document.getElementById('cmp-hl-c').textContent=Math.abs(hC).toFixed(1)+' '+(hC>=0?'HL':'HH');document.getElementById('cmp-sw-o').textContent=f(b.swingweight,1);document.getElementById('cmp-sw-c').textContent=f(c.swingweight,1)+df(c.swingweight,b.swingweight,1);document.getElementById('cmp-tw-o').textContent=f(b.twistweight,2);document.getElementById('cmp-tw-c').textContent=f(c.twistweight,2)+df(c.twistweight,b.twistweight,2);document.getElementById('cmp-rw-o').textContent=f(b.recoilweight,1);document.getElementById('cmp-rw-c').textContent=f(c.recoilweight,1)+df(c.recoilweight,b.recoilweight,1);document.getElementById('cmp-mgri-o').textContent=f(b.mgr_i,2);document.getElementById('cmp-mgri-c').textContent=f(c.mgr_i,2);document.getElementById('cmp-pol-o').textContent=f(b.polarization_index,4);document.getElementById('cmp-pol-c').textContent=f(c.polarization_index,4)}
+function getOptimizerPositions(){const len=+document.getElementById('goal-length').value||68.58;return[{y:0,x:0,label:'Tappo'},{y:7,x:0,label:'Manico basso'},{y:15,x:0,label:'Manico alto'},{y:35,x:0,label:'Cuore (centro)'},{y:35,x:8,label:'Cuore DX'},{y:35,x:-8,label:'Cuore SX'},{y:40,x:10,label:'Ovale DX'},{y:40,x:-10,label:'Ovale SX'},{y:51,x:12,label:'Ore 3'},{y:51,x:-12,label:'Ore 9'},{y:len-2.0,x:0,label:'Ore 12 basso'},{y:len-1.5,x:0,label:'Ore 12 medio'},{y:len-1.0,x:0,label:'Ore 12 alto'},{y:len,x:0,label:'Punta (ore 12)'}]}
+function getParamValue(r,p){switch(p){case'sw':return r.swingweight;case'tw':return r.twistweight;case'mass':return r.mass;case'balance':return r.balance;case'hl':return r.points_hl;case'rw':return r.recoilweight;case'mgri':return r.mgr_i;case'ico':return r.polarization_index;default:return 0}}
+function getParamUnit(p){return{sw:'kg\u00b7cm\u00b2',rw:'kg\u00b7cm\u00b2',mgri:'',balance:'cm',hl:'pt',tw:'kg\u00b7cm\u00b2',mass:'g',ico:''}[p]||''}
+function getParamDecimals(p){return{sw:1,rw:1,mgri:2,balance:2,hl:1,tw:2,mass:1,ico:4}[p]||1}
+function getErrorColor(p,a){const t={sw:{g:3,y:6},mgri:{g:0.05,y:0.1},tw:{g:0.5,y:1/0},mass:{g:2,y:5}}[p];if(!t)return a<0.5?'var(--accent-green)':a<2?'var(--accent-amber)':'var(--accent-red)';if(a<t.g)return'var(--accent-green)';if(a<t.y)return'var(--accent-amber)';return'var(--accent-red)'}
+function customizeRacketFromWeights(b,w){let m=b.mass;let wY=m*b.balance;let sw=b.swingweight;let tw=b.twistweight;for(const x of w){m+=x.mass;wY+=x.mass*x.y;if(x.y>=10)sw+=(x.mass/1000)*(x.y-10)**2;tw+=(x.mass/1000)*x.x*x.x}
+return new Racket(m,wY/m,sw,tw,b.length)}
+function renderWeightEntry(w){return'<div style="background:rgba(6,182,212,0.06);border-radius:6px;padding:4px 12px;margin-bottom:4px;font-size:0.85rem"><strong style="color:#fff;font-size:0.95rem">'+w.mass.toFixed(1)+'g</strong> @ '+w.label+'<br><span style="color:var(--text-secondary)">Y = <strong style="color:var(--accent-cyan)">'+w.y.toFixed(1)+' cm</strong>'+(w.x!==0?' &nbsp; X = <span style="font-size:0.72rem">'+w.x.toFixed(1)+' cm</span>':'')+'</span></div>'}
+function renderCombinedWeights(weights){const used=new Set();const out=[];for(let i=0;i<weights.length;i++){if(used.has(i))continue;used.add(i);let paired=false;for(let j=i+1;j<weights.length;j++){if(used.has(j))continue;if(Math.abs(weights[i].x)===Math.abs(weights[j].x)&&Math.abs(weights[i].y-weights[j].y)<0.01){used.add(j);const l1=weights[i].label.replace(/ DX$/,'');const l2=weights[j].label.replace(/ SX$/,'');if(l1===l2){const tt=weights[i].mass*2;out.push('<div style="background:rgba(6,182,212,0.06);border-radius:6px;padding:4px 12px;margin-bottom:4px;font-size:0.85rem"><strong style="color:#fff;font-size:0.95rem">'+tt.toFixed(2)+'g</strong> @ '+l1+' (DX+SX)<br><span style="color:var(--text-secondary)">Y = <strong style="color:var(--accent-cyan)">'+weights[i].y.toFixed(1)+' cm</strong> &middot; <span style="font-size:0.75rem">'+weights[i].mass.toFixed(2)+'g ciascuno</span></span></div>')}else{out.push(renderWeightEntry(weights[i])+renderWeightEntry(weights[j]))}paired=true;break}}if(!paired)out.push(renderWeightEntry(weights[i]))}return out.join('')}
+function isSymmetricGroup(positions){const l=new Set(positions.filter(p=>p.x<0).map(p=>p.y+'|'+Math.abs(p.x)));const r=new Set(positions.filter(p=>p.x>0).map(p=>p.y+'|'+Math.abs(p.x)));if(l.size!==r.size)return false;for(const k of l)if(!r.has(k))return false;return true}
+function solveOneWeight(b,p,t,pos){if(pos.x!==0)return null;const cur=getParamValue(b,p);const d=t-cur;if(Math.abs(d)<0.001)return null
+if(p==='mass'){if(d<=0)return null;const m=d;const r=customizeRacketFromWeights(b,[{mass:m,y:pos.y,x:pos.x}]);return{weights:[{mass:m,y:pos.y,x:pos.x,label:pos.label}],achieved:getParamValue(r,p),totalMass:m,nWeights:1}}
+if(p==='sw'){const c=pos.y>=10?Math.pow(pos.y-10,2)/1000:0;if(c<=0)return null;const m=d/c;if(m<0.3)return null;const r=customizeRacketFromWeights(b,[{mass:m,y:pos.y,x:pos.x}]);return{weights:[{mass:m,y:pos.y,x:pos.x,label:pos.label}],achieved:getParamValue(r,p),totalMass:m,nWeights:1}}
+if(p==='tw'){const c=pos.x*pos.x/1000;if(c<=0)return null;const m=d/c;if(m<0.3)return null;const r=customizeRacketFromWeights(b,[{mass:m,y:pos.y,x:pos.x}]);return{weights:[{mass:m,y:pos.y,x:pos.x,label:pos.label}],achieved:getParamValue(r,p),totalMass:m,nWeights:1}}
+if(p==='balance'||p==='hl'){const bt=p==='balance'?t:(b.length/2-t*0.3175);if(Math.abs(bt-pos.y)<0.01)return null;const m=b.mass*(b.balance-bt)/(bt-pos.y);if(m<0.3)return null;const r=customizeRacketFromWeights(b,[{mass:m,y:pos.y,x:pos.x}]);return{weights:[{mass:m,y:pos.y,x:pos.x,label:pos.label}],achieved:getParamValue(r,p),totalMass:m,nWeights:1}}
+if(p==='rw'||p==='mgri'){const tR=customizeRacketFromWeights(b,[{mass:1,y:pos.y,x:pos.x}]);const tV=getParamValue(tR,p);const dir=tV>cur?1:-1;if(d*dir<=0)return null;let lo=0.3,hi=999;for(let i=0;i<60;i++){const mid=(lo+hi)/2;const r=customizeRacketFromWeights(b,[{mass:mid,y:pos.y,x:pos.x}]);const v=getParamValue(r,p);if((v<t)===(dir>0))lo=mid;else hi=mid}
+const m=(lo+hi)/2;if(m<0.3)return null;const r=customizeRacketFromWeights(b,[{mass:m,y:pos.y,x:pos.x}]);return{weights:[{mass:m,y:pos.y,x:pos.x,label:pos.label}],achieved:getParamValue(r,p),totalMass:m,nWeights:1}}
+return null}
+function solveNWeightsEqual(b,p,t,positions){const cur=getParamValue(b,p);const d=t-cur;if(Math.abs(d)<0.001)return null;const n=positions.length
+if(p==='mass'){if(d<=0)return null;const m=d/n;if(m<0.3)return null;const w=positions.map(p=>({mass:m,y:p.y,x:p.x,label:p.label}));const r=customizeRacketFromWeights(b,w);return{weights:w,achieved:getParamValue(r,p),totalMass:d,nWeights:n}}
+if(p==='sw'){let tc=0;for(const p of positions){if(p.y>=10)tc+=Math.pow(p.y-10,2)/1000};if(tc<=0)return null;const m=d/tc;if(m<0.3)return null;const w=positions.map(p=>({mass:m,y:p.y,x:p.x,label:p.label}));const r=customizeRacketFromWeights(b,w);return{weights:w,achieved:getParamValue(r,p),totalMass:n*m,nWeights:n}}
+if(p==='tw'){let tc=0;for(const p of positions)tc+=p.x*p.x/1000;if(tc<=0)return null;const m=d/tc;if(m<0.3)return null;const w=positions.map(p=>({mass:m,y:p.y,x:p.x,label:p.label}));const r=customizeRacketFromWeights(b,w);return{weights:w,achieved:getParamValue(r,p),totalMass:n*m,nWeights:n}}
+if(p==='balance'||p==='hl'){const bt=p==='balance'?t:(b.length/2-t*0.3175);const sY=positions.reduce((s,p)=>s+p.y,0);const denom=n*bt-sY;if(Math.abs(denom)<0.01)return null;const m=b.mass*(b.balance-bt)/denom;if(m<0.3)return null;const w=positions.map(p=>({mass:m,y:p.y,x:p.x,label:p.label}));const r=customizeRacketFromWeights(b,w);return{weights:w,achieved:getParamValue(r,p),totalMass:n*m,nWeights:n}}
+if(p==='rw'||p==='mgri'){const tW=positions.map(p=>({mass:1,y:p.y,x:p.x}));const tR=customizeRacketFromWeights(b,tW);const tV=getParamValue(tR,p);const dir=tV>cur?1:-1;if(d*dir<=0)return null;let lo=0.3/n,hi=999;for(let i=0;i<60;i++){const mid=(lo+hi)/2;const w=positions.map(p=>({mass:mid,y:p.y,x:p.x}));const r=customizeRacketFromWeights(b,w);const v=getParamValue(r,p);if((v<t)===(dir>0))lo=mid;else hi=mid}
+const m=(lo+hi)/2;if(m<0.3/n)return null;const w=positions.map(p=>({mass:m,y:p.y,x:p.x,label:p.label}));const r=customizeRacketFromWeights(b,w);return{weights:w,achieved:getParamValue(r,p),totalMass:n*m,nWeights:n}}
+return null}
+function computeMultiGoalScore(base,goals,positions,masses){const ws=positions.map((p,i)=>({mass:masses[i]||0,y:p.y,x:p.x}));const r=customizeRacketFromWeights(base,ws);let s=0;for(const g of goals){const v=getParamValue(r,g.param);s+=Math.pow(Math.abs((v-g.target)/Math.max(Math.abs(g.target),1)),2)}s+=Math.pow(masses.reduce((a,b)=>a+b,0)/100,2);return s}
+function solveMultiGoalGreedy(base,goals,positions,maxPerPos){const n=positions.length;if(n===0)return null;const mx=maxPerPos||999;const mn=0.3;const fg=goals[0];const eq=solveNWeightsEqual(base,fg.param,fg.target,positions);let masses;if(eq){masses=positions.map((p,i)=>{const w=eq.weights.find(w=>Math.abs(w.y-p.y)<0.01&&Math.abs(w.x-p.x)<0.01);return w?w.mass:0})}else masses=new Array(n).fill(0)
+for(let it=0;it<30;it++){let bs=computeMultiGoalScore(base,goals,positions,masses);let bi=-1,bdir=1;for(let i=0;i<n;i++){if(masses[i]>=mx)continue;masses[i]+=0.5;const s=computeMultiGoalScore(base,goals,positions,masses);masses[i]-=0.5;if(s<bs){bs=s;bi=i;bdir=1}if(masses[i]>mn+0.5){masses[i]-=0.5;const s2=computeMultiGoalScore(base,goals,positions,masses);masses[i]+=0.5;if(s2<bs){bs=s2;bi=i;bdir=-1}}}if(bi===-1)break;const curS=computeMultiGoalScore(base,goals,positions,masses);let lo=0,hi=3;for(let b=0;b<15;b++){const mid=(lo+hi)/2;masses[bi]+=bdir*mid;const s=computeMultiGoalScore(base,goals,positions,masses);masses[bi]-=bdir*mid;if(s<curS)lo=mid;else hi=mid}const fd=bdir*lo;if(Math.abs(fd)<0.2)break;masses[bi]+=fd;if(masses[bi]>mx)masses[bi]=mx;if(masses[bi]<0)masses[bi]=0}const tm=masses.reduce((a,b)=>a+b,0);if(tm<mn)return null;const ws=positions.map((p,i)=>({mass:Math.round(masses[i]*100)/100,y:p.y,x:p.x,label:p.label})).filter(w=>w.mass>=mn);if(ws.length===0)return null;const r=customizeRacketFromWeights(base,ws);return{weights:ws,achieved:getParamValue(r,goals[0].param),totalMass:tm,nWeights:ws.length}}
+function getCombinations(arr,k){if(k===0)return[[]];if(arr.length===0)return[];const[first,...rest]=arr;const wF=getCombinations(rest,k-1).map(c=>[first,...c]);const woF=getCombinations(rest,k);return[...wF,...woF]}
+function getGoalBaseRacket(){return new Racket(+document.getElementById('goal-mass').value||300,+document.getElementById('goal-balance').value||32,+document.getElementById('goal-sw').value||315,+document.getElementById('goal-tw').value||14,+document.getElementById('goal-length').value||68.58)}
+function computeSolutionMetrics(base,sol){const r=customizeRacketFromWeights(base,sol.weights);sol._metrics={swAdded:r.swingweight-base.swingweight,twAdded:r.twistweight-base.twistweight,mgri:r.mgr_i,rw:r.recoilweight,ico:r.polarization_index};return sol}
+function getSortFn(sort,base,target,goals){switch(sort){case'mass-asc':return(a,b)=>{if(a.nWeights!==b.nWeights)return a.nWeights-b.nWeights;return a.totalMass-b.totalMass}
+case'sw-asc':return(a,b)=>{if(a.nWeights!==b.nWeights)return a.nWeights-b.nWeights;const m=(a._metrics||computeSolutionMetrics(base,a)).swAdded-(b._metrics||computeSolutionMetrics(base,b)).swAdded;if(m!==0)return m;return a.totalMass-b.totalMass}
+case'sw-desc':return(a,b)=>{if(a.nWeights!==b.nWeights)return a.nWeights-b.nWeights;const m=(b._metrics||computeSolutionMetrics(base,b)).swAdded-(a._metrics||computeSolutionMetrics(base,a)).swAdded;if(m!==0)return m;return a.totalMass-b.totalMass}
+case'mgri-desc':return(a,b)=>{if(a.nWeights!==b.nWeights)return a.nWeights-b.nWeights;const m=(b._metrics||computeSolutionMetrics(base,b)).mgri-(a._metrics||computeSolutionMetrics(base,a)).mgri;if(m!==0)return m;return a.totalMass-b.totalMass}
+case'mgri-asc':return(a,b)=>{if(a.nWeights!==b.nWeights)return a.nWeights-b.nWeights;const m=(a._metrics||computeSolutionMetrics(base,a)).mgri-(b._metrics||computeSolutionMetrics(base,b)).mgri;if(m!==0)return m;return a.totalMass-b.totalMass}
+case'rw-desc':return(a,b)=>{if(a.nWeights!==b.nWeights)return a.nWeights-b.nWeights;const m=(b._metrics||computeSolutionMetrics(base,b)).rw-(a._metrics||computeSolutionMetrics(base,a)).rw;if(m!==0)return m;return a.totalMass-b.totalMass}
+case'rw-asc':return(a,b)=>{if(a.nWeights!==b.nWeights)return a.nWeights-b.nWeights;const m=(a._metrics||computeSolutionMetrics(base,a)).rw-(b._metrics||computeSolutionMetrics(base,b)).rw;if(m!==0)return m;return a.totalMass-b.totalMass}
+case'ico-desc':return(a,b)=>{if(a.nWeights!==b.nWeights)return a.nWeights-b.nWeights;const m=(b._metrics||computeSolutionMetrics(base,b)).ico-(a._metrics||computeSolutionMetrics(base,a)).ico;if(m!==0)return m;return a.totalMass-b.totalMass}
+case'ico-asc':return(a,b)=>{if(a.nWeights!==b.nWeights)return a.nWeights-b.nWeights;const m=(a._metrics||computeSolutionMetrics(base,a)).ico-(b._metrics||computeSolutionMetrics(base,b)).ico;if(m!==0)return m;return a.totalMass-b.totalMass}
+case'tw-desc':return(a,b)=>{if(a.nWeights!==b.nWeights)return a.nWeights-b.nWeights;const m=(b._metrics||computeSolutionMetrics(base,b)).twAdded-(a._metrics||computeSolutionMetrics(base,a)).twAdded;if(m!==0)return m;return a.totalMass-b.totalMass}
+case'tw-asc':return(a,b)=>{if(a.nWeights!==b.nWeights)return a.nWeights-b.nWeights;const m=(a._metrics||computeSolutionMetrics(base,a)).twAdded-(b._metrics||computeSolutionMetrics(base,b)).twAdded;if(m!==0)return m;return a.totalMass-b.totalMass}
+default:return(a,b)=>{const sa=computeMultiGoalScoreSort(a,base,goals);const sb=computeMultiGoalScoreSort(b,base,goals);if(Math.abs(sa-sb)>0.0001)return sa-sb;let d=a.totalMass-b.totalMass;if(d!==0)return d;for(let i=1;goals&&i<goals.length;i++){const g=goals[i];const av=(a._multiGoals&&a._multiGoals[g.param]!==undefined)?a._multiGoals[g.param]:getParamValue(customizeRacketFromWeights(base,a.weights),g.param);const bv=(b._multiGoals&&b._multiGoals[g.param]!==undefined)?b._multiGoals[g.param]:getParamValue(customizeRacketFromWeights(base,b.weights),g.param);const e2a=Math.abs(av-g.target);const e2b=Math.abs(bv-g.target);if(Math.abs(e2a-e2b)>0.005)return e2a-e2b}return 0}}}
+function displayGoalResults(solutions,goals,param,target,maxW){const container=document.getElementById('goal-solutions-container');const resultsDiv=document.getElementById('goal-results');const noResultsDiv=document.getElementById('goal-no-results');const sortBar=document.getElementById('goal-sort-bar')
+if(solutions.length===0){resultsDiv.style.display='none';noResultsDiv.style.display='block';if(sortBar)sortBar.style.display='none';return}
+noResultsDiv.style.display='none';resultsDiv.style.display='block';if(sortBar)sortBar.style.display='block'
+const base=getGoalBaseRacket();const decimals=getParamDecimals(param);const unit=getParamUnit(param);const current=getParamValue(base,param)
+window._rawSolutions=solutions;window._rawBase=base;window._rawGoals=goals;window._rawParam=param;window._rawTarget=target;window._rawMaxW=maxW
+// compute achieved for all goals on each solution
+for(const sol of solutions){if(!sol._multiGoals){sol._multiGoals={};for(const g of goals){const r=customizeRacketFromWeights(base,sol.weights);sol._multiGoals[g.param]=getParamValue(r,g.param)}}}
+const sort=document.getElementById('sort-select')?document.getElementById('sort-select').value:'precision';const sortFn=getSortFn(sort,base,target,goals);const sorted=[...solutions].sort(sortFn);const bestOverall=sorted.reduce((b,s)=>computeMultiGoalScoreSort(s,base,goals)<computeMultiGoalScoreSort(b,base,goals)?s:b);if(sorted[0]!==bestOverall){const idx=sorted.indexOf(bestOverall);sorted.splice(idx,1);sorted.unshift(bestOverall)}const bestSol=sorted[0];const groups={};for(const sol of sorted){(groups[sol.nWeights]=groups[sol.nWeights]||[]).push(sol)}
+let html='<div class="goal-summary" style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:14px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><span style="font-size:0.95rem">\u{1f3af} '+goals.map((g,i)=>{const c=getParamValue(base,g.param);const d=getParamDecimals(g.param);return'<span style="'+(i===0?'color:#fff;font-weight:600':'color:var(--text-secondary);font-size:0.82rem')+'">'+g.param.toUpperCase()+' '+c.toFixed(d)+'\u2192<strong style="color:var(--accent-cyan)">'+g.target.toFixed(d)+'</strong></span>'}).join(' &nbsp;')+'</span><span style="font-size:0.85rem;color:var(--text-secondary)">'+solutions.length+' soluzioni</span></div>'
+const emojis=['\u{1f539}','\u{1f538}','\u{1f53b}','\u{1f7e2}','\u{1f535}','\u{25ab}','\u{25aa}'];const displayOrder=[]
+{const sol=bestOverall;displayOrder.push(sol);const cs=computeMultiGoalScoreSort(sol,base,goals);const op=['mass','balance','sw','tw','ico','rw','mgri'].filter(p=>!goals.map(g=>g.param).includes(p));let oh='';if(op.length){const mr=customizeRacketFromWeights(base,sol.weights);oh=op.map(p=>{const bv=getParamValue(base,p);const nv=getParamValue(mr,p);const d=nv-bv;const s=d>=0?'+':'';const u=getParamUnit(p);const dc=d>0.1?'var(--accent-amber)':d<-0.1?'var(--accent-cyan)':'var(--text-secondary)';return'<span style="font-size:0.72rem;color:var(--text-secondary);background:rgba(255,255,255,0.03);padding:2px 8px;border-radius:4px"><strong style="color:#999">'+p.toUpperCase()+'</strong> '+nv.toFixed(getParamDecimals(p))+(u?' '+u:'')+' <span style="color:'+dc+'">('+s+d.toFixed(getParamDecimals(p))+')</span></span>'}).join('')}
+html+='<div style="background:rgba(245,158,11,0.08);border:2px solid rgba(245,158,11,0.5);border-radius:10px;padding:12px 15px;margin-bottom:14px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px"><div><span style="color:var(--accent-amber);margin-right:4px">\u2b50</span><span style="font-weight:700;color:#fff;font-size:1.2rem">Migliore \u2014 Precisione: '+cs.toFixed(4)+'</span><span style="font-size:0.72rem;color:var(--text-secondary);margin-left:6px;opacity:0.5">+ '+sol.totalMass.toFixed(1)+'g</span></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">'+goals.map(g=>{const av=g===goals[0]?sol.achieved:(sol._multiGoals?sol._multiGoals[g.param]:undefined);const ae2=Math.abs(av-g.target);const ac=getErrorColor(g.param,ae2);return av!==undefined?'<span style="font-weight:700;font-size:1.2rem;color:'+ac+'">'+g.param.toUpperCase()+' '+av.toFixed(getParamDecimals(g.param))+'</span>':''}).join('')+'</div></div>'+(oh?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+oh+'</div>':'')+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px">'+renderCombinedWeights(sol.weights)+'</div><button class="btn btn-secondary" style="padding:4px 12px;font-size:0.78rem" onclick="openSolutionPopup(0)">Applica</button></div>'}
+const ns=Object.keys(groups).map(Number).sort((a,b)=>a-b);for(const n of ns){const group=groups[n];if(group.length===0)continue
+html+='<h4 style="margin:18px 0 10px 0;color:#fff;font-size:1rem">'+emojis[Math.min(n-1,emojis.length-1)]+' '+n+' Mass'+(n>1?'e':'a')+' ('+group.length+' opzioni)</h4>'
+const solDivs=[];for(let i=0;i<group.length;i++){const sol=group[i];displayOrder.push(sol);const err=Math.abs(sol.achieved-target);const errColor=getErrorColor(param,err);const isBest=sol===bestSol;const sortEl=document.getElementById('sort-select');const sortVal=sortEl?sortEl.value:'precision';let sortDisplay;if(sortVal==='mass-asc'){sortDisplay='Massa aggiunta totale '+sol.totalMass.toFixed(1)+'g'}else if(sortVal==='precision'){sortDisplay='Precisione: '+computeMultiGoalScoreSort(sol,base,goals).toFixed(4)}else{const met=sol._metrics||computeSolutionMetrics(base,sol)._metrics;if(sortVal==='sw-asc'||sortVal==='sw-desc')sortDisplay='SW +'+met.swAdded.toFixed(1)+' kg\u00b7cm\u00b2';else if(sortVal==='tw-asc'||sortVal==='tw-desc')sortDisplay='TW +'+met.twAdded.toFixed(2)+' kg\u00b7cm\u00b2';else if(sortVal==='mgri-asc'||sortVal==='mgri-desc')sortDisplay='MGR/I '+met.mgri.toFixed(2);else if(sortVal==='rw-asc'||sortVal==='rw-desc')sortDisplay='RW '+met.rw.toFixed(1)+' kg\u00b7cm\u00b2';else if(sortVal==='ico-asc'||sortVal==='ico-desc')sortDisplay='ICO '+met.ico.toFixed(4)}
+const goalParams=goals.map(g=>g.param);const otherParams=['mass','balance','sw','tw','ico','rw','mgri'].filter(p=>!goalParams.includes(p));let otherHtml='';if(otherParams.length){const modR=customizeRacketFromWeights(base,sol.weights);otherHtml=otherParams.map(p=>{const bv=getParamValue(base,p);const nv=getParamValue(modR,p);const delta=nv-bv;const s=delta>=0?'+':'';const u=getParamUnit(p);const dc=delta>0.1?'var(--accent-amber)':delta<-0.1?'var(--accent-cyan)':'var(--text-secondary)';return'<span style="font-size:0.72rem;color:var(--text-secondary);background:rgba(255,255,255,0.03);padding:2px 8px;border-radius:4px"><strong style="color:#999">'+p.toUpperCase()+'</strong> '+nv.toFixed(getParamDecimals(p))+(u?' '+u:'')+' <span style="color:'+dc+'">('+s+delta.toFixed(getParamDecimals(p))+')</span></span>'}).join('')}
+solDivs.push('<div style="background:rgba(255,255,255,0.02);border:1px solid '+(isBest?'rgba(245,158,11,0.4)':'var(--border-color)')+';border-radius:10px;padding:12px 15px;margin-bottom:8px'+(i>=4?';display:none':'')+'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px"><div>'+(isBest?'<span style="color:var(--accent-amber);margin-right:4px">\u2b50</span>':'')+'<span style="font-weight:700;color:#fff;font-size:1.2rem">'+sortDisplay+'</span>'+(sortVal!=='mass-asc'?'<span style="font-size:0.72rem;color:var(--text-secondary);margin-left:6px;opacity:0.5">+ '+sol.totalMass.toFixed(1)+'g</span>':'')+'</div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">'+goals.map(g=>{const av=g===goals[0]?sol.achieved:(sol._multiGoals?sol._multiGoals[g.param]:undefined);const ae2=Math.abs(av-g.target);const ac=getErrorColor(g.param,ae2);return av!==undefined?'<span style="font-weight:700;font-size:1.2rem;color:'+ac+'">'+g.param.toUpperCase()+' '+av.toFixed(getParamDecimals(g.param))+'</span>':''}).join('')+'</div></div>'+(otherHtml?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+otherHtml+'</div>':'')+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px">'+renderCombinedWeights(sol.weights)+'</div><button class="btn btn-secondary" style="padding:4px 12px;font-size:0.78rem" onclick="openSolutionPopup('+(displayOrder.length-1)+')">Applica</button></div>')}
+html+=solDivs.join('')
+if(group.length>4){html+='<div class="help-text" style="text-align:center;margin-bottom:6px;cursor:pointer;color:var(--accent-cyan);text-decoration:underline" onclick="toggleExtra(this)">+'+(group.length-4)+' altre opzioni da '+n+(n>1?' masse':' massa')+'</div>'}}
+window._goalSolutions=displayOrder;container.innerHTML=html}
+function toggleExtra(el){const expanded=el.getAttribute('data-expanded')==='1';const divs=[];let sib=el.previousElementSibling;while(sib&&sib.tagName!=='H4'){if(sib.style&&sib.style.display!==undefined)divs.unshift(sib);sib=sib.previousElementSibling}if(expanded){for(let i=4;i<divs.length;i++)divs[i].style.display='none';el.setAttribute('data-expanded','0');el.textContent=el.textContent.replace('Mostra meno','+'+(divs.length-4)+' altre opzioni')}else{for(let i=4;i<divs.length;i++)divs[i].style.display='';el.setAttribute('data-expanded','1');el.textContent='Mostra meno'}}
+function computeMultiGoalScoreSort(sol,base,goals){const n=goals.length;if(n===0)return 0;let sc=0;for(let i=0;i<n;i++){const g=goals[i];const av=i===0?sol.achieved:((sol._multiGoals&&sol._multiGoals[g.param]!==undefined)?sol._multiGoals[g.param]:getParamValue(customizeRacketFromWeights(base,sol.weights),g.param));sc+=Math.max(1-0.05*i,0)*Math.abs(av-g.target)/Math.max(Math.abs(g.target),1)}return sc}
+function reSortResults(){const sols=window._rawSolutions;if(!sols||!sols.length)return;const base=window._rawBase||getGoalBaseRacket();displayGoalResults(sols,window._rawGoals,window._rawParam,window._rawTarget,window._rawMaxW)}
+function getMassLimits(){const limitEl=document.getElementById('limit-manico');const container=limitEl?limitEl.closest('.form-group').querySelector('div'):null;if(!container||container.style.display==='none')return{manico:null,cuore:null,ovale:null};const m=parseFloat(document.getElementById('limit-manico').value);const c=parseFloat(document.getElementById('limit-cuore').value);const o=parseFloat(document.getElementById('limit-ovale').value);return{manico:isNaN(m)?null:m,cuore:isNaN(c)?null:c,ovale:isNaN(o)?null:o}}
+function getMaxMassForWeight(w,limits){const y=w.y;if(y<=20)return limits.manico;if(y<=35)return limits.cuore;return limits.ovale}
+function solutionExceedsLimits(sol,limits){for(const w of sol.weights){const maxM=getMaxMassForWeight(w,limits);if(maxM!==null&&w.mass>maxM)return true}return false}
+function runOptimizer(){const base=getGoalBaseRacket();const goals=getGoals();if(!goals||goals.length===0)return;const param=goals[0].param;const target=goals[0].target;const maxW=parseInt(document.getElementById('goal-max-weights').value)
+if(isNaN(target)){alert('Inserisci un valore target valido.');return}
+const rd=document.getElementById('goal-results');const nd=document.getElementById('goal-no-results');const ct=document.getElementById('goal-solutions-container');if(rd)rd.style.display='none';if(nd)nd.style.display='none';ct.innerHTML='<div style="text-align:center;padding:30px;color:var(--accent-cyan)"><span style="font-size:2rem">\u23f3</span><br><span style="font-size:1rem">Calcolo in corso...</span></div>'
+setTimeout(()=>{
+const constraints=getConstraints();const massLimits=getMassLimits();const fPos=getFilteredPositions(constraints);const allSolutions=[];for(const pos of fPos){const sol=solveOneWeight(base,param,target,pos);if(sol)allSolutions.push(sol)}
+for(let n=2;n<=maxW&&n<=fPos.length;n++){const combos=combosPassInclude(getCombinations(fPos,n),constraints).filter(isSymmetricGroup);for(const combo of combos){const sol=solveNWeightsEqual(base,param,target,combo);if(sol)allSolutions.push(sol);if(goals.length>1){const maxPerPos=Math.min(...combo.map(p=>{const lim=getMaxMassForWeight(p,massLimits);return lim!==null?lim:999}));const mg=solveMultiGoalGreedy(base,goals,combo,maxPerPos);if(mg){const k=mg.weights.map(w=>w.y.toFixed(1)+'-'+w.x.toFixed(1)+'-'+w.mass.toFixed(1)).sort().join('|');if(!allSolutions.some(s=>s.weights.map(w=>w.y.toFixed(1)+'-'+w.x.toFixed(1)+'-'+w.mass.toFixed(1)).sort().join('|')===k)){allSolutions.push(mg)}}}}}
+for(let si=0;si<allSolutions.length;si++){if(solutionExceedsLimits(allSolutions[si],massLimits)){allSolutions.splice(si,1);si--;continue}for(const c of constraints){if(c.type==='include'&&!allSolutions[si].weights.some(w=>w.y>=c.yMin&&w.y<=c.yMax)){allSolutions.splice(si,1);si--;break}}}
+const seen=new Set();const unique=[];for(const sol of allSolutions){const key=sol.weights.map(w=>w.y.toFixed(1)+'-'+w.x.toFixed(1)+'-'+w.mass.toFixed(1)).sort().join('|');if(!seen.has(key)){seen.add(key);unique.push(sol)}}
+const filtered=unique.filter(sol=>{const re=target?Math.abs((sol.achieved-target)/target):Math.abs(sol.achieved-target);return re<0.05});const grouped={};for(const sol of filtered){(grouped[sol.nWeights]=grouped[sol.nWeights]||[]).push(sol)}const final=[];for(const n of Object.keys(grouped).map(Number).sort((a,b)=>a-b)){grouped[n].sort((a,b)=>Math.abs(a.achieved-target)-Math.abs(b.achieved-target));final.push(...grouped[n].slice(0,8))}
+displayGoalResults(final,goals,param,target,maxW);addHistory('\u{1f3af} '+goals.map(g=>g.param.toUpperCase()+'='+g.target).join(', ')+'\u2192'+(final.length>0?final[0].achieved.toFixed(getParamDecimals(param)):'?'));saveState()},30)}
+function openSolutionPopup(idx){const sol=window._goalSolutions[idx];if(!sol)return
+const used=new Set();const h=[];for(let i=0;i<sol.weights.length;i++){if(used.has(i))continue;used.add(i);let p=false;for(let j=i+1;j<sol.weights.length;j++){if(used.has(j))continue;if(Math.abs(sol.weights[i].x)===Math.abs(sol.weights[j].x)&&Math.abs(sol.weights[i].y-sol.weights[j].y)<0.01){used.add(j);const l1=sol.weights[i].label.replace(/ DX$/,'');const l2=sol.weights[j].label.replace(/ SX$/,'');if(l1===l2){const t=sol.weights[i].mass*2;h.push('<div class="weight-detail-item"><span><strong>'+t.toFixed(2)+'g</strong> @ '+l1+' (DX+SX)</span><span style="color:var(--text-secondary);font-size:0.8rem">Y '+sol.weights[i].y.toFixed(1)+' cm &middot; '+sol.weights[i].mass.toFixed(2)+'g ciascuno</span></div>')}else{h.push('<div class="weight-detail-item"><span><strong>'+sol.weights[i].mass.toFixed(2)+'g</strong> @ '+sol.weights[i].label+'</span><span style="color:var(--text-secondary);font-size:0.8rem">Y '+sol.weights[i].y.toFixed(1)+' cm &middot; X '+sol.weights[i].x.toFixed(1)+' cm</span></div>');h.push('<div class="weight-detail-item"><span><strong>'+sol.weights[j].mass.toFixed(2)+'g</strong> @ '+sol.weights[j].label+'</span><span style="color:var(--text-secondary);font-size:0.8rem">Y '+sol.weights[j].y.toFixed(1)+' cm &middot; X '+sol.weights[j].x.toFixed(1)+' cm</span></div>')}p=true;break}}if(!p){h.push('<div class="weight-detail-item"><span><strong>'+sol.weights[i].mass.toFixed(2)+'g</strong> @ '+sol.weights[i].label+'</span><span style="color:var(--text-secondary);font-size:0.8rem">Y '+sol.weights[i].y.toFixed(1)+' cm &middot; X '+sol.weights[i].x.toFixed(1)+' cm</span></div>')}}
+const list=document.getElementById('popup-weight-list');list.innerHTML=h.join('')
+drawPopupRacket(sol.weights);window._pendingSolution=sol;document.getElementById('modal-overlay').classList.add('open')}
+function closeSolutionPopup(){document.getElementById('modal-overlay').classList.remove('open');window._pendingSolution=null}
+function confirmSolution(){const sol=window._pendingSolution;if(!sol)return
+appliedStrips=[];for(const w of sol.weights){const strip={id:Date.now()+Math.random(),name:'CT '+w.mass.toFixed(1)+'g @ '+w.label,mass:w.mass,y:w.y,sw_added:w.y>=10?(w.mass/1000)*(w.y-10)**2:0,tw_added:(w.mass/1000)*w.x*w.x,arcLen:0,indices:new Set()};appliedStrips.push(strip)}
+closeSolutionPopup();updateComparison();saveState();setTimeout(()=>{const el=document.getElementById('cmp-mass-o');if(el){const panel=el.closest('.panel');if(panel)panel.scrollIntoView({behavior:'smooth',block:'start'})}},100)}
+function findNearestSeg(x,y){let bi=0,bd=Infinity;for(let i=0;i<N_SEG;i++){const seg=hoopSegs[i];const ex=HOOP_B*Math.sin(seg.tMid),ey=yCentre+HOOP_A*Math.cos(seg.tMid);const d=Math.hypot(ex-x,ey-y);if(d<bd){bd=d;bi=i}}return{idx:bi,dist:bd}}
+function hoopSegsForMass(mass,centerIdx){const len=Math.min(mass*5,30);const segs=new Set();let half=0;let fi=centerIdx||0,bi=centerIdx||0;segs.add(fi);while(half<len/2&&fi<N_SEG-1){fi=(fi+1)%N_SEG;half+=hoopSegs[fi].ds;segs.add(fi)}while(half<len/2&&bi<N_SEG-1){bi=(bi-1+N_SEG)%N_SEG;half+=hoopSegs[bi].ds;segs.add(bi)}return segs}
+function drawStripOnHoop(ctx,centerIdx,mass,r2x,r2y){const segs=hoopSegsForMass(mass,centerIdx);if(!segs.has(centerIdx))segs.add(centerIdx);let inPath=false;ctx.strokeStyle='rgba(255,20,147,0.8)';ctx.lineWidth=12;ctx.lineCap='round';ctx.beginPath();for(let i=0;i<=N_SEG;i++){const idx=i%N_SEG;const seg=hoopSegs[idx];const ex=HOOP_B*Math.sin(seg.tMid),ey=yCentre+HOOP_A*Math.cos(seg.tMid);if(segs.has(idx)){if(!inPath){ctx.moveTo(r2x(ex),r2y(ey));inPath=true}else ctx.lineTo(r2x(ex),r2y(ey))}else{if(inPath){ctx.stroke();ctx.beginPath();inPath=false}}}
+if(inPath)ctx.stroke();ctx.lineCap='butt'}
+function drawPopupRacket(weights){const canvas=document.getElementById('popup-canvas');if(!canvas)return;const ctx=canvas.getContext('2d');const CW=canvas.width,CH=canvas.height;ctx.clearRect(0,0,CW,CH);const activeLen=baseRacket.length+racketExtension.cm;const svgTipY=46.2,svgButtY=553;const scale=CH*(svgButtY-svgTipY)/600/activeLen;const cx=CW/2;const r2x=(x)=>cx+x*scale;const r2y=(y)=>CH*svgButtY/600-y*scale;ctx.fillStyle='#0f1322';ctx.fillRect(0,0,CW,CH);const handleTop=18,gripW=1.5,yOff=HOOP_A-5,connectY=yCentre-yOff,connectX=HOOP_B*Math.sqrt(1-(yOff/HOOP_A)**2)
+ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=4
+ctx.beginPath();ctx.ellipse(r2x(0),r2y(yCentre),HOOP_B*scale,HOOP_A*scale,0,0,Math.PI*2);ctx.stroke()
+ctx.fillStyle='rgba(18,25,40,0.6)';ctx.beginPath();ctx.ellipse(r2x(0),r2y(yCentre),(HOOP_B-0.8)*scale,(HOOP_A-0.8)*scale,0,0,Math.PI*2);ctx.fill()
+ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=3.5;ctx.lineCap='round'
+ctx.beginPath();ctx.moveTo(r2x(-gripW),r2y(handleTop));ctx.quadraticCurveTo(r2x(-(gripW+connectX)/2),r2y((handleTop+connectY)/2),r2x(-connectX),r2y(connectY));ctx.stroke()
+ctx.beginPath();ctx.moveTo(r2x(gripW),r2y(handleTop));ctx.quadraticCurveTo(r2x((gripW+connectX)/2),r2y((handleTop+connectY)/2),r2x(connectX),r2y(connectY));ctx.stroke()
+ctx.beginPath();ctx.moveTo(r2x(-gripW),r2y(0));ctx.lineTo(r2x(-gripW),r2y(handleTop));ctx.stroke()
+ctx.beginPath();ctx.moveTo(r2x(gripW),r2y(0));ctx.lineTo(r2x(gripW),r2y(handleTop));ctx.stroke()
+ctx.lineWidth=1.5;ctx.strokeStyle='rgba(255,255,255,0.07)'
+for(let y=2;y<handleTop;y+=2){ctx.beginPath();ctx.moveTo(r2x(-gripW),r2y(y));ctx.lineTo(r2x(gripW),r2y(y));ctx.stroke()}
+ctx.fillStyle='#222738';ctx.beginPath();ctx.arc(r2x(0),r2y(0),gripW*scale,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=1;ctx.stroke()
+for(const w of weights){const px=r2x(w.x),py=r2y(w.y);const g=ctx.createRadialGradient(px,py,0,px,py,22);g.addColorStop(0,'rgba(255,20,147,0.4)');g.addColorStop(1,'rgba(255,20,147,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,22,0,2*Math.PI);ctx.fill()
+ctx.shadowColor='rgba(255,20,147,0.6)';ctx.shadowBlur=10;ctx.fillStyle='#ff1493';ctx.beginPath();ctx.arc(px,py,6,0,2*Math.PI);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='rgba(255,255,255,0.5)';ctx.lineWidth=2;ctx.stroke()
+ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=6;ctx.fillStyle='#ff1493';ctx.font='bold 13px -apple-system,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(w.mass.toFixed(1)+'g',px,py-12);ctx.shadowBlur=0}
+ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=4;ctx.fillStyle='#ff1493';ctx.textAlign='right';ctx.font='bold 11px -apple-system,sans-serif';for(let y=0;y<=Math.ceil(activeLen);y+=10){ctx.fillText(y+'',r2x(-HOOP_B*1.7),r2y(y)+3)};ctx.shadowBlur=0}
+const STORAGE_KEY='custom_tool_data';const HISTORY_KEY='custom_tool_history'
+function getStateSnapshot(){return{base:{mass:+document.getElementById('goal-mass').value,balance:+document.getElementById('goal-balance').value,sw:+document.getElementById('goal-sw').value,tw:+document.getElementById('goal-tw').value,length:+document.getElementById('goal-length').value},strips:appliedStrips.map(s=>({mass:s.mass,y:s.y,sw_added:s.sw_added,tw_added:s.tw_added,name:s.name})),extension:{...racketExtension},goals:getGoals(),maxWeights:+document.getElementById('goal-max-weights').value,constraints:getConstraints(),massLimits:getMassLimits()}}
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(getStateSnapshot()))}catch(e){}}
+function loadState(){try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;const s=JSON.parse(raw)
+if(s.base){document.getElementById('goal-mass').value=s.base.mass;document.getElementById('goal-balance').value=s.base.balance;document.getElementById('goal-sw').value=s.base.sw;document.getElementById('goal-tw').value=s.base.tw;document.getElementById('goal-length').value=s.base.length}
+if(s.maxWeights)document.getElementById('goal-max-weights').value=s.maxWeights;else if(s.goal&&s.goal.maxWeights)document.getElementById('goal-max-weights').value=s.goal.maxWeights
+if(s.goals&&s.goals.length){document.querySelectorAll('#goal-list .goal-row').forEach((r,i)=>{if(i===0&&s.goals[0]){r.querySelector('.goal-param').value=s.goals[0].param;r.querySelector('.goal-target').value=s.goals[0].target}else r.remove()});for(let i=1;i<s.goals.length;i++)addGoalRow(s.goals[i].param,s.goals[i].target)}else if(s.goal){const r=document.querySelector('#goal-list .goal-row');r.querySelector('.goal-param').value=s.goal.param;r.querySelector('.goal-target').value=s.goal.target}
+if(s.constraints&&s.constraints.length){document.querySelectorAll('#constraint-list .constraint-row').forEach(r=>r.remove());s.constraints.forEach(c=>addConstraintRow(c.type,c.yMin,c.yMax))}
+if(s.massLimits){if(s.massLimits.manico!==null)document.getElementById('limit-manico').value=s.massLimits.manico;if(s.massLimits.cuore!==null)document.getElementById('limit-cuore').value=s.massLimits.cuore;if(s.massLimits.ovale!==null)document.getElementById('limit-ovale').value=s.massLimits.ovale}
+if(s.strips&&s.strips.length){appliedStrips=s.strips.map(st=>({...st,id:Date.now()+Math.random(),arcLen:0,indices:new Set()}))}
+if(s.extension){racketExtension={...s.extension}};onBaseChange();updateGoalCurrentValues();saveState()}catch(e){}}
+function addHistory(label){try{const h=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');h.unshift({id:Date.now(),date:new Date().toLocaleString('it-IT'),label,state:getStateSnapshot()});if(h.length>50)h.length=50;localStorage.setItem(HISTORY_KEY,JSON.stringify(h));renderHistory()}catch(e){}}
+function clearHistory(){if(confirm('Cancellare tutta la cronologia?')){try{localStorage.removeItem(HISTORY_KEY)}catch(e){}renderHistory()}}
+function restoreFromHistory(idx){try{const h=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');const entry=h[idx];if(!entry)return;const s=entry.state
+if(s.base){document.getElementById('goal-mass').value=s.base.mass;document.getElementById('goal-balance').value=s.base.balance;document.getElementById('goal-sw').value=s.base.sw;document.getElementById('goal-tw').value=s.base.tw;document.getElementById('goal-length').value=s.base.length}
+if(s.constraints&&s.constraints.length){document.querySelectorAll('#constraint-list .constraint-row').forEach(r=>r.remove());s.constraints.forEach(c=>addConstraintRow(c.type,c.yMin,c.yMax))}
+if(s.massLimits){if(s.massLimits.manico!==null)document.getElementById('limit-manico').value=s.massLimits.manico;if(s.massLimits.cuore!==null)document.getElementById('limit-cuore').value=s.massLimits.cuore;if(s.massLimits.ovale!==null)document.getElementById('limit-ovale').value=s.massLimits.ovale}
+if(s.strips){appliedStrips=s.strips.map(st=>({...st,id:Date.now()+Math.random(),arcLen:0,indices:new Set()}))}else{appliedStrips=[]}
+if(s.extension){racketExtension={...s.extension}}else{racketExtension={cm:0,mass:0,y:0}}
+if(s.maxWeights)document.getElementById('goal-max-weights').value=s.maxWeights;else if(s.goal&&s.goal.maxWeights)document.getElementById('goal-max-weights').value=s.goal.maxWeights
+if(s.goals&&s.goals.length){document.querySelectorAll('#goal-list .goal-row').forEach((r,i)=>{if(i===0&&s.goals[0]){r.querySelector('.goal-param').value=s.goals[0].param;r.querySelector('.goal-target').value=s.goals[0].target}else r.remove()});for(let i=1;i<s.goals.length;i++)addGoalRow(s.goals[i].param,s.goals[i].target)}else if(s.goal){document.querySelector('#goal-list .goal-row .goal-param').value=s.goal.param;document.querySelector('#goal-list .goal-row .goal-target').value=s.goal.target}
+onBaseChange();updateGoalCurrentValues();saveState()}catch(e){}}
+function renderHistory(){const container=document.getElementById('history-list');if(!container)return;try{const h=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]')
+if(h.length===0){container.innerHTML='<div class="help-text" style="text-align:center;padding:15px;color:var(--text-secondary)">Nessuna cronologia. Le analisi vengono salvate automaticamente.</div>';return}
+container.innerHTML=h.map((entry,idx)=>{const b=entry&&entry.state&&entry.state.base;return'<div class="history-item" onclick="restoreFromHistory('+idx+')" style="cursor:pointer;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:8px 12px;margin-bottom:5px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-weight:600;color:#fff;font-size:0.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(entry?entry.label:'?')+'</span><span style="font-size:0.65rem;color:var(--text-secondary);flex-shrink:0">'+(entry?entry.date:'')+'</span></div><div style="font-size:0.7rem;color:var(--text-secondary);margin-top:2px">'+(b?b.mass+'g / '+b.balance+'cm / SW'+b.sw:'')+'</div></div>'}).join('')
+}catch(e){console.error('renderHistory error:',e)}}
+function onBaseChange(){baseRacket=new Racket(+document.getElementById('goal-mass').value||300,+document.getElementById('goal-balance').value||32,+document.getElementById('goal-sw').value||315,+document.getElementById('goal-tw').value||14,+document.getElementById('goal-length').value||68.58);buildHoopGeometry(baseRacket.length);updateComparison();updateGoalCurrentValues();saveState()}
+function switchTab(name){document.querySelectorAll('.tab-pane').forEach(e=>e.style.display='none');document.querySelectorAll('.tab-btn').forEach(e=>{e.classList.toggle('active',e.dataset.tab===name);e.style.borderBottomColor=e.dataset.tab===name?'var(--accent-cyan)':'transparent';e.style.color=e.dataset.tab===name?'var(--accent-cyan)':'var(--text-secondary)'});document.querySelector('.tab-pane[data-tab="'+name+'"]').style.display=''}
+function toggleLimitsZone(labelEl){const container=labelEl.nextElementSibling;if(!container)return;const isHidden=container.style.display==='none';container.style.display=isHidden?'':'none';const statusEl=labelEl.querySelector('.ml-status');if(statusEl){statusEl.textContent=isHidden?'(attivi)':'(inattivi)'}}
+function toggleConstraints(labelEl){const container=labelEl.nextElementSibling;if(container){container.style.display=container.style.display==='none'?'':'none'}}
+const PEND_HISTORY_KEY='custom_tool_pendulum_history'
+function calcPendulum(){const m=+document.getElementById('pend-mass').value||300;const b=+document.getElementById('pend-balance').value||32;const hng=+document.getElementById('pend-hang').value||64.3;const tN=+document.getElementById('pend-time').value||56.8;const n=+document.getElementById('pend-nswings').value||40;const tw=+document.getElementById('pend-tw').value||null;const mKg=m/1000,T=tN/n,d=hng-b,g=981;const iH=(mKg*g*d*T*T)/(4*Math.PI*Math.PI);const sw=iH-mKg*d*d+mKg*(b-10)*(b-10);const r=document.getElementById('pend-results');if(isNaN(sw)||sw<=0||d<=0){r.style.display='none';alert('Parametri non validi.');return}
+const rack=new Racket(m,b,sw,tw||14,68.58);const hl=rack.points_hl;const mgri=rack.mgr_i;const rw=rack.recoilweight;const ico=rack.polarization_index
+document.getElementById('pend-r-sw').textContent=sw.toFixed(1)+' kg\u00b7cm\u00b2';document.getElementById('pend-r-rw').textContent=rw.toFixed(1)+' kg\u00b7cm\u00b2';document.getElementById('pend-r-mgri').textContent=mgri.toFixed(2);document.getElementById('pend-r-ico').textContent=ico.toFixed(4);document.getElementById('pend-r-mass').textContent=m.toFixed(1)+' g';document.getElementById('pend-r-bal').textContent=b.toFixed(2)+' cm';document.getElementById('pend-r-hl').textContent=Math.abs(hl).toFixed(1)+(hl>=0?' HL':' HH');document.getElementById('pend-r-tw').textContent=(tw!==null?tw.toFixed(2):'N/D')+(tw!==null?' kg\u00b7cm\u00b2':'');r.style.display='block'
+savePendState({mass:m,balance:b,hang:hng,nSwings:n,time:tN,twist:tw,sw,rw,mgri,ico,hl})}
+function savePendState(results){try{const h=JSON.parse(localStorage.getItem(PEND_HISTORY_KEY)||'[]');const lb=results.mass.toFixed(1)+'g / '+results.balance.toFixed(1)+'cm / SW'+results.sw.toFixed(1);h.unshift({id:Date.now(),date:new Date().toLocaleString('it-IT'),label:lb,results});if(h.length>50)h.length=50;localStorage.setItem(PEND_HISTORY_KEY,JSON.stringify(h));renderPendHistory()}catch(e){}}
+function renderPendHistory(){const c=document.getElementById('pend-history-list');if(!c)return;try{const h=JSON.parse(localStorage.getItem(PEND_HISTORY_KEY)||'[]');if(h.length===0){c.innerHTML='<div class="help-text" style="text-align:center;padding:10px;color:var(--text-secondary)">Nessuna cronologia.</div>';return}
+c.innerHTML=h.map((e,i)=>'<div class="history-item" onclick="restorePendHistory('+i+')" style="cursor:pointer;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:6px 10px;margin-bottom:4px"><div style="display:flex;justify-content:space-between;align-items:center;gap:6px"><span style="font-weight:600;color:#fff;font-size:0.78rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+e.label+'</span><span style="font-size:0.6rem;color:var(--text-secondary);flex-shrink:0">'+e.date+'</span></div></div>').join('')}catch(e){}}
+function clearPendHistory(){if(confirm('Cancellare tutta la cronologia SW?')){try{localStorage.removeItem(PEND_HISTORY_KEY)}catch(e){}renderPendHistory()}}
+function restorePendHistory(idx){try{const h=JSON.parse(localStorage.getItem(PEND_HISTORY_KEY)||'[]');const e=h[idx];if(!e||!e.results)return;const r=e.results;document.getElementById('pend-mass').value=r.mass;document.getElementById('pend-balance').value=r.balance;document.getElementById('pend-hang').value=r.hang;document.getElementById('pend-nswings').value=r.nSwings;document.getElementById('pend-time').value=r.time;document.getElementById('pend-tw').value=r.twist;calcPendulum()}catch(e){}}
+function initButtons(){const a=document.getElementById('btn-add-goal');if(a&&!a.dataset.inited){a.dataset.inited='1';a.onclick=null;a.addEventListener('click',()=>addGoalRow())}const b=document.getElementById('btn-add-constraint');if(b&&!b.dataset.inited){b.dataset.inited='1';b.onclick=null;b.addEventListener('click',()=>addConstraintRow())}}function boot(){loadState();updateGoalCurrentValues();['goal-mass','goal-balance','goal-sw','goal-tw','goal-length'].forEach(id=>document.getElementById(id).addEventListener('input',()=>onBaseChange()));document.getElementById('goal-list').addEventListener('input',()=>updateGoalCurrentValues());initButtons();renderHistory();renderPendHistory()}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot)}else{boot()}
+</script>
+</div>
+</body>
+</html>
