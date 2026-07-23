@@ -229,7 +229,7 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
       </div>
       <div style="background:rgba(255,255,255,0.03);padding:8px;border-radius:6px">
          <div style="font-size:0.65rem;color:var(--text-secondary);text-transform:uppercase">Tempo Medio</div>
-         <div id="auto-val-avg" style="font-size:1.4rem;font-weight:bold;color:#fff">0.00 s</div>
+         <div id="auto-val-avg" style="font-size:1.4rem;font-weight:bold;color:#fff">0.000 s</div>
       </div>
       <div style="grid-column:1/-1;background:rgba(255,255,255,0.03);padding:8px;border-radius:6px">
          <div style="font-size:0.65rem;color:var(--text-secondary);text-transform:uppercase">Accuratezza Aggiornamento</div>
@@ -653,7 +653,14 @@ async function initSensor() {
 async function initCamera() {
   try {
     const video = document.getElementById('auto-video');
-    autoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 320, height: 240 } });
+    autoStream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: 'user',
+        width: { ideal: 320 },
+        height: { ideal: 240 },
+        frameRate: { ideal: 60, max: 120 }
+      }
+    });
     video.srcObject = autoStream;
     await video.play();
     video.style.display = 'block';
@@ -696,7 +703,7 @@ function startCounting() {
   autoLastFrameTime = performance.now();
 
   document.getElementById('auto-val-swings').textContent = '0';
-  document.getElementById('auto-val-avg').textContent = '0.00 s';
+  document.getElementById('auto-val-avg').textContent = '0.000 s';
 
   if (autoMode === 'camera') {
     autoRafId = requestAnimationFrame(processCameraFrame);
@@ -801,7 +808,7 @@ function registerPass(now) {
     const avgTimeS = (totalTimeMs / 1000) / autoOscillations;
 
     document.getElementById('auto-val-swings').textContent = autoOscillations;
-    document.getElementById('auto-val-avg').textContent = avgTimeS.toFixed(2) + ' s';
+    document.getElementById('auto-val-avg').textContent = avgTimeS.toFixed(3) + ' s';
   }
 }
 
@@ -837,7 +844,7 @@ function stopAutoMeasurement(apply) {
   if (apply && autoOscillations > 0) {
     document.getElementById('pend-nswings').value = autoOscillations;
     const totalTimeS = (autoLastFullOscillationTime - autoStartTime) / 1000;
-    document.getElementById('pend-time').value = totalTimeS.toFixed(1);
+    document.getElementById('pend-time').value = totalTimeS.toFixed(2);
     calcPendulum();
   }
 }
