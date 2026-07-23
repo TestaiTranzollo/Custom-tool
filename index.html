@@ -211,6 +211,25 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
     Posiziona il dispositivo <strong>esattamente al centro</strong>, sotto il punto in cui la racchetta si trova a riposo.
   </div>
 
+  <div style="display:flex;gap:6px;flex-wrap:wrap;background:rgba(255,255,255,0.03);padding:8px;border-radius:6px;margin-bottom:4px">
+    <label style="font-size:0.75rem;color:var(--text-secondary);flex:1;min-width:100px">
+      Arresto:
+      <select id="auto-stop-mode" style="width:100%;margin-top:2px;padding:4px 6px;font-size:0.8rem;border-radius:4px;border:1px solid var(--border-color);background:rgba(255,255,255,0.05);color:#fff">
+        <option value="auto">Automatico (Stabilità)</option>
+        <option value="10">10 Oscillazioni</option>
+        <option value="20">20 Oscillazioni</option>
+        <option value="30">30 Oscillazioni</option>
+        <option value="40">40 Oscillazioni</option>
+        <option value="50">50 Oscillazioni</option>
+        <option value="60">60 Oscillazioni</option>
+      </select>
+    </label>
+    <div style="flex:1;min-width:100px;display:flex;flex-direction:column;justify-content:center;gap:4px">
+      <label style="font-size:0.7rem;color:var(--text-secondary);display:flex;align-items:center;gap:4px"><input type="checkbox" id="auto-lock-lens"> Blocca lente fissa</label>
+      <label style="font-size:0.7rem;color:var(--text-secondary);display:flex;align-items:center;gap:4px"><input type="checkbox" id="auto-lock-expo"> Blocca fuoco/esposizione</label>
+    </div>
+  </div>
+
   <div style="display:flex;gap:8px;flex-wrap:wrap">
     <button class="btn btn-secondary" style="flex:1;min-width:110px;padding:8px 10px;font-size:0.75rem;display:flex;align-items:center;justify-content:center;gap:4px" onclick="startAutoMeasurement('camera-front')">&#x1f4f7; Fotocamera Frontale</button>
     <button class="btn btn-secondary" style="flex:1;min-width:110px;padding:8px 10px;font-size:0.75rem;display:flex;align-items:center;justify-content:center;gap:4px" onclick="startAutoMeasurement('camera-back')">&#x1f4f7; Fotocamera Posteriore</button>
@@ -654,15 +673,40 @@ async function initSensor() {
 async function initCamera(mode) {
   try {
     const video = document.getElementById('auto-video');
-    const facing = mode === 'camera-back' ? 'environment' : 'user';
-    autoStream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: facing,
-        width: { ideal: 320 },
-        height: { ideal: 240 },
-        frameRate: { ideal: 60, max: 120 }
+    const lockLens = document.getElementById('auto-lock-lens').checked;
+
+    let videoConstraints = {
+      width: { ideal: 320 },
+      height: { ideal: 240 },
+      frameRate: { ideal: 60, max: 120 }
+    };
+
+    if (lockLens && mode === 'camera-back') {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const backCameras = devices.filter(d => d.kind === 'videoinput' && d.label.toLowerCase().includes('back'));
+      if (backCameras.length > 0) {
+        videoConstraints.deviceId = { exact: backCameras[0].deviceId };
+      } else {
+        videoConstraints.facingMode = 'environment';
       }
-    });
+    } else {
+      videoConstraints.facingMode = mode === 'camera-back' ? 'environment' : 'user';
+    }
+
+    autoStream = await navigator.mediaDevices.getUserMedia({ video: videoConstraints });
+
+    const lockExpo = document.getElementById('auto-lock-expo').checked;
+    if (lockExpo) {
+      const track = autoStream.getVideoTracks()[0];
+      if (track && track.getCapabilities) {
+        try {
+          await track.applyConstraints({
+            advanced: [{ exposureMode: 'manual', focusMode: 'manual', whiteBalanceMode: 'manual' }]
+          });
+        } catch(e) { console.warn('Advanced constraints non supportate', e); }
+      }
+    }
+
     video.srcObject = autoStream;
     await video.play();
     video.style.display = 'block';
@@ -838,17 +882,27 @@ function registerPass(now) {
     document.getElementById('auto-val-swings').textContent = autoOscillations;
     document.getElementById('auto-val-avg').textContent = avgTimeS.toFixed(3) + ' s';
 
-    // Check for stability (Require 8 readings, threshold 0.005s)
-    autoAvgHistory.push(avgTimeS);
-    if (autoAvgHistory.length > 8) {
-      autoAvgHistory.shift();
-    }
+    const stopMode = document.getElementById('auto-stop-mode').value;
 
-    if (autoOscillations >= 10 && autoAvgHistory.length === 8) {
-      const maxAvg = Math.max(...autoAvgHistory);
-      const minAvg = Math.min(...autoAvgHistory);
-      if (maxAvg - minAvg <= 0.005) {
-        completeAutoMeasurementStable();
+    if (stopMode === 'auto') {
+      // Check for stability (Require 8 readings, threshold 0.005s)
+      autoAvgHistory.push(avgTimeS);
+      if (autoAvgHistory.length > 8) {
+        autoAvgHistory.shift();
+      }
+
+      if (autoOscillations >= 10 && autoAvgHistory.length === 8) {
+        const maxAvg = Math.max(...autoAvgHistory);
+        const minAvg = Math.min(...autoAvgHistory);
+        if (maxAvg - minAvg <= 0.005) {
+          completeAutoMeasurementStable('Misurazione Stabile Terminata!');
+        }
+      }
+    } else {
+      // Manual target mode (e.g. 20, 30, 40)
+      const target = parseInt(stopMode);
+      if (autoOscillations >= target) {
+        completeAutoMeasurementStable('Misurazione Completata (' + target + ' osc.)');
       }
     }
   }
@@ -871,8 +925,8 @@ function playBeep() {
   } catch(e) {}
 }
 
-function completeAutoMeasurementStable() {
-  document.getElementById('auto-countdown').textContent = 'Misurazione Stabile Terminata!';
+function completeAutoMeasurementStable(message) {
+  document.getElementById('auto-countdown').textContent = message || 'Misurazione Stabile Terminata!';
   document.getElementById('auto-countdown').style.color = 'var(--accent-green)';
   document.getElementById('auto-countdown').style.display = 'block';
 
