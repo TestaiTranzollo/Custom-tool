@@ -87,7 +87,7 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <div class="tab-bar" style="display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid var(--border-color)">
 <button class="tab-btn active" data-tab="misura-sw" onclick="switchTab('misura-sw')" style="flex:1;padding:10px 16px;font-size:0.85rem;font-weight:600;background:none;border:none;border-bottom:2px solid var(--accent-cyan);color:var(--accent-cyan);cursor:pointer;transition:all 0.15s">&#x23f1; Misura SW</button>
 <button class="tab-btn" data-tab="calc-customization" onclick="switchTab('calc-customization')" style="flex:1;padding:10px 16px;font-size:0.85rem;font-weight:600;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-secondary);cursor:pointer;transition:all 0.15s">&#x1f9ee; Personalizzazione manuale</button>
-<button class="tab-btn" data-tab="personalizzazione" onclick="switchTab('personalizzazione')" style="flex:1;padding:10px 16px;font-size:0.85rem;font-weight:600;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-secondary);cursor:pointer;transition:all 0.15s">&#x1f527; Personalizzazione</button>
+<button class="tab-btn" data-tab="personalizzazione" onclick="switchTab('personalizzazione')" style="flex:1;padding:10px 16px;font-size:0.85rem;font-weight:600;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-secondary);cursor:pointer;transition:all 0.15s">&#x1f527; Personalizzazione automatica</button>
 </div>
 <div data-tab="personalizzazione" class="tab-pane">
 <div class="panel">
@@ -162,6 +162,17 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <div style="color:var(--accent-red);font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Nessuna soluzione trovata</div>
 <div style="font-size:0.9rem;color:var(--text-secondary)">Prova a modificare il target o a permettere pi&ugrave; punti di applicazione.</div>
 </div></div>
+
+<div style="margin-top:22px;border-top:1px solid var(--border-color);padding-top:18px">
+<h3 style="font-size:1rem;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:8px">&#x2b50; Salva nei Preferiti</h3>
+<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+<input type="text" id="auto-fav-name" placeholder="Nome configurazione base (es. Base Blade 100)" style="flex:1;min-width:200px;padding:9px 12px;border-radius:8px;border:1px solid var(--border-color);background:rgba(255,255,255,0.05);color:#fff">
+<button class="btn" onclick="saveAutoFavorite()" style="width:auto;padding:9px 18px">&#x2b50; Salva Preferito</button>
+</div>
+<h4 style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px">&#x1f4c1; Configurazioni Salvate</h4>
+<div id="auto-fav-list" style="max-height:250px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border-color) transparent"><div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div></div>
+</div>
+
 </div>
 
 <div class="panel" style="margin-top:20px">
@@ -236,7 +247,6 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
   <div style="display:flex;gap:8px;flex-wrap:wrap">
     <button class="btn btn-secondary" style="flex:1;min-width:110px;padding:8px 10px;font-size:0.75rem;display:flex;align-items:center;justify-content:center;gap:4px" onclick="startAutoMeasurement('camera-front')">&#x1f4f7; Fotocamera Frontale</button>
     <button class="btn btn-secondary" style="flex:1;min-width:110px;padding:8px 10px;font-size:0.75rem;display:flex;align-items:center;justify-content:center;gap:4px" onclick="startAutoMeasurement('camera-back')">&#x1f4f7; Fotocamera Posteriore</button>
-    <button class="btn btn-secondary" style="flex:1;min-width:110px;padding:8px 10px;font-size:0.75rem;display:flex;align-items:center;justify-content:center;gap:4px" onclick="startAutoMeasurement('sensor')">&#x1f4e1; Sensore</button>
   </div>
 
   <div id="auto-ui-container" style="display:none;background:rgba(0,0,0,0.3);border-radius:6px;padding:10px;margin-top:5px;border:1px solid rgba(6,182,212,0.3)">
@@ -265,7 +275,6 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
       <video id="auto-video" playsinline muted style="width:100%;height:100%;object-fit:cover;display:none;transform:scaleX(-1)"></video>
       <canvas id="auto-canvas" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
       <div id="auto-target-box" style="display:none;position:absolute;top:50%;left:50%;width:40px;height:40px;transform:translate(-50%,-50%);border:2px solid rgba(239,68,68,0.8);border-radius:4px;box-shadow:0 0 10px rgba(0,0,0,0.5);pointer-events:none"></div>
-      <div id="auto-sensor-indicator" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:var(--accent-cyan);font-size:2rem">&#x1f4e1;</div>
     </div>
   </div>
 </div>
@@ -308,6 +317,15 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <div id="pend-r-tw" style="font-size:0.85rem;font-weight:600;color:var(--text-primary);margin-top:1px">---</div>
 </div>
 </div></div>
+<div style="margin-top:22px;border-top:1px solid var(--border-color);padding-top:18px">
+<h3 style="font-size:1rem;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:8px">&#x2b50; Salva nei Preferiti</h3>
+<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+<input type="text" id="pend-fav-name" placeholder="Nome misurazione (es. Pure Aero 98)" style="flex:1;min-width:200px;padding:9px 12px;border-radius:8px;border:1px solid var(--border-color);background:rgba(255,255,255,0.05);color:#fff">
+<button class="btn" onclick="savePendFavorite()" style="width:auto;padding:9px 18px">&#x2b50; Salva Preferito</button>
+</div>
+<h4 style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px">&#x1f4c1; Misure Preferite Salvate</h4>
+<div id="pend-fav-list" style="max-height:250px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border-color) transparent"><div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div></div>
+</div>
 <div style="margin-top:14px;border-top:1px solid var(--border-color);padding-top:12px">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
 <h3 style="font-size:0.85rem;margin:0;color:var(--text-secondary)">&#x1f4dc; Cronologia Misure SW</h3>
@@ -588,6 +606,19 @@ c.innerHTML=h.map((e,i)=>'<div class="history-item" onclick="restorePendHistory(
 function clearPendHistory(){if(confirm('Cancellare tutta la cronologia SW?')){try{localStorage.removeItem(PEND_HISTORY_KEY)}catch(e){}renderPendHistory()}}
 function restorePendHistory(idx){try{const h=JSON.parse(localStorage.getItem(PEND_HISTORY_KEY)||'[]');const e=h[idx];if(!e||!e.results)return;const r=e.results;document.getElementById('pend-mass').value=r.mass;document.getElementById('pend-balance').value=r.balance;document.getElementById('pend-hang').value=r.hang;document.getElementById('pend-nswings').value=r.nSwings;document.getElementById('pend-time').value=r.time;document.getElementById('pend-tw').value=r.twist;calcPendulum()}catch(e){}}
 const CALC_FAV_KEY='custom_tool_calc_favorites';
+const PEND_FAV_KEY='custom_tool_pend_favorites';
+const AUTO_FAV_KEY='custom_tool_auto_favorites';
+
+function savePendFavorite(){const nameInput=document.getElementById('pend-fav-name');const name=nameInput?nameInput.value.trim():'';if(!name){alert('Inserisci un nome per la misurazione preferita.');return}const data={mass:+document.getElementById('pend-mass').value||0,balance:+document.getElementById('pend-balance').value||0,hang:+document.getElementById('pend-hang').value||0,nswings:+document.getElementById('pend-nswings').value||0,time:+document.getElementById('pend-time').value||0,tw:document.getElementById('pend-tw').value};const favItem={id:Date.now(),name,date:new Date().toLocaleString('it-IT'),data};try{const list=JSON.parse(localStorage.getItem(PEND_FAV_KEY)||'[]');list.unshift(favItem);localStorage.setItem(PEND_FAV_KEY,JSON.stringify(list));nameInput.value='';renderPendFavorites()}catch(e){}}
+function renderPendFavorites(){const container=document.getElementById('pend-fav-list');if(!container)return;try{const list=JSON.parse(localStorage.getItem(PEND_FAV_KEY)||'[]');if(list.length===0){container.innerHTML='<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>';return}container.innerHTML=list.map((item,idx)=>'<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:10px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><div><div style="font-weight:700;color:#fff;font-size:0.9rem">\u2b50 '+item.name+'</div><div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Massa: '+item.data.mass+'g / Bil: '+item.data.balance+'cm / Osc: '+item.data.nswings+' &middot; <span style="opacity:0.6">'+item.date+'</span></div></div><div style="display:flex;gap:6px"><button class="btn btn-secondary" onclick="loadPendFavorite('+idx+')" style="padding:4px 10px;font-size:0.75rem">Carica</button><button class="btn btn-secondary" onclick="deletePendFavorite('+idx+')" style="padding:4px 8px;font-size:0.75rem;color:var(--accent-red)">&times;</button></div></div>').join('')}catch(e){}}
+function loadPendFavorite(idx){try{const list=JSON.parse(localStorage.getItem(PEND_FAV_KEY)||'[]');const item=list[idx];if(!item)return;document.getElementById('pend-mass').value=item.data.mass;document.getElementById('pend-balance').value=item.data.balance;document.getElementById('pend-hang').value=item.data.hang;document.getElementById('pend-nswings').value=item.data.nswings;document.getElementById('pend-time').value=item.data.time;document.getElementById('pend-tw').value=item.data.tw||'';calcPendulum()}catch(e){}}
+function deletePendFavorite(idx){try{const list=JSON.parse(localStorage.getItem(PEND_FAV_KEY)||'[]');list.splice(idx,1);localStorage.setItem(PEND_FAV_KEY,JSON.stringify(list));renderPendFavorites()}catch(e){}}
+
+function saveAutoFavorite(){const nameInput=document.getElementById('auto-fav-name');const name=nameInput?nameInput.value.trim():'';if(!name){alert('Inserisci un nome per la configurazione preferita.');return}const data={base:{mass:+document.getElementById('goal-mass').value||0,balance:+document.getElementById('goal-balance').value||0,sw:+document.getElementById('goal-sw').value||0,tw:+document.getElementById('goal-tw').value||0,length:+document.getElementById('goal-length').value||0},goals:getGoals(),maxW:document.getElementById('goal-max-weights').value,constraints:getConstraints(),limits:getMassLimits()};const favItem={id:Date.now(),name,date:new Date().toLocaleString('it-IT'),data};try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');list.unshift(favItem);localStorage.setItem(AUTO_FAV_KEY,JSON.stringify(list));nameInput.value='';renderAutoFavorites()}catch(e){}}
+function renderAutoFavorites(){const container=document.getElementById('auto-fav-list');if(!container)return;try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');if(list.length===0){container.innerHTML='<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>';return}container.innerHTML=list.map((item,idx)=>'<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:10px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><div><div style="font-weight:700;color:#fff;font-size:0.9rem">\u2b50 '+item.name+'</div><div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Base: '+item.data.base.mass+'g / '+item.data.base.balance+'cm / SW'+item.data.base.sw+' &middot; '+(item.data.goals?item.data.goals.length:0)+' obiettivi &middot; <span style="opacity:0.6">'+item.date+'</span></div></div><div style="display:flex;gap:6px"><button class="btn btn-secondary" onclick="loadAutoFavorite('+idx+')" style="padding:4px 10px;font-size:0.75rem">Carica</button><button class="btn btn-secondary" onclick="deleteAutoFavorite('+idx+')" style="padding:4px 8px;font-size:0.75rem;color:var(--accent-red)">&times;</button></div></div>').join('')}catch(e){}}
+function loadAutoFavorite(idx){try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');const item=list[idx];if(!item)return;document.getElementById('goal-mass').value=item.data.base.mass;document.getElementById('goal-balance').value=item.data.base.balance;document.getElementById('goal-sw').value=item.data.base.sw;document.getElementById('goal-tw').value=item.data.base.tw;document.getElementById('goal-length').value=item.data.base.length;if(item.data.maxW)document.getElementById('goal-max-weights').value=item.data.maxW;document.querySelectorAll('#goal-list .goal-row').forEach(r=>r.remove());if(item.data.goals&&item.data.goals.length){item.data.goals.forEach(g=>addGoalRow(g.param,g.target))}else{addGoalRow()}document.querySelectorAll('#constraint-list .constraint-row').forEach(r=>r.remove());if(item.data.constraints){item.data.constraints.forEach(c=>addConstraintRow(c.type,c.yMin,c.yMax))}if(item.data.limits){document.getElementById('limit-manico').value=item.data.limits.manico!==null?item.data.limits.manico:'';document.getElementById('limit-cuore').value=item.data.limits.cuore!==null?item.data.limits.cuore:'';document.getElementById('limit-ovale').value=item.data.limits.ovale!==null?item.data.limits.ovale:'';}onBaseChange()}catch(e){}}
+function deleteAutoFavorite(idx){try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');list.splice(idx,1);localStorage.setItem(AUTO_FAV_KEY,JSON.stringify(list));renderAutoFavorites()}catch(e){}}
+
 function addCalcMassRow(m=0,y=2,x=0){const tbody=document.getElementById('calc-mass-tbody');if(!tbody)return;const count=tbody.children.length+1;const tr=document.createElement('tr');tr.className='calc-mass-row';tr.innerHTML='<td class="calc-row-idx">'+count+'</td><td><input type="number" class="calc-row-mass" value="'+m+'" step="0.1" oninput="recalcCustomizationTab()" style="padding:4px 6px;font-size:0.85rem"></td><td><input type="number" class="calc-row-y" value="'+y+'" step="0.5" min="0" max="80" oninput="recalcCustomizationTab()" style="padding:4px 6px;font-size:0.85rem"></td><td><input type="number" class="calc-row-x" value="'+x+'" step="0.5" min="-20" max="20" oninput="recalcCustomizationTab()" style="padding:4px 6px;font-size:0.85rem"></td><td class="calc-row-swadd" style="color:var(--accent-cyan);font-weight:600">0.0</td><td class="calc-row-twadd" style="color:var(--accent-cyan);font-weight:600">0.00</td><td><button class="btn btn-secondary" onclick="removeCalcMassRow(this)" style="padding:2px 6px;font-size:0.7rem">&times;</button></td>';tbody.appendChild(tr);updateCalcRowIndices();recalcCustomizationTab()}
 function removeCalcMassRow(btn){btn.closest('tr').remove();updateCalcRowIndices();recalcCustomizationTab()}
 function updateCalcRowIndices(){const rows=document.querySelectorAll('#calc-mass-tbody tr');rows.forEach((r,i)=>{const td=r.querySelector('.calc-row-idx');if(td)td.textContent=i+1})}
@@ -610,7 +641,6 @@ let autoCountdownInterval = null;
 let autoPrevImageData = null;
 let autoPassCooldown = 0;
 let autoLastFrameTime = 0;
-let autoOldProximityHandler = null;
 let autoAvgHistory = [];
 
 function startAutoMeasurement(mode) {
@@ -625,55 +655,19 @@ function startAutoMeasurement(mode) {
   document.getElementById('auto-video').style.display = 'none';
   document.getElementById('auto-canvas').style.display = 'none';
   document.getElementById('auto-target-box').style.display = 'none';
-  document.getElementById('auto-sensor-indicator').style.display = 'none';
 
   let count = 5;
   document.getElementById('auto-countdown').textContent = 'Posiziona il dispositivo... ' + count;
   document.getElementById('auto-countdown').style.color = 'var(--accent-amber)';
 
-  if (mode === 'camera-front' || mode === 'camera-back') {
-    initCamera(mode).then(success => {
-      if (success) {
-        startCountdown(count);
-      } else {
-        alert('Impossibile accedere alla fotocamera. Controlla i permessi.');
-        stopAutoMeasurement(false);
-      }
-    });
-  } else {
-    initSensor().then(success => {
-      if (success) {
-        document.getElementById('auto-sensor-indicator').style.display = 'flex';
-        startCountdown(count);
-      } else {
-        alert('Sensore di prossimità non supportato su questo dispositivo/browser. (Nota: su iOS usa la fotocamera).');
-        stopAutoMeasurement(false);
-      }
-    });
-  }
-}
-
-let autoSensor = null;
-
-async function initSensor() {
-  try {
-    if ('ProximitySensor' in window) {
-      // @ts-ignore
-      autoSensor = new ProximitySensor({ frequency: 60 });
-      await autoSensor.start();
-      return true;
+  initCamera(mode).then(success => {
+    if (success) {
+      startCountdown(count);
+    } else {
+      alert('Impossibile accedere alla fotocamera. Controlla i permessi.');
+      stopAutoMeasurement(false);
     }
-
-    // Fallback old API
-    if ('ondeviceproximity' in window) {
-      return true;
-    }
-
-    return false;
-  } catch (err) {
-    console.error('Sensor error', err);
-    return false;
-  }
+  });
 }
 
 async function initCamera(mode) {
@@ -764,51 +758,7 @@ function startCounting() {
   document.getElementById('auto-val-swings').textContent = '0';
   document.getElementById('auto-val-avg').textContent = '0.000 s';
 
-  if (autoMode === 'camera-front' || autoMode === 'camera-back') {
-    autoRafId = requestAnimationFrame(processCameraFrame);
-  } else if (autoMode === 'sensor') {
-    startSensorListening();
-  }
-}
-
-function handleSensorReading(now) {
-  if (!autoIsCounting) return;
-  const dt = now - autoLastFrameTime;
-  autoLastFrameTime = now;
-  if (dt > 0) {
-    const fps = 1000 / dt;
-    document.getElementById('auto-val-acc').textContent = Math.round(fps) + ' fps';
-  }
-}
-
-function onSensorPass(now) {
-  if (!autoIsCounting) return;
-  if (now > autoPassCooldown) {
-    registerPass(now);
-    autoPassCooldown = now + 400; // Cooldown to avoid double triggers
-  }
-}
-
-function startSensorListening() {
-  if ('ProximitySensor' in window && autoSensor) {
-    autoSensor.onreading = () => {
-      const now = performance.now();
-      handleSensorReading(now);
-      if (autoSensor.distance < 5) { // Threshold in cm
-        onSensorPass(now);
-      }
-    };
-  } else if ('ondeviceproximity' in window) {
-    autoOldProximityHandler = function(event) {
-      const now = performance.now();
-      handleSensorReading(now);
-      // @ts-ignore
-      if (event.value < event.max) {
-        onSensorPass(now);
-      }
-    };
-    window.addEventListener('deviceproximity', autoOldProximityHandler);
-  }
+  autoRafId = requestAnimationFrame(processCameraFrame);
 }
 
 function processCameraFrame(now) {
@@ -946,8 +896,6 @@ function completeAutoMeasurementStable(message) {
   playBeep();
   if (autoRafId) { cancelAnimationFrame(autoRafId); autoRafId = null; }
   if (autoStream) { autoStream.getTracks().forEach(t => t.stop()); autoStream = null; }
-  if (autoSensor) { autoSensor.stop(); autoSensor = null; }
-  if (autoOldProximityHandler) { window.removeEventListener('deviceproximity', autoOldProximityHandler); autoOldProximityHandler = null; }
 }
 
 function stopAutoMeasurement(apply) {
@@ -965,16 +913,6 @@ function stopAutoMeasurement(apply) {
     autoStream.getTracks().forEach(t => t.stop());
     autoStream = null;
   }
-  if (autoSensor) {
-    autoSensor.stop();
-    autoSensor = null;
-  }
-
-  // Remove event listener if using the old API
-  if (autoOldProximityHandler) {
-    window.removeEventListener('deviceproximity', autoOldProximityHandler);
-    autoOldProximityHandler = null;
-  }
 
   // Clean UI
   document.getElementById('auto-ui-container').style.display = 'none';
@@ -987,7 +925,7 @@ function stopAutoMeasurement(apply) {
   }
 }
 
-function initButtons(){const a=document.getElementById('btn-add-goal');if(a&&!a.dataset.inited){a.dataset.inited='1';a.onclick=null;a.addEventListener('click',()=>addGoalRow())}const b=document.getElementById('btn-add-constraint');if(b&&!b.dataset.inited){b.dataset.inited='1';b.onclick=null;b.addEventListener('click',()=>addConstraintRow())}}function boot(){loadState();updateGoalCurrentValues();['goal-mass','goal-balance','goal-sw','goal-tw','goal-length'].forEach(id=>document.getElementById(id).addEventListener('input',()=>onBaseChange()));document.getElementById('goal-list').addEventListener('input',()=>updateGoalCurrentValues());initButtons();renderHistory();renderPendHistory();if(!document.querySelectorAll('#calc-mass-tbody tr').length){addCalcMassRow(0,66,0);addCalcMassRow(0,18,0)}renderCalcFavorites();recalcCustomizationTab();switchTab('misura-sw')}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot)}else{boot()}
+function initButtons(){const a=document.getElementById('btn-add-goal');if(a&&!a.dataset.inited){a.dataset.inited='1';a.onclick=null;a.addEventListener('click',()=>addGoalRow())}const b=document.getElementById('btn-add-constraint');if(b&&!b.dataset.inited){b.dataset.inited='1';b.onclick=null;b.addEventListener('click',()=>addConstraintRow())}}function boot(){loadState();updateGoalCurrentValues();['goal-mass','goal-balance','goal-sw','goal-tw','goal-length'].forEach(id=>document.getElementById(id).addEventListener('input',()=>onBaseChange()));document.getElementById('goal-list').addEventListener('input',()=>updateGoalCurrentValues());initButtons();renderHistory();renderPendHistory();if(!document.querySelectorAll('#calc-mass-tbody tr').length){addCalcMassRow(0,66,0);addCalcMassRow(0,18,0)}renderCalcFavorites();renderPendFavorites();renderAutoFavorites();recalcCustomizationTab();switchTab('misura-sw')}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot)}else{boot()}
 </script>
 </div>
 </body>
