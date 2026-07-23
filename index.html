@@ -215,9 +215,10 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
     </select>
   </div>
 
-  <div style="display:flex;gap:8px">
-    <button class="btn btn-secondary" style="flex:1;padding:8px 10px;font-size:0.8rem;display:flex;align-items:center;justify-content:center;gap:4px" onclick="startAutoMeasurement('camera')">&#x1f4f7; Fotocamera</button>
-    <button class="btn btn-secondary" style="flex:1;padding:8px 10px;font-size:0.8rem;display:flex;align-items:center;justify-content:center;gap:4px" onclick="startAutoMeasurement('sensor')">&#x1f4e1; Sensore</button>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn btn-secondary" style="flex:1;min-width:110px;padding:8px 10px;font-size:0.75rem;display:flex;align-items:center;justify-content:center;gap:4px" onclick="startAutoMeasurement('camera-front')">&#x1f4f7; Fotocamera Frontale</button>
+    <button class="btn btn-secondary" style="flex:1;min-width:110px;padding:8px 10px;font-size:0.75rem;display:flex;align-items:center;justify-content:center;gap:4px" onclick="startAutoMeasurement('camera-back')">&#x1f4f7; Fotocamera Posteriore</button>
+    <button class="btn btn-secondary" style="flex:1;min-width:110px;padding:8px 10px;font-size:0.75rem;display:flex;align-items:center;justify-content:center;gap:4px" onclick="startAutoMeasurement('sensor')">&#x1f4e1; Sensore</button>
   </div>
 
   <div id="auto-ui-container" style="display:none;background:rgba(0,0,0,0.3);border-radius:6px;padding:10px;margin-top:5px;border:1px solid rgba(6,182,212,0.3)">
@@ -229,7 +230,7 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
       </div>
       <div style="background:rgba(255,255,255,0.03);padding:8px;border-radius:6px">
          <div style="font-size:0.65rem;color:var(--text-secondary);text-transform:uppercase">Tempo Medio</div>
-         <div id="auto-val-avg" style="font-size:1.4rem;font-weight:bold;color:#fff">0.00 s</div>
+         <div id="auto-val-avg" style="font-size:1.4rem;font-weight:bold;color:#fff">0.000 s</div>
       </div>
       <div style="grid-column:1/-1;background:rgba(255,255,255,0.03);padding:8px;border-radius:6px">
          <div style="font-size:0.65rem;color:var(--text-secondary);text-transform:uppercase">Accuratezza Aggiornamento</div>
@@ -591,6 +592,7 @@ let autoPrevImageData = null;
 let autoPassCooldown = 0;
 let autoLastFrameTime = 0;
 let autoOldProximityHandler = null;
+let autoAvgHistory = [];
 
 function startAutoMeasurement(mode) {
   stopAutoMeasurement(false);
@@ -604,9 +606,10 @@ function startAutoMeasurement(mode) {
 
   let count = 5;
   document.getElementById('auto-countdown').textContent = 'Posiziona il dispositivo... ' + count;
+  document.getElementById('auto-countdown').style.color = 'var(--accent-amber)';
 
-  if (mode === 'camera') {
-    initCamera().then(success => {
+  if (mode === 'camera-front' || mode === 'camera-back') {
+    initCamera(mode).then(success => {
       if (success) {
         startCountdown(count);
       } else {
@@ -650,10 +653,18 @@ async function initSensor() {
   }
 }
 
-async function initCamera() {
+async function initCamera(mode) {
   try {
     const video = document.getElementById('auto-video');
-    autoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 320, height: 240 } });
+    const facing = mode === 'camera-back' ? 'environment' : 'user';
+    autoStream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: facing,
+        width: { ideal: 320 },
+        height: { ideal: 240 },
+        frameRate: { ideal: 60, max: 120 }
+      }
+    });
     video.srcObject = autoStream;
     await video.play();
     video.style.display = 'block';
@@ -694,11 +705,12 @@ function startCounting() {
   autoPrevImageData = null;
   autoPassCooldown = 0;
   autoLastFrameTime = performance.now();
+  autoAvgHistory = [];
 
   document.getElementById('auto-val-swings').textContent = '0';
-  document.getElementById('auto-val-avg').textContent = '0.00 s';
+  document.getElementById('auto-val-avg').textContent = '0.000 s';
 
-  if (autoMode === 'camera') {
+  if (autoMode === 'camera-front' || autoMode === 'camera-back') {
     autoRafId = requestAnimationFrame(processCameraFrame);
   } else if (autoMode === 'sensor') {
     startSensorListening();
@@ -801,8 +813,35 @@ function registerPass(now) {
     const avgTimeS = (totalTimeMs / 1000) / autoOscillations;
 
     document.getElementById('auto-val-swings').textContent = autoOscillations;
-    document.getElementById('auto-val-avg').textContent = avgTimeS.toFixed(2) + ' s';
+    document.getElementById('auto-val-avg').textContent = avgTimeS.toFixed(3) + ' s';
+
+    // Check for stability
+    autoAvgHistory.push(avgTimeS);
+    if (autoAvgHistory.length > 5) {
+      autoAvgHistory.shift();
+    }
+
+    if (autoOscillations >= 6 && autoAvgHistory.length === 5) {
+      const maxAvg = Math.max(...autoAvgHistory);
+      const minAvg = Math.min(...autoAvgHistory);
+      // Stabile almeno al secondo decimale (diff max 0.01s)
+      if (maxAvg - minAvg <= 0.01) {
+        completeAutoMeasurementStable();
+      }
+    }
   }
+}
+
+function completeAutoMeasurementStable() {
+  document.getElementById('auto-countdown').textContent = 'Misurazione Stabile Terminata!';
+  document.getElementById('auto-countdown').style.color = 'var(--accent-green)';
+  document.getElementById('auto-countdown').style.display = 'block';
+
+  autoIsCounting = false;
+  if (autoRafId) { cancelAnimationFrame(autoRafId); autoRafId = null; }
+  if (autoStream) { autoStream.getTracks().forEach(t => t.stop()); autoStream = null; }
+  if (autoSensor) { autoSensor.stop(); autoSensor = null; }
+  if (autoOldProximityHandler) { window.removeEventListener('deviceproximity', autoOldProximityHandler); autoOldProximityHandler = null; }
 }
 
 function stopAutoMeasurement(apply) {
@@ -837,7 +876,7 @@ function stopAutoMeasurement(apply) {
   if (apply && autoOscillations > 0) {
     document.getElementById('pend-nswings').value = autoOscillations;
     const totalTimeS = (autoLastFullOscillationTime - autoStartTime) / 1000;
-    document.getElementById('pend-time').value = totalTimeS.toFixed(1);
+    document.getElementById('pend-time').value = totalTimeS.toFixed(2);
     calcPendulum();
   }
 }
