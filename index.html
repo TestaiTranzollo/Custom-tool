@@ -207,12 +207,27 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <div style="margin-top:16px;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:12px">
 <h3 style="font-size:0.85rem;margin:0 0 10px 0;color:#fff;display:flex;align-items:center;gap:6px">&#x1f916; Misurazione Automatica</h3>
 <div style="display:flex;flex-direction:column;gap:10px">
-  <div>
-    <label style="display:block;font-size:0.75rem;color:var(--text-secondary);margin-bottom:4px">Posizione del dispositivo</label>
-    <select id="auto-pos" style="width:100%;padding:6px 8px;font-size:0.85rem;border-radius:6px;border:1px solid var(--border-color);background:rgba(255,255,255,0.05);color:#fff">
-      <option value="center">Al centro (2 passaggi = 1 oscillazione)</option>
-      <option value="extreme">All'estremo (1 passaggio = 1 oscillazione)</option>
-    </select>
+  <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:4px">
+    Posiziona il dispositivo <strong>esattamente al centro</strong>, sotto il punto in cui la racchetta si trova a riposo.
+  </div>
+
+  <div style="display:flex;gap:6px;flex-wrap:wrap;background:rgba(255,255,255,0.03);padding:8px;border-radius:6px;margin-bottom:4px">
+    <label style="font-size:0.75rem;color:var(--text-secondary);flex:1;min-width:100px">
+      Arresto:
+      <select id="auto-stop-mode" style="width:100%;margin-top:2px;padding:4px 6px;font-size:0.8rem;border-radius:4px;border:1px solid var(--border-color);background:rgba(255,255,255,0.05);color:#fff">
+        <option value="auto">Automatico (Stabilità)</option>
+        <option value="10">10 Oscillazioni</option>
+        <option value="20">20 Oscillazioni</option>
+        <option value="30">30 Oscillazioni</option>
+        <option value="40">40 Oscillazioni</option>
+        <option value="50">50 Oscillazioni</option>
+        <option value="60">60 Oscillazioni</option>
+      </select>
+    </label>
+    <div style="flex:1;min-width:100px;display:flex;flex-direction:column;justify-content:center;gap:4px">
+      <label style="font-size:0.7rem;color:var(--text-secondary);display:flex;align-items:center;gap:4px"><input type="checkbox" id="auto-lock-lens"> Blocca lente fissa</label>
+      <label style="font-size:0.7rem;color:var(--text-secondary);display:flex;align-items:center;gap:4px"><input type="checkbox" id="auto-lock-expo"> Blocca fuoco/esposizione</label>
+    </div>
   </div>
 
   <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -658,15 +673,40 @@ async function initSensor() {
 async function initCamera(mode) {
   try {
     const video = document.getElementById('auto-video');
-    const facing = mode === 'camera-back' ? 'environment' : 'user';
-    autoStream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: facing,
-        width: { ideal: 320 },
-        height: { ideal: 240 },
-        frameRate: { ideal: 60, max: 120 }
+    const lockLens = document.getElementById('auto-lock-lens').checked;
+
+    let videoConstraints = {
+      width: { ideal: 320 },
+      height: { ideal: 240 },
+      frameRate: { ideal: 60, max: 120 }
+    };
+
+    if (lockLens && mode === 'camera-back') {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const backCameras = devices.filter(d => d.kind === 'videoinput' && d.label.toLowerCase().includes('back'));
+      if (backCameras.length > 0) {
+        videoConstraints.deviceId = { exact: backCameras[0].deviceId };
+      } else {
+        videoConstraints.facingMode = 'environment';
       }
-    });
+    } else {
+      videoConstraints.facingMode = mode === 'camera-back' ? 'environment' : 'user';
+    }
+
+    autoStream = await navigator.mediaDevices.getUserMedia({ video: videoConstraints });
+
+    const lockExpo = document.getElementById('auto-lock-expo').checked;
+    if (lockExpo) {
+      const track = autoStream.getVideoTracks()[0];
+      if (track && track.getCapabilities) {
+        try {
+          await track.applyConstraints({
+            advanced: [{ exposureMode: 'manual', focusMode: 'manual', whiteBalanceMode: 'manual' }]
+          });
+        } catch(e) { console.warn('Advanced constraints non supportate', e); }
+      }
+    }
+
     video.srcObject = autoStream;
     await video.play();
     video.style.display = 'block';
@@ -809,8 +849,7 @@ function processCameraFrame(now) {
 }
 
 function registerPass(now) {
-  const pos = document.getElementById('auto-pos').value;
-  const passesPerOscillation = pos === 'center' ? 2 : 1;
+  const passesPerOscillation = 2; // Fixed to center position
 
   if (autoStartTime === 0) {
     autoStartTime = now;
@@ -843,17 +882,27 @@ function registerPass(now) {
     document.getElementById('auto-val-swings').textContent = autoOscillations;
     document.getElementById('auto-val-avg').textContent = avgTimeS.toFixed(3) + ' s';
 
-    // Check for stability (Require 8 readings, threshold 0.005s)
-    autoAvgHistory.push(avgTimeS);
-    if (autoAvgHistory.length > 8) {
-      autoAvgHistory.shift();
-    }
+    const stopMode = document.getElementById('auto-stop-mode').value;
 
-    if (autoOscillations >= 10 && autoAvgHistory.length === 8) {
-      const maxAvg = Math.max(...autoAvgHistory);
-      const minAvg = Math.min(...autoAvgHistory);
-      if (maxAvg - minAvg <= 0.005) {
-        completeAutoMeasurementStable();
+    if (stopMode === 'auto') {
+      // Check for stability (Require 8 readings, threshold 0.005s)
+      autoAvgHistory.push(avgTimeS);
+      if (autoAvgHistory.length > 8) {
+        autoAvgHistory.shift();
+      }
+
+      if (autoOscillations >= 10 && autoAvgHistory.length === 8) {
+        const maxAvg = Math.max(...autoAvgHistory);
+        const minAvg = Math.min(...autoAvgHistory);
+        if (maxAvg - minAvg <= 0.005) {
+          completeAutoMeasurementStable('Misurazione Stabile Terminata!');
+        }
+      }
+    } else {
+      // Manual target mode (e.g. 20, 30, 40)
+      const target = parseInt(stopMode);
+      if (autoOscillations >= target) {
+        completeAutoMeasurementStable('Misurazione Completata (' + target + ' osc.)');
       }
     }
   }
@@ -876,8 +925,8 @@ function playBeep() {
   } catch(e) {}
 }
 
-function completeAutoMeasurementStable() {
-  document.getElementById('auto-countdown').textContent = 'Misurazione Stabile Terminata!';
+function completeAutoMeasurementStable(message) {
+  document.getElementById('auto-countdown').textContent = message || 'Misurazione Stabile Terminata!';
   document.getElementById('auto-countdown').style.color = 'var(--accent-green)';
   document.getElementById('auto-countdown').style.display = 'block';
 
