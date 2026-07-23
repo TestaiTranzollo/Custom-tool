@@ -251,8 +251,8 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
          <div id="auto-val-avg" style="font-size:1.4rem;font-weight:bold;color:#fff">0.000 s</div>
       </div>
       <div style="grid-column:1/-1;background:rgba(255,255,255,0.03);padding:8px;border-radius:6px">
-         <div style="font-size:0.65rem;color:var(--text-secondary);text-transform:uppercase">Accuratezza Aggiornamento</div>
-         <div id="auto-val-acc" style="font-size:1rem;font-weight:bold;color:var(--accent-cyan)">-- ms</div>
+         <div style="font-size:0.65rem;color:var(--text-secondary);text-transform:uppercase">Framerate</div>
+         <div id="auto-val-acc" style="font-size:1rem;font-weight:bold;color:var(--accent-cyan)">-- fps</div>
       </div>
     </div>
 
@@ -617,6 +617,9 @@ function startAutoMeasurement(mode) {
   stopAutoMeasurement(false);
   autoMode = mode;
   document.getElementById('auto-ui-container').style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('auto-ui-container').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 100);
   document.getElementById('auto-countdown').style.display = 'block';
   document.getElementById('auto-stats').style.display = 'none';
   document.getElementById('auto-video').style.display = 'none';
@@ -772,7 +775,10 @@ function handleSensorReading(now) {
   if (!autoIsCounting) return;
   const dt = now - autoLastFrameTime;
   autoLastFrameTime = now;
-  document.getElementById('auto-val-acc').textContent = Math.round(dt) + ' ms';
+  if (dt > 0) {
+    const fps = 1000 / dt;
+    document.getElementById('auto-val-acc').textContent = Math.round(fps) + ' fps';
+  }
 }
 
 function onSensorPass(now) {
@@ -810,7 +816,10 @@ function processCameraFrame(now) {
 
   const dt = now - autoLastFrameTime;
   autoLastFrameTime = now;
-  document.getElementById('auto-val-acc').textContent = Math.round(dt) + ' ms';
+  if (dt > 0) {
+    const fps = 1000 / dt;
+    document.getElementById('auto-val-acc').textContent = Math.round(fps) + ' fps';
+  }
 
   const video = document.getElementById('auto-video');
   const canvas = document.getElementById('auto-canvas');
