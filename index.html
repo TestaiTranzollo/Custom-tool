@@ -207,12 +207,8 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <div style="margin-top:16px;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:12px">
 <h3 style="font-size:0.85rem;margin:0 0 10px 0;color:#fff;display:flex;align-items:center;gap:6px">&#x1f916; Misurazione Automatica</h3>
 <div style="display:flex;flex-direction:column;gap:10px">
-  <div>
-    <label style="display:block;font-size:0.75rem;color:var(--text-secondary);margin-bottom:4px">Posizione del dispositivo</label>
-    <select id="auto-pos" style="width:100%;padding:6px 8px;font-size:0.85rem;border-radius:6px;border:1px solid var(--border-color);background:rgba(255,255,255,0.05);color:#fff">
-      <option value="center">Al centro (2 passaggi = 1 oscillazione)</option>
-      <option value="extreme">All'estremo (1 passaggio = 1 oscillazione)</option>
-    </select>
+  <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:4px">
+    Posiziona il dispositivo <strong>esattamente al centro</strong>, sotto il punto in cui la racchetta si trova a riposo.
   </div>
 
   <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -809,8 +805,7 @@ function processCameraFrame(now) {
 }
 
 function registerPass(now) {
-  const pos = document.getElementById('auto-pos').value;
-  const passesPerOscillation = pos === 'center' ? 2 : 1;
+  const passesPerOscillation = 2; // Fixed to center position
 
   if (autoStartTime === 0) {
     autoStartTime = now;
