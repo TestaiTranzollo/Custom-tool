@@ -211,23 +211,26 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
     Posiziona il dispositivo <strong>esattamente al centro</strong>, sotto il punto in cui la racchetta si trova a riposo.
   </div>
 
-  <div style="display:flex;gap:6px;flex-wrap:wrap;background:rgba(255,255,255,0.03);padding:8px;border-radius:6px;margin-bottom:4px">
-    <label style="font-size:0.75rem;color:var(--text-secondary);flex:1;min-width:100px">
-      Arresto:
-      <select id="auto-stop-mode" style="width:100%;margin-top:2px;padding:4px 6px;font-size:0.8rem;border-radius:4px;border:1px solid var(--border-color);background:rgba(255,255,255,0.05);color:#fff">
-        <option value="auto">Automatico (Stabilità)</option>
-        <option value="10">10 Oscillazioni</option>
-        <option value="20">20 Oscillazioni</option>
-        <option value="30">30 Oscillazioni</option>
-        <option value="40">40 Oscillazioni</option>
-        <option value="50">50 Oscillazioni</option>
-        <option value="60">60 Oscillazioni</option>
+  <div style="display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,0.03);padding:8px;border-radius:6px;margin-bottom:4px">
+    <label style="font-size:0.75rem;color:var(--text-secondary)">
+      Arresto misurazione:
+      <select id="auto-stop-mode" style="width:100%;margin-top:4px;padding:6px;font-size:0.85rem;border-radius:4px;border:1px solid var(--border-color);background:rgba(255,255,255,0.05);color:#fff">
+        <option value="auto">Automatico (Alta Stabilità)</option>
+        <option value="10">Manuale (10 Oscillazioni)</option>
+        <option value="20">Manuale (20 Oscillazioni)</option>
+        <option value="30">Manuale (30 Oscillazioni)</option>
+        <option value="40">Manuale (40 Oscillazioni)</option>
+        <option value="50">Manuale (50 Oscillazioni)</option>
+        <option value="60">Manuale (60 Oscillazioni)</option>
       </select>
     </label>
-    <div style="flex:1;min-width:100px;display:flex;flex-direction:column;justify-content:center;gap:4px">
-      <label style="font-size:0.7rem;color:var(--text-secondary);display:flex;align-items:center;gap:4px"><input type="checkbox" id="auto-lock-lens"> Blocca lente fissa</label>
-      <label style="font-size:0.7rem;color:var(--text-secondary);display:flex;align-items:center;gap:4px"><input type="checkbox" id="auto-lock-expo"> Blocca fuoco/esposizione</label>
-    </div>
+    <details style="margin-top:4px">
+      <summary style="font-size:0.7rem;color:var(--text-secondary);cursor:pointer;user-select:none">&#x2699; Sperimentale (Fotocamera)</summary>
+      <div style="margin-top:6px;display:flex;flex-direction:column;gap:4px;padding-left:14px;border-left:1px solid var(--border-color)">
+        <label style="font-size:0.7rem;color:var(--text-secondary);display:flex;align-items:center;gap:4px"><input type="checkbox" id="auto-lock-lens"> Blocca lente fissa (no auto-switch)</label>
+        <label style="font-size:0.7rem;color:var(--text-secondary);display:flex;align-items:center;gap:4px"><input type="checkbox" id="auto-lock-expo"> Blocca fuoco/esposizione</label>
+      </div>
+    </details>
   </div>
 
   <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -894,7 +897,7 @@ function registerPass(now) {
       if (autoOscillations >= 10 && autoAvgHistory.length === 8) {
         const maxAvg = Math.max(...autoAvgHistory);
         const minAvg = Math.min(...autoAvgHistory);
-        if (maxAvg - minAvg <= 0.005) {
+        if (maxAvg - minAvg <= 0.002) {
           completeAutoMeasurementStable('Misurazione Stabile Terminata!');
         }
       }
