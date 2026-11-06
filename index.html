@@ -744,9 +744,12 @@ function closeJokeBanner(e){
 function initJokeBannerScrollObserver(){
   const banner = document.getElementById('joke-popup');
   if(!banner || !('IntersectionObserver' in window)) return;
+  let hasBeenVisible = false;
   const observer = new IntersectionObserver((entries) => {
     for(const entry of entries){
-      if(!entry.isIntersecting && entry.boundingClientRect.bottom <= 0){
+      if(entry.isIntersecting){
+        hasBeenVisible = true;
+      } else if(hasBeenVisible && entry.boundingClientRect.bottom <= 0){
         requestAnimationFrame(() => {
           if(banner) banner.style.display = 'none';
         });
