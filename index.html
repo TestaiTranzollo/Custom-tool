@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 <title>Custom Tool &mdash; Personalizzazione Racchetta</title>
 <style>
 :root{--bg-primary:#0b0f19;--bg-secondary:rgba(17,24,39,0.7);--border-color:rgba(255,255,255,0.08);--text-primary:#f3f4f6;--text-secondary:#9ca3af;--accent-cyan:#06b6d4;--accent-cyan-glow:rgba(6,182,212,0.3);--accent-amber:#f59e0b;--accent-amber-glow:rgba(245,158,11,0.3);--accent-red:#ef4444;--accent-green:#10b981;--card-shadow:0 8px 32px 0 rgba(0,0,0,0.37);--transition-speed:0.2s}
@@ -244,35 +244,39 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 .comparison-table tr:hover td{background:rgba(255,255,255,0.02)}
 
 /* Floating Live Comparison HUD for Manual Customization */
-.calc-hud{position:fixed;bottom:0;left:0;right:0;z-index:990;background:rgba(11,16,28,0.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(6,182,212,0.35);box-shadow:0 -4px 24px rgba(0,0,0,0.6);transition:all 0.2s ease;user-select:none}
-.calc-hud.calc-hud-top{bottom:auto;top:0;border-top:none;border-bottom:1px solid rgba(6,182,212,0.35);box-shadow:0 4px 24px rgba(0,0,0,0.6)}
-.calc-hud-inner{max-width:1080px;margin:0 auto;padding:6px 14px 7px 14px;display:flex;flex-direction:column;gap:5px}
-.calc-hud-header{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.calc-hud-title{display:flex;align-items:center;gap:6px;color:var(--text-secondary);font-size:0.75rem;font-weight:600}
-.hud-dot{width:7px;height:7px;border-radius:50%;background:var(--accent-cyan);box-shadow:0 0 8px var(--accent-cyan);display:inline-block}
-.hud-main-title{color:#fff;font-weight:700;font-size:0.76rem;letter-spacing:0.02em}
-.hud-badge{background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.3);color:var(--accent-cyan);border-radius:4px;padding:1px 6px;font-size:0.68rem;font-weight:700}
-.calc-hud-actions{display:flex;align-items:center;gap:4px}
-.hud-btn-icon{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:4px;color:var(--text-secondary);padding:2px 7px;font-size:0.75rem;cursor:pointer;transition:all 0.15s;line-height:1.2}
+.calc-hud{position:fixed;bottom:0;left:0;right:0;z-index:990;background:rgba(11,16,28,0.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(6,182,212,0.35);box-shadow:0 -3px 20px rgba(0,0,0,0.6);transition:all 0.2s ease;user-select:none}
+.calc-hud.calc-hud-bottom .calc-hud-inner{padding:4px 10px calc(5px + env(safe-area-inset-bottom, 0px)) 10px}
+.calc-hud.calc-hud-top{bottom:auto;top:0;border-top:none;border-bottom:1px solid rgba(6,182,212,0.35);box-shadow:0 3px 20px rgba(0,0,0,0.6)}
+.calc-hud.calc-hud-top .calc-hud-inner{padding:calc(5px + env(safe-area-inset-top, 0px)) 10px 4px 10px}
+.calc-hud-inner{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:3px}
+.calc-hud-header{display:flex;justify-content:space-between;align-items:center;gap:6px;line-height:1.2}
+.calc-hud-title{display:flex;align-items:center;gap:5px;color:var(--text-secondary);font-size:0.68rem;font-weight:600;min-width:0;overflow:hidden}
+.hud-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-cyan);box-shadow:0 0 6px var(--accent-cyan);display:inline-block;flex-shrink:0}
+.hud-main-title{color:#fff;font-weight:700;font-size:0.72rem;letter-spacing:0.02em;white-space:nowrap}
+.hud-badge{background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.3);color:var(--accent-cyan);border-radius:3px;padding:1px 5px;font-size:0.64rem;font-weight:700;white-space:nowrap}
+.calc-hud-actions{display:flex;align-items:center;gap:3px;flex-shrink:0}
+.hud-btn-icon{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:3px;color:var(--text-secondary);padding:1px 6px;font-size:0.70rem;cursor:pointer;transition:all 0.15s;line-height:1.2}
 .hud-btn-icon:hover{background:rgba(255,255,255,0.14);color:#fff;border-color:var(--accent-cyan)}
-.calc-hud-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.calc-hud-body{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
 .calc-hud.collapsed .calc-hud-body{display:none}
-.calc-hud.collapsed .calc-hud-inner{padding:6px 14px}
-.hud-metric{background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:4px 8px;display:flex;flex-direction:column;gap:1px;min-width:0}
-.hud-metric.highlight-cyan{border-color:rgba(6,182,212,0.3);background:rgba(6,182,212,0.06)}
-.hud-lbl{font-size:0.62rem;color:var(--text-secondary);text-transform:uppercase;font-weight:700;letter-spacing:0.04em;line-height:1}
-.hud-val-wrap{display:flex;align-items:baseline;gap:3px;font-size:0.8rem;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hud-old{color:var(--text-secondary);font-size:0.72rem;opacity:0.75}
-.hud-arrow{color:var(--accent-cyan);font-size:0.68rem;opacity:0.8}
-.hud-new{color:#fff;font-weight:700;font-size:0.8rem}
+.calc-hud.collapsed.calc-hud-bottom .calc-hud-inner{padding:3px 10px calc(4px + env(safe-area-inset-bottom, 0px)) 10px}
+.calc-hud.collapsed.calc-hud-top .calc-hud-inner{padding:calc(4px + env(safe-area-inset-top, 0px)) 10px 3px 10px}
+.hud-metric{background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.08);border-radius:4px;padding:2px 5px;display:flex;flex-direction:column;gap:0px;min-width:0}
+.hud-metric.highlight-cyan{border-color:rgba(6,182,212,0.35);background:rgba(6,182,212,0.08)}
+.hud-lbl{font-size:0.56rem;color:var(--text-secondary);text-transform:uppercase;font-weight:700;letter-spacing:0.03em;line-height:1;margin-bottom:1px}
+.hud-val-wrap{display:flex;align-items:baseline;gap:2px;font-size:0.74rem;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.15}
+.hud-old{color:var(--text-secondary);font-size:0.66rem;opacity:0.75}
+.hud-arrow{color:var(--accent-cyan);font-size:0.60rem;opacity:0.8}
+.hud-new{color:#fff;font-weight:700;font-size:0.74rem}
 .hud-new.cyan{color:var(--accent-cyan)}
-.hud-unit{font-size:0.68rem;color:var(--text-secondary)}
-.hud-delta{font-size:0.72rem;font-weight:700;margin-left:1px}
+.hud-unit{font-size:0.62rem;color:var(--text-secondary)}
+.hud-delta{font-size:0.66rem;font-weight:700;margin-left:1px}
 @media(max-width:768px){
-  .calc-hud-body{grid-template-columns:repeat(3,1fr)}
+  .calc-hud-body{grid-template-columns:repeat(3,1fr);gap:3px}
 }
-@media(max-width:480px){
-  .calc-hud-body{grid-template-columns:repeat(2,1fr)}
+@media(max-width:360px){
+  .calc-hud-body{grid-template-columns:repeat(2,1fr);gap:2px}
+  .hud-val-wrap{font-size:0.70rem}
 }
 @media(max-width:600px){
   .submode-bar{grid-template-columns:1fr}
@@ -727,7 +731,7 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 </div></div>
 
 <div data-tab="calc-customization" class="tab-pane" style="display:none">
-<div class="panel" style="margin-top:0;padding-bottom:85px">
+<div class="panel" style="margin-top:0;padding-bottom:calc(95px + env(safe-area-inset-bottom, 0px))">
 
 <div class="calc-base-panel">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
@@ -821,7 +825,7 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
     <div class="calc-hud-header">
       <div class="calc-hud-title">
         <span class="hud-dot"></span>
-        <span class="hud-main-title">Live &Delta; Modifiche Manuali</span>
+        <span class="hud-main-title">Live &Delta; Modifiche</span>
         <span class="hud-badge" id="hud-added-badge">+0.0 g (0 masse)</span>
       </div>
       <div class="calc-hud-actions">
