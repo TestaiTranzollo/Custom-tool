@@ -95,16 +95,17 @@ input[type="number"]:focus,select:focus{border-color:var(--accent-cyan);backgrou
 .calc-mass-row:nth-child(3n) .calc-badge-num{background:rgba(168,85,247,0.2);border-color:#a855f7}
 .calc-row-hint{font-size:0.82rem;color:#e2e8f0;font-weight:600;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);padding:4px 10px;border-radius:6px}
 
-/* Card Body Grid */
-.calc-card-body{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:12px 14px;align-items:end}
+/* Card Body Flex Container */
+.calc-card-body{display:flex;gap:16px;align-items:stretch}
+.calc-card-inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;flex:1;min-width:0}
 .calc-field-group{display:flex;flex-direction:column;gap:6px}
-.calc-field-group label{font-size:0.8rem;font-weight:600;color:#cbd5e1;text-transform:uppercase;letter-spacing:0.03em}
-.calc-field-group input[type="number"]{width:100%;padding:10px 12px;font-size:1.05rem;font-weight:600;border-radius:8px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.15);color:#fff;transition:all var(--transition-speed)}
+.calc-field-group label{font-size:0.78rem;font-weight:600;color:#cbd5e1;text-transform:uppercase;letter-spacing:0.03em;line-height:1.2}
+.calc-field-group input[type="number"]{width:100%;padding:10px 12px;font-size:1.02rem;font-weight:600;border-radius:8px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.15);color:#fff;transition:all var(--transition-speed)}
 .calc-field-group input[type="number"]:focus{border-color:var(--accent-cyan);background:rgba(0,0,0,0.65);box-shadow:0 0 0 3px rgba(6,182,212,0.3)}
 
 /* Card Impact Readout Box */
-.calc-card-impact{display:flex;gap:14px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.25);border-radius:10px;padding:8px 16px;align-items:center;min-height:48px}
-.calc-impact-item{display:flex;align-items:baseline;gap:6px}
+.calc-card-impact{display:flex;flex-direction:column;justify-content:center;gap:8px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.25);border-radius:10px;padding:12px 16px;min-width:170px}
+.calc-impact-item{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
 .calc-impact-lbl{font-size:0.78rem;font-weight:700;color:#94a3b8}
 .calc-row-swadd,.calc-row-twadd{font-size:1.15rem;font-weight:800;color:var(--accent-cyan);font-variant-numeric:tabular-nums}
 .calc-impact-unit{font-size:0.7rem;color:#64748b}
@@ -116,13 +117,16 @@ input[type="number"]:focus,select:focus{border-color:var(--accent-cyan);backgrou
 .btn-add-mass{background:linear-gradient(135deg,rgba(6,182,212,0.15) 0%,rgba(8,145,178,0.25) 100%);border:1px dashed var(--accent-cyan);color:#fff;padding:14px 20px;font-size:0.95rem;font-weight:700;border-radius:12px;width:100%;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all var(--transition-speed);margin-top:12px}
 .btn-add-mass:hover{background:linear-gradient(135deg,rgba(6,182,212,0.3) 0%,rgba(8,145,178,0.4) 100%);border-style:solid;box-shadow:0 0 16px rgba(6,182,212,0.3);transform:translateY(-1px)}
 
-@media(max-width:900px){
-.calc-card-body{grid-template-columns:1fr 1fr}
-.calc-card-impact{grid-column:1 / -1;justify-content:space-around}
+@media(max-width:850px){
+.calc-card-body{flex-direction:column;gap:12px}
+.calc-card-impact{flex-direction:row;justify-content:space-around;padding:8px 14px;min-width:auto}
+.calc-impact-item{justify-content:flex-start}
 }
 @media(max-width:500px){
-.calc-mass-row{padding:14px}
-.calc-card-body{grid-template-columns:1fr;gap:10px}
+.calc-mass-row{padding:12px 14px}
+.calc-card-inputs{gap:10px 10px}
+.calc-field-group input[type="number"]{padding:8px 10px;font-size:0.95rem}
+.calc-field-group label{font-size:0.74rem}
 }
 
 @media(max-width:700px){
@@ -2275,30 +2279,32 @@ function addCalcMassRow(m=0,l=0,y=2,x=0){
       '<button type="button" class="calc-del-btn" onclick="removeCalcMassRow(this)" title="Rimuovi questa massa" aria-label="Rimuovi">&#x2715; Rimuovi</button>' +
     '</div>' +
     '<div class="calc-card-body">' +
-      '<div class="calc-field-group">' +
-        '<label>Massa (g)</label>' +
-        '<input type="number" class="calc-row-mass" value="' + m + '" step="0.1" min="0" oninput="recalcCustomizationTab()">' +
-      '</div>' +
-      '<div class="calc-field-group">' +
-        '<label>Lungh. Striscia (cm)</label>' +
-        '<input type="number" class="calc-row-len" value="' + l + '" step="0.5" min="0" placeholder="0 = puntiforme" oninput="recalcCustomizationTab()">' +
-      '</div>' +
-      '<div class="calc-field-group">' +
-        '<label>CM dal tappo</label>' +
-        '<input type="number" class="calc-row-y" value="' + y + '" step="0.5" min="0" max="80" oninput="recalcCustomizationTab()">' +
-      '</div>' +
-      '<div class="calc-field-group">' +
-        '<label>Posizione X (cm)</label>' +
-        '<input type="number" class="calc-row-x" value="' + x + '" step="0.5" min="-20" max="20" placeholder="0 = centro" oninput="recalcCustomizationTab()">' +
+      '<div class="calc-card-inputs">' +
+        '<div class="calc-field-group">' +
+          '<label>Massa (g)</label>' +
+          '<input type="number" class="calc-row-mass" value="' + m + '" step="0.1" min="0" oninput="recalcCustomizationTab()">' +
+        '</div>' +
+        '<div class="calc-field-group">' +
+          '<label>Lunghezza Striscia (cm)</label>' +
+          '<input type="number" class="calc-row-len" value="' + l + '" step="0.5" min="0" placeholder="0 = puntiforme" oninput="recalcCustomizationTab()">' +
+        '</div>' +
+        '<div class="calc-field-group">' +
+          '<label>CM dal tappo</label>' +
+          '<input type="number" class="calc-row-y" value="' + y + '" step="0.5" min="0" max="80" oninput="recalcCustomizationTab()">' +
+        '</div>' +
+        '<div class="calc-field-group">' +
+          '<label title="Scostamento dall\'asse longitudinale principale (0 = centro)">Scostamento da Asse Princ. (cm)</label>' +
+          '<input type="number" class="calc-row-x" value="' + x + '" step="0.5" min="-20" max="20" placeholder="0 = centro" oninput="recalcCustomizationTab()">' +
+        '</div>' +
       '</div>' +
       '<div class="calc-card-impact">' +
         '<div class="calc-impact-item">' +
-          '<span class="calc-impact-lbl">SW:</span>' +
+          '<span class="calc-impact-lbl">SW agg.:</span>' +
           '<span class="calc-row-swadd">+0.00</span>' +
           '<span class="calc-impact-unit">kg&middot;cm&sup2;</span>' +
         '</div>' +
         '<div class="calc-impact-item">' +
-          '<span class="calc-impact-lbl">TW:</span>' +
+          '<span class="calc-impact-lbl">TW agg.:</span>' +
           '<span class="calc-row-twadd">+0.00</span>' +
           '<span class="calc-impact-unit">kg&middot;cm&sup2;</span>' +
         '</div>' +
