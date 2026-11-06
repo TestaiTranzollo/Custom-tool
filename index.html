@@ -815,19 +815,24 @@ function getMassPositionHint(y, x){
   if (yVal <= 3.5) return '📍 Tappo (Base manico)';
   if (yVal <= 18) return '📍 Manico';
   if (yVal <= 33) return '📍 Cuore / Gola';
-  if (ax >= 8) {
+
+  if (ax >= 6) {
+    if (yVal >= 58) return xVal > 0 ? '📍 Ore 2' : '📍 Ore 10';
+    if (yVal >= 46) return xVal > 0 ? '📍 Ore 3' : '📍 Ore 9';
+    return xVal > 0 ? '📍 Ore 4' : '📍 Ore 8';
+  }
+
+  if (ax >= 2) {
     const side = xVal > 0 ? 'DX' : 'SX';
-    if (yVal >= 58) return '📍 Ore 2 / 10 (' + side + ')';
-    if (yVal >= 46) return '📍 Ore 3 / 9 (' + side + ')';
-    return '📍 Ore 4 / 8 (' + side + ')';
+    if (yVal >= 60) return xVal > 0 ? '📍 Ore 1' : '📍 Ore 11';
+    if (yVal >= 46) return '📍 Piatto corde ' + side;
+    return '📍 Ponte / Cuore ' + side;
   }
-  if (ax < 4) {
-    if (yVal >= 64) return '📍 Ore 12 (Testa)';
-    if (yVal >= 55) return '📍 Ore 11 / 1 (Alto)';
-    if (yVal >= 42) return '📍 Centro piatto corde';
-    return '📍 Ponte / Cuore alto';
-  }
-  return '📍 Ovale (Y: ' + yVal.toFixed(1) + ' cm)';
+
+  if (yVal >= 64) return '📍 Ore 12 (Testa)';
+  if (yVal >= 55) return '📍 Ore 12 basso';
+  if (yVal >= 40) return '📍 Centro piatto corde';
+  return '📍 Ponte / Cuore alto';
 }
 
 function addCalcMassRow(m=0,l=0,y=2,x=0){
