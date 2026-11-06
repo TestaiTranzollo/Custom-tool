@@ -242,6 +242,38 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 .comparison-table th{background:rgba(255,255,255,0.05);padding:10px 12px;font-size:0.75rem;text-transform:uppercase;color:var(--text-secondary);font-weight:700;text-align:left;border-bottom:1px solid var(--border-color)}
 .comparison-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--text-primary);font-variant-numeric:tabular-nums}
 .comparison-table tr:hover td{background:rgba(255,255,255,0.02)}
+
+/* Floating Live Comparison HUD for Manual Customization */
+.calc-hud{position:fixed;bottom:0;left:0;right:0;z-index:990;background:rgba(11,16,28,0.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(6,182,212,0.35);box-shadow:0 -4px 24px rgba(0,0,0,0.6);transition:all 0.2s ease;user-select:none}
+.calc-hud.calc-hud-top{bottom:auto;top:0;border-top:none;border-bottom:1px solid rgba(6,182,212,0.35);box-shadow:0 4px 24px rgba(0,0,0,0.6)}
+.calc-hud-inner{max-width:1080px;margin:0 auto;padding:6px 14px 7px 14px;display:flex;flex-direction:column;gap:5px}
+.calc-hud-header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.calc-hud-title{display:flex;align-items:center;gap:6px;color:var(--text-secondary);font-size:0.75rem;font-weight:600}
+.hud-dot{width:7px;height:7px;border-radius:50%;background:var(--accent-cyan);box-shadow:0 0 8px var(--accent-cyan);display:inline-block}
+.hud-main-title{color:#fff;font-weight:700;font-size:0.76rem;letter-spacing:0.02em}
+.hud-badge{background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.3);color:var(--accent-cyan);border-radius:4px;padding:1px 6px;font-size:0.68rem;font-weight:700}
+.calc-hud-actions{display:flex;align-items:center;gap:4px}
+.hud-btn-icon{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:4px;color:var(--text-secondary);padding:2px 7px;font-size:0.75rem;cursor:pointer;transition:all 0.15s;line-height:1.2}
+.hud-btn-icon:hover{background:rgba(255,255,255,0.14);color:#fff;border-color:var(--accent-cyan)}
+.calc-hud-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.calc-hud.collapsed .calc-hud-body{display:none}
+.calc-hud.collapsed .calc-hud-inner{padding:6px 14px}
+.hud-metric{background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:4px 8px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.hud-metric.highlight-cyan{border-color:rgba(6,182,212,0.3);background:rgba(6,182,212,0.06)}
+.hud-lbl{font-size:0.62rem;color:var(--text-secondary);text-transform:uppercase;font-weight:700;letter-spacing:0.04em;line-height:1}
+.hud-val-wrap{display:flex;align-items:baseline;gap:3px;font-size:0.8rem;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hud-old{color:var(--text-secondary);font-size:0.72rem;opacity:0.75}
+.hud-arrow{color:var(--accent-cyan);font-size:0.68rem;opacity:0.8}
+.hud-new{color:#fff;font-weight:700;font-size:0.8rem}
+.hud-new.cyan{color:var(--accent-cyan)}
+.hud-unit{font-size:0.68rem;color:var(--text-secondary)}
+.hud-delta{font-size:0.72rem;font-weight:700;margin-left:1px}
+@media(max-width:768px){
+  .calc-hud-body{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:480px){
+  .calc-hud-body{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:600px){
   .submode-bar{grid-template-columns:1fr}
   .match-racket-name{width:100%}
@@ -695,7 +727,7 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 </div></div>
 
 <div data-tab="calc-customization" class="tab-pane" style="display:none">
-<div class="panel" style="margin-top:0">
+<div class="panel" style="margin-top:0;padding-bottom:85px">
 
 <div class="calc-base-panel">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
@@ -781,6 +813,93 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 </div>
 <h4 style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px">&#x1f4c1; Setup Preferiti Salvati</h4>
 <div id="calc-fav-list" style="max-height:250px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border-color) transparent"><div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div></div>
+</div>
+
+<!-- Floating Live Comparison HUD for Manual Customization -->
+<div id="calc-floating-hud" class="calc-hud calc-hud-bottom">
+  <div class="calc-hud-inner">
+    <div class="calc-hud-header">
+      <div class="calc-hud-title">
+        <span class="hud-dot"></span>
+        <span class="hud-main-title">Live &Delta; Modifiche Manuali</span>
+        <span class="hud-badge" id="hud-added-badge">+0.0 g (0 masse)</span>
+      </div>
+      <div class="calc-hud-actions">
+        <button type="button" class="hud-btn-icon" id="hud-pos-btn" onclick="toggleHudPosition()" title="Sposta in alto / in basso" aria-label="Sposta">&#x21c5;</button>
+        <button type="button" class="hud-btn-icon" id="hud-toggle-btn" onclick="toggleHudCollapse()" title="Riduci metriche" aria-label="Riduci">&#x25bc;</button>
+      </div>
+    </div>
+    
+    <div class="calc-hud-body" id="hud-body">
+      <!-- Massa -->
+      <div class="hud-metric">
+        <div class="hud-lbl">Massa</div>
+        <div class="hud-val-wrap">
+          <span class="hud-old" id="hud-mass-o">352.8</span>
+          <span class="hud-arrow">&rarr;</span>
+          <span class="hud-new" id="hud-mass-n">352.8</span>
+          <span class="hud-unit">g</span>
+          <span class="hud-delta" id="hud-mass-d">(0.0)</span>
+        </div>
+      </div>
+
+      <!-- Bilanciamento -->
+      <div class="hud-metric">
+        <div class="hud-lbl">Bilanc.</div>
+        <div class="hud-val-wrap">
+          <span class="hud-old" id="hud-bal-o">31.20</span>
+          <span class="hud-arrow">&rarr;</span>
+          <span class="hud-new" id="hud-bal-n">31.20</span>
+          <span class="hud-unit">cm</span>
+          <span class="hud-delta" id="hud-bal-d">(0.00)</span>
+        </div>
+      </div>
+
+      <!-- Swingweight -->
+      <div class="hud-metric highlight-cyan">
+        <div class="hud-lbl">SW</div>
+        <div class="hud-val-wrap">
+          <span class="hud-old" id="hud-sw-o">333.1</span>
+          <span class="hud-arrow">&rarr;</span>
+          <span class="hud-new cyan" id="hud-sw-n">333.1</span>
+          <span class="hud-delta" id="hud-sw-d">(0.0)</span>
+        </div>
+      </div>
+
+      <!-- MGR/I -->
+      <div class="hud-metric highlight-cyan">
+        <div class="hud-lbl">MGR/I</div>
+        <div class="hud-val-wrap">
+          <span class="hud-old" id="hud-mgri-o">20.84</span>
+          <span class="hud-arrow">&rarr;</span>
+          <span class="hud-new cyan" id="hud-mgri-n">20.84</span>
+          <span class="hud-delta" id="hud-mgri-d">(0.00)</span>
+        </div>
+      </div>
+
+      <!-- Twistweight -->
+      <div class="hud-metric">
+        <div class="hud-lbl">TW</div>
+        <div class="hud-val-wrap">
+          <span class="hud-old" id="hud-tw-o">13.50</span>
+          <span class="hud-arrow">&rarr;</span>
+          <span class="hud-new" id="hud-tw-n">13.50</span>
+          <span class="hud-delta" id="hud-tw-d">(0.00)</span>
+        </div>
+      </div>
+
+      <!-- Recoilweight -->
+      <div class="hud-metric">
+        <div class="hud-lbl">RW</div>
+        <div class="hud-val-wrap">
+          <span class="hud-old" id="hud-rw-o">174.6</span>
+          <span class="hud-arrow">&rarr;</span>
+          <span class="hud-new" id="hud-rw-n">174.6</span>
+          <span class="hud-delta" id="hud-rw-d">(0.0)</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 </div></div>
@@ -1283,7 +1402,7 @@ if(h.length===0){container.innerHTML='<div class="help-text" style="text-align:c
 container.innerHTML=h.map((entry,idx)=>{const b=entry&&entry.state&&entry.state.base;return'<div class="history-item" onclick="restoreFromHistory('+idx+')" style="cursor:pointer;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:8px 12px;margin-bottom:5px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-weight:600;color:#fff;font-size:0.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(entry?entry.label:'?')+'</span><span style="font-size:0.65rem;color:var(--text-secondary);flex-shrink:0">'+(entry?entry.date:'')+'</span></div><div style="font-size:0.7rem;color:var(--text-secondary);margin-top:2px">'+(b?b.mass+' g / '+b.balance+' cm / SW '+b.sw:'')+'</div></div>'}).join('')
 }catch(e){console.error('renderHistory error:',e)}}
 function onBaseChange(){baseRacket=new Racket(+document.getElementById('goal-mass').value||300,+document.getElementById('goal-balance').value||32,+document.getElementById('goal-sw').value||315,+document.getElementById('goal-tw').value||14,+document.getElementById('goal-length').value||68.58);buildHoopGeometry(baseRacket.length);updateComparison();updateGoalCurrentValues();saveState()}
-function switchTab(name){document.querySelectorAll('.tab-pane').forEach(e=>e.style.display='none');document.querySelectorAll('.tab-btn').forEach(e=>{e.classList.toggle('active',e.dataset.tab===name);e.style.borderBottomColor=e.dataset.tab===name?'var(--accent-cyan)':'transparent';e.style.color=e.dataset.tab===name?'var(--accent-cyan)':'var(--text-secondary)'});document.querySelector('.tab-pane[data-tab="'+name+'"]').style.display=''}
+function switchTab(name){document.querySelectorAll('.tab-pane').forEach(e=>e.style.display='none');document.querySelectorAll('.tab-btn').forEach(e=>{e.classList.toggle('active',e.dataset.tab===name);e.style.borderBottomColor=e.dataset.tab===name?'var(--accent-cyan)':'transparent';e.style.color=e.dataset.tab===name?'var(--accent-cyan)':'var(--text-secondary)'});document.querySelector('.tab-pane[data-tab="'+name+'"]').style.display='';const hud=document.getElementById('calc-floating-hud');if(hud)hud.style.display=(name==='calc-customization'?'block':'none');}
 function switchAutoSubMode(mode){
   const mDiv=document.getElementById('auto-submode-matching');
   const sDiv=document.getElementById('auto-submode-single');
@@ -2304,6 +2423,62 @@ function recalcCustomizationTab(){
   document.getElementById('calc-res-ico-o').textContent=fmt(ico0,4);
   document.getElementById('calc-res-ico-n').textContent=fmt(icoNew,4);
   document.getElementById('calc-res-ico-d').innerHTML=fmtD(icoNew-ico0,4);
+
+  // Update floating comparison HUD
+  const hudBadge=document.getElementById('hud-added-badge');
+  if(hudBadge){
+    const dM=mNew-m0;
+    hudBadge.textContent=(dM>=0?'+':'')+dM.toFixed(1)+' g ('+rows.length+(rows.length===1?' massa':' masse')+')';
+  }
+  const setHudVal=(prefix,vOld,vNew,diff,dec)=>{
+    const oEl=document.getElementById('hud-'+prefix+'-o');
+    const nEl=document.getElementById('hud-'+prefix+'-n');
+    const dEl=document.getElementById('hud-'+prefix+'-d');
+    if(oEl)oEl.textContent=vOld.toFixed(dec);
+    if(nEl)nEl.textContent=vNew.toFixed(dec);
+    if(dEl){
+      if(Math.abs(diff)<0.0001){
+        dEl.textContent='(0.0)';
+        dEl.style.color='var(--text-secondary)';
+      }else{
+        const sign=diff>0?'+':'';
+        const col=diff>0?'var(--accent-amber)':'var(--accent-cyan)';
+        dEl.textContent='('+sign+diff.toFixed(dec)+')';
+        dEl.style.color=col;
+      }
+    }
+  };
+  setHudVal('mass',m0,mNew,mNew-m0,1);
+  setHudVal('bal',b0,bNew,bNew-b0,2);
+  setHudVal('sw',sw0,swNew,swNew-sw0,1);
+  setHudVal('mgri',mgri0,mgriNew,mgriNew-mgri0,2);
+  setHudVal('tw',tw0,twNew,twNew-tw0,2);
+  setHudVal('rw',rw0,rwNew,rwNew-rw0,1);
+}
+function toggleHudCollapse(){
+  const hud=document.getElementById('calc-floating-hud');
+  const btn=document.getElementById('hud-toggle-btn');
+  if(!hud)return;
+  const isCol=hud.classList.toggle('collapsed');
+  if(btn){
+    btn.innerHTML=isCol?'&#x25b2;':'&#x25bc;';
+    btn.title=isCol?'Espandi metriche':'Riduci metriche';
+  }
+}
+function toggleHudPosition(){
+  const hud=document.getElementById('calc-floating-hud');
+  const btn=document.getElementById('hud-pos-btn');
+  if(!hud)return;
+  const isTop=hud.classList.contains('calc-hud-top');
+  if(isTop){
+    hud.classList.remove('calc-hud-top');
+    hud.classList.add('calc-hud-bottom');
+    if(btn)btn.title='Sposta in alto';
+  }else{
+    hud.classList.remove('calc-hud-bottom');
+    hud.classList.add('calc-hud-top');
+    if(btn)btn.title='Sposta in basso';
+  }
 }
 function saveCalcFavorite(){const nameInput=document.getElementById('calc-fav-name');const name=nameInput?nameInput.value.trim():'';if(!name){alert('Inserisci un nome per la configurazione preferita.');return}const base={mass:+document.getElementById('calc-base-mass').value||0,balance:+document.getElementById('calc-base-bal').value||0,sw:+document.getElementById('calc-base-sw').value||0,tw:+document.getElementById('calc-base-tw').value||0,length:+document.getElementById('calc-base-len').value||68.58};const masses=[];document.querySelectorAll('#calc-mass-tbody .calc-mass-row').forEach(r=>{masses.push({mass:+r.querySelector('.calc-row-mass').value||0,len:+r.querySelector('.calc-row-len').value||0,y:+r.querySelector('.calc-row-y').value||0,x:+r.querySelector('.calc-row-x').value||0})});const favItem={id:Date.now(),name,date:new Date().toLocaleString('it-IT'),base,masses};try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');list.unshift(favItem);localStorage.setItem(CALC_FAV_KEY,JSON.stringify(list));nameInput.value='';renderCalcFavorites()}catch(e){}}
 function renderCalcFavorites(){const container=document.getElementById('calc-fav-list');if(!container)return;try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');if(list.length===0){container.innerHTML='<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>';return}container.innerHTML=list.map((item,idx)=>'<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px"><div><div style="font-weight:700;color:#fff;font-size:0.9rem">\u2b50 '+escapeHTML(item.name)+'</div><div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Base: '+item.base.mass+' g / '+item.base.balance+' cm / SW '+item.base.sw+' &middot; '+(item.masses?item.masses.length:0)+' masse &middot; <span style="opacity:0.6">'+item.date+'</span></div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-secondary" onclick="loadCalcFavorite('+idx+')" style="padding:6px 14px;font-size:0.8rem">Carica</button><button class="btn btn-secondary" onclick="deleteCalcFavorite('+idx+')" style="padding:6px 12px;font-size:0.8rem;color:var(--accent-red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);margin-left:8px" title="Elimina preferito">&#x2715; Elimina</button></div></div>').join('')}catch(e){}}
