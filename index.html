@@ -53,34 +53,76 @@ input[type="number"]:focus,select:focus{border-color:var(--accent-cyan);backgrou
 .history-item:hover{background:rgba(255,255,255,0.06)!important}
 .history-item:active{transform:scale(0.98)}
 
-/* Desktop default for mass table */
-.calc-mobile-label{display:none}
-#calc-mass-table input[type="number"]{width:75px;padding:6px 8px;font-size:0.85rem;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid var(--border-color);color:#fff}
-.calc-del-btn{padding:4px 10px;font-size:0.85rem;color:var(--accent-red);background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:6px;cursor:pointer;transition:all var(--transition-speed);display:inline-flex;align-items:center;justify-content:center}
-.calc-del-btn:hover{background:rgba(239,68,68,0.25)}
-
 /* Tab bar responsive scroll */
 .tab-bar{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border-color);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .tab-bar::-webkit-scrollbar{display:none}
 .tab-btn{white-space:nowrap;flex:1 0 auto;min-width:fit-content;text-align:center}
 
-/* Mobile responsive card layout for #calc-mass-table */
-@media(max-width:650px){
-#calc-mass-table-wrap{overflow-x:visible!important;border:none!important;background:transparent!important}
-#calc-mass-table{display:block!important;width:100%!important;border:none!important}
-#calc-mass-table thead{display:none!important}
-#calc-mass-tbody{display:flex!important;flex-direction:column!important;gap:12px!important;width:100%!important}
-.calc-mass-row{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px 10px!important;background:rgba(255,255,255,0.03)!important;border:1px solid var(--border-color)!important;border-radius:12px!important;padding:14px!important;box-shadow:0 4px 14px rgba(0,0,0,0.2)!important}
-.calc-mass-row:hover td{background:transparent!important}
-.calc-mass-row td{display:flex!important;flex-direction:column!important;padding:0!important;border:none!important}
-.calc-mass-row td.calc-col-idx{grid-column:1 / 2!important;flex-direction:row!important;align-items:center!important;font-size:0.95rem!important;font-weight:700!important;color:var(--accent-cyan)!important}
-.calc-mass-row td.calc-col-act{grid-column:2 / 3!important;flex-direction:row!important;justify-content:flex-end!important;align-items:center!important}
-.calc-mass-row td.calc-col-field{gap:4px!important}
-.calc-mobile-label{display:block!important;font-size:0.72rem!important;color:var(--text-secondary)!important;font-weight:500!important}
-.calc-col-idx .calc-mobile-label{display:inline!important}
-.calc-mass-row td.calc-col-field input[type="number"]{width:100%!important;padding:8px 10px!important;font-size:0.95rem!important}
-.calc-mass-row td.calc-col-res{background:rgba(6,182,212,0.07)!important;border:1px solid rgba(6,182,212,0.18)!important;border-radius:8px!important;padding:8px 10px!important;flex-direction:row!important;justify-content:space-between!important;align-items:center!important}
-.calc-mass-row td.calc-col-res .calc-mobile-label{margin:0!important;font-size:0.75rem!important}
+/* Base Specs Panel */
+.calc-base-panel{background:linear-gradient(135deg,rgba(6,182,212,0.08) 0%,rgba(17,24,39,0.7) 100%);border:1px solid rgba(6,182,212,0.25);border-radius:14px;padding:18px 20px;margin-bottom:22px;box-shadow:0 4px 18px rgba(0,0,0,0.25)}
+.calc-base-panel input[type="number"]{font-size:1.05rem;font-weight:600;padding:10px 12px;border-radius:8px;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.12)}
+
+/* Summary Dashboard Banner */
+.calc-summary-banner{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;background:linear-gradient(135deg,rgba(17,24,39,0.9) 0%,rgba(11,15,25,0.95) 100%);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 18px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,0.3)}
+.calc-sum-item{display:flex;flex-direction:column;gap:2px}
+.calc-sum-label{font-size:0.75rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.04em}
+.calc-sum-value{font-size:1.35rem;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+.calc-sum-value.cyan{color:var(--accent-cyan)}
+.calc-sum-value.amber{color:var(--accent-amber)}
+.calc-sum-value.green{color:var(--accent-green)}
+
+/* Preset Bar & Buttons */
+.calc-presets-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.calc-presets-title{font-size:0.85rem;color:var(--text-secondary);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-right:4px}
+.btn-preset{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:#f3f4f6;padding:8px 14px;font-size:0.85rem;font-weight:600;border-radius:8px;cursor:pointer;transition:all var(--transition-speed)}
+.btn-preset:hover{background:rgba(6,182,212,0.15);border-color:var(--accent-cyan);color:#fff;transform:translateY(-1px)}
+
+/* Card list container for added masses */
+.calc-cards-list{display:flex;flex-direction:column;gap:16px;margin-bottom:16px}
+
+/* Individual Mass Card */
+.calc-mass-row{background:linear-gradient(135deg,rgba(26,36,56,0.9) 0%,rgba(15,23,42,0.95) 100%);border:1px solid rgba(255,255,255,0.12);border-left:5px solid var(--accent-cyan);border-radius:14px;padding:16px 20px;box-shadow:0 4px 20px rgba(0,0,0,0.35);transition:transform 0.15s ease,border-color 0.2s ease,box-shadow 0.2s ease}
+.calc-mass-row:nth-child(even){border-left-color:var(--accent-amber)}
+.calc-mass-row:nth-child(3n){border-left-color:#a855f7}
+.calc-mass-row:nth-child(4n){border-left-color:var(--accent-green)}
+.calc-mass-row:hover{border-color:rgba(6,182,212,0.45);box-shadow:0 8px 28px rgba(0,0,0,0.5);transform:translateY(-1px)}
+
+/* Card Header */
+.calc-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.calc-card-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.calc-badge-num{background:rgba(6,182,212,0.2);border:1px solid var(--accent-cyan);color:#fff;font-weight:700;font-size:0.85rem;padding:4px 12px;border-radius:20px;letter-spacing:0.02em}
+.calc-mass-row:nth-child(even) .calc-badge-num{background:rgba(245,158,11,0.2);border-color:var(--accent-amber)}
+.calc-mass-row:nth-child(3n) .calc-badge-num{background:rgba(168,85,247,0.2);border-color:#a855f7}
+.calc-row-hint{font-size:0.82rem;color:#e2e8f0;font-weight:600;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);padding:4px 10px;border-radius:6px}
+
+/* Card Body Grid */
+.calc-card-body{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:12px 14px;align-items:end}
+.calc-field-group{display:flex;flex-direction:column;gap:6px}
+.calc-field-group label{font-size:0.8rem;font-weight:600;color:#cbd5e1;text-transform:uppercase;letter-spacing:0.03em}
+.calc-field-group input[type="number"]{width:100%;padding:10px 12px;font-size:1.05rem;font-weight:600;border-radius:8px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.15);color:#fff;transition:all var(--transition-speed)}
+.calc-field-group input[type="number"]:focus{border-color:var(--accent-cyan);background:rgba(0,0,0,0.65);box-shadow:0 0 0 3px rgba(6,182,212,0.3)}
+
+/* Card Impact Readout Box */
+.calc-card-impact{display:flex;gap:14px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.25);border-radius:10px;padding:8px 16px;align-items:center;min-height:48px}
+.calc-impact-item{display:flex;align-items:baseline;gap:6px}
+.calc-impact-lbl{font-size:0.78rem;font-weight:700;color:#94a3b8}
+.calc-row-swadd,.calc-row-twadd{font-size:1.15rem;font-weight:800;color:var(--accent-cyan);font-variant-numeric:tabular-nums}
+.calc-impact-unit{font-size:0.7rem;color:#64748b}
+
+.calc-del-btn{padding:6px 14px;font-size:0.85rem;font-weight:600;color:var(--accent-red);background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;cursor:pointer;transition:all var(--transition-speed);display:inline-flex;align-items:center;justify-content:center}
+.calc-del-btn:hover{background:rgba(239,68,68,0.25);transform:translateY(-1px)}
+
+/* Add Mass Button */
+.btn-add-mass{background:linear-gradient(135deg,rgba(6,182,212,0.15) 0%,rgba(8,145,178,0.25) 100%);border:1px dashed var(--accent-cyan);color:#fff;padding:14px 20px;font-size:0.95rem;font-weight:700;border-radius:12px;width:100%;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all var(--transition-speed);margin-top:12px}
+.btn-add-mass:hover{background:linear-gradient(135deg,rgba(6,182,212,0.3) 0%,rgba(8,145,178,0.4) 100%);border-style:solid;box-shadow:0 0 16px rgba(6,182,212,0.3);transform:translateY(-1px)}
+
+@media(max-width:900px){
+.calc-card-body{grid-template-columns:1fr 1fr}
+.calc-card-impact{grid-column:1 / -1;justify-content:space-around}
+}
+@media(max-width:500px){
+.calc-mass-row{padding:14px}
+.calc-card-body{grid-template-columns:1fr;gap:10px}
 }
 
 @media(max-width:700px){
@@ -379,9 +421,12 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <div data-tab="calc-customization" class="tab-pane" style="display:none">
 <div class="panel" style="margin-top:0">
 
-<div style="background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.15);border-radius:10px;padding:15px;margin-bottom:18px">
-<h3 style="font-size:0.95rem;color:var(--accent-cyan);margin-bottom:12px">&#x1f4d0; Specifiche Base Iniziali</h3>
-<div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr))">
+<div class="calc-base-panel">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+<h3 style="font-size:1.05rem;color:var(--accent-cyan);margin:0;font-weight:700">&#x1f4d0; Specifiche Base Iniziali Racchetta</h3>
+<span style="font-size:0.75rem;color:var(--text-secondary)">Parametri di partenza per il calcolo</span>
+</div>
+<div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px">
 <div class="form-group"><label for="calc-base-mass">Massa (g)</label><input type="number" id="calc-base-mass" value="352.8" step="0.1" min="100" max="500" oninput="recalcCustomizationTab()"></div>
 <div class="form-group"><label for="calc-base-bal">Bilanciamento (cm)</label><input type="number" id="calc-base-bal" value="31.2" step="0.05" min="20" max="45" oninput="recalcCustomizationTab()"></div>
 <div class="form-group"><label for="calc-base-sw">Swingweight (kg&middot;cm&sup2;)</label><input type="number" id="calc-base-sw" value="333.1" step="0.1" min="200" max="450" oninput="recalcCustomizationTab()"></div>
@@ -389,34 +434,39 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <div class="form-group"><label for="calc-base-len">Lunghezza (cm)</label><input type="number" id="calc-base-len" value="68.58" step="0.01" min="60" max="80" oninput="recalcCustomizationTab()"></div>
 </div></div>
 
-<div id="calc-mode-mass-sec">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
-<h3 style="font-size:0.95rem;color:#fff">&#x2795; Tabella Masse Aggiunte</h3>
-<div style="display:flex;gap:6px;flex-wrap:wrap">
-<button class="btn btn-secondary" onclick="addCalcPreset('tappo')" style="padding:4px 8px;font-size:0.75rem">+ Tappo (2cm)</button>
-<button class="btn btn-secondary" onclick="addCalcPreset('manico')" style="padding:4px 8px;font-size:0.75rem">+ Manico (10cm)</button>
-<button class="btn btn-secondary" onclick="addCalcPreset('ore39')" style="padding:4px 8px;font-size:0.75rem">+ Ore 3&amp;9 (52cm)</button>
-<button class="btn btn-secondary" onclick="addCalcPreset('ore12')" style="padding:4px 8px;font-size:0.75rem">+ Ore 12 (66cm)</button>
-</div></div>
+<div class="calc-summary-banner" id="calc-summary-banner">
+<div class="calc-sum-item">
+<span class="calc-sum-label">Masse Applicate</span>
+<span class="calc-sum-value" id="calc-sum-count">0</span>
+</div>
+<div class="calc-sum-item">
+<span class="calc-sum-label">Massa Totale Agg.</span>
+<span class="calc-sum-value cyan" id="calc-sum-mass">+0.0 g</span>
+</div>
+<div class="calc-sum-item">
+<span class="calc-sum-label">Swingweight Agg.</span>
+<span class="calc-sum-value amber" id="calc-sum-sw">+0.0</span>
+</div>
+<div class="calc-sum-item">
+<span class="calc-sum-label">Twistweight Agg.</span>
+<span class="calc-sum-value green" id="calc-sum-tw">+0.00</span>
+</div>
+</div>
 
-<div class="data-table-container" id="calc-mass-table-wrap" style="margin-bottom:12px">
-<table class="data-table" id="calc-mass-table">
-<thead>
-<tr>
-<th>#</th>
-<th>Massa (g)</th>
-<th>Lunghezza (cm)</th>
-<th>Y (cm)</th>
-<th>X (cm)</th>
-<th>SW Aggiunto</th>
-<th>TW Aggiunto</th>
-<th>Azione</th>
-</tr>
-</thead>
-<tbody id="calc-mass-tbody">
-</tbody>
-</table></div>
-<button class="btn btn-secondary" onclick="addCalcMassRow()" style="font-size:0.82rem;padding:6px 14px;width:auto">+ Aggiungi Riga Massa</button>
+<div id="calc-mode-mass-sec">
+<div class="calc-presets-bar">
+<span class="calc-presets-title">&#x26a1; Preset Rapidi:</span>
+<button type="button" class="btn-preset" onclick="addCalcPreset('tappo')">&#x1f518; + Tappo (2cm)</button>
+<button type="button" class="btn-preset" onclick="addCalcPreset('manico')">&#x1f3f8; + Manico (10cm)</button>
+<button type="button" class="btn-preset" onclick="addCalcPreset('ore39')">&#x2696;&#xfe0f; + Ore 3 &amp; 9 (52cm)</button>
+<button type="button" class="btn-preset" onclick="addCalcPreset('ore12')">&#x1f51d; + Ore 12 (66cm)</button>
+</div>
+
+<div id="calc-mass-tbody" class="calc-cards-list"></div>
+
+<button type="button" class="btn-add-mass" onclick="addCalcMassRow()">
+<span style="font-size:1.25rem;font-weight:900">&#x2b;</span> Aggiungi Nuova Massa
+</button>
 </div>
 
 <div style="margin-top:22px;border-top:1px solid var(--border-color);padding-top:18px">
@@ -659,19 +709,218 @@ function renderAutoFavorites(){const container=document.getElementById('auto-fav
 function loadAutoFavorite(idx){try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');const item=list[idx];if(!item)return;document.getElementById('goal-mass').value=item.data.base.mass;document.getElementById('goal-balance').value=item.data.base.balance;document.getElementById('goal-sw').value=item.data.base.sw;document.getElementById('goal-tw').value=item.data.base.tw;document.getElementById('goal-length').value=item.data.base.length;if(item.data.maxW)document.getElementById('goal-max-weights').value=item.data.maxW;document.querySelectorAll('#goal-list .goal-row').forEach(r=>r.remove());if(item.data.goals&&item.data.goals.length){item.data.goals.forEach(g=>addGoalRow(g.param,g.target))}else{addGoalRow()}document.querySelectorAll('#constraint-list .constraint-row').forEach(r=>r.remove());if(item.data.constraints){item.data.constraints.forEach(c=>addConstraintRow(c.type,c.yMin,c.yMax))}if(item.data.limits){document.getElementById('limit-manico').value=item.data.limits.manico!==null?item.data.limits.manico:'';document.getElementById('limit-cuore').value=item.data.limits.cuore!==null?item.data.limits.cuore:'';document.getElementById('limit-ovale').value=item.data.limits.ovale!==null?item.data.limits.ovale:'';}onBaseChange()}catch(e){}}
 function deleteAutoFavorite(idx){try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');const item=list[idx];if(!item)return;if(!confirm('Sei sicuro di voler eliminare la configurazione preferita "'+item.name+'"?'))return;list.splice(idx,1);localStorage.setItem(AUTO_FAV_KEY,JSON.stringify(list));renderAutoFavorites()}catch(e){}}
 
-function addCalcMassRow(m=0,l=0,y=2,x=0){const tbody=document.getElementById('calc-mass-tbody');if(!tbody)return;const count=tbody.children.length+1;const tr=document.createElement('tr');tr.className='calc-mass-row';tr.innerHTML='<td class="calc-col-idx"><span class="calc-mobile-label">Massa </span>#<span class="calc-row-idx">'+count+'</span></td>'+
-'<td class="calc-col-field"><span class="calc-mobile-label">Massa (g)</span><input type="number" class="calc-row-mass" value="'+m+'" step="0.1" min="0" oninput="recalcCustomizationTab()"></td>'+
-'<td class="calc-col-field"><span class="calc-mobile-label">Lungh. (cm)</span><input type="number" class="calc-row-len" value="'+l+'" step="0.5" min="0" oninput="recalcCustomizationTab()"></td>'+
-'<td class="calc-col-field"><span class="calc-mobile-label">Pos. Y (cm)</span><input type="number" class="calc-row-y" value="'+y+'" step="0.5" min="0" max="80" oninput="recalcCustomizationTab()"></td>'+
-'<td class="calc-col-field"><span class="calc-mobile-label">Pos. X (cm)</span><input type="number" class="calc-row-x" value="'+x+'" step="0.5" min="-20" max="20" oninput="recalcCustomizationTab()"></td>'+
-'<td class="calc-col-res"><span class="calc-mobile-label">SW Agg.</span><span class="calc-row-swadd" style="color:var(--accent-cyan);font-weight:600">0.0</span></td>'+
-'<td class="calc-col-res"><span class="calc-mobile-label">TW Agg.</span><span class="calc-row-twadd" style="color:var(--accent-cyan);font-weight:600">0.00</span></td>'+
-'<td class="calc-col-act"><button class="calc-del-btn" onclick="removeCalcMassRow(this)" title="Rimuovi massa" aria-label="Rimuovi">&times;</button></td>';tbody.appendChild(tr);updateCalcRowIndices();recalcCustomizationTab()}
-function removeCalcMassRow(btn){btn.closest('tr').remove();updateCalcRowIndices();recalcCustomizationTab()}
-function updateCalcRowIndices(){const rows=document.querySelectorAll('#calc-mass-tbody tr');rows.forEach((r,i)=>{const span=r.querySelector('.calc-row-idx');if(span)span.textContent=i+1})}
-function addCalcPreset(preset){switch(preset){case'tappo':addCalcMassRow(3,0,2,0);break;case'manico':addCalcMassRow(5,0,10,0);break;case'ore39':addCalcMassRow(2,0,52,12);addCalcMassRow(2,0,52,-12);break;case'ore12':addCalcMassRow(3,0,66,0);break}}
-function recalcCustomizationTab(){const m0=+document.getElementById('calc-base-mass').value||0;const b0=+document.getElementById('calc-base-bal').value||0;const sw0=+document.getElementById('calc-base-sw').value||0;const tw0=+document.getElementById('calc-base-tw').value||0;const len0=+document.getElementById('calc-base-len').value||68.58;buildHoopGeometry(len0);const i0=sw0+20*b0*(m0/1000)-100*(m0/1000);const rw0=sw0-(m0/1000)*(b0-10)**2;const mgri0=i0===0?0:((m0/1000)*980.5*b0)/i0;const ico0=m0===0?0:rw0/m0;let sumMassY=m0*b0,sumMass=m0,sumSwAdd=0,sumTwAdd=0;document.querySelectorAll('#calc-mass-tbody tr').forEach(r=>{const mVal=+r.querySelector('.calc-row-mass').value||0;const lVal=+r.querySelector('.calc-row-len').value||0;const yVal=+r.querySelector('.calc-row-y').value||0;const xVal=+r.querySelector('.calc-row-x').value||0;let swAdd=0,twAdd=0,yCM=yVal;if(lVal>0){let isHoop=yVal>(len0-HOOP_A*2);if(isHoop){const nn=findNearestSeg(xVal,yVal).idx;const segs=Array.from(hoopSegsForMass(lVal/5,nn));if(segs.length>0){const dm=mVal/segs.length;let sumY=0;for(const idx of segs){const s=hoopSegs[idx];const ey=yCentre+HOOP_A*Math.cos(s.tMid);const ex=HOOP_B*Math.sin(s.tMid);sumY+=ey;if(ey>=10)swAdd+=(dm/1000)*(ey-10)**2;twAdd+=(dm/1000)*ex*ex}yCM=sumY/segs.length}}else{const nSteps=Math.max(10,Math.ceil(lVal*2));const dm=mVal/nSteps;const dy=lVal/nSteps;let sumY=0;for(let i=0;i<nSteps;i++){const currY=yVal-lVal/2+dy*(i+0.5);sumY+=currY;if(currY>=10)swAdd+=(dm/1000)*(currY-10)**2;twAdd+=(dm/1000)*xVal*xVal}yCM=sumY/nSteps}}else{if(yVal>=10)swAdd=(mVal/1000)*(yVal-10)**2;twAdd=(mVal/1000)*xVal**2;}r.querySelector('.calc-row-swadd').textContent=swAdd.toFixed(2);r.querySelector('.calc-row-twadd').textContent=twAdd.toFixed(2);sumMass+=mVal;sumMassY+=mVal*yCM;sumSwAdd+=swAdd;sumTwAdd+=twAdd});const mNew=sumMass;const bNew=mNew>0?sumMassY/mNew:b0;const swNew=sw0+sumSwAdd;const twNew=tw0+sumTwAdd;const iNew=swNew+20*bNew*(mNew/1000)-100*(mNew/1000);const rwNew=swNew-(mNew/1000)*(bNew-10)**2;const mgriNew=iNew===0?0:((mNew/1000)*980.5*bNew)/iNew;const icoNew=mNew===0?0:rwNew/mNew;const fmt=(v,d)=>v.toFixed(d);const fmtD=(diff,dec,unit)=>{if(Math.abs(diff)<0.0001)return'<span style="color:var(--text-secondary)">0.0</span>';const sign=diff>0?'+':'';const color=diff>0?'var(--accent-amber)':'var(--accent-cyan)';return'<span style="color:'+color+';font-weight:600">'+sign+diff.toFixed(dec)+(unit?' '+unit:'')+'</span>'};document.getElementById('calc-res-mass-o').textContent=fmt(m0,1)+' g';document.getElementById('calc-res-mass-n').textContent=fmt(mNew,1)+' g';document.getElementById('calc-res-mass-d').innerHTML=fmtD(mNew-m0,1,'g');document.getElementById('calc-res-bal-o').textContent=fmt(b0,2)+' cm';document.getElementById('calc-res-bal-n').textContent=fmt(bNew,2)+' cm';document.getElementById('calc-res-bal-d').innerHTML=fmtD(bNew-b0,2,'cm');document.getElementById('calc-res-sw-o').textContent=fmt(sw0,1);document.getElementById('calc-res-sw-n').textContent=fmt(swNew,1);document.getElementById('calc-res-sw-d').innerHTML=fmtD(swNew-sw0,1);document.getElementById('calc-res-tw-o').textContent=fmt(tw0,2);document.getElementById('calc-res-tw-n').textContent=fmt(twNew,2);document.getElementById('calc-res-tw-d').innerHTML=fmtD(twNew-tw0,2);document.getElementById('calc-res-rw-o').textContent=fmt(rw0,1);document.getElementById('calc-res-rw-n').textContent=fmt(rwNew,1);document.getElementById('calc-res-rw-d').innerHTML=fmtD(rwNew-rw0,1);document.getElementById('calc-res-i-o').textContent=fmt(i0,2);document.getElementById('calc-res-i-n').textContent=fmt(iNew,2);document.getElementById('calc-res-i-d').innerHTML=fmtD(iNew-i0,2);document.getElementById('calc-res-mgri-o').textContent=fmt(mgri0,2);document.getElementById('calc-res-mgri-n').textContent=fmt(mgriNew,2);document.getElementById('calc-res-mgri-d').innerHTML=fmtD(mgriNew-mgri0,2);document.getElementById('calc-res-ico-o').textContent=fmt(ico0,4);document.getElementById('calc-res-ico-n').textContent=fmt(icoNew,4);document.getElementById('calc-res-ico-d').innerHTML=fmtD(icoNew-ico0,4)}
-function saveCalcFavorite(){const nameInput=document.getElementById('calc-fav-name');const name=nameInput?nameInput.value.trim():'';if(!name){alert('Inserisci un nome per la configurazione preferita.');return}const base={mass:+document.getElementById('calc-base-mass').value||0,balance:+document.getElementById('calc-base-bal').value||0,sw:+document.getElementById('calc-base-sw').value||0,tw:+document.getElementById('calc-base-tw').value||0,length:+document.getElementById('calc-base-len').value||68.58};const masses=[];document.querySelectorAll('#calc-mass-tbody tr').forEach(r=>{masses.push({mass:+r.querySelector('.calc-row-mass').value||0,len:+r.querySelector('.calc-row-len').value||0,y:+r.querySelector('.calc-row-y').value||0,x:+r.querySelector('.calc-row-x').value||0})});const favItem={id:Date.now(),name,date:new Date().toLocaleString('it-IT'),base,masses};try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');list.unshift(favItem);localStorage.setItem(CALC_FAV_KEY,JSON.stringify(list));nameInput.value='';renderCalcFavorites()}catch(e){}}
+function getMassPositionHint(y, x){
+  const yVal = parseFloat(y) || 0;
+  const xVal = parseFloat(x) || 0;
+  const ax = Math.abs(xVal);
+  if (yVal <= 3.5) return '📍 Tappo (Base manico)';
+  if (yVal <= 18) return '📍 Manico';
+  if (yVal <= 33) return '📍 Cuore / Gola';
+  if (ax >= 8) {
+    const side = xVal > 0 ? 'DX' : 'SX';
+    if (yVal >= 58) return '📍 Ore 2 / 10 (' + side + ')';
+    if (yVal >= 46) return '📍 Ore 3 / 9 (' + side + ')';
+    return '📍 Ore 4 / 8 (' + side + ')';
+  }
+  if (ax < 4) {
+    if (yVal >= 64) return '📍 Ore 12 (Testa)';
+    if (yVal >= 55) return '📍 Ore 11 / 1 (Alto)';
+    if (yVal >= 42) return '📍 Centro piatto corde';
+    return '📍 Ponte / Cuore alto';
+  }
+  return '📍 Ovale (Y: ' + yVal.toFixed(1) + ' cm)';
+}
+
+function addCalcMassRow(m=0,l=0,y=2,x=0){
+  const container = document.getElementById('calc-mass-tbody');
+  if(!container) return;
+  const count = container.querySelectorAll('.calc-mass-row').length + 1;
+  const card = document.createElement('div');
+  card.className = 'calc-mass-row';
+  card.innerHTML = 
+    '<div class="calc-card-header">' +
+      '<div class="calc-card-title">' +
+        '<span class="calc-badge-num">Massa #<span class="calc-row-idx">' + count + '</span></span>' +
+        '<span class="calc-row-hint">' + getMassPositionHint(y, x) + '</span>' +
+      '</div>' +
+      '<button type="button" class="calc-del-btn" onclick="removeCalcMassRow(this)" title="Rimuovi questa massa" aria-label="Rimuovi">&#x2715; Rimuovi</button>' +
+    '</div>' +
+    '<div class="calc-card-body">' +
+      '<div class="calc-field-group">' +
+        '<label>Massa (g)</label>' +
+        '<input type="number" class="calc-row-mass" value="' + m + '" step="0.1" min="0" oninput="recalcCustomizationTab()">' +
+      '</div>' +
+      '<div class="calc-field-group">' +
+        '<label>Lungh. Striscia (cm)</label>' +
+        '<input type="number" class="calc-row-len" value="' + l + '" step="0.5" min="0" placeholder="0 = puntiforme" oninput="recalcCustomizationTab()">' +
+      '</div>' +
+      '<div class="calc-field-group">' +
+        '<label>Posizione Y (cm)</label>' +
+        '<input type="number" class="calc-row-y" value="' + y + '" step="0.5" min="0" max="80" oninput="recalcCustomizationTab()">' +
+      '</div>' +
+      '<div class="calc-field-group">' +
+        '<label>Posizione X (cm)</label>' +
+        '<input type="number" class="calc-row-x" value="' + x + '" step="0.5" min="-20" max="20" placeholder="0 = centro" oninput="recalcCustomizationTab()">' +
+      '</div>' +
+      '<div class="calc-card-impact">' +
+        '<div class="calc-impact-item">' +
+          '<span class="calc-impact-lbl">SW:</span>' +
+          '<span class="calc-row-swadd">+0.00</span>' +
+          '<span class="calc-impact-unit">kg&middot;cm&sup2;</span>' +
+        '</div>' +
+        '<div class="calc-impact-item">' +
+          '<span class="calc-impact-lbl">TW:</span>' +
+          '<span class="calc-row-twadd">+0.00</span>' +
+          '<span class="calc-impact-unit">kg&middot;cm&sup2;</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  container.appendChild(card);
+  updateCalcRowIndices();
+  recalcCustomizationTab();
+}
+
+function removeCalcMassRow(btn){
+  const card = btn.closest('.calc-mass-row');
+  if(card) card.remove();
+  updateCalcRowIndices();
+  recalcCustomizationTab();
+}
+
+function updateCalcRowIndices(){
+  const rows = document.querySelectorAll('#calc-mass-tbody .calc-mass-row');
+  rows.forEach((r,i)=>{
+    const span = r.querySelector('.calc-row-idx');
+    if(span) span.textContent = i + 1;
+  });
+}
+
+function addCalcPreset(preset){
+  switch(preset){
+    case'tappo':addCalcMassRow(3,0,2,0);break;
+    case'manico':addCalcMassRow(5,0,10,0);break;
+    case'ore39':addCalcMassRow(2,0,52,12);addCalcMassRow(2,0,52,-12);break;
+    case'ore12':addCalcMassRow(3,0,66,0);break;
+  }
+}
+
+function recalcCustomizationTab(){
+  const m0=+document.getElementById('calc-base-mass').value||0;
+  const b0=+document.getElementById('calc-base-bal').value||0;
+  const sw0=+document.getElementById('calc-base-sw').value||0;
+  const tw0=+document.getElementById('calc-base-tw').value||0;
+  const len0=+document.getElementById('calc-base-len').value||68.58;
+  buildHoopGeometry(len0);
+  const i0=sw0+20*b0*(m0/1000)-100*(m0/1000);
+  const rw0=sw0-(m0/1000)*(b0-10)**2;
+  const mgri0=i0===0?0:((m0/1000)*980.5*b0)/i0;
+  const ico0=m0===0?0:rw0/m0;
+  let sumMassY=m0*b0,sumMass=m0,sumSwAdd=0,sumTwAdd=0;
+  const rows=document.querySelectorAll('#calc-mass-tbody .calc-mass-row');
+  rows.forEach(r=>{
+    const mVal=+r.querySelector('.calc-row-mass').value||0;
+    const lVal=+r.querySelector('.calc-row-len').value||0;
+    const yVal=+r.querySelector('.calc-row-y').value||0;
+    const xVal=+r.querySelector('.calc-row-x').value||0;
+    let swAdd=0,twAdd=0,yCM=yVal;
+    if(lVal>0){
+      let isHoop=yVal>(len0-HOOP_A*2);
+      if(isHoop){
+        const nn=findNearestSeg(xVal,yVal).idx;
+        const segs=Array.from(hoopSegsForMass(lVal/5,nn));
+        if(segs.length>0){
+          const dm=mVal/segs.length;
+          let sumY=0;
+          for(const idx of segs){
+            const s=hoopSegs[idx];
+            const ey=yCentre+HOOP_A*Math.cos(s.tMid);
+            const ex=HOOP_B*Math.sin(s.tMid);
+            sumY+=ey;
+            if(ey>=10)swAdd+=(dm/1000)*(ey-10)**2;
+            twAdd+=(dm/1000)*ex*ex;
+          }
+          yCM=sumY/segs.length;
+        }
+      }else{
+        const nSteps=Math.max(10,Math.ceil(lVal*2));
+        const dm=mVal/nSteps;
+        const dy=lVal/nSteps;
+        let sumY=0;
+        for(let i=0;i<nSteps;i++){
+          const currY=yVal-lVal/2+dy*(i+0.5);
+          sumY+=currY;
+          if(currY>=10)swAdd+=(dm/1000)*(currY-10)**2;
+          twAdd+=(dm/1000)*xVal*xVal;
+        }
+        yCM=sumY/nSteps;
+      }
+    }else{
+      if(yVal>=10)swAdd=(mVal/1000)*(yVal-10)**2;
+      twAdd=(mVal/1000)*xVal**2;
+    }
+    const swEl=r.querySelector('.calc-row-swadd');
+    if(swEl)swEl.textContent=(swAdd>=0?'+':'')+swAdd.toFixed(2);
+    const twEl=r.querySelector('.calc-row-twadd');
+    if(twEl)twEl.textContent=(twAdd>=0?'+':'')+twAdd.toFixed(2);
+    const hintEl=r.querySelector('.calc-row-hint');
+    if(hintEl)hintEl.textContent=getMassPositionHint(yVal,xVal);
+    sumMass+=mVal;
+    sumMassY+=mVal*yCM;
+    sumSwAdd+=swAdd;
+    sumTwAdd+=twAdd;
+  });
+  const mNew=sumMass;
+  const bNew=mNew>0?sumMassY/mNew:b0;
+  const swNew=sw0+sumSwAdd;
+  const twNew=tw0+sumTwAdd;
+  const iNew=swNew+20*bNew*(mNew/1000)-100*(mNew/1000);
+  const rwNew=swNew-(mNew/1000)*(bNew-10)**2;
+  const mgriNew=iNew===0?0:((mNew/1000)*980.5*bNew)/iNew;
+  const icoNew=mNew===0?0:rwNew/mNew;
+
+  // Update summary banner
+  const sumCountEl=document.getElementById('calc-sum-count');
+  if(sumCountEl)sumCountEl.textContent=rows.length;
+  const sumMassEl=document.getElementById('calc-sum-mass');
+  if(sumMassEl)sumMassEl.textContent=(sumMass>=m0?'+':'')+(sumMass-m0).toFixed(1)+' g';
+  const sumSwEl=document.getElementById('calc-sum-sw');
+  if(sumSwEl)sumSwEl.textContent=(sumSwAdd>=0?'+':'')+sumSwAdd.toFixed(1);
+  const sumTwEl=document.getElementById('calc-sum-tw');
+  if(sumTwEl)sumTwEl.textContent=(sumTwAdd>=0?'+':'')+sumTwAdd.toFixed(2);
+
+  const fmt=(v,d)=>v.toFixed(d);
+  const fmtD=(diff,dec,unit)=>{
+    if(Math.abs(diff)<0.0001)return'<span style="color:var(--text-secondary)">0.0</span>';
+    const sign=diff>0?'+':'';
+    const color=diff>0?'var(--accent-amber)':'var(--accent-cyan)';
+    return'<span style="color:'+color+';font-weight:600">'+sign+diff.toFixed(dec)+(unit?' '+unit:'')+'</span>';
+  };
+  document.getElementById('calc-res-mass-o').textContent=fmt(m0,1)+' g';
+  document.getElementById('calc-res-mass-n').textContent=fmt(mNew,1)+' g';
+  document.getElementById('calc-res-mass-d').innerHTML=fmtD(mNew-m0,1,'g');
+  document.getElementById('calc-res-bal-o').textContent=fmt(b0,2)+' cm';
+  document.getElementById('calc-res-bal-n').textContent=fmt(bNew,2)+' cm';
+  document.getElementById('calc-res-bal-d').innerHTML=fmtD(bNew-b0,2,'cm');
+  document.getElementById('calc-res-sw-o').textContent=fmt(sw0,1);
+  document.getElementById('calc-res-sw-n').textContent=fmt(swNew,1);
+  document.getElementById('calc-res-sw-d').innerHTML=fmtD(swNew-sw0,1);
+  document.getElementById('calc-res-tw-o').textContent=fmt(tw0,2);
+  document.getElementById('calc-res-tw-n').textContent=fmt(twNew,2);
+  document.getElementById('calc-res-tw-d').innerHTML=fmtD(twNew-tw0,2);
+  document.getElementById('calc-res-rw-o').textContent=fmt(rw0,1);
+  document.getElementById('calc-res-rw-n').textContent=fmt(rwNew,1);
+  document.getElementById('calc-res-rw-d').innerHTML=fmtD(rwNew-rw0,1);
+  document.getElementById('calc-res-i-o').textContent=fmt(i0,2);
+  document.getElementById('calc-res-i-n').textContent=fmt(iNew,2);
+  document.getElementById('calc-res-i-d').innerHTML=fmtD(iNew-i0,2);
+  document.getElementById('calc-res-mgri-o').textContent=fmt(mgri0,2);
+  document.getElementById('calc-res-mgri-n').textContent=fmt(mgriNew,2);
+  document.getElementById('calc-res-mgri-d').innerHTML=fmtD(mgriNew-mgri0,2);
+  document.getElementById('calc-res-ico-o').textContent=fmt(ico0,4);
+  document.getElementById('calc-res-ico-n').textContent=fmt(icoNew,4);
+  document.getElementById('calc-res-ico-d').innerHTML=fmtD(icoNew-ico0,4);
+}
+function saveCalcFavorite(){const nameInput=document.getElementById('calc-fav-name');const name=nameInput?nameInput.value.trim():'';if(!name){alert('Inserisci un nome per la configurazione preferita.');return}const base={mass:+document.getElementById('calc-base-mass').value||0,balance:+document.getElementById('calc-base-bal').value||0,sw:+document.getElementById('calc-base-sw').value||0,tw:+document.getElementById('calc-base-tw').value||0,length:+document.getElementById('calc-base-len').value||68.58};const masses=[];document.querySelectorAll('#calc-mass-tbody .calc-mass-row').forEach(r=>{masses.push({mass:+r.querySelector('.calc-row-mass').value||0,len:+r.querySelector('.calc-row-len').value||0,y:+r.querySelector('.calc-row-y').value||0,x:+r.querySelector('.calc-row-x').value||0})});const favItem={id:Date.now(),name,date:new Date().toLocaleString('it-IT'),base,masses};try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');list.unshift(favItem);localStorage.setItem(CALC_FAV_KEY,JSON.stringify(list));nameInput.value='';renderCalcFavorites()}catch(e){}}
 function renderCalcFavorites(){const container=document.getElementById('calc-fav-list');if(!container)return;try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');if(list.length===0){container.innerHTML='<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>';return}container.innerHTML=list.map((item,idx)=>'<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px"><div><div style="font-weight:700;color:#fff;font-size:0.9rem">\u2b50 '+escapeHTML(item.name)+'</div><div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Base: '+item.base.mass+'g / '+item.base.balance+'cm / SW'+item.base.sw+' &middot; '+(item.masses?item.masses.length:0)+' masse &middot; <span style="opacity:0.6">'+item.date+'</span></div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-secondary" onclick="loadCalcFavorite('+idx+')" style="padding:6px 14px;font-size:0.8rem">Carica</button><button class="btn btn-secondary" onclick="deleteCalcFavorite('+idx+')" style="padding:6px 12px;font-size:0.8rem;color:var(--accent-red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);margin-left:8px" title="Elimina preferito">&#x2715; Elimina</button></div></div>').join('')}catch(e){}}
 function loadCalcFavorite(idx){try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');const item=list[idx];if(!item)return;document.getElementById('calc-base-mass').value=item.base.mass;document.getElementById('calc-base-bal').value=item.base.balance;document.getElementById('calc-base-sw').value=item.base.sw;document.getElementById('calc-base-tw').value=item.base.tw;document.getElementById('calc-base-len').value=item.base.length;const tbody=document.getElementById('calc-mass-tbody');tbody.innerHTML='';if(item.masses&&item.masses.length){item.masses.forEach(m=>{const massVal=m.mass||0;const lenVal=m.len!==undefined?m.len:0;const yVal=m.y!==undefined?m.y:0;const xVal=m.x!==undefined?m.x:0;addCalcMassRow(massVal,lenVal,yVal,xVal)})}recalcCustomizationTab()}catch(e){}}
 function deleteCalcFavorite(idx){try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');const item=list[idx];if(!item)return;if(!confirm('Sei sicuro di voler eliminare la configurazione preferita "'+item.name+'"?'))return;list.splice(idx,1);localStorage.setItem(CALC_FAV_KEY,JSON.stringify(list));renderCalcFavorites()}catch(e){}}
@@ -972,7 +1221,7 @@ function stopAutoMeasurement(apply) {
   }
 }
 
-function initButtons(){const a=document.getElementById('btn-add-goal');if(a&&!a.dataset.inited){a.dataset.inited='1';a.onclick=null;a.addEventListener('click',()=>addGoalRow())}const b=document.getElementById('btn-add-constraint');if(b&&!b.dataset.inited){b.dataset.inited='1';b.onclick=null;b.addEventListener('click',()=>addConstraintRow())}}function boot(){loadState();updateGoalCurrentValues();['goal-mass','goal-balance','goal-sw','goal-tw','goal-length'].forEach(id=>document.getElementById(id).addEventListener('input',()=>onBaseChange()));document.getElementById('goal-list').addEventListener('input',()=>updateGoalCurrentValues());initButtons();renderHistory();renderPendHistory();if(!document.querySelectorAll('#calc-mass-tbody tr').length){addCalcMassRow(0,0,66,0);addCalcMassRow(0,0,18,0)}renderCalcFavorites();renderPendFavorites();renderAutoFavorites();recalcCustomizationTab();switchTab('misura-sw')}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot)}else{boot()}
+function initButtons(){const a=document.getElementById('btn-add-goal');if(a&&!a.dataset.inited){a.dataset.inited='1';a.onclick=null;a.addEventListener('click',()=>addGoalRow())}const b=document.getElementById('btn-add-constraint');if(b&&!b.dataset.inited){b.dataset.inited='1';b.onclick=null;b.addEventListener('click',()=>addConstraintRow())}}function boot(){loadState();updateGoalCurrentValues();['goal-mass','goal-balance','goal-sw','goal-tw','goal-length'].forEach(id=>document.getElementById(id).addEventListener('input',()=>onBaseChange()));document.getElementById('goal-list').addEventListener('input',()=>updateGoalCurrentValues());initButtons();renderHistory();renderPendHistory();if(!document.querySelectorAll('#calc-mass-tbody .calc-mass-row').length){addCalcMassRow(0,0,66,0);addCalcMassRow(0,0,18,0)}renderCalcFavorites();renderPendFavorites();renderAutoFavorites();recalcCustomizationTab();switchTab('misura-sw')}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot)}else{boot()}
 </script>
 </div>
 </body>
