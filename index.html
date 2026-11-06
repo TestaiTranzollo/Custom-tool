@@ -216,21 +216,32 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 .match-racket-grid label{font-size:0.74rem;color:#cbd5e1;text-transform:uppercase;font-weight:600}
 .match-racket-grid input[type="number"]{padding:7px 10px;font-size:0.95rem;font-weight:600;background:rgba(0,0,0,0.4)}
 
-.spread-banner{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px 15px;margin:14px 0 18px 0}
-.spread-item{display:flex;flex-direction:column;gap:2px}
-.spread-lbl{font-size:0.68rem;color:var(--text-secondary);text-transform:uppercase;font-weight:700;letter-spacing:0.04em}
-.spread-val{font-size:1.1rem;font-weight:800;font-variant-numeric:tabular-nums}
+.spread-banner{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px 15px;margin:14px 0 18px 0}
+.spread-item,.spread-metric{display:flex;flex-direction:column;gap:3px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:8px 12px}
+.spread-lbl,.sm-lbl{font-size:0.68rem;color:var(--text-secondary);text-transform:uppercase;font-weight:700;letter-spacing:0.04em}
+.spread-val,.sm-val{font-size:1.05rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.3}
 .spread-sub{font-size:0.72rem;color:var(--text-secondary)}
 
+.match-racket-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.match-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:0.75rem;font-weight:700;line-height:1.2;white-space:nowrap}
+.match-badge-cyan{background:rgba(6,182,212,0.15);color:var(--accent-cyan);border:1px solid rgba(6,182,212,0.3)}
+.match-badge-amber{background:rgba(245,158,11,0.15);color:var(--accent-amber);border:1px solid rgba(245,158,11,0.3)}
+.match-badge-green{background:rgba(16,185,129,0.15);color:var(--accent-green);border:1px solid rgba(16,185,129,0.3)}
+
 .plan-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:18px}
-.plan-tab-card{background:rgba(255,255,255,0.03);border:1px solid var(--border-color);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all 0.15s;text-align:left}
-.plan-tab-card:hover{background:rgba(255,255,255,0.06);border-color:rgba(6,182,212,0.4)}
-.plan-tab-card.active{background:linear-gradient(135deg,rgba(6,182,212,0.18) 0%,rgba(17,24,39,0.9) 100%);border:2px solid var(--accent-cyan);box-shadow:0 4px 18px rgba(6,182,212,0.2)}
+.plan-tab-card,.plan-tab-btn{background:rgba(255,255,255,0.03);border:1px solid var(--border-color);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all 0.15s;text-align:left;color:var(--text-secondary);font-size:0.86rem;font-weight:700;line-height:1.3}
+.plan-tab-card:hover,.plan-tab-btn:hover{background:rgba(255,255,255,0.07);border-color:rgba(6,182,212,0.4);color:#fff}
+.plan-tab-card.active,.plan-tab-btn.active{background:linear-gradient(135deg,rgba(6,182,212,0.2) 0%,rgba(17,24,39,0.9) 100%);border:2px solid var(--accent-cyan);color:#fff;box-shadow:0 4px 18px rgba(6,182,212,0.2)}
 .plan-tab-title{font-size:0.9rem;font-weight:700;color:#fff;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;gap:6px}
 .plan-tab-meta{font-size:0.75rem;color:var(--text-secondary);line-height:1.35}
 
 .recipe-card{background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:12px;padding:15px 18px;margin-bottom:12px}
 .recipe-card.untouched{border-color:rgba(16,185,129,0.4);background:rgba(16,185,129,0.05)}
+
+.comparison-table{width:100%;border-collapse:collapse;margin-top:10px;background:rgba(255,255,255,0.015);border:1px solid var(--border-color);border-radius:8px;overflow:hidden}
+.comparison-table th{background:rgba(255,255,255,0.05);padding:10px 12px;font-size:0.75rem;text-transform:uppercase;color:var(--text-secondary);font-weight:700;text-align:left;border-bottom:1px solid var(--border-color)}
+.comparison-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--text-primary);font-variant-numeric:tabular-nums}
+.comparison-table tr:hover td{background:rgba(255,255,255,0.02)}
 @media(max-width:600px){
   .submode-bar{grid-template-columns:1fr}
   .match-racket-name{width:100%}
@@ -316,12 +327,12 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
         <div class="form-group">
           <label for="match-priority-mode">Parametri Prioritari da Allineare</label>
           <select id="match-priority-mode" onchange="onMatchConfigChange()">
-            <option value="sw-mgri" selected>&#x2b50; Dinamico: SW + MGR/I (Consigliato)</option>
-            <option value="sw-mgri-bal">&#x2696;&#xfe0f; Dinamico + Bilanciamento (SW + MGR/I + Bil.)</option>
-            <option value="full">&#x1f3c6; Match Totale (SW + MGR/I + Bil. + Massa)</option>
-            <option value="sw-tw-mgri">&#x1f6e1;&#xfe0f; Dinamico + Twistweight (SW + MGR/I + TW)</option>
+            <option value="sw-mgri" selected>&#x2b50; Massima Uniformit&agrave; Dinamica (SW + MGR/I - Consigliato)</option>
+            <option value="sw-mgri-bal">&#x2696;&#xfe0f; Massima Uniformit&agrave; + Bilanciamento (SW + MGR/I + Bil.)</option>
+            <option value="full">&#x1f3c6; Match Totale Completo (SW + MGR/I + Bil. + Massa)</option>
+            <option value="sw-tw-mgri">&#x1f6e1;&#xfe0f; Massima Uniformit&agrave; + Twistweight (SW + MGR/I + TW)</option>
           </select>
-          <div class="help-text" id="match-priority-hint">Allinea alla perfezione <strong>SW</strong> e <strong>MGR/I</strong> (che racchiude l'effetto combinato di SW e Bilanciamento) con il minimo piombo possibile, senza appesantire inutilmente i telai pi&ugrave; leggeri.</div>
+          <div class="help-text" id="match-priority-hint"><strong>Massima Uniformit&agrave; Dinamica (Consigliato):</strong> allinea alla perfezione <strong>SW</strong> e <strong>MGR/I</strong> (che racchiude l'effetto congiunto di SW e Bilanciamento statico), rendendo tutte le racchette identiche all'impatto e allo swing con il minimo quantitativo possibile di piombo.</div>
         </div>
 
         <div class="form-group">
@@ -468,9 +479,9 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <label style="font-size:0.85rem;color:var(--text-secondary);cursor:pointer" onclick="toggleLimitsZone(this)">&#x2699; Limiti massa per zona <span class="ml-status">(inattivi)</span> <span style="font-size:0.7rem">&#x25bc;</span></label>
 <div style="display:none;margin-top:6px">
 <div style="display:flex;gap:8px;flex-wrap:wrap">
-<label style="font-size:0.78rem;color:var(--text-secondary)">Manico (&le;20cm): <input type="number" id="limit-manico" step="0.5" min="0" value="40" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"></label>
-<label style="font-size:0.78rem;color:var(--text-secondary)">Cuore (21-35cm): <input type="number" id="limit-cuore" step="0.5" min="0" value="10" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"></label>
-<label style="font-size:0.78rem;color:var(--text-secondary)">Ovale/testa (&ge;35cm): <input type="number" id="limit-ovale" step="0.5" min="0" value="10" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"></label>
+<label style="font-size:0.78rem;color:var(--text-secondary)">Manico (&le; 20 cm): <input type="number" id="limit-manico" step="0.5" min="0" value="40" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"></label>
+<label style="font-size:0.78rem;color:var(--text-secondary)">Cuore (21 - 35 cm): <input type="number" id="limit-cuore" step="0.5" min="0" value="10" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"></label>
+<label style="font-size:0.78rem;color:var(--text-secondary)">Ovale / testa (&ge; 35 cm): <input type="number" id="limit-ovale" step="0.5" min="0" value="10" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"></label>
 </div>
 </div>
 </div>
@@ -725,10 +736,10 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <div id="calc-mode-mass-sec">
 <div class="calc-presets-bar">
 <span class="calc-presets-title">&#x26a1; Preset Rapidi:</span>
-<button type="button" class="btn-preset" onclick="addCalcPreset('tappo')">&#x1f518; + Tappo (2cm)</button>
-<button type="button" class="btn-preset" onclick="addCalcPreset('manico')">&#x1f3f8; + Manico (10cm)</button>
-<button type="button" class="btn-preset" onclick="addCalcPreset('ore39')">&#x2696;&#xfe0f; + Ore 3 &amp; 9 (52cm)</button>
-<button type="button" class="btn-preset" onclick="addCalcPreset('ore12')">&#x1f51d; + Ore 12 (66cm)</button>
+<button type="button" class="btn-preset" onclick="addCalcPreset('tappo')">&#x1f518; + Tappo (2 cm)</button>
+<button type="button" class="btn-preset" onclick="addCalcPreset('manico')">&#x1f3f8; + Manico (10 cm)</button>
+<button type="button" class="btn-preset" onclick="addCalcPreset('ore39')">&#x2696;&#xfe0f; + Ore 3 &amp; 9 (52 cm)</button>
+<button type="button" class="btn-preset" onclick="addCalcPreset('ore12')">&#x1f51d; + Ore 12 (66 cm)</button>
 </div>
 
 <div id="calc-mass-tbody" class="calc-cards-list"></div>
@@ -918,8 +929,8 @@ function getParamValue(r,p){switch(p){case'sw':return r.swingweight;case'tw':ret
 function getParamUnit(p){return{sw:'kg\u00b7cm\u00b2',rw:'kg\u00b7cm\u00b2',mgri:'',balance:'cm',tw:'kg\u00b7cm\u00b2',mass:'g',ico:''}[p]||''}
 function getParamDecimals(p){return{sw:1,rw:1,mgri:2,balance:2,tw:2,mass:1,ico:4}[p]||1}
 function getErrorColor(p,a){const t={sw:{g:0.8,y:2.5},mgri:{g:0.04,y:0.12},balance:{g:0.1,y:0.25},tw:{g:0.15,y:0.4},mass:{g:1.0,y:2.5},rw:{g:0.8,y:2.5},ico:{g:0.003,y:0.01}}[p];if(!t)return a<0.5?'var(--accent-green)':a<2?'var(--accent-amber)':'var(--accent-red)';if(a<=t.g)return'var(--accent-green)';if(a<=t.y)return'var(--accent-amber)';return'var(--accent-red)'}
-function renderWeightEntry(w){return'<div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.18);border-radius:6px;padding:5px 12px;margin-bottom:4px;font-size:0.84rem"><strong style="color:#fff;font-size:0.92rem">'+w.mass.toFixed(1)+'g</strong> @ '+w.label+'<br><span style="color:var(--text-secondary)">Y = <strong style="color:var(--accent-cyan)">'+w.y.toFixed(1)+' cm</strong>'+(w.x!==0?' &nbsp; X = <span style="font-size:0.72rem">'+w.x.toFixed(1)+' cm</span>':'')+'</span></div>'}
-function renderCombinedWeights(weights){const used=new Set();const out=[];for(let i=0;i<weights.length;i++){if(used.has(i))continue;used.add(i);let paired=false;for(let j=i+1;j<weights.length;j++){if(used.has(j))continue;if(Math.abs(weights[i].x)===Math.abs(weights[j].x)&&Math.abs(weights[i].y-weights[j].y)<0.01&&weights[i].x!==0){used.add(j);const l1=weights[i].label.replace(/ (DX|SX)$/,'');const tt=weights[i].mass+weights[j].mass;out.push('<div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.18);border-radius:6px;padding:5px 12px;margin-bottom:4px;font-size:0.84rem"><strong style="color:#fff;font-size:0.92rem">'+tt.toFixed(1)+'g tot</strong> @ '+l1+' (DX+SX)<br><span style="color:var(--text-secondary)">Y = <strong style="color:var(--accent-cyan)">'+weights[i].y.toFixed(1)+' cm</strong> &middot; <span style="font-size:0.75rem;color:var(--accent-amber)">'+weights[i].mass.toFixed(2)+'g per lato</span></span></div>');paired=true;break}}if(!paired)out.push(renderWeightEntry(weights[i]))}return out.join('')}
+function renderWeightEntry(w){return'<div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.18);border-radius:6px;padding:5px 12px;margin-bottom:4px;font-size:0.84rem"><strong style="color:#fff;font-size:0.92rem">'+w.mass.toFixed(1)+' g</strong> @ '+w.label+'<br><span style="color:var(--text-secondary)">Y = <strong style="color:var(--accent-cyan)">'+w.y.toFixed(1)+' cm</strong>'+(w.x!==0?' &nbsp; X = <span style="font-size:0.72rem">'+w.x.toFixed(1)+' cm</span>':'')+'</span></div>'}
+function renderCombinedWeights(weights){const used=new Set();const out=[];for(let i=0;i<weights.length;i++){if(used.has(i))continue;used.add(i);let paired=false;for(let j=i+1;j<weights.length;j++){if(used.has(j))continue;if(Math.abs(weights[i].x)===Math.abs(weights[j].x)&&Math.abs(weights[i].y-weights[j].y)<0.01&&weights[i].x!==0){used.add(j);const l1=weights[i].label.replace(/ (DX|SX)$/,'');const tt=weights[i].mass+weights[j].mass;out.push('<div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.18);border-radius:6px;padding:5px 12px;margin-bottom:4px;font-size:0.84rem"><strong style="color:#fff;font-size:0.92rem">'+tt.toFixed(1)+' g tot</strong> @ '+l1+' (DX+SX)<br><span style="color:var(--text-secondary)">Y = <strong style="color:var(--accent-cyan)">'+weights[i].y.toFixed(1)+' cm</strong> &middot; <span style="font-size:0.75rem;color:var(--accent-amber)">'+weights[i].mass.toFixed(2)+' g per lato</span></span></div>');paired=true;break}}if(!paired)out.push(renderWeightEntry(weights[i]))}return out.join('')}
 function solveLinearLeastSquares(A,b){
   const m=A.length,n=A[0].length;
   const ATA=Array.from({length:n},()=>new Array(n).fill(0));
@@ -1123,13 +1134,13 @@ const base=getGoalBaseRacket();
 window._rawSolutions=solutions;window._rawBase=base;window._rawGoals=goals;window._rawParam=param;window._rawTarget=target;window._rawMaxW=maxW
 for(const sol of solutions){sol.nWeights=countSymmetricZones(sol.weights);sol._multiGoals={};const r=customizeRacketFromWeights(base,sol.weights);for(const g of goals){sol._multiGoals[g.param]=getParamValue(r,g.param)}sol.achieved=sol._multiGoals[param]}
 const sort=document.getElementById('sort-select')?document.getElementById('sort-select').value:'precision';const sortFn=getSortFn(sort,base,target,goals);const sorted=[...solutions].sort(sortFn);const bestOverall=sorted.reduce((b,s)=>computeMultiGoalScoreSort(s,base,goals)<computeMultiGoalScoreSort(b,base,goals)?s:b);if(sorted[0]!==bestOverall){const idx=sorted.indexOf(bestOverall);sorted.splice(idx,1);sorted.unshift(bestOverall)}const bestSol=sorted[0];const groups={};for(const sol of sorted){(groups[sol.nWeights]=groups[sol.nWeights]||[]).push(sol)}
-let html='<div class="goal-summary" style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:14px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><span style="font-size:0.95rem">\u{1f3af} '+goals.map((g,i)=>{const c=getParamValue(base,g.param);const d=getParamDecimals(g.param);return'<span style="'+(i===0?'color:#fff;font-weight:600':'color:var(--text-secondary);font-size:0.85rem')+'">'+g.param.toUpperCase()+' '+c.toFixed(d)+'\u2192<strong style="color:var(--accent-cyan)">'+g.target.toFixed(d)+'</strong></span>'}).join(' &nbsp;&middot;&nbsp; ')+'</span><span style="font-size:0.85rem;color:var(--text-secondary)">'+solutions.length+' soluzioni trovate</span></div>'
+let html='<div class="goal-summary" style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:14px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><span style="font-size:0.95rem">\u{1f3af} '+goals.map((g,i)=>{const c=getParamValue(base,g.param);const d=getParamDecimals(g.param);return'<span style="'+(i===0?'color:#fff;font-weight:600':'color:var(--text-secondary);font-size:0.85rem')+'">'+g.param.toUpperCase()+' '+c.toFixed(d)+' \u2192 <strong style="color:var(--accent-cyan)">'+g.target.toFixed(d)+'</strong></span>'}).join(' &nbsp;&middot;&nbsp; ')+'</span><span style="font-size:0.85rem;color:var(--text-secondary)">'+solutions.length+' soluzioni trovate</span></div>'
 const emojis=['\u{1f539}','\u{1f538}','\u{1f53b}','\u{1f7e2}','\u{1f535}','\u{25ab}','\u{25aa}'];const displayOrder=[]
 {const sol=bestOverall;displayOrder.push(sol);const op=['mass','balance','sw','mgri','rw','tw','ico'].filter(p=>!goals.map(g=>g.param).includes(p));let oh='';if(op.length){const mr=customizeRacketFromWeights(base,sol.weights);oh=op.map(p=>{const bv=getParamValue(base,p);const nv=getParamValue(mr,p);const d=nv-bv;const s=d>=0?'+':'';const u=getParamUnit(p);const dc=d>0.05?'var(--accent-amber)':d<-0.05?'var(--accent-cyan)':'var(--text-secondary)';return'<span style="font-size:0.72rem;color:var(--text-secondary);background:rgba(255,255,255,0.03);padding:2px 8px;border-radius:4px"><strong style="color:#999">'+p.toUpperCase()+'</strong> '+nv.toFixed(getParamDecimals(p))+(u?' '+u:'')+' <span style="color:'+dc+'">('+s+d.toFixed(getParamDecimals(p))+')</span></span>'}).join('')}
-html+='<div style="background:rgba(245,158,11,0.08);border:2px solid rgba(245,158,11,0.5);border-radius:10px;padding:12px 15px;margin-bottom:14px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px"><div><span style="color:var(--accent-amber);margin-right:4px">\u2b50</span><span style="font-weight:700;color:#fff;font-size:1.1rem">Soluzione Consigliata ('+sol.nWeights+(sol.nWeights>1?' zone':' zona')+')</span><span style="font-size:0.78rem;color:var(--accent-cyan);margin-left:8px;font-weight:600">+'+sol.totalMass.toFixed(1)+'g tot</span></div><div style="display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px">'+goals.map(g=>{const av=sol._multiGoals[g.param];const ae2=Math.abs(av-g.target);const ac=getErrorColor(g.param,ae2);return'<span style="font-weight:700;font-size:1.05rem;color:'+ac+'">'+g.param.toUpperCase()+' '+av.toFixed(getParamDecimals(g.param))+' <span style="font-size:0.72rem;opacity:0.8">(\u0394 '+(av-g.target>=0?'+':'')+(av-g.target).toFixed(getParamDecimals(g.param))+')</span></span>'}).join('')+'</div></div>'+(oh?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+oh+'</div>':'')+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">'+renderCombinedWeights(sol.weights)+'</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-secondary" style="padding:5px 12px;font-size:0.78rem" onclick="openSolutionPopup(0)">\u{1f4cd} Dettagli & Grafico</button><button class="btn btn-secondary" style="padding:5px 12px;font-size:0.78rem;border-color:rgba(245,158,11,0.4);color:var(--accent-amber)" onclick="sendGoalSolToManual(0)">\u{1f9ee} Simula in Manuale</button></div></div>'}
+html+='<div style="background:rgba(245,158,11,0.08);border:2px solid rgba(245,158,11,0.5);border-radius:10px;padding:12px 15px;margin-bottom:14px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px"><div><span style="color:var(--accent-amber);margin-right:4px">\u2b50</span><span style="font-weight:700;color:#fff;font-size:1.1rem">Soluzione Consigliata ('+sol.nWeights+(sol.nWeights>1?' zone':' zona')+')</span><span style="font-size:0.78rem;color:var(--accent-cyan);margin-left:8px;font-weight:600">+'+sol.totalMass.toFixed(1)+' g tot</span></div><div style="display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px">'+goals.map(g=>{const av=sol._multiGoals[g.param];const ae2=Math.abs(av-g.target);const ac=getErrorColor(g.param,ae2);return'<span style="font-weight:700;font-size:1.05rem;color:'+ac+'">'+g.param.toUpperCase()+' '+av.toFixed(getParamDecimals(g.param))+' <span style="font-size:0.72rem;opacity:0.8">(\u0394 '+(av-g.target>=0?'+':'')+(av-g.target).toFixed(getParamDecimals(g.param))+')</span></span>'}).join('')+'</div></div>'+(oh?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+oh+'</div>':'')+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">'+renderCombinedWeights(sol.weights)+'</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-secondary" style="padding:5px 12px;font-size:0.78rem" onclick="openSolutionPopup(0)">\u{1f4cd} Dettagli & Grafico</button><button class="btn btn-secondary" style="padding:5px 12px;font-size:0.78rem;border-color:rgba(245,158,11,0.4);color:var(--accent-amber)" onclick="sendGoalSolToManual(0)">\u{1f9ee} Simula in Manuale</button></div></div>'}
 const ns=Object.keys(groups).map(Number).sort((a,b)=>a-b);for(const n of ns){const group=groups[n];if(group.length===0)continue
 html+='<h4 style="margin:18px 0 10px 0;color:#fff;font-size:0.98rem">'+emojis[Math.min(n-1,emojis.length-1)]+' '+n+' Zon'+(n>1?'e Simmetriche':'a')+' ('+group.length+' opzioni)</h4>'
-const solDivs=[];for(let i=0;i<group.length;i++){const sol=group[i];displayOrder.push(sol);const solIdx=displayOrder.length-1;const isBest=sol===bestSol;const sortEl=document.getElementById('sort-select');const sortVal=sortEl?sortEl.value:'precision';let sortDisplay;if(sortVal==='mass-asc'){sortDisplay='Massa aggiunta +'+sol.totalMass.toFixed(1)+'g'}else if(sortVal==='precision'){sortDisplay='Massa totale +'+sol.totalMass.toFixed(1)+'g'}else{const met=sol._metrics||computeSolutionMetrics(base,sol)._metrics;if(sortVal==='sw-asc'||sortVal==='sw-desc')sortDisplay='SW +'+met.swAdded.toFixed(1)+' kg\u00b7cm\u00b2';else if(sortVal==='tw-asc'||sortVal==='tw-desc')sortDisplay='TW +'+met.twAdded.toFixed(2)+' kg\u00b7cm\u00b2';else if(sortVal==='mgri-asc'||sortVal==='mgri-desc')sortDisplay='MGR/I '+met.mgri.toFixed(2);else if(sortVal==='rw-asc'||sortVal==='rw-desc')sortDisplay='RW '+met.rw.toFixed(1)+' kg\u00b7cm\u00b2';else if(sortVal==='ico-asc'||sortVal==='ico-desc')sortDisplay='ICO '+met.ico.toFixed(4)}
+const solDivs=[];for(let i=0;i<group.length;i++){const sol=group[i];displayOrder.push(sol);const solIdx=displayOrder.length-1;const isBest=sol===bestSol;const sortEl=document.getElementById('sort-select');const sortVal=sortEl?sortEl.value:'precision';let sortDisplay;if(sortVal==='mass-asc'){sortDisplay='Massa aggiunta +'+sol.totalMass.toFixed(1)+' g'}else if(sortVal==='precision'){sortDisplay='Massa totale +'+sol.totalMass.toFixed(1)+' g'}else{const met=sol._metrics||computeSolutionMetrics(base,sol)._metrics;if(sortVal==='sw-asc'||sortVal==='sw-desc')sortDisplay='SW +'+met.swAdded.toFixed(1)+' kg\u00b7cm\u00b2';else if(sortVal==='tw-asc'||sortVal==='tw-desc')sortDisplay='TW +'+met.twAdded.toFixed(2)+' kg\u00b7cm\u00b2';else if(sortVal==='mgri-asc'||sortVal==='mgri-desc')sortDisplay='MGR/I '+met.mgri.toFixed(2);else if(sortVal==='rw-asc'||sortVal==='rw-desc')sortDisplay='RW '+met.rw.toFixed(1)+' kg\u00b7cm\u00b2';else if(sortVal==='ico-asc'||sortVal==='ico-desc')sortDisplay='ICO '+met.ico.toFixed(4)}
 const goalParams=goals.map(g=>g.param);const otherParams=['mass','balance','sw','mgri','rw','tw','ico'].filter(p=>!goalParams.includes(p));let otherHtml='';if(otherParams.length){const modR=customizeRacketFromWeights(base,sol.weights);otherHtml=otherParams.map(p=>{const bv=getParamValue(base,p);const nv=getParamValue(modR,p);const delta=nv-bv;const s=delta>=0?'+':'';const u=getParamUnit(p);const dc=delta>0.05?'var(--accent-amber)':delta<-0.05?'var(--accent-cyan)':'var(--text-secondary)';return'<span style="font-size:0.72rem;color:var(--text-secondary);background:rgba(255,255,255,0.03);padding:2px 8px;border-radius:4px"><strong style="color:#999">'+p.toUpperCase()+'</strong> '+nv.toFixed(getParamDecimals(p))+(u?' '+u:'')+' <span style="color:'+dc+'">('+s+delta.toFixed(getParamDecimals(p))+')</span></span>'}).join('')}
 solDivs.push('<div style="background:rgba(255,255,255,0.02);border:1px solid '+(isBest?'rgba(245,158,11,0.4)':'var(--border-color)')+';border-radius:10px;padding:12px 15px;margin-bottom:8px'+(i>=4?';display:none':'')+'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px"><div>'+(isBest?'<span style="color:var(--accent-amber);margin-right:4px">\u2b50</span>':'')+'<span style="font-weight:700;color:#fff;font-size:1.05rem">'+sortDisplay+'</span></div><div style="display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px">'+goals.map(g=>{const av=sol._multiGoals[g.param];const ae2=Math.abs(av-g.target);const ac=getErrorColor(g.param,ae2);return'<span style="font-weight:700;font-size:1rem;color:'+ac+'">'+g.param.toUpperCase()+' '+av.toFixed(getParamDecimals(g.param))+'</span>'}).join('')+'</div></div>'+(otherHtml?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+otherHtml+'</div>':'')+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">'+renderCombinedWeights(sol.weights)+'</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-secondary" style="padding:4px 12px;font-size:0.78rem" onclick="openSolutionPopup('+solIdx+')">\u{1f4cd} Dettagli & Grafico</button><button class="btn btn-secondary" style="padding:4px 12px;font-size:0.78rem;border-color:rgba(245,158,11,0.4);color:var(--accent-amber)" onclick="sendGoalSolToManual('+solIdx+')">\u{1f9ee} Simula in Manuale</button></div></div>')}
 html+=solDivs.join('')
@@ -1164,7 +1175,7 @@ let filtered=unique.filter(sol=>computeMultiGoalScoreSort(sol,base,goals)<6.0);
 if(filtered.length===0&&unique.length>0)filtered=unique.slice(0,12);
 const grouped={};for(const sol of filtered){(grouped[sol.nWeights]=grouped[sol.nWeights]||[]).push(sol)}
 const final=[];for(const n of Object.keys(grouped).map(Number).sort((a,b)=>a-b)){grouped[n].sort((a,b)=>computeMultiGoalScoreSort(a,base,goals)-computeMultiGoalScoreSort(b,base,goals));final.push(...grouped[n].slice(0,8))}
-displayGoalResults(final,goals,param,target,maxW);addHistory('\u{1f3af} '+goals.map(g=>g.param.toUpperCase()+'='+g.target).join(', ')+'\u2192'+(final.length>0?final[0].achieved.toFixed(getParamDecimals(param)):'?'));saveState()},20)}
+displayGoalResults(final,goals,param,target,maxW);addHistory('\u{1f3af} '+goals.map(g=>g.param.toUpperCase()+'='+g.target).join(', ')+' \u2192 '+(final.length>0?final[0].achieved.toFixed(getParamDecimals(param)):'?'));saveState()},20)}
 function openSolutionPopup(idx){const sol=window._goalSolutions[idx];if(!sol)return;const base=getGoalBaseRacket();openCustomPopupWithWeights(sol.weights,base,'Soluzione #'+((idx||0)+1),sol,true)}
 function openCustomPopupWithWeights(weights,baseRack,title,solObj,allowApply){
   const used=new Set();const h=[];
@@ -1176,12 +1187,12 @@ function openCustomPopupWithWeights(weights,baseRack,title,solObj,allowApply){
         used.add(j);
         const l1=weights[i].label.replace(/ (DX|SX)$/,'');
         const t=weights[i].mass+weights[j].mass;
-        h.push('<div class="weight-detail-item"><span><strong>'+t.toFixed(2)+'g tot</strong> @ '+l1+' (DX+SX)</span><span style="color:var(--text-secondary);font-size:0.8rem">Y '+weights[i].y.toFixed(1)+' cm &middot; <strong style="color:var(--accent-amber)">'+weights[i].mass.toFixed(2)+'g per lato</strong></span></div>');
+        h.push('<div class="weight-detail-item"><span><strong>'+t.toFixed(2)+' g tot</strong> @ '+l1+' (DX+SX)</span><span style="color:var(--text-secondary);font-size:0.8rem">Y '+weights[i].y.toFixed(1)+' cm &middot; <strong style="color:var(--accent-amber)">'+weights[i].mass.toFixed(2)+' g per lato</strong></span></div>');
         p=true;break;
       }
     }
     if(!p){
-      h.push('<div class="weight-detail-item"><span><strong>'+weights[i].mass.toFixed(2)+'g</strong> @ '+weights[i].label+'</span><span style="color:var(--text-secondary);font-size:0.8rem">Y '+weights[i].y.toFixed(1)+' cm'+(weights[i].x!==0?' &middot; X '+weights[i].x.toFixed(1)+' cm':'')+'</span></div>');
+      h.push('<div class="weight-detail-item"><span><strong>'+weights[i].mass.toFixed(2)+' g</strong> @ '+weights[i].label+'</span><span style="color:var(--text-secondary);font-size:0.8rem">Y '+weights[i].y.toFixed(1)+' cm'+(weights[i].x!==0?' &middot; X '+weights[i].x.toFixed(1)+' cm':'')+'</span></div>');
     }
   }
   if(h.length===0)h.push('<div class="weight-detail-item"><span>Nessun peso aggiuntivo richiesto (Telaio Riferimento)</span></div>');
@@ -1197,7 +1208,7 @@ function openCustomPopupWithWeights(weights,baseRack,title,solObj,allowApply){
 }
 function closeSolutionPopup(){document.getElementById('modal-overlay').classList.remove('open');window._pendingSolution=null}
 function confirmSolution(){const sol=window._pendingSolution;if(!sol)return
-appliedStrips=[];for(const w of sol.weights){const strip={id:Date.now()+Math.random(),name:'CT '+w.mass.toFixed(1)+'g @ '+w.label,mass:w.mass,y:w.y,sw_added:(w.mass/1000)*Math.pow(w.y-10,2),tw_added:(w.mass/1000)*w.x*w.x,arcLen:0,indices:new Set()};appliedStrips.push(strip)}
+appliedStrips=[];for(const w of sol.weights){const strip={id:Date.now()+Math.random(),name:'CT '+w.mass.toFixed(1)+' g @ '+w.label,mass:w.mass,y:w.y,sw_added:(w.mass/1000)*Math.pow(w.y-10,2),tw_added:(w.mass/1000)*w.x*w.x,arcLen:0,indices:new Set()};appliedStrips.push(strip)}
 closeSolutionPopup();updateComparison();saveState();setTimeout(()=>{const el=document.getElementById('cmp-mass-o');if(el){const panel=el.closest('.panel');if(panel)panel.scrollIntoView({behavior:'smooth',block:'start'})}},100)}
 function sendGoalSolToManual(idx){
   const sol=window._goalSolutions&&window._goalSolutions[idx];if(!sol)return;
@@ -1243,7 +1254,7 @@ for(let y=2;y<handleTop;y+=2){ctx.beginPath();ctx.moveTo(r2x(-gripW),r2y(y));ctx
 ctx.fillStyle='#222738';ctx.beginPath();ctx.arc(r2x(0),r2y(0),gripW*scale,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=1;ctx.stroke()
 for(const w of weights){const px=r2x(w.x),py=r2y(w.y);const g=ctx.createRadialGradient(px,py,0,px,py,22);g.addColorStop(0,'rgba(255,20,147,0.4)');g.addColorStop(1,'rgba(255,20,147,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,22,0,2*Math.PI);ctx.fill()
 ctx.shadowColor='rgba(255,20,147,0.6)';ctx.shadowBlur=10;ctx.fillStyle='#ff1493';ctx.beginPath();ctx.arc(px,py,6,0,2*Math.PI);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='rgba(255,255,255,0.5)';ctx.lineWidth=2;ctx.stroke()
-ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=6;ctx.fillStyle='#ff1493';ctx.font='bold 13px -apple-system,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(w.mass.toFixed(1)+'g',px,py-12);ctx.shadowBlur=0}
+ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=6;ctx.fillStyle='#ff1493';ctx.font='bold 13px -apple-system,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(w.mass.toFixed(1)+' g',px,py-12);ctx.shadowBlur=0}
 ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=4;ctx.fillStyle='#ff1493';ctx.textAlign='right';ctx.font='bold 11px -apple-system,sans-serif';for(let y=0;y<=Math.ceil(activeLen);y+=10){ctx.fillText(y+'',r2x(-HOOP_B*1.7),r2y(y)+3)};ctx.shadowBlur=0}
 const STORAGE_KEY='custom_tool_data';const HISTORY_KEY='custom_tool_history'
 function getStateSnapshot(){return{base:{mass:+document.getElementById('goal-mass').value,balance:+document.getElementById('goal-balance').value,sw:+document.getElementById('goal-sw').value,tw:+document.getElementById('goal-tw').value,length:+document.getElementById('goal-length').value},strips:appliedStrips.map(s=>({mass:s.mass,y:s.y,sw_added:s.sw_added,tw_added:s.tw_added,name:s.name})),extension:{...racketExtension},goals:getGoals(),maxWeights:+document.getElementById('goal-max-weights').value,constraints:getConstraints(),massLimits:getMassLimits()}}
@@ -1269,7 +1280,7 @@ if(s.goals&&s.goals.length){document.querySelectorAll('#goal-list .goal-row').fo
 onBaseChange();updateGoalCurrentValues();saveState()}catch(e){}}
 function renderHistory(){const container=document.getElementById('history-list');if(!container)return;try{const h=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]')
 if(h.length===0){container.innerHTML='<div class="help-text" style="text-align:center;padding:15px;color:var(--text-secondary)">Nessuna cronologia. Le analisi vengono salvate automaticamente.</div>';return}
-container.innerHTML=h.map((entry,idx)=>{const b=entry&&entry.state&&entry.state.base;return'<div class="history-item" onclick="restoreFromHistory('+idx+')" style="cursor:pointer;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:8px 12px;margin-bottom:5px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-weight:600;color:#fff;font-size:0.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(entry?entry.label:'?')+'</span><span style="font-size:0.65rem;color:var(--text-secondary);flex-shrink:0">'+(entry?entry.date:'')+'</span></div><div style="font-size:0.7rem;color:var(--text-secondary);margin-top:2px">'+(b?b.mass+'g / '+b.balance+'cm / SW'+b.sw:'')+'</div></div>'}).join('')
+container.innerHTML=h.map((entry,idx)=>{const b=entry&&entry.state&&entry.state.base;return'<div class="history-item" onclick="restoreFromHistory('+idx+')" style="cursor:pointer;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:8px 12px;margin-bottom:5px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-weight:600;color:#fff;font-size:0.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(entry?entry.label:'?')+'</span><span style="font-size:0.65rem;color:var(--text-secondary);flex-shrink:0">'+(entry?entry.date:'')+'</span></div><div style="font-size:0.7rem;color:var(--text-secondary);margin-top:2px">'+(b?b.mass+' g / '+b.balance+' cm / SW '+b.sw:'')+'</div></div>'}).join('')
 }catch(e){console.error('renderHistory error:',e)}}
 function onBaseChange(){baseRacket=new Racket(+document.getElementById('goal-mass').value||300,+document.getElementById('goal-balance').value||32,+document.getElementById('goal-sw').value||315,+document.getElementById('goal-tw').value||14,+document.getElementById('goal-length').value||68.58);buildHoopGeometry(baseRacket.length);updateComparison();updateGoalCurrentValues();saveState()}
 function switchTab(name){document.querySelectorAll('.tab-pane').forEach(e=>e.style.display='none');document.querySelectorAll('.tab-btn').forEach(e=>{e.classList.toggle('active',e.dataset.tab===name);e.style.borderBottomColor=e.dataset.tab===name?'var(--accent-cyan)':'transparent';e.style.color=e.dataset.tab===name?'var(--accent-cyan)':'var(--text-secondary)'});document.querySelector('.tab-pane[data-tab="'+name+'"]').style.display=''}
@@ -1289,6 +1300,9 @@ function switchAutoSubMode(mode){
     if(bM)bM.classList.add('active');
     if(bS)bS.classList.remove('active');
     updateMatchDiagnostics();
+    if(!currentMatchingPlans||currentMatchingPlans.length===0){
+      runMultiRacketMatcher();
+    }
   }
 }
 function toggleLimitsZone(labelEl){const container=labelEl.nextElementSibling;if(!container)return;const isHidden=container.style.display==='none';container.style.display=isHidden?'':'none';const statusEl=labelEl.querySelector('.ml-status');if(statusEl){statusEl.textContent=isHidden?'(attivi)':'(inattivi)'}}
@@ -1313,6 +1327,7 @@ function loadSampleMatchingSet(){
   ];
   renderMatchRacketList();
   updateMatchDiagnostics();
+  runMultiRacketMatcher();
   saveMatchState();
 }
 function saveMatchState(){
@@ -1345,6 +1360,7 @@ function loadMatchState(){
   onMatchConfigChange();
   onMatchTargetModeChange();
   updateMatchDiagnostics();
+  runMultiRacketMatcher();
 }
 function renderMatchRacketList(){
   const c=document.getElementById('match-rackets-container');
@@ -1381,7 +1397,7 @@ function updateMasterSelectOptions(){
   const sel=document.getElementById('match-master-select');
   if(!sel)return;
   const curVal=sel.value||'0';
-  sel.innerHTML=matchRackets.map((rk,idx)=>'<option value="'+idx+'"'+(String(idx)===curVal?' selected':'')+'>#'+(idx+1)+' '+escapeHTML(rk.name)+' ('+rk.mass+'g / '+rk.balance+'cm / SW '+rk.sw+')</option>').join('');
+  sel.innerHTML=matchRackets.map((rk,idx)=>'<option value="'+idx+'"'+(String(idx)===curVal?' selected':'')+'>#'+(idx+1)+' '+escapeHTML(rk.name)+' ('+rk.mass+' g / '+rk.balance+' cm / SW '+rk.sw+')</option>').join('');
 }
 function syncMatchRacketsFromDOM(){
   const cards=document.querySelectorAll('#match-rackets-container .match-racket-card');
@@ -1502,10 +1518,10 @@ function onMatchConfigChange(){
   const hint=document.getElementById('match-priority-hint');
   if(!hint)return;
   const hints={
-    'sw-mgri':'Allinea alla perfezione <strong>SW</strong> e <strong>MGR/I</strong> (che racchiude l\'effetto combinato di SW e Bilanciamento) con il minimo piombo possibile, senza appesantire inutilmente i telai pi\u00f9 leggeri.',
-    'sw-mgri-bal':'Allinea prioritariamente <strong>SW</strong>, <strong>MGR/I</strong> e <strong>Bilanciamento</strong> statico (tolleranza strettissima anche in equilibrio).',
-    'full':'Clonazione completa: allinea <strong>SW</strong>, <strong>MGR/I</strong>, <strong>Bilanciamento</strong> e <strong>Massa totale</strong> (richiede pi\u00f9 massa sui telai leggeri).',
-    'sw-tw-mgri':'Allinea <strong>SW</strong>, <strong>MGR/I</strong> e <strong>Twistweight</strong> privilegiando applicazioni laterali sull\'ovale (Ore 3&amp;9 / 2&amp;10).'
+    'sw-mgri':'<strong>Massima Uniformit\u00e0 Dinamica (Consigliato):</strong> allinea alla perfezione <strong>SW</strong> e <strong>MGR/I</strong> (che racchiude l\'effetto congiunto di SW e Bilanciamento statico), rendendo tutte le racchette identiche all\'impatto e allo swing col minimo quantitativo possibile di piombo.',
+    'sw-mgri-bal':'<strong>Massima Uniformit\u00e0 + Bilanciamento:</strong> allinea prioritariamente <strong>SW</strong>, <strong>MGR/I</strong> e <strong>Bilanciamento statico</strong> (tolleranza strettissima anche in equilibrio).',
+    'full':'<strong>Match Totale (Clonazione 4 Parametri):</strong> allinea <strong>SW</strong>, <strong>MGR/I</strong>, <strong>Bilanciamento</strong> e <strong>Massa totale</strong> (richiede pi\u00f9 piombo sui telai pi\u00f9 leggeri per pareggiare la massa statica).',
+    'sw-tw-mgri':'<strong>Massima Uniformit\u00e0 + Stabilit\u00e0 Torzionale:</strong> allinea <strong>SW</strong>, <strong>MGR/I</strong> e <strong>Twistweight</strong> privilegiando applicazioni laterali a ore 3&amp;9 / 2&amp;10.'
   };
   hint.innerHTML=hints[mode]||hints['sw-mgri'];
   saveMatchState();
@@ -1760,8 +1776,8 @@ function runMultiRacketMatcher(){
           if(Math.abs(sa-sb)>0.08)return sa-sb;
           return a.totalAddedMass-b.totalAddedMass;
         })[0];
-        bestPrecision.title='\u2b50 Piano Consigliato (Massima Uniformit\u00e0 SW & MGR/I)';
-        bestPrecision.subtitle='Allineamento ottimale dei parametri dinamici con ricette semplici';
+        bestPrecision.title='\u2b50 Massima Uniformit\u00e0 (Consigliato)';
+        bestPrecision.subtitle='Allineamento ottimale di SW e MGR/I (sensazioni identiche in gioco col minimo piombo)';
         plans.push(bestPrecision);
 
         const lightCands=candidates.filter(c=>c.spread.sw<=Math.max(0.8,bestPrecision.spread.sw+0.4)&&c.spread.mgri<=Math.max(0.04,bestPrecision.spread.mgri+0.02));
@@ -1830,15 +1846,15 @@ function renderMatchingPlan(idx){
         '<div style="font-size:0.8rem;color:var(--text-secondary)">'+plan.subtitle+'</div>'+
       '</div>'+
       '<div style="text-align:right">'+
-        '<span class="match-badge match-badge-cyan" style="font-size:0.82rem;padding:4px 10px">Piombo Totale Lotto: +'+plan.totalAddedMass.toFixed(1)+'g (media +'+plan.avgAdded.toFixed(1)+'g/telaio)</span>'+
+        '<span class="match-badge match-badge-cyan" style="font-size:0.82rem;padding:4px 10px">Piombo Totale Lotto: +'+plan.totalAddedMass.toFixed(1)+' g (media +'+plan.avgAdded.toFixed(1)+' g / telaio)</span>'+
       '</div>'+
     '</div>'+
     '<div class="spread-banner" style="margin-bottom:0;background:rgba(15,19,34,0.65)">'+
       '<div class="spread-metric"><div class="sm-lbl">SW Finale Medio / Spread</div><div class="sm-val" style="color:#fff">'+avgMod(o=>o.swingweight).toFixed(1)+' <span style="font-size:0.8rem">('+spBadge(finSp.sw,0.6,1.8,'',1)+' vs '+initSp.sw.toFixed(1)+')</span></div></div>'+
       '<div class="spread-metric"><div class="sm-lbl">MGR/I Finale Medio / Spread</div><div class="sm-val" style="color:#fff">'+avgMod(o=>o.mgr_i).toFixed(2)+' <span style="font-size:0.8rem">('+spBadge(finSp.mgri,0.03,0.08,'',2)+' vs '+initSp.mgri.toFixed(2)+')</span></div></div>'+
-      '<div class="spread-metric"><div class="sm-lbl">Bilanc. Finale / Spread</div><div class="sm-val" style="color:#fff">'+avgMod(o=>o.balance).toFixed(2)+' cm <span style="font-size:0.8rem">('+spBadge(finSp.bal,0.12,0.28,'cm',2)+')</span></div></div>'+
-      '<div class="spread-metric"><div class="sm-lbl">Massa Finale / Spread</div><div class="sm-val" style="color:#fff">'+avgMod(o=>o.mass).toFixed(1)+' g <span style="font-size:0.8rem">('+spBadge(finSp.mass,1.2,3.0,'g',1)+')</span></div></div>'+
-      '<div class="spread-metric"><div class="sm-lbl">RW Finale / Spread</div><div class="sm-val" style="color:#fff">'+avgMod(o=>o.recoilweight).toFixed(1)+' <span style="font-size:0.8rem">('+spBadge(finSp.rw,0.8,2.0,'',1)+')</span></div></div>'+
+      '<div class="spread-metric"><div class="sm-lbl">Bilanc. Finale / Spread</div><div class="sm-val" style="color:#fff">'+avgMod(o=>o.balance).toFixed(2)+' cm <span style="font-size:0.8rem">('+spBadge(finSp.bal,0.12,0.28,'cm',2)+' vs '+initSp.bal.toFixed(2)+' cm)</span></div></div>'+
+      '<div class="spread-metric"><div class="sm-lbl">Massa Finale / Spread</div><div class="sm-val" style="color:#fff">'+avgMod(o=>o.mass).toFixed(1)+' g <span style="font-size:0.8rem">('+spBadge(finSp.mass,1.2,3.0,'g',1)+' vs '+initSp.mass.toFixed(1)+' g)</span></div></div>'+
+      '<div class="spread-metric"><div class="sm-lbl">RW Finale / Spread</div><div class="sm-val" style="color:#fff">'+avgMod(o=>o.recoilweight).toFixed(1)+' <span style="font-size:0.8rem">('+spBadge(finSp.rw,0.8,2.0,'',1)+' vs '+initSp.rw.toFixed(1)+')</span></div></div>'+
     '</div>'+
   '</div>';
 
@@ -1853,7 +1869,7 @@ function renderMatchingPlan(idx){
       '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px">'+
         '<div>'+
           '<span style="font-weight:700;color:#fff;font-size:1rem">#'+(i+1)+' '+escapeHTML(rk.name)+'</span>'+
-          (isRef?'<span class="match-badge match-badge-green" style="margin-left:8px">Telaio Riferimento (0g aggiunti)</span>':'<span class="match-badge match-badge-cyan" style="margin-left:8px">+'+rec.totalMass.toFixed(1)+'g in '+rec.nZones+(rec.nZones>1?' zone':' zona')+'</span>')+
+          (isRef?'<span class="match-badge match-badge-green" style="margin-left:8px">Telaio Riferimento (0 g aggiunti)</span>':'<span class="match-badge match-badge-cyan" style="margin-left:8px">+'+rec.totalMass.toFixed(1)+' g in '+rec.nZones+(rec.nZones>1?' zone':' zona')+'</span>')+
         '</div>'+
         '<div style="display:flex;gap:6px;flex-wrap:wrap">'+
           '<button type="button" class="btn btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="openMatchRacketPopup('+idx+','+i+')">\u{1f4cd} Grafico Pesi</button>'+
@@ -1861,8 +1877,8 @@ function renderMatchingPlan(idx){
         '</div>'+
       '</div>'+
       '<div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:8px;display:flex;flex-wrap:wrap;gap:12px">'+
-        '<span>Massa: <strong>'+bObj.mass.toFixed(1)+'</strong> \u2192 <strong style="color:#fff">'+mObj.mass.toFixed(1)+'g</strong></span>'+
-        '<span>Bil: <strong>'+bObj.balance.toFixed(2)+'</strong> \u2192 <strong style="color:#fff">'+mObj.balance.toFixed(2)+'cm</strong></span>'+
+        '<span>Massa: <strong>'+bObj.mass.toFixed(1)+' g</strong> \u2192 <strong style="color:#fff">'+mObj.mass.toFixed(1)+' g</strong></span>'+
+        '<span>Bil: <strong>'+bObj.balance.toFixed(2)+' cm</strong> \u2192 <strong style="color:#fff">'+mObj.balance.toFixed(2)+' cm</strong></span>'+
         '<span>SW: <strong>'+bObj.swingweight.toFixed(1)+'</strong> \u2192 <strong style="color:var(--accent-cyan)">'+mObj.swingweight.toFixed(1)+'</strong></span>'+
         '<span>MGR/I: <strong>'+bObj.mgr_i.toFixed(2)+'</strong> \u2192 <strong style="color:var(--accent-cyan)">'+mObj.mgr_i.toFixed(2)+'</strong></span>'+
         '<span>RW: <strong>'+bObj.recoilweight.toFixed(1)+'</strong> \u2192 <strong style="color:#fff">'+mObj.recoilweight.toFixed(1)+'</strong></span>'+
@@ -1886,18 +1902,18 @@ function renderMatchingPlan(idx){
       '<td><span style="opacity:0.65">'+bObj.mgr_i.toFixed(2)+'</span> \u2192 <strong style="color:var(--accent-cyan)">'+mObj.mgr_i.toFixed(2)+'</strong></td>'+
       '<td><span style="opacity:0.65">'+bObj.recoilweight.toFixed(1)+'</span> \u2192 <strong>'+mObj.recoilweight.toFixed(1)+'</strong></td>'+
       '<td><span style="opacity:0.65">'+bObj.twistweight.toFixed(2)+'</span> \u2192 <strong>'+mObj.twistweight.toFixed(2)+'</strong></td>'+
-      '<td style="color:var(--accent-amber);font-weight:700">+'+rec.totalMass.toFixed(1)+'g</td>'+
+      '<td style="color:var(--accent-amber);font-weight:700">+'+rec.totalMass.toFixed(1)+' g</td>'+
     '</tr>';
   }
   html+='<tr style="background:rgba(6,182,212,0.08);font-weight:700">'+
     '<td style="color:var(--accent-cyan)">Spread Max (\u0394)</td>'+
-    '<td>'+initSp.mass.toFixed(1)+' \u2192 '+finSp.mass.toFixed(1)+'g</td>'+
-    '<td>'+initSp.bal.toFixed(2)+' \u2192 '+finSp.bal.toFixed(2)+'cm</td>'+
+    '<td>'+initSp.mass.toFixed(1)+' \u2192 '+finSp.mass.toFixed(1)+' g</td>'+
+    '<td>'+initSp.bal.toFixed(2)+' \u2192 '+finSp.bal.toFixed(2)+' cm</td>'+
     '<td style="color:var(--accent-green)">'+initSp.sw.toFixed(1)+' \u2192 '+finSp.sw.toFixed(1)+'</td>'+
     '<td style="color:var(--accent-green)">'+initSp.mgri.toFixed(2)+' \u2192 '+finSp.mgri.toFixed(2)+'</td>'+
     '<td>'+initSp.rw.toFixed(1)+' \u2192 '+finSp.rw.toFixed(1)+'</td>'+
     '<td>'+initSp.tw.toFixed(2)+' \u2192 '+finSp.tw.toFixed(2)+'</td>'+
-    '<td>Tot '+plan.totalAddedMass.toFixed(1)+'g</td>'+
+    '<td>Tot +'+plan.totalAddedMass.toFixed(1)+' g</td>'+
   '</tr></tbody></table></div>';
 
   container.innerHTML=html;
@@ -1907,7 +1923,7 @@ function openMatchRacketPopup(planIdx,racketIdx){
   const rk=matchRackets[racketIdx];
   const rec=plan.recipes[racketIdx];
   const bObj=new Racket(rk.mass,rk.balance,rk.sw,rk.tw||14,rk.length||68.58);
-  openCustomPopupWithWeights(rec.weights,bObj,rk.name+' (+'+rec.totalMass.toFixed(1)+'g)',rec,false);
+  openCustomPopupWithWeights(rec.weights,bObj,rk.name+' (+'+rec.totalMass.toFixed(1)+' g)',rec,false);
 }
 function sendMatchRacketToManual(planIdx,racketIdx){
   const plan=currentMatchingPlans[planIdx];if(!plan)return;
@@ -2010,7 +2026,7 @@ function sendCurrentPendToMatching(){
   addMatchRacketRow(favName||('Telaio '+(matchRackets.length+1)),p.mass,p.balance,+p.sw.toFixed(1),p.tw||14,68.58);
   switchTab('personalizzazione');switchAutoSubMode('matching');
 }
-function savePendState(results){try{const h=JSON.parse(localStorage.getItem(PEND_HISTORY_KEY)||'[]');const lb=results.mass.toFixed(1)+'g / '+results.balance.toFixed(1)+'cm / SW'+results.sw.toFixed(1);h.unshift({id:Date.now(),date:new Date().toLocaleString('it-IT'),label:lb,results});if(h.length>50)h.length=50;localStorage.setItem(PEND_HISTORY_KEY,JSON.stringify(h));renderPendHistory()}catch(e){}}
+function savePendState(results){try{const h=JSON.parse(localStorage.getItem(PEND_HISTORY_KEY)||'[]');const lb=results.mass.toFixed(1)+' g / '+results.balance.toFixed(1)+' cm / SW '+results.sw.toFixed(1);h.unshift({id:Date.now(),date:new Date().toLocaleString('it-IT'),label:lb,results});if(h.length>50)h.length=50;localStorage.setItem(PEND_HISTORY_KEY,JSON.stringify(h));renderPendHistory()}catch(e){}}
 function renderPendHistory(){const c=document.getElementById('pend-history-list');if(!c)return;try{const h=JSON.parse(localStorage.getItem(PEND_HISTORY_KEY)||'[]');if(h.length===0){c.innerHTML='<div class="help-text" style="text-align:center;padding:10px;color:var(--text-secondary)">Nessuna cronologia.</div>';return}
 c.innerHTML=h.map((e,i)=>'<div class="history-item" onclick="restorePendHistory('+i+')" style="cursor:pointer;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:6px 10px;margin-bottom:4px"><div style="display:flex;justify-content:space-between;align-items:center;gap:6px"><span style="font-weight:600;color:#fff;font-size:0.78rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+e.label+'</span><span style="font-size:0.6rem;color:var(--text-secondary);flex-shrink:0">'+e.date+'</span></div></div>').join('')}catch(e){}}
 function clearPendHistory(){if(confirm('Cancellare tutta la cronologia SW?')){try{localStorage.removeItem(PEND_HISTORY_KEY)}catch(e){}renderPendHistory()}}
@@ -2290,7 +2306,7 @@ function recalcCustomizationTab(){
   document.getElementById('calc-res-ico-d').innerHTML=fmtD(icoNew-ico0,4);
 }
 function saveCalcFavorite(){const nameInput=document.getElementById('calc-fav-name');const name=nameInput?nameInput.value.trim():'';if(!name){alert('Inserisci un nome per la configurazione preferita.');return}const base={mass:+document.getElementById('calc-base-mass').value||0,balance:+document.getElementById('calc-base-bal').value||0,sw:+document.getElementById('calc-base-sw').value||0,tw:+document.getElementById('calc-base-tw').value||0,length:+document.getElementById('calc-base-len').value||68.58};const masses=[];document.querySelectorAll('#calc-mass-tbody .calc-mass-row').forEach(r=>{masses.push({mass:+r.querySelector('.calc-row-mass').value||0,len:+r.querySelector('.calc-row-len').value||0,y:+r.querySelector('.calc-row-y').value||0,x:+r.querySelector('.calc-row-x').value||0})});const favItem={id:Date.now(),name,date:new Date().toLocaleString('it-IT'),base,masses};try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');list.unshift(favItem);localStorage.setItem(CALC_FAV_KEY,JSON.stringify(list));nameInput.value='';renderCalcFavorites()}catch(e){}}
-function renderCalcFavorites(){const container=document.getElementById('calc-fav-list');if(!container)return;try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');if(list.length===0){container.innerHTML='<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>';return}container.innerHTML=list.map((item,idx)=>'<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px"><div><div style="font-weight:700;color:#fff;font-size:0.9rem">\u2b50 '+escapeHTML(item.name)+'</div><div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Base: '+item.base.mass+'g / '+item.base.balance+'cm / SW'+item.base.sw+' &middot; '+(item.masses?item.masses.length:0)+' masse &middot; <span style="opacity:0.6">'+item.date+'</span></div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-secondary" onclick="loadCalcFavorite('+idx+')" style="padding:6px 14px;font-size:0.8rem">Carica</button><button class="btn btn-secondary" onclick="deleteCalcFavorite('+idx+')" style="padding:6px 12px;font-size:0.8rem;color:var(--accent-red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);margin-left:8px" title="Elimina preferito">&#x2715; Elimina</button></div></div>').join('')}catch(e){}}
+function renderCalcFavorites(){const container=document.getElementById('calc-fav-list');if(!container)return;try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');if(list.length===0){container.innerHTML='<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>';return}container.innerHTML=list.map((item,idx)=>'<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px"><div><div style="font-weight:700;color:#fff;font-size:0.9rem">\u2b50 '+escapeHTML(item.name)+'</div><div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Base: '+item.base.mass+' g / '+item.base.balance+' cm / SW '+item.base.sw+' &middot; '+(item.masses?item.masses.length:0)+' masse &middot; <span style="opacity:0.6">'+item.date+'</span></div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-secondary" onclick="loadCalcFavorite('+idx+')" style="padding:6px 14px;font-size:0.8rem">Carica</button><button class="btn btn-secondary" onclick="deleteCalcFavorite('+idx+')" style="padding:6px 12px;font-size:0.8rem;color:var(--accent-red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);margin-left:8px" title="Elimina preferito">&#x2715; Elimina</button></div></div>').join('')}catch(e){}}
 function loadCalcFavorite(idx){try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');const item=list[idx];if(!item)return;document.getElementById('calc-base-mass').value=item.base.mass;document.getElementById('calc-base-bal').value=item.base.balance;document.getElementById('calc-base-sw').value=item.base.sw;document.getElementById('calc-base-tw').value=item.base.tw;document.getElementById('calc-base-len').value=item.base.length;const tbody=document.getElementById('calc-mass-tbody');tbody.innerHTML='';if(item.masses&&item.masses.length){item.masses.forEach(m=>{const massVal=m.mass||0;const lenVal=m.len!==undefined?m.len:0;const yVal=m.y!==undefined?m.y:0;const xVal=m.x!==undefined?m.x:0;addCalcMassRow(massVal,lenVal,yVal,xVal)})}recalcCustomizationTab()}catch(e){}}
 function deleteCalcFavorite(idx){try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');const item=list[idx];if(!item)return;if(!confirm('Sei sicuro di voler eliminare la configurazione preferita "'+item.name+'"?'))return;list.splice(idx,1);localStorage.setItem(CALC_FAV_KEY,JSON.stringify(list));renderCalcFavorites()}catch(e){}}
 let autoMode = null;
