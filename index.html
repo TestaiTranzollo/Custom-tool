@@ -97,11 +97,11 @@ input[type="number"]:focus,select:focus{border-color:var(--accent-cyan);backgrou
 
 /* Card Body Flex Container */
 .calc-card-body{display:flex;gap:16px;align-items:stretch}
-.calc-card-inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;flex:1;min-width:0}
-.calc-field-group{display:flex;flex-direction:column;gap:6px}
-.calc-field-group label{font-size:0.78rem;font-weight:600;color:#cbd5e1;text-transform:uppercase;letter-spacing:0.03em;line-height:1.2}
-.calc-field-group input[type="number"]{width:100%;padding:10px 12px;font-size:1.02rem;font-weight:600;border-radius:8px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.15);color:#fff;transition:all var(--transition-speed)}
-.calc-field-group input[type="number"]:focus{border-color:var(--accent-cyan);background:rgba(0,0,0,0.65);box-shadow:0 0 0 3px rgba(6,182,212,0.3)}
+.calc-card-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;flex:1;min-width:0}
+.calc-field-group{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);padding:6px 10px;border-radius:8px;min-width:0}
+.calc-field-group label{font-size:0.76rem;font-weight:600;color:#cbd5e1;text-transform:uppercase;letter-spacing:0.02em;line-height:1.2;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.calc-field-group input[type="number"]{width:86px;flex-shrink:0;padding:7px 8px;font-size:1.0rem;font-weight:700;text-align:center;border-radius:6px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.18);color:#fff;transition:all var(--transition-speed)}
+.calc-field-group input[type="number"]:focus{border-color:var(--accent-cyan);background:rgba(0,0,0,0.75);box-shadow:0 0 0 2px rgba(6,182,212,0.35)}
 
 /* Card Impact Readout Box */
 .calc-card-impact{display:flex;flex-direction:column;justify-content:center;gap:8px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.25);border-radius:10px;padding:12px 16px;min-width:170px}
@@ -118,15 +118,19 @@ input[type="number"]:focus,select:focus{border-color:var(--accent-cyan);backgrou
 .btn-add-mass:hover{background:linear-gradient(135deg,rgba(6,182,212,0.3) 0%,rgba(8,145,178,0.4) 100%);border-style:solid;box-shadow:0 0 16px rgba(6,182,212,0.3);transform:translateY(-1px)}
 
 @media(max-width:850px){
-.calc-card-body{flex-direction:column;gap:12px}
+.calc-card-body{flex-direction:column;gap:10px}
 .calc-card-impact{flex-direction:row;justify-content:space-around;padding:8px 14px;min-width:auto}
 .calc-impact-item{justify-content:flex-start}
 }
-@media(max-width:500px){
-.calc-mass-row{padding:12px 14px}
-.calc-card-inputs{gap:10px 10px}
-.calc-field-group input[type="number"]{padding:8px 10px;font-size:0.95rem}
-.calc-field-group label{font-size:0.74rem}
+@media(max-width:550px){
+.calc-mass-row{padding:12px 10px}
+.calc-card-inputs{gap:8px 8px}
+.calc-field-group{padding:5px 6px;gap:5px}
+.calc-field-group label{font-size:0.68rem}
+.calc-field-group input[type="number"]{width:68px;padding:5px 4px;font-size:0.92rem}
+}
+@media(max-width:380px){
+.calc-card-inputs{grid-template-columns:1fr;gap:6px}
 }
 
 @media(max-width:700px){
@@ -2285,15 +2289,15 @@ function addCalcMassRow(m=0,l=0,y=2,x=0){
           '<input type="number" class="calc-row-mass" value="' + m + '" step="0.1" min="0" oninput="recalcCustomizationTab()">' +
         '</div>' +
         '<div class="calc-field-group">' +
-          '<label>Lunghezza Striscia (cm)</label>' +
+          '<label title="Lunghezza della striscia (0 = puntiforme)">Lungh. Striscia (cm)</label>' +
           '<input type="number" class="calc-row-len" value="' + l + '" step="0.5" min="0" placeholder="0 = puntiforme" oninput="recalcCustomizationTab()">' +
         '</div>' +
         '<div class="calc-field-group">' +
-          '<label>CM dal tappo</label>' +
+          '<label title="Distanza dal tappo lungo l\'asse">CM dal tappo</label>' +
           '<input type="number" class="calc-row-y" value="' + y + '" step="0.5" min="0" max="80" oninput="recalcCustomizationTab()">' +
         '</div>' +
         '<div class="calc-field-group">' +
-          '<label title="Scostamento dall\'asse longitudinale principale (0 = centro)">Scostamento da Asse Princ. (cm)</label>' +
+          '<label title="Scostamento dall\'asse longitudinale principale (0 = centro)">Scostam. Asse (cm)</label>' +
           '<input type="number" class="calc-row-x" value="' + x + '" step="0.5" min="-20" max="20" placeholder="0 = centro" oninput="recalcCustomizationTab()">' +
         '</div>' +
       '</div>' +
