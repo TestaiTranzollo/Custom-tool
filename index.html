@@ -261,22 +261,24 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 .calc-hud.collapsed .calc-hud-body{display:none}
 .calc-hud.collapsed.calc-hud-bottom .calc-hud-inner{padding:3px 10px calc(4px + env(safe-area-inset-bottom, 0px)) 10px}
 .calc-hud.collapsed.calc-hud-top .calc-hud-inner{padding:calc(4px + env(safe-area-inset-top, 0px)) 10px 3px 10px}
-.hud-metric{background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.08);border-radius:4px;padding:2px 5px;display:flex;flex-direction:column;gap:0px;min-width:0}
-.hud-metric.highlight-cyan{border-color:rgba(6,182,212,0.35);background:rgba(6,182,212,0.08)}
-.hud-lbl{font-size:0.56rem;color:var(--text-secondary);text-transform:uppercase;font-weight:700;letter-spacing:0.03em;line-height:1;margin-bottom:1px}
-.hud-val-wrap{display:flex;align-items:baseline;gap:2px;font-size:0.74rem;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.15}
-.hud-old{color:var(--text-secondary);font-size:0.66rem;opacity:0.75}
-.hud-arrow{color:var(--accent-cyan);font-size:0.60rem;opacity:0.8}
-.hud-new{color:#fff;font-weight:700;font-size:0.74rem}
-.hud-new.cyan{color:var(--accent-cyan)}
-.hud-unit{font-size:0.62rem;color:var(--text-secondary)}
-.hud-delta{font-size:0.66rem;font-weight:700;margin-left:1px}
+.hud-metric{background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.08);border-radius:5px;padding:3px 6px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.hud-lbl{font-size:0.64rem;color:var(--text-secondary);text-transform:uppercase;font-weight:700;letter-spacing:0.04em;line-height:1}
+.hud-val-wrap{display:flex;align-items:baseline;gap:3px;font-size:0.86rem;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+.hud-old{color:var(--text-secondary);font-size:0.78rem;opacity:0.8;font-weight:500}
+.hud-arrow{color:var(--accent-cyan);font-size:0.72rem;opacity:0.9;margin:0 1px}
+.hud-new{color:#fff;font-weight:700;font-size:0.86rem;transition:color 0.15s ease}
+.hud-unit{font-size:0.72rem;color:var(--text-secondary);margin-left:1px;font-weight:600}
 @media(max-width:768px){
-  .calc-hud-body{grid-template-columns:repeat(3,1fr);gap:3px}
+  .calc-hud-body{grid-template-columns:repeat(3,1fr);gap:4px}
+  .hud-val-wrap{font-size:0.84rem}
+  .hud-old{font-size:0.76rem}
+  .hud-new{font-size:0.84rem}
 }
 @media(max-width:360px){
-  .calc-hud-body{grid-template-columns:repeat(2,1fr);gap:2px}
-  .hud-val-wrap{font-size:0.70rem}
+  .calc-hud-body{grid-template-columns:repeat(2,1fr);gap:3px}
+  .hud-val-wrap{font-size:0.80rem}
+  .hud-old{font-size:0.72rem}
+  .hud-new{font-size:0.80rem}
 }
 @media(max-width:600px){
   .submode-bar{grid-template-columns:1fr}
@@ -837,47 +839,43 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
     <div class="calc-hud-body" id="hud-body">
       <!-- Massa -->
       <div class="hud-metric">
-        <div class="hud-lbl">Massa</div>
+        <div class="hud-lbl">MASSA</div>
         <div class="hud-val-wrap">
           <span class="hud-old" id="hud-mass-o">352.8</span>
           <span class="hud-arrow">&rarr;</span>
           <span class="hud-new" id="hud-mass-n">352.8</span>
           <span class="hud-unit">g</span>
-          <span class="hud-delta" id="hud-mass-d">(0.0)</span>
         </div>
       </div>
 
       <!-- Bilanciamento -->
       <div class="hud-metric">
-        <div class="hud-lbl">Bilanc.</div>
+        <div class="hud-lbl">BILANC.</div>
         <div class="hud-val-wrap">
           <span class="hud-old" id="hud-bal-o">31.20</span>
           <span class="hud-arrow">&rarr;</span>
           <span class="hud-new" id="hud-bal-n">31.20</span>
           <span class="hud-unit">cm</span>
-          <span class="hud-delta" id="hud-bal-d">(0.00)</span>
         </div>
       </div>
 
       <!-- Swingweight -->
-      <div class="hud-metric highlight-cyan">
+      <div class="hud-metric">
         <div class="hud-lbl">SW</div>
         <div class="hud-val-wrap">
           <span class="hud-old" id="hud-sw-o">333.1</span>
           <span class="hud-arrow">&rarr;</span>
-          <span class="hud-new cyan" id="hud-sw-n">333.1</span>
-          <span class="hud-delta" id="hud-sw-d">(0.0)</span>
+          <span class="hud-new" id="hud-sw-n">333.1</span>
         </div>
       </div>
 
       <!-- MGR/I -->
-      <div class="hud-metric highlight-cyan">
+      <div class="hud-metric">
         <div class="hud-lbl">MGR/I</div>
         <div class="hud-val-wrap">
           <span class="hud-old" id="hud-mgri-o">20.84</span>
           <span class="hud-arrow">&rarr;</span>
-          <span class="hud-new cyan" id="hud-mgri-n">20.84</span>
-          <span class="hud-delta" id="hud-mgri-d">(0.00)</span>
+          <span class="hud-new" id="hud-mgri-n">20.84</span>
         </div>
       </div>
 
@@ -888,7 +886,6 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
           <span class="hud-old" id="hud-tw-o">13.50</span>
           <span class="hud-arrow">&rarr;</span>
           <span class="hud-new" id="hud-tw-n">13.50</span>
-          <span class="hud-delta" id="hud-tw-d">(0.00)</span>
         </div>
       </div>
 
@@ -899,7 +896,6 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
           <span class="hud-old" id="hud-rw-o">174.6</span>
           <span class="hud-arrow">&rarr;</span>
           <span class="hud-new" id="hud-rw-n">174.6</span>
-          <span class="hud-delta" id="hud-rw-d">(0.0)</span>
         </div>
       </div>
     </div>
@@ -2437,19 +2433,10 @@ function recalcCustomizationTab(){
   const setHudVal=(prefix,vOld,vNew,diff,dec)=>{
     const oEl=document.getElementById('hud-'+prefix+'-o');
     const nEl=document.getElementById('hud-'+prefix+'-n');
-    const dEl=document.getElementById('hud-'+prefix+'-d');
     if(oEl)oEl.textContent=vOld.toFixed(dec);
-    if(nEl)nEl.textContent=vNew.toFixed(dec);
-    if(dEl){
-      if(Math.abs(diff)<0.0001){
-        dEl.textContent='(0.0)';
-        dEl.style.color='var(--text-secondary)';
-      }else{
-        const sign=diff>0?'+':'';
-        const col=diff>0?'var(--accent-amber)':'var(--accent-cyan)';
-        dEl.textContent='('+sign+diff.toFixed(dec)+')';
-        dEl.style.color=col;
-      }
+    if(nEl){
+      nEl.textContent=vNew.toFixed(dec);
+      nEl.style.color=Math.abs(diff)>0.0001?'var(--accent-cyan)':'#fff';
     }
   };
   setHudVal('mass',m0,mNew,mNew-m0,1);
