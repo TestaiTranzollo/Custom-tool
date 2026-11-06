@@ -246,10 +246,27 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 .recipe-card{background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:12px;padding:15px 18px;margin-bottom:12px}
 .recipe-card.untouched{border-color:rgba(16,185,129,0.4);background:rgba(16,185,129,0.05)}
 
-.comparison-table{width:100%;border-collapse:collapse;margin-top:10px;background:rgba(255,255,255,0.015);border:1px solid var(--border-color);border-radius:8px;overflow:hidden}
-.comparison-table th{background:rgba(255,255,255,0.05);padding:10px 12px;font-size:0.75rem;text-transform:uppercase;color:var(--text-secondary);font-weight:700;text-align:left;border-bottom:1px solid var(--border-color)}
-.comparison-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--text-primary);font-variant-numeric:tabular-nums}
-.comparison-table tr:hover td{background:rgba(255,255,255,0.02)}
+.comparison-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border-color);border-radius:10px;margin-top:8px;background:rgba(15,23,42,0.65);position:relative;scrollbar-width:thin;scrollbar-color:rgba(6,182,212,0.3) transparent}
+.comparison-table-wrap::-webkit-scrollbar{height:6px}
+.comparison-table-wrap::-webkit-scrollbar-thumb{background:rgba(6,182,212,0.35);border-radius:4px}
+.comparison-table-hint{display:none;font-size:0.72rem;color:var(--accent-cyan);text-align:right;margin:0;font-weight:600}
+@media(max-width:768px){
+  .comparison-table-hint{display:flex;align-items:center;justify-content:flex-end;gap:4px}
+}
+.comparison-table{width:100%;min-width:640px;border-collapse:separate;border-spacing:0;font-size:0.80rem}
+.comparison-table th{background:#111827;padding:9px 10px;font-size:0.72rem;text-transform:uppercase;color:var(--text-secondary);font-weight:700;text-align:center;border-bottom:1px solid rgba(255,255,255,0.12);white-space:nowrap}
+.comparison-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--text-primary);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:center}
+.comparison-table tr:hover td{background:rgba(255,255,255,0.03)}
+.comparison-table th:first-child,.comparison-table td:first-child{position:sticky;left:0;z-index:2;text-align:left;padding-left:12px;padding-right:12px;background:#0d1322;border-right:1px solid rgba(6,182,212,0.25);box-shadow:3px 0 8px rgba(0,0,0,0.45);font-weight:600;color:#fff;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis}
+.comparison-table thead th:first-child{z-index:3;background:#131b2e;border-bottom:1px solid rgba(255,255,255,0.12)}
+.comparison-table tr:hover td:first-child{background:#172238}
+.comparison-table tr.comparison-spread-row td:first-child{background:#0e2438}
+.comp-val-old{color:var(--text-secondary);opacity:0.75;font-size:0.76rem}
+.comp-val-arr{color:var(--accent-cyan);font-size:0.70rem;margin:0 2px;opacity:0.85}
+.comp-val-new{color:#fff;font-weight:700}
+.comp-val-new.cyan{color:var(--accent-cyan)}
+.comp-val-new.green{color:var(--accent-green)}
+.comp-val-new.amber{color:var(--accent-amber)}
 
 /* Floating Live Comparison HUD for Manual Customization */
 .calc-hud{position:fixed;bottom:0;left:0;right:0;z-index:990;background:rgba(11,16,28,0.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(6,182,212,0.35);box-shadow:0 -3px 20px rgba(0,0,0,0.6);transition:all 0.2s ease;user-select:none}
@@ -2015,32 +2032,35 @@ function renderMatchingPlan(idx){
     '</div>';
   }
 
-  html+='<h4 style="color:#fff;font-size:0.95rem;margin:18px 0 10px 0">\u{1f4ca} Tabella Comparativa Lotto (Prima \u2192 Dopo Matching)</h4>'+
-    '<div style="overflow-x:auto"><table class="comparison-table" style="font-size:0.82rem"><thead><tr>'+
-      '<th>Telaio</th><th>Massa (g)</th><th>Bilanc. (cm)</th><th>SW (kg&middot;cm&sup2;)</th><th>MGR/I</th><th>RW</th><th>TW</th><th>Piombo</th>'+
-    '</tr></thead><tbody>';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin:18px 0 8px 0">'+
+    '<h4 style="color:#fff;font-size:0.95rem;margin:0">\u{1f4ca} Tabella Comparativa Lotto (Prima \u2192 Dopo Matching)</h4>'+
+    '<div class="comparison-table-hint">&#x2194;&#xfe0f; Scorri orizzontalmente per confrontare tutti i parametri</div>'+
+  '</div>'+
+  '<div class="comparison-table-wrap"><table class="comparison-table"><thead><tr>'+
+    '<th>Telaio</th><th>Massa (g)</th><th>Bilanc. (cm)</th><th>SW</th><th>MGR/I</th><th>RW</th><th>TW</th><th>Piombo</th>'+
+  '</tr></thead><tbody>';
   for(let i=0;i<matchRackets.length;i++){
     const rk=matchRackets[i],bObj=baseObjs[i],rec=plan.recipes[i],mObj=rec.modRacket;
     html+='<tr>'+
-      '<td style="color:#fff;font-weight:600">'+escapeHTML(rk.name)+'</td>'+
-      '<td><span style="opacity:0.65">'+bObj.mass.toFixed(1)+'</span> \u2192 <strong>'+mObj.mass.toFixed(1)+'</strong></td>'+
-      '<td><span style="opacity:0.65">'+bObj.balance.toFixed(2)+'</span> \u2192 <strong>'+mObj.balance.toFixed(2)+'</strong></td>'+
-      '<td><span style="opacity:0.65">'+bObj.swingweight.toFixed(1)+'</span> \u2192 <strong style="color:var(--accent-cyan)">'+mObj.swingweight.toFixed(1)+'</strong></td>'+
-      '<td><span style="opacity:0.65">'+bObj.mgr_i.toFixed(2)+'</span> \u2192 <strong style="color:var(--accent-cyan)">'+mObj.mgr_i.toFixed(2)+'</strong></td>'+
-      '<td><span style="opacity:0.65">'+bObj.recoilweight.toFixed(1)+'</span> \u2192 <strong>'+mObj.recoilweight.toFixed(1)+'</strong></td>'+
-      '<td><span style="opacity:0.65">'+bObj.twistweight.toFixed(2)+'</span> \u2192 <strong>'+mObj.twistweight.toFixed(2)+'</strong></td>'+
-      '<td style="color:var(--accent-amber);font-weight:700">+'+rec.totalMass.toFixed(1)+' g</td>'+
+      '<td title="'+escapeHTML(rk.name)+'">'+escapeHTML(rk.name)+'</td>'+
+      '<td><span class="comp-val-old">'+bObj.mass.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+mObj.mass.toFixed(1)+'</strong></td>'+
+      '<td><span class="comp-val-old">'+bObj.balance.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+mObj.balance.toFixed(2)+'</strong></td>'+
+      '<td><span class="comp-val-old">'+bObj.swingweight.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new cyan">'+mObj.swingweight.toFixed(1)+'</strong></td>'+
+      '<td><span class="comp-val-old">'+bObj.mgr_i.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new cyan">'+mObj.mgr_i.toFixed(2)+'</strong></td>'+
+      '<td><span class="comp-val-old">'+bObj.recoilweight.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+mObj.recoilweight.toFixed(1)+'</strong></td>'+
+      '<td><span class="comp-val-old">'+bObj.twistweight.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+mObj.twistweight.toFixed(2)+'</strong></td>'+
+      '<td><strong class="comp-val-new amber">+'+rec.totalMass.toFixed(1)+' g</strong></td>'+
     '</tr>';
   }
-  html+='<tr style="background:rgba(6,182,212,0.08);font-weight:700">'+
-    '<td style="color:var(--accent-cyan)">Spread Max (\u0394)</td>'+
-    '<td>'+initSp.mass.toFixed(1)+' \u2192 '+finSp.mass.toFixed(1)+' g</td>'+
-    '<td>'+initSp.bal.toFixed(2)+' \u2192 '+finSp.bal.toFixed(2)+' cm</td>'+
-    '<td style="color:var(--accent-green)">'+initSp.sw.toFixed(1)+' \u2192 '+finSp.sw.toFixed(1)+'</td>'+
-    '<td style="color:var(--accent-green)">'+initSp.mgri.toFixed(2)+' \u2192 '+finSp.mgri.toFixed(2)+'</td>'+
-    '<td>'+initSp.rw.toFixed(1)+' \u2192 '+finSp.rw.toFixed(1)+'</td>'+
-    '<td>'+initSp.tw.toFixed(2)+' \u2192 '+finSp.tw.toFixed(2)+'</td>'+
-    '<td>Tot +'+plan.totalAddedMass.toFixed(1)+' g</td>'+
+  html+='<tr class="comparison-spread-row" style="background:rgba(6,182,212,0.08);font-weight:700">'+
+    '<td style="color:var(--accent-cyan)">Spread Max (&Delta;)</td>'+
+    '<td><span class="comp-val-old">'+initSp.mass.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+finSp.mass.toFixed(1)+' g</strong></td>'+
+    '<td><span class="comp-val-old">'+initSp.bal.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+finSp.bal.toFixed(2)+' cm</strong></td>'+
+    '<td><span class="comp-val-old">'+initSp.sw.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new green">'+finSp.sw.toFixed(1)+'</strong></td>'+
+    '<td><span class="comp-val-old">'+initSp.mgri.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new green">'+finSp.mgri.toFixed(2)+'</strong></td>'+
+    '<td><span class="comp-val-old">'+initSp.rw.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+finSp.rw.toFixed(1)+'</strong></td>'+
+    '<td><span class="comp-val-old">'+initSp.tw.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+finSp.tw.toFixed(2)+'</strong></td>'+
+    '<td><strong class="comp-val-new amber">Tot +'+plan.totalAddedMass.toFixed(1)+' g</strong></td>'+
   '</tr></tbody></table></div>';
 
   container.innerHTML=html;
