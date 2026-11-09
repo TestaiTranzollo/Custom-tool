@@ -913,7 +913,7 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <div data-tab="misura-sw" class="tab-pane">
 <div class="panel" style="margin-top:0">
 
-<div class="calc-base-panel" style="margin-bottom:12px">
+<div class="calc-base-panel" style="margin-bottom:10px">
   <div class="panel-section-header" style="margin-bottom:10px">
     <div class="panel-section-title">
       <span class="step-badge" style="background:rgba(6,182,212,0.18);border-color:rgba(6,182,212,0.45);color:var(--accent-cyan)">SW</span>
@@ -948,95 +948,16 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
       <input id="pend-tw" type="number" step="0.01" min="5" max="30" placeholder="es. 14.0" oninput="onPendInputChange()" style="width:100%;padding:7px 9px;font-size:0.88rem;font-weight:600;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff">
     </div>
   </div>
-
-  <div id="pend-diagnostic-box" style="display:none;margin-top:10px;padding:10px 12px;border-radius:8px;font-size:0.76rem;line-height:1.45"></div>
-
-  <button class="btn" style="margin-top:12px;width:100%;font-size:0.95rem;padding:10px" onclick="calcPendulum(true)"><strong style="font-size:1.05rem">SW</strong> &mdash; Calcola e Registra Swingweight</button>
 </div>
 
-<div id="pend-results" style="display:none;margin-bottom:12px">
-  <div style="background:linear-gradient(135deg,rgba(6,182,212,0.16),rgba(6,182,212,0.04));border:2px solid var(--accent-cyan);border-radius:12px;padding:14px 16px;text-align:center;margin-bottom:10px;position:relative">
-    <div style="font-size:0.68rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">&#x1f3af; Swingweight Rilevato (I&#x2081;&#x2080;)</div>
-    <div id="pend-r-sw" style="font-size:2.25rem;font-weight:800;color:#fff;line-height:1.15">---</div>
-    <div style="font-size:0.72rem;color:var(--accent-cyan);font-weight:600;margin-top:2px">kg&#xb7;cm&#xb2; <span id="pend-r-period-badge" style="color:var(--text-secondary);font-weight:500;margin-left:6px"></span></div>
-  </div>
-
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
-    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
-      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">Recoilweight (I<sub>cm</sub>)</div>
-      <div id="pend-r-rw" style="font-size:0.84rem;font-weight:700;color:var(--text-primary);margin-top:2px">---</div>
-    </div>
-    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
-      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">MGR/I</div>
-      <div id="pend-r-mgri" style="font-size:0.84rem;font-weight:700;color:var(--text-primary);margin-top:2px">---</div>
-    </div>
-    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
-      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">ICO (RW/I&#x2080;)</div>
-      <div id="pend-r-ico" style="font-size:0.84rem;font-weight:700;color:var(--text-primary);margin-top:2px">---</div>
-    </div>
-    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
-      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">Inerzia Tappo (I&#x2080;)</div>
-      <div id="pend-r-i0" style="font-size:0.84rem;font-weight:700;color:var(--text-primary);margin-top:2px">---</div>
-    </div>
-    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
-      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">Massa / Bil.</div>
-      <div style="font-size:0.8rem;font-weight:600;color:var(--text-primary);margin-top:2px"><span id="pend-r-mass">---</span> &middot; <span id="pend-r-bal">---</span></div>
-    </div>
-    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
-      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">Twistweight</div>
-      <div id="pend-r-tw" style="font-size:0.84rem;font-weight:700;color:var(--text-primary);margin-top:2px">---</div>
-    </div>
-  </div>
-
-  <div id="pend-r-sensitivity" style="margin-top:8px;padding:7px 10px;background:rgba(255,255,255,0.02);border:1px dashed var(--border-color);border-radius:6px;font-size:0.68rem;color:var(--text-secondary);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px"></div>
-
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-    <button type="button" class="btn btn-secondary" style="flex:1;padding:7px 10px;font-size:0.78rem" onclick="sendCurrentPendToManual()">&#x1f9ee; Invia a Manuale</button>
-    <button type="button" class="btn btn-secondary" style="flex:1;padding:7px 10px;font-size:0.78rem" onclick="sendCurrentPendToAutoSingle()">&#x1f3af; Invia a Target Singolo</button>
-    <button type="button" class="btn btn-secondary" style="flex:1;padding:7px 10px;font-size:0.78rem;border-color:rgba(6,182,212,0.4);color:var(--accent-cyan)" onclick="sendCurrentPendToMatching()">&#x2696;&#xfe0f; + Aggiungi al Matching</button>
-  </div>
-</div>
-
-<!-- Strumenti di Rilevamento del Tempo: Cronometro Tap & Fotocamera -->
-<div class="auto-card" style="margin-top:12px">
-  <div class="panel-section-header" style="margin-bottom:8px">
-    <div class="panel-section-title">
-      <span class="step-badge" style="background:rgba(245,158,11,0.18);border-color:rgba(245,158,11,0.45);color:var(--accent-amber)">&#x23f1;</span>
-      <span>Cronometro &amp; Tap-Counter Manuale</span>
-    </div>
-    <span style="font-size:0.66rem;color:var(--text-secondary)">Alta precisione (ms)</span>
-  </div>
-  <div style="font-size:0.73rem;color:var(--text-secondary);margin-bottom:8px">
-    Avvia al passaggio <strong>0</strong> e premi <strong>Tap Ciclo (+1)</strong> ad ogni oscillazione completa (oppure premi direttamente <strong>Stop e Applica</strong> al raggiungimento delle oscillazioni impostate).
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;text-align:center">
-    <div style="background:rgba(0,0,0,0.25);border:1px solid var(--border-color);border-radius:6px;padding:6px">
-      <div style="font-size:0.6rem;color:var(--text-secondary);text-transform:uppercase">Tempo</div>
-      <div id="tap-val-time" style="font-size:1.15rem;font-weight:700;color:#fff;font-variant-numeric:tabular-nums">0.00 s</div>
-    </div>
-    <div style="background:rgba(0,0,0,0.25);border:1px solid var(--border-color);border-radius:6px;padding:6px">
-      <div style="font-size:0.6rem;color:var(--text-secondary);text-transform:uppercase">Cicli Tap</div>
-      <div id="tap-val-count" style="font-size:1.15rem;font-weight:700;color:var(--accent-amber);font-variant-numeric:tabular-nums">0</div>
-    </div>
-    <div style="background:rgba(0,0,0,0.25);border:1px solid var(--border-color);border-radius:6px;padding:6px">
-      <div style="font-size:0.6rem;color:var(--text-secondary);text-transform:uppercase">SW Stimato</div>
-      <div id="tap-val-sw" style="font-size:1.15rem;font-weight:700;color:var(--accent-cyan);font-variant-numeric:tabular-nums">---</div>
-    </div>
-  </div>
-  <div style="display:flex;gap:6px;flex-wrap:wrap">
-    <button type="button" id="btn-tap-action" class="btn" style="flex:2;min-width:140px;padding:9px 12px;font-size:0.84rem;background:linear-gradient(135deg,var(--accent-amber) 0%,#d97706 100%)" onclick="handleManualStopwatchTap()">&#x25b6;&#xfe0f; Avvia (Passaggio 0)</button>
-    <button type="button" id="btn-tap-apply" class="btn btn-secondary" style="flex:1;min-width:95px;padding:9px 10px;font-size:0.8rem;border-color:rgba(16,185,129,0.45);color:var(--accent-green);display:none" onclick="finishManualStopwatch(true)">&#x2705; Stop e Applica</button>
-    <button type="button" id="btn-tap-reset" class="btn btn-secondary" style="padding:9px 10px;font-size:0.8rem;color:var(--accent-red);display:none" onclick="finishManualStopwatch(false)">Reset</button>
-  </div>
-</div>
-
-<div class="auto-card" style="margin-top:10px">
+<!-- Misurazione Ottica Automatica (Scelta principale) -->
+<div class="auto-card" style="margin-bottom:12px">
   <div class="panel-section-header" style="margin-bottom:8px">
     <div class="panel-section-title">
       <span class="step-badge">&#x1f4f7;</span>
-      <span>Misurazione Ottica con Fotocamera</span>
+      <span>Misurazione Ottica Automatica</span>
     </div>
-    <span style="font-size:0.66rem;color:var(--text-secondary)">Regressione OLS</span>
+    <span style="font-size:0.66rem;color:var(--accent-cyan);font-weight:600">Consigliata &middot; OLS</span>
   </div>
   <div style="display:flex;flex-direction:column;gap:8px">
     <div style="font-size:0.73rem;color:var(--text-secondary)">
@@ -1047,11 +968,11 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
       <label style="font-size:0.74rem;color:var(--text-secondary);flex:1;min-width:180px">
         Modalit&#xe0; arresto:
         <select id="auto-stop-mode" style="width:100%;margin-top:3px;padding:5px 8px;font-size:0.82rem;border-radius:5px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff">
-          <option value="auto">Automatico (Alta Stabilit&#xe0; OLS)</option>
+          <option value="auto" selected>Automatico (Alta Stabilit&#xe0; OLS)</option>
           <option value="10">Target Fisso (10 Oscillazioni)</option>
           <option value="20">Target Fisso (20 Oscillazioni)</option>
           <option value="30">Target Fisso (30 Oscillazioni)</option>
-          <option value="40" selected>Target Fisso (40 Oscillazioni)</option>
+          <option value="40">Target Fisso (40 Oscillazioni)</option>
           <option value="50">Target Fisso (50 Oscillazioni)</option>
           <option value="60">Target Fisso (60 Oscillazioni)</option>
         </select>
@@ -1059,8 +980,8 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
       <details style="font-size:0.7rem;color:var(--text-secondary)">
         <summary style="cursor:pointer;user-select:none;padding:4px 0">&#x2699; Opzioni Lente</summary>
         <div style="margin-top:4px;display:flex;flex-direction:column;gap:4px;padding-left:10px;border-left:1px solid var(--border-color)">
-          <label style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="auto-lock-lens"> Blocca lente fissa</label>
-          <label style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="auto-lock-expo"> Blocca fuoco/esposizione</label>
+          <label style="display:flex;align-items:center;gap:5px" title="Evita il cambio automatico verso la lente macro/grandangolo sui telefoni multi-fotocamera"><input type="checkbox" id="auto-lock-lens" checked> Blocca lente principale 1x (no macro auto-switch)</label>
+          <label style="display:flex;align-items:center;gap:5px" title="Fissa messa a fuoco ed esposizione dopo la messa a fuoco iniziale"><input type="checkbox" id="auto-lock-expo" checked> Blocca fuoco/esposizione dopo avvio</label>
         </div>
       </details>
     </div>
@@ -1101,9 +1022,70 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
         <canvas id="auto-canvas" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
         <div id="auto-target-box" style="display:none;position:absolute;top:50%;left:50%;width:42px;height:42px;transform:translate(-50%,-50%);border:2px solid rgba(239,68,68,0.85);border-radius:6px;box-shadow:0 0 10px rgba(0,0,0,0.6);pointer-events:none;transition:border-color 0.1s,transform 0.1s"></div>
       </div>
+      <div id="auto-camera-lock-status" style="display:none;margin-top:6px;font-size:0.66rem;color:var(--text-secondary);text-align:center"></div>
     </div>
   </div>
 </div>
+
+<div id="pend-diagnostic-box" style="display:none;margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:0.76rem;line-height:1.45"></div>
+
+<button class="btn" style="margin-bottom:12px;width:100%;font-size:0.95rem;padding:10px" onclick="calcPendulum(true)"><strong style="font-size:1.05rem">SW</strong> &mdash; Calcola e Registra Swingweight</button>
+
+<div id="pend-results" style="display:none;margin-bottom:12px">
+  <div style="background:linear-gradient(135deg,rgba(6,182,212,0.16),rgba(6,182,212,0.04));border:2px solid var(--accent-cyan);border-radius:12px;padding:14px 16px;text-align:center;margin-bottom:10px;position:relative">
+    <div style="font-size:0.68rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">&#x1f3af; Swingweight Rilevato (I&#x2081;&#x2080;)</div>
+    <div id="pend-r-sw" style="font-size:2.25rem;font-weight:800;color:#fff;line-height:1.15">---</div>
+    <div style="font-size:0.72rem;color:var(--accent-cyan);font-weight:600;margin-top:2px">kg&#xb7;cm&#xb2; <span id="pend-r-period-badge" style="color:var(--text-secondary);font-weight:500;margin-left:6px"></span></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
+      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">Recoilweight (I<sub>cm</sub>)</div>
+      <div id="pend-r-rw" style="font-size:0.84rem;font-weight:700;color:var(--text-primary);margin-top:2px">---</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
+      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">MGR/I</div>
+      <div id="pend-r-mgri" style="font-size:0.84rem;font-weight:700;color:var(--text-primary);margin-top:2px">---</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
+      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">ICO (RW/I&#x2080;)</div>
+      <div id="pend-r-ico" style="font-size:0.84rem;font-weight:700;color:var(--text-primary);margin-top:2px">---</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
+      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">Inerzia Tappo (I&#x2080;)</div>
+      <div id="pend-r-i0" style="font-size:0.84rem;font-weight:700;color:var(--text-primary);margin-top:2px">---</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
+      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">Massa / Bil.</div>
+      <div style="font-size:0.8rem;font-weight:600;color:var(--text-primary);margin-top:2px"><span id="pend-r-mass">---</span> &middot; <span id="pend-r-bal">---</span></div>
+    </div>
+    <div style="background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:6px;padding:7px 6px;text-align:center">
+      <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em">Twistweight</div>
+      <div id="pend-r-tw" style="font-size:0.84rem;font-weight:700;color:var(--text-primary);margin-top:2px">---</div>
+    </div>
+  </div>
+
+  <div style="margin-top:10px;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:9px 10px">
+    <div style="font-size:0.68rem;color:var(--text-secondary);margin-bottom:6px;font-weight:600">&#x1f517; Usa subito questa racchetta nelle altre schede (copia automatica dei dati):</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button type="button" class="btn btn-secondary" style="flex:1;min-width:115px;padding:7px 8px;font-size:0.75rem;line-height:1.25" onclick="sendCurrentPendToManual()" title="Copia Massa, Bilanciamento e SW nella Scheda 2 (Personalizzazione Manuale)">
+        <div>&#x1f9ee; <strong>Invia a Manuale</strong></div>
+        <div style="font-size:0.62rem;color:var(--text-secondary);font-weight:400;margin-top:2px">Simula pesi a mano (Tab 2)</div>
+      </button>
+      <button type="button" class="btn btn-secondary" style="flex:1;min-width:115px;padding:7px 8px;font-size:0.75rem;line-height:1.25" onclick="sendCurrentPendToAutoSingle()" title="Copia Massa, Bilanciamento e SW come racchetta base in Target Singolo (Scheda 3)">
+        <div>&#x1f3af; <strong>Invia a Target Singolo</strong></div>
+        <div style="font-size:0.62rem;color:var(--text-secondary);font-weight:400;margin-top:2px">Custom automatico 1 telaio (Tab 3)</div>
+      </button>
+      <button type="button" class="btn btn-secondary" style="flex:1;min-width:115px;padding:7px 8px;font-size:0.75rem;line-height:1.25;border-color:rgba(6,182,212,0.4);color:var(--accent-cyan)" onclick="sendCurrentPendToMatching()" title="Aggiunge questa racchetta alla lista dei telai da uniformare nel Matching Multi-Racchetta (Scheda 3)">
+        <div>&#x2696;&#xfe0f; <strong>+ Aggiungi al Matching</strong></div>
+        <div style="font-size:0.62rem;color:var(--text-secondary);font-weight:400;margin-top:2px">Pareggia pi&#xf9; racchette (Tab 3)</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Info sulla Sensibilità di Misura posizionata subito prima del salvataggio telaio -->
+<div id="pend-r-sensitivity" style="display:none;margin-top:10px;margin-bottom:4px;padding:8px 11px;background:rgba(255,255,255,0.02);border:1px dashed var(--border-color);border-radius:8px;font-size:0.7rem;color:var(--text-secondary);justify-content:space-between;flex-wrap:wrap;gap:6px"></div>
 
 <!-- Preferiti e Cronologia Misurazioni in Cassetto Compatto -->
 <details class="fav-drawer" open>
@@ -2958,7 +2940,6 @@ function applyHalfOscillationFix(newN){
 }
 
 function onPendInputChange(){
-  updateManualStopwatchLiveSW();
   const r=document.getElementById('pend-results');
   const diag=document.getElementById('pend-diagnostic-box');
   if((r&&r.style.display!=='none')||(diag&&diag.style.display!=='none')){
@@ -2978,9 +2959,11 @@ function calcPendulum(saveToHist=true){
   const det=computePendulumDetails(m,b,hng,n,tN,tw);
   const r=document.getElementById('pend-results');
   const diag=document.getElementById('pend-diagnostic-box');
+  const sensEl=document.getElementById('pend-r-sensitivity');
 
   if(!det.valid){
     if(r)r.style.display='none';
+    if(sensEl)sensEl.style.display='none';
     if(diag){
       diag.style.display='block';
       diag.style.background='rgba(239,68,68,0.1)';
@@ -3028,8 +3011,8 @@ function calcPendulum(saveToHist=true){
   document.getElementById('pend-r-bal').textContent=b.toFixed(2)+' cm';
   document.getElementById('pend-r-tw').textContent=(tw!==null?tw.toFixed(2)+' kg\u00b7cm\u00b2':'N/D');
 
-  const sensEl=document.getElementById('pend-r-sensitivity');
   if(sensEl){
+    sensEl.style.display='flex';
     sensEl.innerHTML='<span>\ud83d\udd2c <strong>Sensibilit\u00e0 misura:</strong></span>'
       +'<span>\u00b10.10 s tempo \u2192 <strong style="color:#fff">\u00b1'+det.sensTime01s.toFixed(2)+'</strong> pt SW</span>'
       +'<span>\u00b11 mm sospensione \u2192 <strong style="color:#fff">\u00b1'+det.sensHang1mm.toFixed(2)+'</strong> pt SW</span>'
@@ -3422,7 +3405,7 @@ function saveCalcFavorite(){const nameInput=document.getElementById('calc-fav-na
 function renderCalcFavorites(){const container=document.getElementById('calc-fav-list');if(!container)return;try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');if(list.length===0){container.innerHTML='<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>';return}container.innerHTML=list.map((item,idx)=>'<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px"><div><div style="font-weight:700;color:#fff;font-size:0.9rem">\u2b50 '+escapeHTML(item.name)+'</div><div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Base: '+item.base.mass+' g / '+item.base.balance+' cm / SW '+item.base.sw+' &middot; '+(item.masses?item.masses.length:0)+' masse &middot; <span style="opacity:0.6">'+item.date+'</span></div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-secondary" onclick="loadCalcFavorite('+idx+')" style="padding:6px 14px;font-size:0.8rem">Carica</button><button class="btn btn-secondary" onclick="deleteCalcFavorite('+idx+')" style="padding:6px 12px;font-size:0.8rem;color:var(--accent-red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);margin-left:8px" title="Elimina preferito">&#x2715; Elimina</button></div></div>').join('')}catch(e){}}
 function loadCalcFavorite(idx){try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');const item=list[idx];if(!item)return;document.getElementById('calc-base-mass').value=item.base.mass;document.getElementById('calc-base-bal').value=item.base.balance;document.getElementById('calc-base-sw').value=item.base.sw;document.getElementById('calc-base-tw').value=item.base.tw;document.getElementById('calc-base-len').value=item.base.length;const tbody=document.getElementById('calc-mass-tbody');tbody.innerHTML='';if(item.masses&&item.masses.length){item.masses.forEach(m=>{const massVal=m.mass||0;const lenVal=m.len!==undefined?m.len:0;const yVal=m.y!==undefined?m.y:0;const xVal=m.x!==undefined?m.x:0;addCalcMassRow(massVal,lenVal,yVal,xVal)})}recalcCustomizationTab()}catch(e){}}
 function deleteCalcFavorite(idx){try{const list=JSON.parse(localStorage.getItem(CALC_FAV_KEY)||'[]');const item=list[idx];if(!item)return;if(!confirm('Sei sicuro di voler eliminare la configurazione preferita "'+item.name+'"?'))return;list.splice(idx,1);localStorage.setItem(CALC_FAV_KEY,JSON.stringify(list));renderCalcFavorites()}catch(e){}}
-// --- OLS Linear Regression Period Estimator (used by both Manual Tap-Counter & Camera Gate) ---
+// --- OLS Linear Regression Period Estimator ---
 function computeOLSPeriod(timestampsMs) {
   const n = timestampsMs.length - 1;
   if (n < 1) return { periodS: 0, sigmaMs: 0, totalTimeS: 0, n: 0 };
@@ -3461,132 +3444,6 @@ function computeOLSPeriod(timestampsMs) {
   };
 }
 
-// --- Integrated Manual Stopwatch & Tap-Counter ---
-let manualTapRunning = false;
-let manualTapStartTime = 0;
-let manualTapTimestamps = [];
-let manualTapRafId = null;
-
-function handleManualStopwatchTap() {
-  const now = performance.now();
-  const btnAction = document.getElementById('btn-tap-action');
-  const btnApply = document.getElementById('btn-tap-apply');
-  const btnReset = document.getElementById('btn-tap-reset');
-
-  if (!manualTapRunning) {
-    manualTapRunning = true;
-    manualTapStartTime = now;
-    manualTapTimestamps = [now];
-    if (btnAction) btnAction.innerHTML = '&#x1f941; Tap Ciclo (+1) &mdash; Passaggio Completo';
-    if (btnApply) btnApply.style.display = 'inline-block';
-    if (btnReset) btnReset.style.display = 'inline-block';
-    document.getElementById('tap-val-time').textContent = '0.00 s';
-    document.getElementById('tap-val-count').textContent = '0';
-    document.getElementById('tap-val-sw').textContent = '---';
-    if (manualTapRafId) cancelAnimationFrame(manualTapRafId);
-    manualTapRafId = requestAnimationFrame(updateManualStopwatchTick);
-    return;
-  }
-
-  // Debounce accidental double-taps (< 350 ms)
-  const lastTap = manualTapTimestamps[manualTapTimestamps.length - 1];
-  if (now - lastTap < 350) return;
-
-  manualTapTimestamps.push(now);
-  const count = manualTapTimestamps.length - 1;
-  document.getElementById('tap-val-count').textContent = String(count);
-  updateManualStopwatchLiveSW();
-
-  const targetSwings = parseInt(document.getElementById('pend-nswings').value) || 40;
-  if (count >= targetSwings) {
-    playBeep();
-    finishManualStopwatch(true);
-  }
-}
-
-function updateManualStopwatchTick(now) {
-  if (!manualTapRunning) return;
-  const elapsedS = (now - manualTapStartTime) / 1000;
-  const timeEl = document.getElementById('tap-val-time');
-  if (timeEl) timeEl.textContent = elapsedS.toFixed(2) + ' s';
-
-  // If user is not tapping every cycle, show live preview SW assuming elapsed time is for target swings once elapsedS > 3s
-  if (manualTapTimestamps.length === 1 && elapsedS > 2.0) {
-    const m = parseFloat(document.getElementById('pend-mass').value);
-    const b = parseFloat(document.getElementById('pend-balance').value);
-    const hng = parseFloat(document.getElementById('pend-hang').value);
-    const nTarget = parseFloat(document.getElementById('pend-nswings').value) || 40;
-    const det = computePendulumDetails(m, b, hng, nTarget, elapsedS);
-    const swEl = document.getElementById('tap-val-sw');
-    if (swEl) swEl.textContent = det.valid && det.sw >= 150 && det.sw <= 500 ? det.sw.toFixed(1) : '---';
-  }
-  manualTapRafId = requestAnimationFrame(updateManualStopwatchTick);
-}
-
-function updateManualStopwatchLiveSW() {
-  const swEl = document.getElementById('tap-val-sw');
-  if (!swEl) return;
-  if (manualTapTimestamps.length < 2) return;
-  const ols = computeOLSPeriod(manualTapTimestamps);
-  const m = parseFloat(document.getElementById('pend-mass').value);
-  const b = parseFloat(document.getElementById('pend-balance').value);
-  const hng = parseFloat(document.getElementById('pend-hang').value);
-  const det = computePendulumDetails(m, b, hng, ols.n, ols.totalTimeS);
-  swEl.textContent = det.valid ? det.sw.toFixed(1) : '---';
-}
-
-function finishManualStopwatch(apply) {
-  const now = performance.now();
-  const wasRunning = manualTapRunning;
-  manualTapRunning = false;
-  if (manualTapRafId) {
-    cancelAnimationFrame(manualTapRafId);
-    manualTapRafId = null;
-  }
-
-  const btnAction = document.getElementById('btn-tap-action');
-  const btnApply = document.getElementById('btn-tap-apply');
-  const btnReset = document.getElementById('btn-tap-reset');
-  if (btnAction) btnAction.innerHTML = '&#x25b6;&#xfe0f; Avvia (Passaggio 0)';
-  if (btnApply) btnApply.style.display = 'none';
-
-  if (!apply) {
-    manualTapTimestamps = [];
-    if (btnReset) btnReset.style.display = 'none';
-    document.getElementById('tap-val-time').textContent = '0.00 s';
-    document.getElementById('tap-val-count').textContent = '0';
-    document.getElementById('tap-val-sw').textContent = '---';
-    return;
-  }
-
-  if (manualTapTimestamps.length >= 2) {
-    const ols = computeOLSPeriod(manualTapTimestamps);
-    document.getElementById('pend-nswings').value = ols.n;
-    document.getElementById('pend-time').value = ols.totalTimeS.toFixed(3);
-    document.getElementById('tap-val-time').textContent = ols.totalTimeS.toFixed(2) + ' s';
-    document.getElementById('tap-val-count').textContent = String(ols.n);
-    calcPendulum(true);
-    updateManualStopwatchLiveSW();
-  } else if (wasRunning && manualTapStartTime > 0) {
-    const elapsedS = (now - manualTapStartTime) / 1000;
-    if (elapsedS >= 0.5) {
-      const nTarget = parseInt(document.getElementById('pend-nswings').value) || 40;
-      document.getElementById('pend-time').value = elapsedS.toFixed(3);
-      document.getElementById('tap-val-time').textContent = elapsedS.toFixed(2) + ' s';
-      document.getElementById('tap-val-count').textContent = String(nTarget);
-      calcPendulum(true);
-      const det = computePendulumDetails(
-        document.getElementById('pend-mass').value,
-        document.getElementById('pend-balance').value,
-        document.getElementById('pend-hang').value,
-        nTarget,
-        elapsedS
-      );
-      document.getElementById('tap-val-sw').textContent = det.valid ? det.sw.toFixed(1) : '---';
-    }
-  }
-}
-
 // --- Optical Camera Auto-Measurement with Adaptive Thresholding & OLS Regression ---
 let autoMode = null;
 let autoStream = null;
@@ -3598,6 +3455,7 @@ let autoLastFullOscillationTime = 0;
 let autoPasses = 0;
 let autoOscillations = 0;
 let autoCountdownInterval = null;
+let autoLockTimer = null;
 let autoPrevImageData = null;
 let autoBgFloatData = null;
 let autoNoiseFloor = 4.0;
@@ -3614,6 +3472,20 @@ let autoOscTimestamps = [];
 let autoCurrentOLSPeriodS = 0;
 let autoCurrentOLSSigmaMs = 0;
 
+function pickPrimaryBackCameraDeviceId(devices) {
+  const videoInputs = (devices || []).filter(d => d.kind === 'videoinput' && d.deviceId);
+  const backCams = videoInputs.filter(d => {
+    const lbl = (d.label || '').toLowerCase();
+    if (!lbl) return false;
+    if (/front|user|anteriore|selfie|facetime/.test(lbl)) return false;
+    return /back|rear|posteriore|environment|camera2 0|0, facing back/.test(lbl);
+  });
+  if (backCams.length === 0) return null;
+  // Prefer primary 1x wide sensor, avoiding ultra-wide, macro, telephoto, or virtual multi-camera aggregators
+  const primary1x = backCams.find(d => !/ultra|macro|tele|depth|dual|triple|multi|0\.5x|2x|3x|5x/.test(d.label.toLowerCase()));
+  return (primary1x || backCams[0]).deviceId;
+}
+
 function startAutoMeasurement(mode) {
   stopAutoMeasurement(false);
   autoMode = mode;
@@ -3626,6 +3498,11 @@ function startAutoMeasurement(mode) {
   document.getElementById('auto-video').style.display = 'none';
   document.getElementById('auto-canvas').style.display = 'none';
   document.getElementById('auto-target-box').style.display = 'none';
+  const statusEl = document.getElementById('auto-camera-lock-status');
+  if (statusEl) {
+    statusEl.style.display = 'none';
+    statusEl.textContent = '';
+  }
 
   let count = 5;
   document.getElementById('auto-countdown').textContent = 'Posiziona il dispositivo... ' + count;
@@ -3645,6 +3522,9 @@ async function initCamera(mode) {
   try {
     const video = document.getElementById('auto-video');
     const lockLens = document.getElementById('auto-lock-lens').checked;
+    const lockExpo = document.getElementById('auto-lock-expo').checked;
+    const statusEl = document.getElementById('auto-camera-lock-status');
+    const appliedLocks = [];
 
     let videoConstraints = {
       width: { ideal: 320 },
@@ -3652,29 +3532,37 @@ async function initCamera(mode) {
       frameRate: { ideal: 60, max: 120 }
     };
 
-    if (lockLens && mode === 'camera-back') {
+    let selectedDeviceId = null;
+    if (lockLens && mode === 'camera-back' && navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
       const devices = await navigator.mediaDevices.enumerateDevices();
-      const backCameras = devices.filter(d => d.kind === 'videoinput' && d.label.toLowerCase().includes('back'));
-      if (backCameras.length > 0) {
-        videoConstraints.deviceId = { exact: backCameras[0].deviceId };
-      } else {
-        videoConstraints.facingMode = 'environment';
-      }
-    } else {
-      videoConstraints.facingMode = mode === 'camera-back' ? 'environment' : 'user';
+      selectedDeviceId = pickPrimaryBackCameraDeviceId(devices);
     }
 
-    autoStream = await navigator.mediaDevices.getUserMedia({ video: videoConstraints });
+    if (selectedDeviceId) {
+      videoConstraints.deviceId = { exact: selectedDeviceId };
+      appliedLocks.push('Lente 1x fissa');
+    } else {
+      videoConstraints.facingMode = mode === 'camera-back' ? { ideal: 'environment' } : { ideal: 'user' };
+    }
 
-    const lockExpo = document.getElementById('auto-lock-expo').checked;
-    if (lockExpo) {
-      const track = autoStream.getVideoTracks()[0];
-      if (track && track.getCapabilities) {
-        try {
-          await track.applyConstraints({
-            advanced: [{ exposureMode: 'manual', focusMode: 'manual', whiteBalanceMode: 'manual' }]
-          });
-        } catch(e) { console.warn('Advanced constraints non supportate', e); }
+    autoStream = await navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: false });
+
+    // If labels were empty before permission was granted, re-check after opening stream to switch to primary 1x lens if needed
+    if (lockLens && mode === 'camera-back' && !selectedDeviceId && navigator.mediaDevices.enumerateDevices) {
+      try {
+        const devicesAfter = await navigator.mediaDevices.enumerateDevices();
+        const primaryId = pickPrimaryBackCameraDeviceId(devicesAfter);
+        const currentTrack = autoStream.getVideoTracks()[0];
+        const currentSettings = currentTrack && currentTrack.getSettings ? currentTrack.getSettings() : {};
+        if (primaryId && currentSettings.deviceId && currentSettings.deviceId !== primaryId) {
+          autoStream.getTracks().forEach(t => t.stop());
+          videoConstraints.deviceId = { exact: primaryId };
+          delete videoConstraints.facingMode;
+          autoStream = await navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: false });
+        }
+        if (primaryId) appliedLocks.push('Lente 1x fissa');
+      } catch (reErr) {
+        console.warn('Re-select primary back lens non riuscito', reErr);
       }
     }
 
@@ -3682,15 +3570,96 @@ async function initCamera(mode) {
     await video.play();
     video.style.display = 'block';
     document.getElementById('auto-target-box').style.display = 'block';
-    if (mode === 'camera-front') {
-      video.style.transform = 'scaleX(-1)';
-    } else {
-      video.style.transform = 'scaleX(1)';
-    }
+    video.style.transform = mode === 'camera-front' ? 'scaleX(-1)' : 'scaleX(1)';
 
     const canvas = document.getElementById('auto-canvas');
     canvas.width = 32;
     canvas.height = 32;
+
+    const track = autoStream.getVideoTracks()[0];
+
+    // Lock 1x zoom immediately if supported to prevent iOS/Android macro auto-switching
+    if (lockLens && track && track.getCapabilities) {
+      try {
+        const caps = track.getCapabilities();
+        if (caps && caps.zoom) {
+          const targetZoom = Math.max(caps.zoom.min || 1, Math.min(caps.zoom.max || 1, 1.0));
+          await track.applyConstraints({ advanced: [{ zoom: targetZoom }] });
+          if (!appliedLocks.includes('Lente 1x fissa')) appliedLocks.push('Zoom 1x bloccato');
+        }
+      } catch (zErr) {}
+    }
+
+    // Apply Focus / Exposure / WB lock after 1.2s of stream warm-up so AE/AF settles on the scene first
+    if ((lockLens || lockExpo) && statusEl) {
+      statusEl.style.display = 'block';
+      statusEl.textContent = lockExpo
+        ? '\u23f3 Stabilizzazione fuoco/esposizione in corso...'
+        : (appliedLocks.length ? ('\ud83d\udd12 Attivo: ' + appliedLocks.join(' \u00b7 ')) : '\u2139\ufe0f Lente standard attiva');
+    }
+
+    if (lockExpo && track && track.getCapabilities) {
+      autoLockTimer = setTimeout(async () => {
+        if (!autoStream) return;
+        const activeTrack = autoStream.getVideoTracks()[0];
+        if (!activeTrack || !activeTrack.getCapabilities) return;
+        const caps = activeTrack.getCapabilities() || {};
+        const settings = activeTrack.getSettings ? activeTrack.getSettings() : {};
+
+        // 1. Lock Focus individually
+        if (Array.isArray(caps.focusMode)) {
+          const modeToUse = caps.focusMode.includes('manual') ? 'manual' : (caps.focusMode.includes('single-shot') ? 'single-shot' : null);
+          if (modeToUse) {
+            try {
+              const fc = { focusMode: modeToUse };
+              if (modeToUse === 'manual' && caps.focusDistance && typeof settings.focusDistance === 'number') {
+                fc.focusDistance = settings.focusDistance;
+              }
+              await activeTrack.applyConstraints({ advanced: [fc] });
+              appliedLocks.push('Fuoco bloccato');
+            } catch (e) {}
+          }
+        }
+
+        // 2. Lock Exposure individually
+        if (Array.isArray(caps.exposureMode)) {
+          const expMode = caps.exposureMode.includes('manual') ? 'manual' : (caps.exposureMode.includes('single-shot') ? 'single-shot' : null);
+          if (expMode) {
+            try {
+              const ec = { exposureMode: expMode };
+              if (expMode === 'manual' && caps.exposureTime && typeof settings.exposureTime === 'number') {
+                ec.exposureTime = settings.exposureTime;
+              }
+              await activeTrack.applyConstraints({ advanced: [ec] });
+              appliedLocks.push('Esposizione bloccata');
+            } catch (e) {}
+          }
+        }
+
+        // 3. Lock White Balance individually
+        if (Array.isArray(caps.whiteBalanceMode) && caps.whiteBalanceMode.includes('manual')) {
+          try {
+            const wbc = { whiteBalanceMode: 'manual' };
+            if (caps.colorTemperature && typeof settings.colorTemperature === 'number') {
+              wbc.colorTemperature = settings.colorTemperature;
+            }
+            await activeTrack.applyConstraints({ advanced: [wbc] });
+            appliedLocks.push('WB bloccato');
+          } catch (e) {}
+        }
+
+        if (statusEl) {
+          statusEl.style.display = 'block';
+          if (appliedLocks.length > 0) {
+            statusEl.style.color = 'var(--accent-green)';
+            statusEl.textContent = '\ud83d\udd12 Blocchi hardware attivi: ' + appliedLocks.join(' \u00b7 ');
+          } else {
+            statusEl.style.color = 'var(--text-secondary)';
+            statusEl.textContent = '\u2139\ufe0f Il browser non espone il blocco manuale AE/AF su questo dispositivo (compensazione software attiva)';
+          }
+        }
+      }, 1200);
+    }
 
     return true;
   } catch (err) {
@@ -3947,6 +3916,10 @@ function completeAutoMeasurementStable(message) {
 function stopAutoMeasurement(apply) {
   autoIsCounting = false;
 
+  if (autoLockTimer) {
+    clearTimeout(autoLockTimer);
+    autoLockTimer = null;
+  }
   if (autoCountdownInterval) {
     clearInterval(autoCountdownInterval);
     autoCountdownInterval = null;
