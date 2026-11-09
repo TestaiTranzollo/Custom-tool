@@ -53,10 +53,30 @@ input[type="number"]:focus,select:focus{border-color:var(--accent-cyan);backgrou
 .history-item:hover{background:rgba(255,255,255,0.06)!important}
 .history-item:active{transform:scale(0.98)}
 
-/* Tab bar responsive scroll */
-.tab-bar{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border-color);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.tab-bar::-webkit-scrollbar{display:none}
-.tab-btn{white-space:nowrap;flex:1 0 auto;min-width:fit-content;text-align:center}
+/* Modern Unified 3-Segment Tab Bar (Zero Horizontal Scroll) */
+.tab-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:rgba(11,15,25,0.92);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:6px;margin-bottom:22px;box-shadow:0 4px 20px rgba(0,0,0,0.35);user-select:none}
+.tab-btn{background:transparent;border:1px solid transparent;border-radius:10px;padding:9px 8px;color:var(--text-secondary);font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 0.2s ease;display:flex;align-items:center;justify-content:center;gap:8px;text-align:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent;min-height:44px}
+.tab-btn:hover{background:rgba(255,255,255,0.05);color:#fff}
+.tab-btn.active{background:linear-gradient(135deg,rgba(6,182,212,0.22) 0%,rgba(8,145,178,0.12) 100%);border:1.5px solid var(--accent-cyan);color:#fff;box-shadow:0 3px 14px rgba(6,182,212,0.22)}
+.tab-icon{font-size:1.2rem;line-height:1;flex-shrink:0}
+.tab-label{display:flex;flex-direction:column;align-items:flex-start;text-align:left;line-height:1.15}
+.tab-label-text{font-size:0.85rem;font-weight:700;color:inherit}
+.tab-label-sub{font-size:0.68rem;font-weight:500;color:var(--text-secondary);opacity:0.85}
+.tab-btn.active .tab-label-sub{color:var(--accent-cyan);opacity:1}
+
+@media(max-width:680px){
+  .tab-bar{gap:4px;padding:4px;margin-bottom:18px}
+  .tab-btn{flex-direction:column;padding:6px 2px;gap:2px}
+  .tab-label{align-items:center;text-align:center}
+  .tab-label-text{font-size:0.75rem;white-space:nowrap}
+  .tab-label-sub{display:none}
+  .tab-icon{font-size:1.1rem}
+}
+@media(max-width:400px){
+  .tab-long{display:none}
+  .tab-label-text{font-size:0.72rem}
+  .tab-icon{font-size:1.0rem}
+}
 
 /* Base Specs Panel */
 .calc-base-panel{background:linear-gradient(135deg,rgba(6,182,212,0.08) 0%,rgba(17,24,39,0.7) 100%);border:1px solid rgba(6,182,212,0.25);border-radius:14px;padding:18px 20px;margin-bottom:22px;box-shadow:0 4px 18px rgba(0,0,0,0.25)}
@@ -99,7 +119,9 @@ input[type="number"]:focus,select:focus{border-color:var(--accent-cyan);backgrou
 .calc-card-body{display:flex;gap:16px;align-items:stretch}
 .calc-card-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;flex:1;min-width:0}
 .calc-field-group{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);padding:6px 10px;border-radius:8px;min-width:0}
-.calc-field-group label{font-size:0.76rem;font-weight:600;color:#cbd5e1;text-transform:uppercase;letter-spacing:0.02em;line-height:1.2;flex:1;min-width:0}
+.calc-field-group label{display:flex;flex-direction:column;justify-content:center;gap:1px;font-size:0.75rem;font-weight:600;color:#cbd5e1;text-transform:uppercase;letter-spacing:0.02em;line-height:1.2;flex:1;min-width:0}
+.calc-field-group label .calc-field-main{font-size:0.75rem;font-weight:700;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.calc-field-group label .calc-field-unit{font-size:0.68rem;color:var(--accent-cyan);font-weight:600;text-transform:none;letter-spacing:0}
 .calc-field-group input[type="number"]{width:86px;flex-shrink:0;padding:7px 8px;font-size:1.0rem;font-weight:700;text-align:center;border-radius:6px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.18);color:#fff;transition:all var(--transition-speed)}
 .calc-field-group input[type="number"]:focus{border-color:var(--accent-cyan);background:rgba(0,0,0,0.75);box-shadow:0 0 0 2px rgba(6,182,212,0.35)}
 
@@ -126,7 +148,9 @@ input[type="number"]:focus,select:focus{border-color:var(--accent-cyan);backgrou
 .calc-mass-row{padding:12px 10px}
 .calc-card-inputs{gap:8px 10px}
 .calc-field-group{flex-direction:column;align-items:stretch;justify-content:space-between;padding:8px 8px;gap:5px}
-.calc-field-group label{font-size:0.69rem;min-height:2.4em;display:flex;align-items:flex-end;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.2}
+.calc-field-group label{min-height:2.4em;display:flex;flex-direction:column;justify-content:flex-end;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.2}
+.calc-field-group label .calc-field-main{font-size:0.70rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.calc-field-group label .calc-field-unit{font-size:0.64rem}
 .calc-field-group input[type="number"]{width:100%;padding:6px 4px;font-size:0.95rem}
 }
 @media(max-width:380px){
@@ -214,6 +238,74 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 .zone-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:7px 12px;font-size:0.8rem;color:#e2e8f0;cursor:pointer;user-select:none;transition:all 0.15s}
 .zone-chip:hover{border-color:var(--accent-cyan);background:rgba(6,182,212,0.1)}
 .zone-chip input[type="checkbox"]{accent-color:var(--accent-cyan);width:15px;height:15px;cursor:pointer}
+
+/* Zone Selector Card & Visual Racket Ruler System */
+.zone-selector-card{background:rgba(15,23,42,0.75);border:1px solid rgba(6,182,212,0.25);border-radius:14px;padding:16px;margin-top:14px;margin-bottom:16px;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+.zone-card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+.zone-card-title{font-size:0.98rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.zone-card-subtitle{font-size:0.78rem;color:var(--text-secondary);margin-top:2px;line-height:1.35}
+.zone-mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.btn-zone-mode{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 14px;text-align:left;cursor:pointer;transition:all 0.2s ease;display:flex;flex-direction:column;gap:3px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.btn-zone-mode:hover{background:rgba(255,255,255,0.05);border-color:rgba(6,182,212,0.4)}
+.btn-zone-mode.active{background:linear-gradient(135deg,rgba(6,182,212,0.22) 0%,rgba(16,185,129,0.14) 100%);border:1.5px solid var(--accent-cyan);box-shadow:0 4px 16px rgba(6,182,212,0.2)}
+.btn-zone-mode .zmode-icon{font-size:1.1rem}
+.btn-zone-mode .zmode-title{font-size:0.88rem;font-weight:700;color:#cbd5e1}
+.btn-zone-mode.active .zmode-title{color:#fff}
+.btn-zone-mode .zmode-desc{font-size:0.72rem;color:var(--text-secondary);line-height:1.25}
+.btn-zone-mode.active .zmode-desc{color:var(--accent-cyan)}
+
+/* Visual Racket Ruler */
+.racket-ruler-wrap{background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+.racket-ruler-header{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.ruler-status-label{font-size:0.78rem;font-weight:700;display:flex;align-items:center;gap:6px}
+.ruler-len-badge{font-size:0.72rem;color:var(--text-secondary);background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:6px;font-weight:600}
+.ruler-track-container{position:relative;height:30px;background-color:#080d1a;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.02),rgba(255,255,255,0.02) 8px,transparent 8px,transparent 16px);border-radius:15px;border:1.5px solid rgba(255,255,255,0.12);overflow:hidden;box-shadow:inset 0 2px 8px rgba(0,0,0,0.8)}
+.ruler-track{position:absolute;inset:0}
+.ruler-active-segment{position:absolute;top:2px;bottom:2px;background:linear-gradient(135deg,rgba(16,185,129,0.9) 0%,rgba(6,182,212,0.9) 100%);border:1px solid rgba(255,255,255,0.7);border-radius:12px;box-shadow:0 0 14px rgba(6,182,212,0.65);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.72rem;font-weight:800;text-shadow:0 1px 3px rgba(0,0,0,0.9);white-space:nowrap;overflow:hidden;padding:0 6px;transition:all 0.2s ease}
+.ruler-landmarks{display:flex;justify-content:space-between;margin-top:7px;font-size:0.68rem;color:var(--text-secondary);user-select:none}
+.ruler-landmarks span{text-align:center;line-height:1.15}
+.ruler-landmarks span small{display:block;font-size:0.62rem;opacity:0.75}
+
+/* Custom Zones Panel */
+.zone-custom-panel{background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px;margin-bottom:12px}
+.zone-presets-header{font-size:0.76rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-secondary);margin-bottom:8px}
+.zone-presets-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.btn-zone-preset{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:var(--text-primary);padding:6px 12px;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.15s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;min-height:34px;display:inline-flex;align-items:center;gap:4px}
+.btn-zone-preset:hover{background:rgba(6,182,212,0.14);border-color:var(--accent-cyan);color:#fff}
+.btn-zone-preset.reset{border-color:rgba(245,158,11,0.3);color:var(--accent-amber)}
+.btn-zone-preset.reset:hover{background:rgba(245,158,11,0.15);border-color:var(--accent-amber)}
+
+.zone-ranges-title{font-size:0.78rem;font-weight:700;color:#fff;margin-bottom:8px}
+.zone-ranges-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.zone-range-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.09);border-left:4px solid var(--accent-cyan);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;transition:border-color 0.15s ease}
+.zone-range-item:hover{border-color:rgba(6,182,212,0.4);border-left-color:var(--accent-cyan)}
+.zri-header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.zri-badge{background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.3);color:var(--accent-cyan);border-radius:6px;padding:3px 8px;font-size:0.76rem;font-weight:700}
+.zri-del-btn{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.28);color:var(--accent-red);border-radius:6px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;transition:all 0.15s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.zri-del-btn:hover{background:rgba(239,68,68,0.25);color:#fff;border-color:var(--accent-red)}
+.zri-inputs-row{display:flex;align-items:center;gap:10px}
+.zri-input-group{display:flex;align-items:center;gap:6px;flex:1}
+.zri-input-group label{font-size:0.78rem;color:var(--text-secondary);font-weight:700;white-space:nowrap}
+.zri-input-group input.zri-input{background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.14);border-radius:6px;color:#fff;padding:7px 10px;font-size:0.95rem;font-weight:700;min-height:40px;width:100%}
+.zri-input-group input.zri-input:focus{border-color:var(--accent-cyan);background:rgba(0,0,0,0.6);box-shadow:0 0 0 2px var(--accent-cyan-glow)}
+.zri-unit{font-size:0.78rem;color:var(--text-secondary);font-weight:600}
+.zri-sep{color:var(--accent-cyan);font-weight:800;font-size:1.1rem}
+.btn-add-zone{background:rgba(6,182,212,0.1);border:1.5px dashed rgba(6,182,212,0.45);border-radius:8px;color:var(--accent-cyan);padding:10px 16px;font-size:0.85rem;font-weight:700;cursor:pointer;width:100%;text-align:center;transition:all 0.15s ease;min-height:42px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.btn-add-zone:hover{background:rgba(6,182,212,0.2);border-color:var(--accent-cyan);color:#fff}
+
+/* Continuous Toggle */
+.zone-continuous-toggle{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08)}
+.zone-toggle-label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;user-select:none}
+.zone-toggle-label input[type="checkbox"]{width:19px;height:19px;accent-color:var(--accent-cyan);margin-top:2px;cursor:pointer;flex-shrink:0}
+.ztoggle-text{display:flex;flex-direction:column;gap:2px}
+.ztoggle-text strong{font-size:0.84rem;color:#fff}
+.ztoggle-text small{font-size:0.74rem;color:var(--text-secondary);line-height:1.3}
+
+@media(max-width:540px){
+  .zone-mode-switch{grid-template-columns:1fr}
+  .zri-inputs-row{flex-wrap:wrap;gap:6px}
+  .zri-sep{display:none}
+}
 
 .match-racket-card{background:linear-gradient(135deg,rgba(26,36,56,0.85) 0%,rgba(15,23,42,0.92) 100%);border:1px solid rgba(255,255,255,0.12);border-left:4px solid var(--accent-cyan);border-radius:12px;padding:14px 16px;margin-bottom:12px;transition:all 0.15s}
 .match-racket-card:nth-child(even){border-left-color:var(--accent-amber)}
@@ -332,11 +424,29 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 </div>
 </header>
 
-<div class="tab-bar">
-<button class="tab-btn active" data-tab="misura-sw" onclick="switchTab('misura-sw')" style="flex:1;padding:10px 16px;font-size:0.85rem;font-weight:600;background:none;border:none;border-bottom:2px solid var(--accent-cyan);color:var(--accent-cyan);cursor:pointer;transition:all 0.15s">&#x23f1; Misura SW</button>
-<button class="tab-btn" data-tab="calc-customization" onclick="switchTab('calc-customization')" style="flex:1;padding:10px 16px;font-size:0.85rem;font-weight:600;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-secondary);cursor:pointer;transition:all 0.15s">&#x1f9ee; Personalizzazione manuale</button>
-<button class="tab-btn" data-tab="personalizzazione" onclick="switchTab('personalizzazione')" style="flex:1;padding:10px 16px;font-size:0.85rem;font-weight:600;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-secondary);cursor:pointer;transition:all 0.15s">&#x1f527; Personalizzazione automatica</button>
-</div>
+<nav class="tab-bar" aria-label="Navigazione Principale">
+  <button type="button" class="tab-btn active" data-tab="misura-sw" onclick="switchTab('misura-sw')">
+    <span class="tab-icon">&#x23f1;</span>
+    <span class="tab-label">
+      <span class="tab-label-text">Misura SW</span>
+      <span class="tab-label-sub">Pendolo</span>
+    </span>
+  </button>
+  <button type="button" class="tab-btn" data-tab="calc-customization" onclick="switchTab('calc-customization')">
+    <span class="tab-icon">&#x1f9ee;</span>
+    <span class="tab-label">
+      <span class="tab-label-text"><span class="tab-long">Custom </span>Manuale</span>
+      <span class="tab-label-sub">Simula Pesi</span>
+    </span>
+  </button>
+  <button type="button" class="tab-btn" data-tab="personalizzazione" onclick="switchTab('personalizzazione')">
+    <span class="tab-icon">&#x1f527;</span>
+    <span class="tab-label">
+      <span class="tab-label-text"><span class="tab-long">Custom </span>Automatica</span>
+      <span class="tab-label-sub">Matching &amp; Target</span>
+    </span>
+  </button>
+</nav>
 <div data-tab="personalizzazione" class="tab-pane" style="display:none">
 
 <!-- Sub-Mode Selector: Target Singolo vs Matching Multi-Racchetta -->
@@ -439,16 +549,73 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
         </div>
       </div>
 
-      <!-- Allowed Zones for Matching -->
-      <div style="margin-top:8px">
-        <label style="font-size:0.8rem;color:var(--text-secondary);font-weight:600">Zone del telaio utilizzabili per il Matching:</label>
-        <div class="zone-chips-grid">
-          <label class="zone-chip"><input type="checkbox" id="mz-tappo" checked> &#x1f518; Tappo (1-3 cm)</label>
-          <label class="zone-chip"><input type="checkbox" id="mz-manico" checked> &#x1f3f8; Manico (6-18 cm)</label>
-          <label class="zone-chip"><input type="checkbox" id="mz-cuore" checked> &#x1f53b; Gola / Cuore (22-34 cm)</label>
-          <label class="zone-chip"><input type="checkbox" id="mz-ovale" checked> &#x2696;&#xfe0f; Ovale (Ore 3&amp;9 / 2&amp;10 / 4&amp;8)</label>
-          <label class="zone-chip"><input type="checkbox" id="mz-testa" checked> &#x1f51d; Testa Ore 12 (65-68 cm)</label>
-          <label class="zone-chip"><input type="checkbox" id="mz-cont" checked> &#x1f3af; Posizione Continua su Misura</label>
+      <!-- Allowed Lead Placement Zones Component (Matching) -->
+      <div class="zone-selector-card" id="match-zone-card">
+        <div class="zone-card-header">
+          <div>
+            <div class="zone-card-title">&#x1f3af; Zone del Telaio Consentite per il Matching</div>
+            <div class="zone-card-subtitle">Specifica in quali zone l'algoritmo pu&ograve; aggiungere piombo. Le zone escluse non verranno mai toccate.</div>
+          </div>
+        </div>
+
+        <!-- Mode Toggle: Tutto il Telaio vs Zone Specifiche -->
+        <div class="zone-mode-switch">
+          <button type="button" class="btn-zone-mode active" id="btn-match-zone-all" onclick="setZoneMode('match', 'all')">
+            <span class="zmode-icon">&#x1f310;</span>
+            <span class="zmode-title">Tutto il Telaio</span>
+            <span class="zmode-desc">0 cm &rarr; Lunghezza racchetta (Massima libert&agrave;)</span>
+          </button>
+          <button type="button" class="btn-zone-mode" id="btn-match-zone-custom" onclick="setZoneMode('match', 'custom')">
+            <span class="zmode-icon">&#x1f3af;</span>
+            <span class="zmode-title">Zone Specifiche</span>
+            <span class="zmode-desc">Limita l'applicazione solo ai range di cm desiderati</span>
+          </button>
+        </div>
+
+        <!-- Visual Racket Ruler -->
+        <div class="racket-ruler-wrap">
+          <div class="racket-ruler-header">
+            <span class="ruler-status-label" id="match-ruler-status">&#x1f7e2; 100% Telaio Consentito (0 &rarr; 68.6 cm)</span>
+            <span class="ruler-len-badge" id="match-ruler-len">Lungh: 68.58 cm</span>
+          </div>
+          <div class="ruler-track-container">
+            <div class="ruler-track" id="match-ruler-track"></div>
+          </div>
+          <div class="ruler-landmarks">
+            <span>| 0 cm<br><small>Tappo</small></span>
+            <span>| 10 cm<br><small>Presa</small></span>
+            <span>| 27 cm<br><small>Cuore</small></span>
+            <span>| 52 cm<br><small>Ore 3&amp;9</small></span>
+            <span>| 68.6 cm<br><small>Testa 12</small></span>
+          </div>
+        </div>
+
+        <!-- Custom Zones Panel (visible when mode === 'custom') -->
+        <div class="zone-custom-panel" id="match-zone-custom-panel" style="display:none">
+          <div class="zone-presets-header">&#x26a1; Preset Rapidi:</div>
+          <div class="zone-presets-bar">
+            <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-12')">&#x1f518; Tappo + Ore 12</button>
+            <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-39')">&#x2696;&#xfe0f; Tappo + Ore 3 &amp; 9</button>
+            <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'handle')">&#x1f5e1;&#xfe0f; Solo Manico (0-20 cm)</button>
+            <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'hoop')">&#x1f3be; Solo Ovale (42-68.6 cm)</button>
+            <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-39-12')">&#x2b50; Tappo + 3&amp;9 + Ore 12</button>
+            <button type="button" class="btn-zone-preset reset" onclick="setZoneMode('match', 'all')">&#x1f504; Tutto il Telaio</button>
+          </div>
+
+          <div class="zone-ranges-title">&#x1f4cb; Range di Piombatura Consentiti (in cm dal tappo):</div>
+          <div class="zone-ranges-list" id="match-zone-ranges-list"></div>
+          <button type="button" class="btn-add-zone" onclick="addZoneRange('match')">+ Aggiungi Range Consentito</button>
+        </div>
+
+        <!-- Continuous Solver Toggle -->
+        <div class="zone-continuous-toggle">
+          <label class="zone-toggle-label">
+            <input type="checkbox" id="mz-cont" checked onchange="onZoneConfigChange('match')">
+            <span class="ztoggle-text">
+              <strong>&#x1f3af; Posizionamento Continuo su Misura</strong>
+              <small>Calcola la posizione Y millimetrica ottimale all'interno dei range consentiti per la massima precisione</small>
+            </span>
+          </label>
         </div>
       </div>
     </div>
@@ -526,14 +693,73 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 </div>
 
 <div class="form-group" style="grid-column:1/-1">
-  <label style="font-size:0.82rem;color:var(--text-secondary)">Zone Consentite per l'Applicazione:</label>
-  <div class="zone-chips-grid">
-    <label class="zone-chip"><input type="checkbox" id="sz-tappo" checked> &#x1f518; Tappo (1-3 cm)</label>
-    <label class="zone-chip"><input type="checkbox" id="sz-manico" checked> &#x1f3f8; Manico (6-18 cm)</label>
-    <label class="zone-chip"><input type="checkbox" id="sz-cuore" checked> &#x1f53b; Gola / Cuore (22-34 cm)</label>
-    <label class="zone-chip"><input type="checkbox" id="sz-ovale" checked> &#x2696;&#xfe0f; Ovale (Ore 3&amp;9 / 2&amp;10 / 4&amp;8)</label>
-    <label class="zone-chip"><input type="checkbox" id="sz-testa" checked> &#x1f51d; Testa Ore 12 (65-68 cm)</label>
-    <label class="zone-chip"><input type="checkbox" id="sz-cont" checked> &#x1f3af; Posizione Continua su Misura (Y esatto)</label>
+  <div class="zone-selector-card" id="single-zone-card" style="margin-top:0">
+    <div class="zone-card-header">
+      <div>
+        <div class="zone-card-title">&#x1f3af; Zone del Telaio Consentite per l'Applicazione</div>
+        <div class="zone-card-subtitle">Specifica dove l'ottimizzatore pu&ograve; applicare il piombo. Le zone escluse non verranno mai toccate.</div>
+      </div>
+    </div>
+
+    <!-- Mode Toggle: Tutto il Telaio vs Zone Specifiche -->
+    <div class="zone-mode-switch">
+      <button type="button" class="btn-zone-mode active" id="btn-single-zone-all" onclick="setZoneMode('single', 'all')">
+        <span class="zmode-icon">&#x1f310;</span>
+        <span class="zmode-title">Tutto il Telaio</span>
+        <span class="zmode-desc">0 cm &rarr; Lunghezza racchetta (Massima libert&agrave;)</span>
+      </button>
+      <button type="button" class="btn-zone-mode" id="btn-single-zone-custom" onclick="setZoneMode('single', 'custom')">
+        <span class="zmode-icon">&#x1f3af;</span>
+        <span class="zmode-title">Zone Specifiche</span>
+        <span class="zmode-desc">Limita l'applicazione solo ai range di cm desiderati</span>
+      </button>
+    </div>
+
+    <!-- Visual Racket Ruler -->
+    <div class="racket-ruler-wrap">
+      <div class="racket-ruler-header">
+        <span class="ruler-status-label" id="single-ruler-status">&#x1f7e2; 100% Telaio Consentito (0 &rarr; 68.6 cm)</span>
+        <span class="ruler-len-badge" id="single-ruler-len">Lungh: 68.58 cm</span>
+      </div>
+      <div class="ruler-track-container">
+        <div class="ruler-track" id="single-ruler-track"></div>
+      </div>
+      <div class="ruler-landmarks">
+        <span>| 0 cm<br><small>Tappo</small></span>
+        <span>| 10 cm<br><small>Presa</small></span>
+        <span>| 27 cm<br><small>Cuore</small></span>
+        <span>| 52 cm<br><small>Ore 3&amp;9</small></span>
+        <span>| 68.6 cm<br><small>Testa 12</small></span>
+      </div>
+    </div>
+
+    <!-- Custom Zones Panel (visible when mode === 'custom') -->
+    <div class="zone-custom-panel" id="single-zone-custom-panel" style="display:none">
+      <div class="zone-presets-header">&#x26a1; Preset Rapidi:</div>
+      <div class="zone-presets-bar">
+        <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-12')">&#x1f518; Tappo + Ore 12</button>
+        <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-39')">&#x2696;&#xfe0f; Tappo + Ore 3 &amp; 9</button>
+        <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'handle')">&#x1f5e1;&#xfe0f; Solo Manico (0-20 cm)</button>
+        <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'hoop')">&#x1f3be; Solo Ovale (42-68.6 cm)</button>
+        <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-39-12')">&#x2b50; Tappo + 3&amp;9 + Ore 12</button>
+        <button type="button" class="btn-zone-preset reset" onclick="setZoneMode('single', 'all')">&#x1f504; Tutto il Telaio</button>
+      </div>
+
+      <div class="zone-ranges-title">&#x1f4cb; Range di Piombatura Consentiti (in cm dal tappo):</div>
+      <div class="zone-ranges-list" id="single-zone-ranges-list"></div>
+      <button type="button" class="btn-add-zone" onclick="addZoneRange('single')">+ Aggiungi Range Consentito</button>
+    </div>
+
+    <!-- Continuous Solver Toggle -->
+    <div class="zone-continuous-toggle">
+      <label class="zone-toggle-label">
+        <input type="checkbox" id="sz-cont" checked onchange="onZoneConfigChange('single')">
+        <span class="ztoggle-text">
+          <strong>&#x1f3af; Posizionamento Continuo su Misura</strong>
+          <small>Calcola la coordinata Y millimetrica ottimale all'interno dei range consentiti (massima precisione)</small>
+        </span>
+      </label>
+    </div>
   </div>
 </div>
 
@@ -1022,6 +1248,291 @@ function updateBaseTelemetry(){
 function updateGoalCurrentValues(){const r=getGoalBaseRacket();updateBaseTelemetry();document.querySelectorAll('#goal-list .goal-row').forEach(row=>{const p=row.querySelector('.goal-param').value;const v=getParamValue(r,p);row.querySelector('.goal-current').textContent=v.toFixed(getParamDecimals(p))+' '+getParamUnit(p)})}
 function updateComparison(){const c=computeCustomSpecs();const b=baseRacket;const f=(v,d)=>v.toFixed(d);const df=(a,b,d,u)=>{const v=a-b;return Math.abs(v)<1e-4?'':' ('+(v>0?'+':'')+v.toFixed(d)+(u||'')+')'}
 document.getElementById('cmp-mass-o').textContent=f(b.mass,1)+' g';document.getElementById('cmp-mass-c').textContent=f(c.mass,1)+' g'+df(c.mass,b.mass,1,'g');document.getElementById('cmp-bal-o').textContent=f(b.balance,2)+' cm';document.getElementById('cmp-bal-c').textContent=f(c.balance,2)+' cm'+df(c.balance,b.balance,2);document.getElementById('cmp-sw-o').textContent=f(b.swingweight,1);document.getElementById('cmp-sw-c').textContent=f(c.swingweight,1)+df(c.swingweight,b.swingweight,1);document.getElementById('cmp-tw-o').textContent=f(b.twistweight,2);document.getElementById('cmp-tw-c').textContent=f(c.twistweight,2)+df(c.twistweight,b.twistweight,2);document.getElementById('cmp-rw-o').textContent=f(b.recoilweight,1);document.getElementById('cmp-rw-c').textContent=f(c.recoilweight,1)+df(c.recoilweight,b.recoilweight,1);const i0o=document.getElementById('cmp-i0-o'),i0c=document.getElementById('cmp-i0-c');if(i0o)i0o.textContent=f(b.moment_of_inertia_handle,1);if(i0c)i0c.textContent=f(c.moment_of_inertia_handle,1)+df(c.moment_of_inertia_handle,b.moment_of_inertia_handle,1);document.getElementById('cmp-mgri-o').textContent=f(b.mgr_i,2);document.getElementById('cmp-mgri-c').textContent=f(c.mgr_i,2)+df(c.mgr_i,b.mgr_i,2);document.getElementById('cmp-pol-o').textContent=f(b.polarization_index,4);document.getElementById('cmp-pol-c').textContent=f(c.polarization_index,4)+df(c.polarization_index,b.polarization_index,4)}
+/* ================= ZONE SELECTOR & RACKET RULER LOGIC ================= */
+let matchZoneMode = 'all'; // 'all' | 'custom'
+let matchZoneRanges = [
+  {yMin: 0.0, yMax: 4.0},
+  {yMin: 50.0, yMax: 55.0}
+];
+
+let singleZoneMode = 'all'; // 'all' | 'custom'
+let singleZoneRanges = [
+  {yMin: 0.0, yMax: 4.0},
+  {yMin: 50.0, yMax: 55.0}
+];
+
+function isYInRanges(y, ranges){
+  if(!ranges || ranges.length === 0) return true;
+  return ranges.some(r => {
+    const min = parseFloat(r.yMin);
+    const max = parseFloat(r.yMax);
+    if(isNaN(min) || isNaN(max) || min > max) return false;
+    return y >= (min - 0.25) && y <= (max + 0.25);
+  });
+}
+
+function getRangeLandmarkHint(yMin, yMax, len){
+  const L = len || 68.58;
+  const mn = parseFloat(yMin) || 0;
+  const mx = parseFloat(yMax) || 0;
+  if(mn <= 1 && mx >= L - 1) return '\u{1f310} Tutto il Telaio (0 - ' + L.toFixed(1) + ' cm)';
+  if(mx <= 4.0) return '\u{1f4cd} Tappo (Base manico)';
+  if(mn <= 5 && mx <= 20) return '\u{1f4cd} Manico completo (0 - ' + mx.toFixed(0) + ' cm)';
+  if(mn >= 4 && mx <= 20) return '\u{1f4cd} Manico (6 - 18 cm)';
+  if(mn >= 20 && mx <= 36) return '\u{1f4cd} Cuore / Gola (22 - 34 cm)';
+  if(mn >= 38 && mx <= 47) return '\u{1f4cd} Ovale Basso (Ore 4 & 8)';
+  if(mn >= 48 && mx <= 56) return '\u{1f4cd} Ovale Centro (Ore 3 & 9 / TW)';
+  if(mn >= 56 && mx <= 63) return '\u{1f4cd} Ovale Alto (Ore 2 & 10)';
+  if(mn >= 63 && mx >= L - 2) return '\u{1f4cd} Testa / Ore 12 (' + mn.toFixed(0) + ' - ' + mx.toFixed(0) + ' cm)';
+  if(mn >= 40 && mx >= L - 2) return '\u{1f3be} Ovale Completo (' + mn.toFixed(0) + ' - ' + mx.toFixed(0) + ' cm)';
+  return '\u{1f4cd} Zona custom (' + mn.toFixed(1) + ' - ' + mx.toFixed(1) + ' cm)';
+}
+
+function getZoneRacketLength(prefix){
+  if(prefix === 'match'){
+    if(typeof matchRackets !== 'undefined' && matchRackets && matchRackets.length > 0){
+      const l = matchRackets[0].length;
+      if(l && !isNaN(l) && l > 50) return parseFloat(l);
+    }
+    return 68.58;
+  }
+  const el = document.getElementById('goal-length');
+  const v = el ? parseFloat(el.value) : 68.58;
+  return (!isNaN(v) && v > 50) ? v : 68.58;
+}
+
+function setZoneMode(prefix, mode){
+  if(prefix === 'match'){
+    matchZoneMode = mode;
+    saveMatchState();
+  }else{
+    singleZoneMode = mode;
+    saveState();
+  }
+  renderZoneUI(prefix);
+}
+
+function applyZonePreset(prefix, presetKey){
+  const L = getZoneRacketLength(prefix);
+  let newRanges = [];
+
+  switch(presetKey){
+    case 'butt-12':
+      newRanges = [
+        {yMin: 0.0, yMax: 4.0},
+        {yMin: +(L - 4.5).toFixed(1), yMax: +L.toFixed(1)}
+      ];
+      break;
+    case 'butt-39':
+      newRanges = [
+        {yMin: 0.0, yMax: 4.0},
+        {yMin: 50.0, yMax: 55.0}
+      ];
+      break;
+    case 'handle':
+      newRanges = [
+        {yMin: 0.0, yMax: 20.0}
+      ];
+      break;
+    case 'hoop':
+      newRanges = [
+        {yMin: 42.0, yMax: +L.toFixed(1)}
+      ];
+      break;
+    case 'butt-39-12':
+      newRanges = [
+        {yMin: 0.0, yMax: 4.0},
+        {yMin: 50.0, yMax: 55.0},
+        {yMin: +(L - 3.5).toFixed(1), yMax: +L.toFixed(1)}
+      ];
+      break;
+    default:
+      newRanges = [
+        {yMin: 0.0, yMax: 4.0},
+        {yMin: 50.0, yMax: 55.0}
+      ];
+  }
+
+  if(prefix === 'match'){
+    matchZoneMode = 'custom';
+    matchZoneRanges = newRanges;
+    saveMatchState();
+  }else{
+    singleZoneMode = 'custom';
+    singleZoneRanges = newRanges;
+    saveState();
+  }
+  renderZoneUI(prefix);
+}
+
+function addZoneRange(prefix){
+  const L = getZoneRacketLength(prefix);
+  const ranges = prefix === 'match' ? matchZoneRanges : singleZoneRanges;
+
+  let defaultMin = 50.0, defaultMax = 55.0;
+  if(ranges.some(r => r.yMin >= 48 && r.yMax <= 56)){
+    if(!ranges.some(r => r.yMin <= 4)){
+      defaultMin = 0.0; defaultMax = 4.0;
+    }else if(!ranges.some(r => r.yMax >= L - 3)){
+      defaultMin = +(L - 3.5).toFixed(1); defaultMax = +L.toFixed(1);
+    }else if(!ranges.some(r => r.yMin >= 22 && r.yMax <= 35)){
+      defaultMin = 25.0; defaultMax = 32.0;
+    }else{
+      defaultMin = 10.0; defaultMax = 16.0;
+    }
+  }
+
+  ranges.push({yMin: defaultMin, yMax: defaultMax});
+  if(prefix === 'match'){
+    matchZoneMode = 'custom';
+    saveMatchState();
+  }else{
+    singleZoneMode = 'custom';
+    saveState();
+  }
+  renderZoneUI(prefix);
+}
+
+function removeZoneRange(prefix, idx){
+  const ranges = prefix === 'match' ? matchZoneRanges : singleZoneRanges;
+  if(ranges.length > 0){
+    ranges.splice(idx, 1);
+  }
+  if(prefix === 'match') saveMatchState();
+  else saveState();
+  renderZoneUI(prefix);
+}
+
+function onZoneRangeInput(prefix, idx, field, val){
+  const ranges = prefix === 'match' ? matchZoneRanges : singleZoneRanges;
+  if(!ranges[idx]) return;
+  const num = parseFloat(val);
+  if(!isNaN(num)){
+    if(field === 'min') ranges[idx].yMin = Math.max(0, num);
+    else ranges[idx].yMax = Math.max(0, num);
+  }
+  const L = getZoneRacketLength(prefix);
+  renderZoneRuler(prefix, prefix === 'match' ? matchZoneMode : singleZoneMode, ranges, L);
+
+  const listEl = document.getElementById(prefix + '-zone-ranges-list');
+  if(listEl){
+    const card = listEl.querySelector('[data-index="' + idx + '"]');
+    if(card){
+      const badge = card.querySelector('.zri-badge');
+      if(badge) badge.textContent = getRangeLandmarkHint(ranges[idx].yMin, ranges[idx].yMax, L);
+    }
+  }
+
+  if(prefix === 'match') saveMatchState();
+  else saveState();
+}
+
+function onZoneConfigChange(prefix){
+  if(prefix === 'match') saveMatchState();
+  else saveState();
+}
+
+function renderZoneRuler(prefix, mode, ranges, len){
+  const track = document.getElementById(prefix + '-ruler-track');
+  if(!track) return;
+  const L = len > 0 ? len : 68.58;
+
+  if(mode === 'all'){
+    track.innerHTML = '<div class="ruler-active-segment" style="left:0%;width:100%;background:linear-gradient(90deg, rgba(16,185,129,0.85) 0%, rgba(6,182,212,0.85) 100%);"><span>0 &rarr; ' + L.toFixed(1) + ' cm (Tutto il Telaio)</span></div>';
+    return;
+  }
+
+  const valid = (ranges || []).filter(r => !isNaN(r.yMin) && !isNaN(r.yMax) && r.yMin < r.yMax);
+  if(valid.length === 0){
+    track.innerHTML = '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--accent-red);font-size:0.75rem;font-weight:700">Nessuna zona consentita! Clicca "+ Aggiungi Range" qui sotto.</div>';
+    return;
+  }
+
+  track.innerHTML = valid.map((r, idx) => {
+    const leftPct = Math.max(0, Math.min(100, (r.yMin / L) * 100));
+    const rightPct = Math.max(0, Math.min(100, (r.yMax / L) * 100));
+    const widthPct = Math.max(2, rightPct - leftPct);
+    const label = widthPct > 12 ? (r.yMin.toFixed(0) + '-' + r.yMax.toFixed(0) + ' cm') : '';
+    return '<div class="ruler-active-segment" style="left:' + leftPct.toFixed(1) + '%;width:' + widthPct.toFixed(1) + '%;" title="Zona #' + (idx+1) + ': ' + r.yMin + ' - ' + r.yMax + ' cm"><span>' + label + '</span></div>';
+  }).join('');
+}
+
+function renderZoneRangesList(prefix, ranges, len){
+  const listEl = document.getElementById(prefix + '-zone-ranges-list');
+  if(!listEl) return;
+  const L = len > 0 ? len : 68.58;
+
+  if(!ranges || ranges.length === 0){
+    listEl.innerHTML = '<div style="color:var(--text-secondary);font-size:0.8rem;text-align:center;padding:12px;background:rgba(255,255,255,0.02);border-radius:6px">Nessuna zona specificata. Clicca "+ Aggiungi Range Consentito" o scegli un Preset rapido.</div>';
+    return;
+  }
+
+  listEl.innerHTML = ranges.map((r, idx) => {
+    const hint = getRangeLandmarkHint(r.yMin, r.yMax, L);
+    return '<div class="zone-range-item" data-index="' + idx + '">' +
+      '<div class="zri-header">' +
+        '<span class="zri-badge">' + hint + '</span>' +
+        '<button type="button" class="zri-del-btn" onclick="removeZoneRange(\'' + prefix + '\', ' + idx + ')" title="Rimuovi questo range" aria-label="Rimuovi">&times;</button>' +
+      '</div>' +
+      '<div class="zri-inputs-row">' +
+        '<div class="zri-input-group">' +
+          '<label>Da</label>' +
+          '<input type="number" class="zri-input" value="' + r.yMin + '" min="0" max="' + L.toFixed(1) + '" step="0.5" oninput="onZoneRangeInput(\'' + prefix + '\', ' + idx + ', \'min\', this.value)" aria-label="Inizio range cm">' +
+          '<span class="zri-unit">cm</span>' +
+        '</div>' +
+        '<div class="zri-sep">&rarr;</div>' +
+        '<div class="zri-input-group">' +
+          '<label>A</label>' +
+          '<input type="number" class="zri-input" value="' + r.yMax + '" min="0" max="' + L.toFixed(1) + '" step="0.5" oninput="onZoneRangeInput(\'' + prefix + '\', ' + idx + ', \'max\', this.value)" aria-label="Fine range cm">' +
+          '<span class="zri-unit">cm</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderZoneUI(prefix){
+  const mode = prefix === 'match' ? matchZoneMode : singleZoneMode;
+  const ranges = prefix === 'match' ? matchZoneRanges : singleZoneRanges;
+  const len = getZoneRacketLength(prefix);
+
+  const btnAll = document.getElementById('btn-' + prefix + '-zone-all');
+  const btnCustom = document.getElementById('btn-' + prefix + '-zone-custom');
+  if(btnAll && btnCustom){
+    if(mode === 'all'){
+      btnAll.classList.add('active');
+      btnCustom.classList.remove('active');
+    }else{
+      btnAll.classList.remove('active');
+      btnCustom.classList.add('active');
+    }
+  }
+
+  const panel = document.getElementById(prefix + '-zone-custom-panel');
+  if(panel){
+    panel.style.display = mode === 'custom' ? 'block' : 'none';
+  }
+
+  const statusEl = document.getElementById(prefix + '-ruler-status');
+  const lenEl = document.getElementById(prefix + '-ruler-len');
+  if(lenEl) lenEl.textContent = 'Lungh: ' + len.toFixed(1) + ' cm';
+
+  if(statusEl){
+    if(mode === 'all'){
+      statusEl.innerHTML = '<span style="color:var(--accent-green)">&#x1f7e2; 100% Telaio Consentito (0 &rarr; ' + len.toFixed(1) + ' cm)</span> &middot; <span style="color:var(--text-secondary);font-size:0.75rem">Libert&agrave; Totale</span>';
+    }else{
+      const count = (ranges || []).length;
+      statusEl.innerHTML = '<span style="color:var(--accent-amber)">&#x1f3af; ' + count + (count === 1 ? ' Zona Consentita' : ' Zone Consentite') + '</span> &middot; <span style="color:var(--text-secondary);font-size:0.75rem">Zone escluse bloccate</span>';
+    }
+  }
+
+  renderZoneRuler(prefix, mode, ranges, len);
+
+  if(mode === 'custom'){
+    renderZoneRangesList(prefix, ranges, len);
+  }
+}
+
 function getSymmetricZoneCatalog(len){
   const L=len||68.58;
   return[
@@ -1039,7 +1550,29 @@ function getSymmetricZoneCatalog(len){
   ];
 }
 function getFilteredSymmetricZones(constraints,len){
-  let zones=getSymmetricZoneCatalog(len).filter(z=>{const el=document.getElementById(z.chk);return !el||el.checked;});
+  const L=len||68.58;
+  const allCatalog=getSymmetricZoneCatalog(L);
+  let zones=allCatalog;
+  if(singleZoneMode==='custom'){
+    const active=(singleZoneRanges||[]).filter(r=>!isNaN(r.yMin)&&!isNaN(r.yMax)&&r.yMin<r.yMax);
+    if(active.length>0){
+      zones=allCatalog.filter(z=>isYInRanges(z.y,active));
+      active.forEach((r,idx)=>{
+        const hasPoint=zones.some(z=>z.y>=r.yMin-0.25&&z.y<=r.yMax+0.25);
+        if(!hasPoint){
+          const yMid=+((r.yMin+r.yMax)/2).toFixed(1);
+          const isHoop=yMid>=38;
+          zones.push({
+            id:'custom_sz_'+idx,
+            y:yMid,
+            x:isHoop?11.0:0,
+            paired:isHoop,
+            label:'Zona '+r.yMin.toFixed(1)+'-'+r.yMax.toFixed(1)+' cm'+(isHoop?' (Ore 3&9)':'')
+          });
+        }
+      });
+    }
+  }
   for(const c of (constraints||[])){
     if(c.type==='exclude')zones=zones.filter(z=>z.y<c.yMin||z.y>c.yMax);
   }
@@ -1205,7 +1738,7 @@ function solveExactAndRefinedOnZones(base,goals,zoneCombo,limits,constraints){
 }
 function solveContinuousTwoPointCustom(base,goals,limits,constraints){
   const out=[];
-  const rTest=new Racket(base.mass,base.balance,base.swingweight,base.twistweight,base.length);
+  const allowedRanges = singleZoneMode === 'custom' ? singleZoneRanges : null;
   let mT=null,bT=null,swT=null,mgriT=null;
   for(const g of goals){
     if(g.param==='mass')mT=g.target;
@@ -1216,25 +1749,39 @@ function solveContinuousTwoPointCustom(base,goals,limits,constraints){
   if(swT!==null&&mgriT!==null&&bT===null&&mT===null){
     for(let dm=2;dm<=22;dm+=1){
       const mNew=base.mass+dm;
-      const i0Star=(mNew/1000)*(swT>0?1:1);
       const bStar=(swT-100*(mNew/1000))/(mNew/1000*(980.5/mgriT-20));
       if(bStar>28&&bStar<38){
-        const sub=solveContinuousTwoPointFromMB(base,mNew,bStar,swT,limits,constraints);
+        const sub=solveContinuousTwoPointFromMB(base,mNew,bStar,swT,limits,constraints,allowedRanges);
         out.push(...sub);
       }
     }
   }else if(swT!==null&&bT!==null&&mT!==null){
-    out.push(...solveContinuousTwoPointFromMB(base,mT,bT,swT,limits,constraints));
+    out.push(...solveContinuousTwoPointFromMB(base,mT,bT,swT,limits,constraints,allowedRanges));
   }
   return out;
 }
-function solveContinuousTwoPointFromMB(base,mT,bT,swT,limits,constraints){
+function solveContinuousTwoPointFromMB(base,mT,bT,swT,limits,constraints,allowedRanges){
   const res=[];
   const M=mT-base.mass,S1=mT*bT-base.mass*base.balance,S2=1000*(swT-base.swingweight);
   if(M<0.5||S2<=0)return res;
   const mu=S1/M,u=mu-10,sig2=S2/M-u*u;
   if(sig2<=0.01)return res;
-  const anchorYs=[1.5,4.0,8.0,12.0,base.length-1.0,base.length-2.5];
+  let anchorYs=[1.5,4.0,8.0,12.0,+(base.length-1.0).toFixed(1),+(base.length-2.5).toFixed(1)];
+  if(allowedRanges&&allowedRanges.length>0){
+    const customAnchors=[];
+    for(const r of allowedRanges){
+      if(r.yMin<r.yMax){
+        customAnchors.push(Math.max(0.5,+(r.yMin+0.5).toFixed(1)));
+        customAnchors.push(+((r.yMin+r.yMax)/2).toFixed(1));
+        customAnchors.push(Math.min(base.length,+(r.yMax-0.5).toFixed(1)));
+      }
+    }
+    const filteredStd=anchorYs.filter(y=>isYInRanges(y,allowedRanges));
+    anchorYs=[...new Set([...filteredStd,...customAnchors])];
+    if(anchorYs.length===0){
+      anchorYs=[1.5,4.0,8.0,12.0,+(base.length-1.0).toFixed(1),+(base.length-2.5).toFixed(1)];
+    }
+  }
   for(const y1 of anchorYs){
     const u1=y1-10;
     if(Math.abs(u-u1)<0.2)continue;
@@ -1245,6 +1792,7 @@ function solveContinuousTwoPointFromMB(base,mT,bT,swT,limits,constraints){
     if(m1<0.3||m2<0.3)continue;
     const ya=Math.round(Math.min(y1,y2)*2)/2,yb=Math.round(Math.max(y1,y2)*2)/2;
     const ma=y1<y2?m1:m2,mb=y1<y2?m2:m1;
+    if(allowedRanges&&(!isYInRanges(ya,allowedRanges)||!isYInRanges(yb,allowedRanges)))continue;
     const za={y:ya,x:0,paired:false,label:'Posizione '+ya.toFixed(1)+' cm'};
     const zb={y:yb,x:0,paired:false,label:'Posizione '+yb.toFixed(1)+' cm'};
     if(constraints&&constraints.some(c=>c.type==='exclude'&&((ya>=c.yMin&&ya<=c.yMax)||(yb>=c.yMin&&yb<=c.yMax))))continue;
@@ -1402,7 +1950,7 @@ ctx.shadowColor='rgba(255,20,147,0.6)';ctx.shadowBlur=10;ctx.fillStyle='#ff1493'
 ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=6;ctx.fillStyle='#ff1493';ctx.font='bold 13px -apple-system,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(w.mass.toFixed(1)+' g',px,py-12);ctx.shadowBlur=0}
 ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=4;ctx.fillStyle='#ff1493';ctx.textAlign='right';ctx.font='bold 11px -apple-system,sans-serif';for(let y=0;y<=Math.ceil(activeLen);y+=10){ctx.fillText(y+'',r2x(-HOOP_B*1.7),r2y(y)+3)};ctx.shadowBlur=0}
 const STORAGE_KEY='custom_tool_data';const HISTORY_KEY='custom_tool_history'
-function getStateSnapshot(){return{base:{mass:+document.getElementById('goal-mass').value,balance:+document.getElementById('goal-balance').value,sw:+document.getElementById('goal-sw').value,tw:+document.getElementById('goal-tw').value,length:+document.getElementById('goal-length').value},strips:appliedStrips.map(s=>({mass:s.mass,y:s.y,sw_added:s.sw_added,tw_added:s.tw_added,name:s.name})),extension:{...racketExtension},goals:getGoals(),maxWeights:+document.getElementById('goal-max-weights').value,constraints:getConstraints(),massLimits:getMassLimits()}}
+function getStateSnapshot(){return{base:{mass:+document.getElementById('goal-mass').value,balance:+document.getElementById('goal-balance').value,sw:+document.getElementById('goal-sw').value,tw:+document.getElementById('goal-tw').value,length:+document.getElementById('goal-length').value},strips:appliedStrips.map(s=>({mass:s.mass,y:s.y,sw_added:s.sw_added,tw_added:s.tw_added,name:s.name})),extension:{...racketExtension},goals:getGoals(),maxWeights:+document.getElementById('goal-max-weights').value,constraints:getConstraints(),massLimits:getMassLimits(),zoneMode:singleZoneMode,zoneRanges:singleZoneRanges,cont:document.getElementById('sz-cont')?document.getElementById('sz-cont').checked:true}}
 function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(getStateSnapshot()))}catch(e){}}
 function loadState(){try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;const s=JSON.parse(raw)
 if(s.base){document.getElementById('goal-mass').value=s.base.mass;document.getElementById('goal-balance').value=s.base.balance;document.getElementById('goal-sw').value=s.base.sw;document.getElementById('goal-tw').value=s.base.tw;document.getElementById('goal-length').value=s.base.length}
@@ -1411,7 +1959,12 @@ if(s.goals&&s.goals.length){document.querySelectorAll('#goal-list .goal-row').fo
 if(s.constraints&&s.constraints.length){document.querySelectorAll('#constraint-list .constraint-row').forEach(r=>r.remove());s.constraints.forEach(c=>addConstraintRow(c.type,c.yMin,c.yMax))}
 if(s.massLimits){if(s.massLimits.manico!==null)document.getElementById('limit-manico').value=s.massLimits.manico;if(s.massLimits.cuore!==null)document.getElementById('limit-cuore').value=s.massLimits.cuore;if(s.massLimits.ovale!==null)document.getElementById('limit-ovale').value=s.massLimits.ovale}
 if(s.strips&&s.strips.length){appliedStrips=s.strips.map(st=>({...st,id:Date.now()+Math.random(),arcLen:0,indices:new Set()}))}
-if(s.extension){racketExtension={...s.extension}};onBaseChange();updateGoalCurrentValues();saveState()}catch(e){}}
+if(s.extension){racketExtension={...s.extension}};
+if(s.zoneMode)singleZoneMode=s.zoneMode;
+if(s.zoneRanges&&Array.isArray(s.zoneRanges))singleZoneRanges=s.zoneRanges;
+if(s.cont!==undefined&&document.getElementById('sz-cont'))document.getElementById('sz-cont').checked=!!s.cont;
+renderZoneUI('single');
+onBaseChange();updateGoalCurrentValues();saveState()}catch(e){}}
 function addHistory(label){try{const h=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');h.unshift({id:Date.now(),date:new Date().toLocaleString('it-IT'),label,state:getStateSnapshot()});if(h.length>50)h.length=50;localStorage.setItem(HISTORY_KEY,JSON.stringify(h));renderHistory()}catch(e){}}
 function clearHistory(){if(confirm('Cancellare tutta la cronologia?')){try{localStorage.removeItem(HISTORY_KEY)}catch(e){}renderHistory()}}
 function restoreFromHistory(idx){try{const h=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');const entry=h[idx];if(!entry)return;const s=entry.state
@@ -1422,13 +1975,17 @@ if(s.strips){appliedStrips=s.strips.map(st=>({...st,id:Date.now()+Math.random(),
 if(s.extension){racketExtension={...s.extension}}else{racketExtension={cm:0,mass:0,y:0}}
 if(s.maxWeights)document.getElementById('goal-max-weights').value=s.maxWeights;else if(s.goal&&s.goal.maxWeights)document.getElementById('goal-max-weights').value=s.goal.maxWeights
 if(s.goals&&s.goals.length){document.querySelectorAll('#goal-list .goal-row').forEach((r,i)=>{if(i===0&&s.goals[0]){r.querySelector('.goal-param').value=s.goals[0].param;r.querySelector('.goal-target').value=s.goals[0].target}else r.remove()});for(let i=1;i<s.goals.length;i++)addGoalRow(s.goals[i].param,s.goals[i].target)}else if(s.goal){document.querySelector('#goal-list .goal-row .goal-param').value=s.goal.param;document.querySelector('#goal-list .goal-row .goal-target').value=s.goal.target}
+if(s.zoneMode)singleZoneMode=s.zoneMode;
+if(s.zoneRanges&&Array.isArray(s.zoneRanges))singleZoneRanges=s.zoneRanges;
+if(s.cont!==undefined&&document.getElementById('sz-cont'))document.getElementById('sz-cont').checked=!!s.cont;
+renderZoneUI('single');
 onBaseChange();updateGoalCurrentValues();saveState()}catch(e){}}
 function renderHistory(){const container=document.getElementById('history-list');if(!container)return;try{const h=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]')
 if(h.length===0){container.innerHTML='<div class="help-text" style="text-align:center;padding:15px;color:var(--text-secondary)">Nessuna cronologia. Le analisi vengono salvate automaticamente.</div>';return}
 container.innerHTML=h.map((entry,idx)=>{const b=entry&&entry.state&&entry.state.base;return'<div class="history-item" onclick="restoreFromHistory('+idx+')" style="cursor:pointer;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:6px;padding:8px 12px;margin-bottom:5px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-weight:600;color:#fff;font-size:0.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(entry?entry.label:'?')+'</span><span style="font-size:0.65rem;color:var(--text-secondary);flex-shrink:0">'+(entry?entry.date:'')+'</span></div><div style="font-size:0.7rem;color:var(--text-secondary);margin-top:2px">'+(b?b.mass+' g / '+b.balance+' cm / SW '+b.sw:'')+'</div></div>'}).join('')
 }catch(e){console.error('renderHistory error:',e)}}
-function onBaseChange(){baseRacket=new Racket(+document.getElementById('goal-mass').value||300,+document.getElementById('goal-balance').value||32,+document.getElementById('goal-sw').value||315,+document.getElementById('goal-tw').value||14,+document.getElementById('goal-length').value||68.58);buildHoopGeometry(baseRacket.length);updateComparison();updateGoalCurrentValues();saveState()}
-function switchTab(name){document.querySelectorAll('.tab-pane').forEach(e=>e.style.display='none');document.querySelectorAll('.tab-btn').forEach(e=>{e.classList.toggle('active',e.dataset.tab===name);e.style.borderBottomColor=e.dataset.tab===name?'var(--accent-cyan)':'transparent';e.style.color=e.dataset.tab===name?'var(--accent-cyan)':'var(--text-secondary)'});document.querySelector('.tab-pane[data-tab="'+name+'"]').style.display='';const hud=document.getElementById('calc-floating-hud');if(hud)hud.style.display=(name==='calc-customization'?'block':'none');}
+function onBaseChange(){baseRacket=new Racket(+document.getElementById('goal-mass').value||300,+document.getElementById('goal-balance').value||32,+document.getElementById('goal-sw').value||315,+document.getElementById('goal-tw').value||14,+document.getElementById('goal-length').value||68.58);buildHoopGeometry(baseRacket.length);updateComparison();updateGoalCurrentValues();renderZoneUI('single');saveState()}
+function switchTab(name){document.querySelectorAll('.tab-pane').forEach(e=>e.style.display='none');document.querySelectorAll('.tab-btn').forEach(e=>{e.classList.toggle('active',e.dataset.tab===name);e.style.borderBottomColor='';e.style.color='';});const ap=document.querySelector('.tab-pane[data-tab="'+name+'"]');if(ap)ap.style.display='';const hud=document.getElementById('calc-floating-hud');if(hud)hud.style.display=(name==='calc-customization'?'block':'none');if(name==='personalizzazione'){renderZoneUI('match');renderZoneUI('single');}}
 function switchAutoSubMode(mode){
   const mDiv=document.getElementById('auto-submode-matching');
   const sDiv=document.getElementById('auto-submode-single');
@@ -1439,11 +1996,13 @@ function switchAutoSubMode(mode){
     if(sDiv)sDiv.style.display='';
     if(bM)bM.classList.remove('active');
     if(bS)bS.classList.add('active');
+    renderZoneUI('single');
   }else{
     if(mDiv)mDiv.style.display='';
     if(sDiv)sDiv.style.display='none';
     if(bM)bM.classList.add('active');
     if(bS)bS.classList.remove('active');
+    renderZoneUI('match');
     updateMatchDiagnostics();
     if(!currentMatchingPlans||currentMatchingPlans.length===0){
       runMultiRacketMatcher();
@@ -1482,7 +2041,10 @@ function saveMatchState(){
       rackets:matchRackets,
       priority:document.getElementById('match-priority-mode')?document.getElementById('match-priority-mode').value:'sw-mgri',
       targetMode:document.getElementById('match-target-mode')?document.getElementById('match-target-mode').value:'auto',
-      maxZones:document.getElementById('match-max-zones')?document.getElementById('match-max-zones').value:'2'
+      maxZones:document.getElementById('match-max-zones')?document.getElementById('match-max-zones').value:'2',
+      zoneMode:matchZoneMode,
+      zoneRanges:matchZoneRanges,
+      cont:document.getElementById('mz-cont')?document.getElementById('mz-cont').checked:true
     };
     localStorage.setItem(MATCH_STATE_KEY,JSON.stringify(st));
   }catch(e){}
@@ -1497,11 +2059,15 @@ function loadMatchState(){
       if(st.priority&&document.getElementById('match-priority-mode'))document.getElementById('match-priority-mode').value=st.priority;
       if(st.targetMode&&document.getElementById('match-target-mode'))document.getElementById('match-target-mode').value=st.targetMode;
       if(st.maxZones&&document.getElementById('match-max-zones'))document.getElementById('match-max-zones').value=st.maxZones;
+      if(st.zoneMode)matchZoneMode=st.zoneMode;
+      if(st.zoneRanges&&Array.isArray(st.zoneRanges))matchZoneRanges=st.zoneRanges;
+      if(st.cont!==undefined&&document.getElementById('mz-cont'))document.getElementById('mz-cont').checked=!!st.cont;
     }else{
       loadDefaultMatchRackets();
     }
   }catch(e){loadDefaultMatchRackets();}
   renderMatchRacketList();
+  renderZoneUI('match');
   onMatchConfigChange();
   onMatchTargetModeChange();
   updateMatchDiagnostics();
@@ -1701,7 +2267,29 @@ function getAllowedMatchingZones(len){
     {key:'tip_low',chk:'mz-testa',y:+(L-2.5).toFixed(2),x:0,paired:false,label:'Ore 12 basso ('+(L-2.5).toFixed(1)+' cm)'},
     {key:'tip',chk:'mz-testa',y:+(L-1.0).toFixed(2),x:0,paired:false,label:'Ore 12 / Testa ('+(L-1.0).toFixed(1)+' cm)'}
   ];
-  return all.filter(z=>{const el=document.getElementById(z.chk);return !el||el.checked;});
+  if(matchZoneMode==='all'){
+    return all;
+  }
+  const active=(matchZoneRanges||[]).filter(r=>!isNaN(r.yMin)&&!isNaN(r.yMax)&&r.yMin<r.yMax);
+  if(active.length===0){
+    return all;
+  }
+  const filtered=all.filter(z=>isYInRanges(z.y,active));
+  active.forEach((r,idx)=>{
+    const hasPoint=filtered.some(z=>z.y>=r.yMin-0.25&&z.y<=r.yMax+0.25);
+    if(!hasPoint){
+      const yMid=+((r.yMin+r.yMax)/2).toFixed(1);
+      const isHoop=yMid>=38;
+      filtered.push({
+        key:'custom_mz_'+idx,
+        y:yMid,
+        x:isHoop?11.0:0,
+        paired:isHoop,
+        label:'Zona '+r.yMin.toFixed(1)+'-'+r.yMax.toFixed(1)+' cm'+(isHoop?' (Ore 3&9)':'')
+      });
+    }
+  });
+  return filtered;
 }
 function getPriorityWeights(priorityMode){
   if(priorityMode==='sw-mgri')return{sw:12.0,mgri:14.0,bal:1.2,mass:0.15,tw:0.3};
@@ -1724,7 +2312,8 @@ function solveRacketToTargetSpec(baseObj,targetSpec,pw,allowedZones,maxZones,max
   }
   const mzCont=document.getElementById('mz-cont');
   if(maxZones>=2&&(!mzCont||mzCont.checked)){
-    const contSols=solveContinuousTwoPointFromMB(baseObj,targetSpec.mass,targetSpec.bal,targetSpec.sw,{manico:null,cuore:null,ovale:null},[]);
+    const allowedRanges=(matchZoneMode==='custom')?matchZoneRanges:null;
+    const contSols=solveContinuousTwoPointFromMB(baseObj,targetSpec.mass,targetSpec.bal,targetSpec.sw,{manico:null,cuore:null,ovale:null},[],allowedRanges);
     for(const cs of contSols){
       if(cs.totalMass<=maxAddMass){
         const mr=customizeRacketFromWeights(baseObj,cs.weights);
@@ -2090,7 +2679,9 @@ function saveMatchFavorite(){
     name,
     date:new Date().toLocaleString('it-IT'),
     rackets:matchRackets,
-    priority:document.getElementById('match-priority-mode')?document.getElementById('match-priority-mode').value:'sw-mgri'
+    priority:document.getElementById('match-priority-mode')?document.getElementById('match-priority-mode').value:'sw-mgri',
+    zoneMode:matchZoneMode,
+    zoneRanges:matchZoneRanges
   };
   try{
     const list=JSON.parse(localStorage.getItem(MATCH_FAV_KEY)||'[]');
@@ -2122,7 +2713,10 @@ function loadMatchFavorite(idx){
     const item=list[idx];if(!item||!item.rackets)return;
     matchRackets=item.rackets.map(r=>({...r}));
     if(item.priority&&document.getElementById('match-priority-mode'))document.getElementById('match-priority-mode').value=item.priority;
+    if(item.zoneMode)matchZoneMode=item.zoneMode;
+    if(item.zoneRanges&&Array.isArray(item.zoneRanges))matchZoneRanges=item.zoneRanges;
     renderMatchRacketList();
+    renderZoneUI('match');
     onMatchConfigChange();
     updateMatchDiagnostics();
     saveMatchState();
@@ -2257,9 +2851,9 @@ function deletePendFavorite(idx){try{const list=JSON.parse(localStorage.getItem(
 function loadPendFavToManual(idx){try{const list=JSON.parse(localStorage.getItem(PEND_FAV_KEY)||'[]');const item=list[idx];if(!item)return;const m=+item.data.mass;const b=+item.data.balance;const hng=+item.data.hang;const n=+item.data.nswings;const tN=+item.data.time;const tw=item.data.tw?parseFloat(item.data.tw):14;const sw=computePendulumSW(m,b,hng,n,tN);if(isNaN(sw)||sw<=0){alert('I dati di questa misurazione non sono validi per calcolare il SW.');return;}document.getElementById('calc-base-mass').value=m.toFixed(1);document.getElementById('calc-base-bal').value=b.toFixed(2);document.getElementById('calc-base-sw').value=sw.toFixed(1);document.getElementById('calc-base-tw').value=tw.toFixed(2);document.getElementById('calc-mass-tbody').innerHTML='';addCalcMassRow(0,0,66,0);addCalcMassRow(0,0,18,0);recalcCustomizationTab();switchTab('calc-customization');}catch(e){console.error(e);}}
 function addPendFavToMatching(idx){try{const list=JSON.parse(localStorage.getItem(PEND_FAV_KEY)||'[]');const item=list[idx];if(!item)return;const m=+item.data.mass;const b=+item.data.balance;const hng=+item.data.hang;const n=+item.data.nswings;const tN=+item.data.time;const tw=item.data.tw?parseFloat(item.data.tw):14;const sw=item.data.sw||computePendulumSW(m,b,hng,n,tN);if(isNaN(sw)||sw<=0){alert('Dati non validi per calcolare il SW.');return;}addMatchRacketRow(item.name||('Telaio '+(matchRackets.length+1)),m,b,+sw.toFixed(1),tw,68.58);switchTab('personalizzazione');switchAutoSubMode('matching');}catch(e){console.error(e);}}
 
-function saveAutoFavorite(){const nameInput=document.getElementById('auto-fav-name');const name=nameInput?nameInput.value.trim():'';if(!name){alert('Inserisci un nome per la configurazione preferita.');return}const data={base:{mass:+document.getElementById('goal-mass').value||0,balance:+document.getElementById('goal-balance').value||0,sw:+document.getElementById('goal-sw').value||0,tw:+document.getElementById('goal-tw').value||0,length:+document.getElementById('goal-length').value||0},goals:getGoals(),maxW:document.getElementById('goal-max-weights').value,constraints:getConstraints(),limits:getMassLimits()};const favItem={id:Date.now(),name,date:new Date().toLocaleString('it-IT'),data};try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');list.unshift(favItem);localStorage.setItem(AUTO_FAV_KEY,JSON.stringify(list));nameInput.value='';renderAutoFavorites()}catch(e){}}
+function saveAutoFavorite(){const nameInput=document.getElementById('auto-fav-name');const name=nameInput?nameInput.value.trim():'';if(!name){alert('Inserisci un nome per la configurazione preferita.');return}const data={base:{mass:+document.getElementById('goal-mass').value||0,balance:+document.getElementById('goal-balance').value||0,sw:+document.getElementById('goal-sw').value||0,tw:+document.getElementById('goal-tw').value||0,length:+document.getElementById('goal-length').value||0},goals:getGoals(),maxW:document.getElementById('goal-max-weights').value,constraints:getConstraints(),limits:getMassLimits(),zoneMode:singleZoneMode,zoneRanges:singleZoneRanges};const favItem={id:Date.now(),name,date:new Date().toLocaleString('it-IT'),data};try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');list.unshift(favItem);localStorage.setItem(AUTO_FAV_KEY,JSON.stringify(list));nameInput.value='';renderAutoFavorites()}catch(e){}}
 function renderAutoFavorites(){const container=document.getElementById('auto-fav-list');if(!container)return;try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');if(list.length===0){container.innerHTML='<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>';return}container.innerHTML=list.map((item,idx)=>'<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px"><div><div style="font-weight:700;color:#fff;font-size:0.9rem">\u2b50 '+escapeHTML(item.name)+'</div><div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Base: '+item.data.base.mass+'g / '+item.data.base.balance+'cm / SW'+item.data.base.sw+' &middot; '+(item.data.goals?item.data.goals.length:0)+' obiettivi &middot; <span style="opacity:0.6">'+item.date+'</span></div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-secondary" onclick="loadAutoFavorite('+idx+')" style="padding:6px 14px;font-size:0.8rem">Carica</button><button class="btn btn-secondary" onclick="deleteAutoFavorite('+idx+')" style="padding:6px 12px;font-size:0.8rem;color:var(--accent-red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);margin-left:8px" title="Elimina preferito">&#x2715; Elimina</button></div></div>').join('')}catch(e){}}
-function loadAutoFavorite(idx){try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');const item=list[idx];if(!item)return;document.getElementById('goal-mass').value=item.data.base.mass;document.getElementById('goal-balance').value=item.data.base.balance;document.getElementById('goal-sw').value=item.data.base.sw;document.getElementById('goal-tw').value=item.data.base.tw;document.getElementById('goal-length').value=item.data.base.length;if(item.data.maxW)document.getElementById('goal-max-weights').value=item.data.maxW;document.querySelectorAll('#goal-list .goal-row').forEach(r=>r.remove());if(item.data.goals&&item.data.goals.length){item.data.goals.forEach(g=>addGoalRow(g.param,g.target))}else{addGoalRow()}document.querySelectorAll('#constraint-list .constraint-row').forEach(r=>r.remove());if(item.data.constraints){item.data.constraints.forEach(c=>addConstraintRow(c.type,c.yMin,c.yMax))}if(item.data.limits){document.getElementById('limit-manico').value=item.data.limits.manico!==null?item.data.limits.manico:'';document.getElementById('limit-cuore').value=item.data.limits.cuore!==null?item.data.limits.cuore:'';document.getElementById('limit-ovale').value=item.data.limits.ovale!==null?item.data.limits.ovale:'';}onBaseChange()}catch(e){}}
+function loadAutoFavorite(idx){try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');const item=list[idx];if(!item)return;document.getElementById('goal-mass').value=item.data.base.mass;document.getElementById('goal-balance').value=item.data.base.balance;document.getElementById('goal-sw').value=item.data.base.sw;document.getElementById('goal-tw').value=item.data.base.tw;document.getElementById('goal-length').value=item.data.base.length;if(item.data.maxW)document.getElementById('goal-max-weights').value=item.data.maxW;document.querySelectorAll('#goal-list .goal-row').forEach(r=>r.remove());if(item.data.goals&&item.data.goals.length){item.data.goals.forEach(g=>addGoalRow(g.param,g.target))}else{addGoalRow()}document.querySelectorAll('#constraint-list .constraint-row').forEach(r=>r.remove());if(item.data.constraints){item.data.constraints.forEach(c=>addConstraintRow(c.type,c.yMin,c.yMax))}if(item.data.limits){document.getElementById('limit-manico').value=item.data.limits.manico!==null?item.data.limits.manico:'';document.getElementById('limit-cuore').value=item.data.limits.cuore!==null?item.data.limits.cuore:'';document.getElementById('limit-ovale').value=item.data.limits.ovale!==null?item.data.limits.ovale:'';}if(item.data.zoneMode)singleZoneMode=item.data.zoneMode;if(item.data.zoneRanges&&Array.isArray(item.data.zoneRanges))singleZoneRanges=item.data.zoneRanges;renderZoneUI('single');onBaseChange()}catch(e){}}
 function deleteAutoFavorite(idx){try{const list=JSON.parse(localStorage.getItem(AUTO_FAV_KEY)||'[]');const item=list[idx];if(!item)return;if(!confirm('Sei sicuro di voler eliminare la configurazione preferita "'+item.name+'"?'))return;list.splice(idx,1);localStorage.setItem(AUTO_FAV_KEY,JSON.stringify(list));renderAutoFavorites()}catch(e){}}
 
 function getMassPositionHint(y, x){
@@ -2306,19 +2900,19 @@ function addCalcMassRow(m=0,l=0,y=2,x=0){
     '<div class="calc-card-body">' +
       '<div class="calc-card-inputs">' +
         '<div class="calc-field-group">' +
-          '<label>Massa (g)</label>' +
+          '<label><span class="calc-field-main">Massa</span><span class="calc-field-unit">(g)</span></label>' +
           '<input type="number" class="calc-row-mass" value="' + m + '" step="0.1" min="0" oninput="recalcCustomizationTab()">' +
         '</div>' +
         '<div class="calc-field-group">' +
-          '<label title="Lunghezza della striscia (0 = puntiforme)">Lunghezza Striscia (cm)</label>' +
+          '<label title="Lunghezza della striscia (0 = puntiforme)"><span class="calc-field-main">Lunghezza Striscia</span><span class="calc-field-unit">(cm)</span></label>' +
           '<input type="number" class="calc-row-len" value="' + l + '" step="0.5" min="0" placeholder="0 = puntiforme" oninput="recalcCustomizationTab()">' +
         '</div>' +
         '<div class="calc-field-group">' +
-          '<label title="Distanza dal tappo lungo l\'asse">CM dal tappo</label>' +
+          '<label title="Posizione lungo l\'asse longitudinale (distanza dal tappo)"><span class="calc-field-main">Posizione</span><span class="calc-field-unit">(cm dal tappo)</span></label>' +
           '<input type="number" class="calc-row-y" value="' + y + '" step="0.5" min="0" max="80" oninput="recalcCustomizationTab()">' +
         '</div>' +
         '<div class="calc-field-group">' +
-          '<label title="Scostamento dall\'asse longitudinale principale (0 = centro)">Scostamento Asse (cm)</label>' +
+          '<label title="Scostamento dall\'asse longitudinale principale (0 = centro)"><span class="calc-field-main">Scostamento Asse</span><span class="calc-field-unit">(cm)</span></label>' +
           '<input type="number" class="calc-row-x" value="' + x + '" step="0.5" min="-20" max="20" placeholder="0 = centro" oninput="recalcCustomizationTab()">' +
         '</div>' +
       '</div>' +
@@ -2804,7 +3398,7 @@ function stopAutoMeasurement(apply) {
 }
 
 function initButtons(){const a=document.getElementById('btn-add-goal');if(a&&!a.dataset.inited){a.dataset.inited='1';a.onclick=null;a.addEventListener('click',()=>addGoalRow())}const b=document.getElementById('btn-add-constraint');if(b&&!b.dataset.inited){b.dataset.inited='1';b.onclick=null;b.addEventListener('click',()=>addConstraintRow())}}
-function boot(){loadState();loadMatchState();updateGoalCurrentValues();updateBaseTelemetry();['goal-mass','goal-balance','goal-sw','goal-tw','goal-length'].forEach(id=>document.getElementById(id).addEventListener('input',()=>onBaseChange()));document.getElementById('goal-list').addEventListener('input',()=>updateGoalCurrentValues());initButtons();renderHistory();renderPendHistory();if(!document.querySelectorAll('#calc-mass-tbody .calc-mass-row').length){addCalcMassRow(0,0,66,0);addCalcMassRow(0,0,18,0)}renderCalcFavorites();renderPendFavorites();renderAutoFavorites();renderMatchFavorites();recalcCustomizationTab();initJokeBannerScrollObserver();initBackExitGuard();switchTab('misura-sw')}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot)}else{boot()}
+function boot(){loadState();loadMatchState();renderZoneUI('match');renderZoneUI('single');updateGoalCurrentValues();updateBaseTelemetry();['goal-mass','goal-balance','goal-sw','goal-tw','goal-length'].forEach(id=>document.getElementById(id).addEventListener('input',()=>onBaseChange()));document.getElementById('goal-list').addEventListener('input',()=>updateGoalCurrentValues());initButtons();renderHistory();renderPendHistory();if(!document.querySelectorAll('#calc-mass-tbody .calc-mass-row').length){addCalcMassRow(0,0,66,0);addCalcMassRow(0,0,18,0)}renderCalcFavorites();renderPendFavorites();renderAutoFavorites();renderMatchFavorites();recalcCustomizationTab();initJokeBannerScrollObserver();initBackExitGuard();switchTab('misura-sw')}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot)}else{boot()}
 </script>
 </div>
 </body>
