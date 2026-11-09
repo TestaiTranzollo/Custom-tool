@@ -301,6 +301,22 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 .ztoggle-text strong{font-size:0.82rem;color:#fff}
 .ztoggle-text small{font-size:0.72rem;color:var(--text-secondary);line-height:1.2}
 
+/* Shared Coherent Layouts for Auto Customization */
+.panel-section-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1px solid var(--border-color);padding-bottom:12px}
+.panel-section-header h2{margin:0;border:none;padding:0;font-size:1.15rem;color:#fff}
+.panel-section-header .header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.panel-section-header .header-actions .btn{width:auto;padding:7px 14px;font-size:0.82rem;font-weight:700}
+.panel-section-header .header-actions .btn-secondary{padding:7px 12px;font-size:0.80rem}
+
+.auto-card{background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.18);border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.auto-card-title{font-size:0.92rem;font-weight:700;color:var(--accent-cyan);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+
+.btn-primary-action{width:100%;margin-top:16px;font-size:1rem;font-weight:800;padding:13px 20px;letter-spacing:0.02em;box-shadow:0 4px 18px rgba(6,182,212,0.3);min-height:48px}
+
+.fav-input-bar{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.fav-input-bar input{flex:1;min-width:200px;padding:8px 12px;border-radius:8px;border:1px solid var(--border-color);background:rgba(255,255,255,0.05);color:#fff}
+.fav-input-bar .btn{width:auto;padding:8px 16px;font-size:0.82rem;font-weight:700}
+
 /* Collapsible Drawers & Advanced Panels */
 .fav-drawer{margin-top:18px;border-top:1px solid var(--border-color);padding-top:12px}
 .fav-drawer summary{cursor:pointer;font-size:0.88rem;font-weight:700;color:var(--text-secondary);display:flex;align-items:center;justify-content:space-between;list-style:none;padding:9px 12px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);transition:all 0.15s ease;user-select:none}
@@ -481,14 +497,12 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <!-- ================= SUB-MODE 1: MATCHING MULTI-RACCHETTA ================= -->
 <div id="auto-submode-matching">
   <div class="panel">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1px solid var(--border-color);padding-bottom:12px">
-      <div>
-        <h2 style="margin:0;border:none;padding:0">&#x2696;&#xfe0f; Parco Telai da Allineare</h2>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button type="button" class="btn" style="width:auto;padding:7px 14px;font-size:0.82rem;font-weight:700" onclick="addMatchRacketRow()">+ Aggiungi Telaio</button>
-        <button type="button" class="btn btn-secondary" style="padding:7px 12px;font-size:0.8rem" onclick="loadSampleMatchingSet()">&#x1f4cb; Esempio</button>
-        <button type="button" class="btn btn-secondary" style="padding:7px 12px;font-size:0.8rem" onclick="openMatchImportPicker()">&#x1f4e5; Importa da SW</button>
+    <div class="panel-section-header">
+      <h2>&#x2696;&#xfe0f; Parco Telai da Allineare</h2>
+      <div class="header-actions">
+        <button type="button" class="btn" onclick="addMatchRacketRow()">+ Aggiungi Telaio</button>
+        <button type="button" class="btn btn-secondary" onclick="loadSampleMatchingSet()">&#x1f4cb; Esempio</button>
+        <button type="button" class="btn btn-secondary" onclick="openMatchImportPicker()">&#x1f4e5; Importa da SW</button>
       </div>
     </div>
 
@@ -511,16 +525,16 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
     </div>
 
     <!-- Matching Strategy Configuration -->
-    <div style="background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.18);border-radius:12px;padding:14px 16px;margin-top:14px">
-      <h3 style="font-size:0.92rem;color:var(--accent-cyan);margin-bottom:10px;display:flex;align-items:center;gap:8px">&#x2699;&#xfe0f; Strategia e Priorit&agrave; di Matching</h3>
+    <div class="auto-card">
+      <div class="auto-card-title">&#x2699;&#xfe0f; Strategia e Target di Matching</div>
       <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:10px">
         <div class="form-group">
           <label for="match-priority-mode">Parametri Prioritari</label>
           <select id="match-priority-mode" onchange="onMatchConfigChange()">
-            <option value="sw-mgri" selected>&#x2b50; SW + MGR/I (Consigliato)</option>
-            <option value="sw-mgri-bal">&#x2696;&#xfe0f; SW + MGR/I + Bilanciamento</option>
-            <option value="full">&#x1f3c6; Match Totale (SW + MGR/I + Bil + Massa)</option>
-            <option value="sw-tw-mgri">&#x1f6e1;&#xfe0f; SW + MGR/I + Twistweight</option>
+            <option value="sw-mgri" selected>&#x2b50; SW + MGR/I (Dinamico - Consigliato)</option>
+            <option value="sw-mgri-bal">&#x2696;&#xfe0f; SW + Bilanciamento</option>
+            <option value="full">&#x1f3c6; SW + Bil. + Massa (Match Totale)</option>
+            <option value="sw-tw-mgri">&#x1f6e1;&#xfe0f; SW + TW + MGR/I (Stabilit&agrave; Torzionale)</option>
           </select>
           <div class="help-text" id="match-priority-hint" style="font-size:0.74rem;line-height:1.3;margin-top:4px;padding:4px 8px;border-radius:6px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2)"><strong>Consigliato:</strong> allinea SW e MGR/I col minimo piombo per pari inerzia e sensazione dinamica.</div>
         </div>
@@ -540,6 +554,7 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
             <option value="1">Max 1 zona (Semplice)</option>
             <option value="2" selected>Max 2 zone (Consigliato)</option>
             <option value="3">Max 3 zone (Precisione)</option>
+            <option value="4">Max 4 zone (Avanzato)</option>
           </select>
         </div>
       </div>
@@ -561,76 +576,76 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
           <div class="form-group"><label>TW (opz.)</label><input type="number" id="match-cust-tw" placeholder="Auto" step="0.1"></div>
         </div>
       </div>
+    </div>
 
-      <!-- Allowed Lead Placement Zones Component (Matching) -->
-      <div class="zone-selector-card" id="match-zone-card">
-        <div class="zone-card-header">
-          <div class="zone-card-title">&#x1f3af; Zone Consentite per il Piombo</div>
+    <!-- Allowed Lead Placement Zones Component (Matching) -->
+    <div class="zone-selector-card" id="match-zone-card">
+      <div class="zone-card-header">
+        <div class="zone-card-title">&#x1f3af; Zone Consentite per il Piombo</div>
+      </div>
+
+      <!-- Mode Toggle: Tutto il Telaio vs Zone Specifiche -->
+      <div class="zone-mode-switch">
+        <button type="button" class="btn-zone-mode active" id="btn-match-zone-all" onclick="setZoneMode('match', 'all')">
+          <span class="zmode-icon">&#x1f310;</span>
+          <span class="zmode-title">Tutto il Telaio</span>
+          <span class="zmode-desc">0 cm &rarr; Lungh. (Massima libert&agrave;)</span>
+        </button>
+        <button type="button" class="btn-zone-mode" id="btn-match-zone-custom" onclick="setZoneMode('match', 'custom')">
+          <span class="zmode-icon">&#x1f3af;</span>
+          <span class="zmode-title">Zone Specifiche</span>
+          <span class="zmode-desc">Limita ai range scelti</span>
+        </button>
+      </div>
+
+      <!-- Visual Racket Ruler -->
+      <div class="racket-ruler-wrap">
+        <div class="racket-ruler-header">
+          <span class="ruler-status-label" id="match-ruler-status">&#x1f7e2; 100% Telaio Consentito (0 &rarr; 68.6 cm)</span>
+          <span class="ruler-len-badge" id="match-ruler-len">Lungh: 68.58 cm</span>
+        </div>
+        <div class="ruler-track-container">
+          <div class="ruler-track" id="match-ruler-track"></div>
+        </div>
+        <div class="ruler-landmarks">
+          <span>| 0 cm<br><small>Tappo</small></span>
+          <span>| 10 cm<br><small>Presa</small></span>
+          <span>| 27 cm<br><small>Cuore</small></span>
+          <span>| 52 cm<br><small>Ore 3&amp;9</small></span>
+          <span>| 68.6 cm<br><small>Testa 12</small></span>
+        </div>
+      </div>
+
+      <!-- Custom Zones Panel (visible when mode === 'custom') -->
+      <div class="zone-custom-panel" id="match-zone-custom-panel" style="display:none">
+        <div class="zone-presets-header">&#x26a1; Preset Rapidi:</div>
+        <div class="zone-presets-bar">
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-12')">&#x1f518; Tappo + Ore 12</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-39')">&#x2696;&#xfe0f; Tappo + Ore 3 &amp; 9</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'handle')">&#x1f5e1;&#xfe0f; Solo Manico</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'hoop')">&#x1f3be; Solo Ovale</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-39-12')">&#x2b50; Tappo + 3&amp;9 + 12</button>
+          <button type="button" class="btn-zone-preset reset" onclick="setZoneMode('match', 'all')">&#x1f504; Tutto il Telaio</button>
         </div>
 
-        <!-- Mode Toggle: Tutto il Telaio vs Zone Specifiche -->
-        <div class="zone-mode-switch">
-          <button type="button" class="btn-zone-mode active" id="btn-match-zone-all" onclick="setZoneMode('match', 'all')">
-            <span class="zmode-icon">&#x1f310;</span>
-            <span class="zmode-title">Tutto il Telaio</span>
-            <span class="zmode-desc">0 cm &rarr; Lungh. (Massima libert&agrave;)</span>
-          </button>
-          <button type="button" class="btn-zone-mode" id="btn-match-zone-custom" onclick="setZoneMode('match', 'custom')">
-            <span class="zmode-icon">&#x1f3af;</span>
-            <span class="zmode-title">Zone Specifiche</span>
-            <span class="zmode-desc">Limita ai range scelti</span>
-          </button>
-        </div>
+        <div class="zone-ranges-title">&#x1f4cb; Range di Piombatura Consentiti (cm dal tappo):</div>
+        <div class="zone-ranges-list" id="match-zone-ranges-list"></div>
+        <button type="button" class="btn-add-zone" onclick="addZoneRange('match')">+ Aggiungi Range Consentito</button>
+      </div>
 
-        <!-- Visual Racket Ruler -->
-        <div class="racket-ruler-wrap">
-          <div class="racket-ruler-header">
-            <span class="ruler-status-label" id="match-ruler-status">&#x1f7e2; 100% Telaio Consentito (0 &rarr; 68.6 cm)</span>
-            <span class="ruler-len-badge" id="match-ruler-len">Lungh: 68.58 cm</span>
-          </div>
-          <div class="ruler-track-container">
-            <div class="ruler-track" id="match-ruler-track"></div>
-          </div>
-          <div class="ruler-landmarks">
-            <span>| 0 cm<br><small>Tappo</small></span>
-            <span>| 10 cm<br><small>Presa</small></span>
-            <span>| 27 cm<br><small>Cuore</small></span>
-            <span>| 52 cm<br><small>Ore 3&amp;9</small></span>
-            <span>| 68.6 cm<br><small>Testa 12</small></span>
-          </div>
-        </div>
-
-        <!-- Custom Zones Panel (visible when mode === 'custom') -->
-        <div class="zone-custom-panel" id="match-zone-custom-panel" style="display:none">
-          <div class="zone-presets-header">&#x26a1; Preset Rapidi:</div>
-          <div class="zone-presets-bar">
-            <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-12')">&#x1f518; Tappo + Ore 12</button>
-            <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-39')">&#x2696;&#xfe0f; Tappo + Ore 3 &amp; 9</button>
-            <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'handle')">&#x1f5e1;&#xfe0f; Solo Manico</button>
-            <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'hoop')">&#x1f3be; Solo Ovale</button>
-            <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-39-12')">&#x2b50; Tappo + 3&amp;9 + 12</button>
-            <button type="button" class="btn-zone-preset reset" onclick="setZoneMode('match', 'all')">&#x1f504; Tutto il Telaio</button>
-          </div>
-
-          <div class="zone-ranges-title">&#x1f4cb; Range di Piombatura Consentiti (cm dal tappo):</div>
-          <div class="zone-ranges-list" id="match-zone-ranges-list"></div>
-          <button type="button" class="btn-add-zone" onclick="addZoneRange('match')">+ Aggiungi Range Consentito</button>
-        </div>
-
-        <!-- Continuous Solver Toggle -->
-        <div class="zone-continuous-toggle">
-          <label class="zone-toggle-label">
-            <input type="checkbox" id="mz-cont" checked onchange="onZoneConfigChange('match')">
-            <span class="ztoggle-text">
-              <strong>&#x1f3af; Posizionamento Continuo Millimetrico</strong>
-              <small>Ottimizza la coordinata Y millimetrica per la massima precisione</small>
-            </span>
-          </label>
-        </div>
+      <!-- Continuous Solver Toggle -->
+      <div class="zone-continuous-toggle">
+        <label class="zone-toggle-label">
+          <input type="checkbox" id="mz-cont" checked onchange="onZoneConfigChange('match')">
+          <span class="ztoggle-text">
+            <strong>&#x1f3af; Posizionamento Continuo Millimetrico</strong>
+            <small>Ottimizza la coordinata Y millimetrica per la massima precisione</small>
+          </span>
+        </label>
       </div>
     </div>
 
-    <button type="button" class="btn" style="margin-top:16px;font-size:1rem;padding:13px 20px" onclick="runMultiRacketMatcher()">
+    <button type="button" class="btn btn-primary-action" onclick="runMultiRacketMatcher()">
       &#x2696;&#xfe0f; Calcola Matching Ottimale dei Telai
     </button>
 
@@ -641,9 +656,9 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
     <details class="fav-drawer">
       <summary>&#x2b50; Set di Telai Preferiti &amp; Salvataggi</summary>
       <div class="fav-drawer-body">
-        <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap">
-          <input type="text" id="match-fav-name" placeholder="Nome set (es. Set 3x Blade 98 Torneo)" style="flex:1;min-width:200px;padding:8px 12px;border-radius:8px;border:1px solid var(--border-color);background:rgba(255,255,255,0.05);color:#fff">
-          <button type="button" class="btn" onclick="saveMatchFavorite()" style="width:auto;padding:8px 16px">&#x2b50; Salva Set</button>
+        <div class="fav-input-bar">
+          <input type="text" id="match-fav-name" placeholder="Nome set (es. Set 3x Blade 98 Torneo)">
+          <button type="button" class="btn" onclick="saveMatchFavorite()">&#x2b50; Salva Set</button>
         </div>
         <div id="match-fav-list" style="max-height:220px;overflow-y:auto"></div>
       </div>
@@ -653,229 +668,244 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 
 <!-- ================= SUB-MODE 2: TARGET SINGOLO TELAIO ================= -->
 <div id="auto-submode-single" style="display:none">
-<div class="panel">
-<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:14px;border-bottom:1px solid var(--border-color);padding-bottom:10px">
-  <h2 style="margin:0;border:none;padding:0">&#x1f3af; Obiettivi Singolo Telaio</h2>
-  <button type="button" class="btn btn-secondary" style="padding:6px 12px;font-size:0.78rem" onclick="importLatestPendToSingle()">&#x1f4e5; Usa Misura SW</button>
-</div>
-<div style="background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.15);border-radius:10px;padding:14px;margin-bottom:16px">
-<h3 style="font-size:0.92rem;color:var(--accent-cyan);margin-bottom:10px">&#x1f4d0; Dati Base Telaio</h3>
-<div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:0">
-<div class="form-group"><label for="goal-mass">Massa (g)</label><input type="number" id="goal-mass" value="300" step="0.1" min="100" max="500"></div>
-<div class="form-group"><label for="goal-balance">Bilanciamento (cm)</label><input type="number" id="goal-balance" value="32.0" step="0.05" min="20" max="45"></div>
-<div class="form-group"><label for="goal-sw">Swingweight (SW)</label><input type="number" id="goal-sw" value="315" step="0.5" min="200" max="450"></div>
-<div class="form-group"><label for="goal-tw">Twistweight (TW)</label><input type="number" id="goal-tw" value="14.0" step="0.1" min="5" max="30"></div>
-<div class="form-group"><label for="goal-length">Lunghezza (cm)</label><input type="number" id="goal-length" value="68.58" step="0.01" min="60" max="80"></div>
-</div>
-<div class="telemetry-strip" id="single-base-telemetry" style="margin-top:10px">
-  <div class="telemetry-pill"><span class="t-lbl">MGR/I</span><span class="t-val cyan" id="tele-mgri">19.73</span></div>
-  <div class="telemetry-pill"><span class="t-lbl">Recoilweight</span><span class="t-val" id="tele-rw">169.8</span></div>
-  <div class="telemetry-pill"><span class="t-lbl">Inerzia I&#x2080;</span><span class="t-val" id="tele-i0">477.0</span></div>
-  <div class="telemetry-pill"><span class="t-lbl">Polarizzazione ICO</span><span class="t-val" id="tele-ico">0.5660</span></div>
-  <div class="telemetry-pill"><span class="t-lbl">Bilanc. Punti</span><span class="t-val amber" id="tele-hl">7.2 HL</span></div>
-</div>
-</div>
+  <div class="panel">
+    <div class="panel-section-header">
+      <h2>&#x1f3af; Specifiche Telaio Singolo</h2>
+      <div class="header-actions">
+        <button type="button" class="btn btn-secondary" onclick="importLatestPendToSingle()">&#x1f4e5; Importa da SW</button>
+      </div>
+    </div>
 
-<!-- Quick Goal Presets -->
-<div style="margin-bottom:14px">
-  <div style="font-size:0.75rem;color:var(--text-secondary);font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px">&#x26a1; Combinazioni Obiettivo Rapide:</div>
-  <div style="display:flex;gap:6px;flex-wrap:wrap">
-    <button type="button" class="btn-zone-preset" onclick="applySingleGoalPreset('sw-mgri')">&#x2b50; SW + MGR/I (Dinamico)</button>
-    <button type="button" class="btn-zone-preset" onclick="applySingleGoalPreset('sw-bal')">&#x2696;&#xfe0f; SW + Bilanciamento</button>
-    <button type="button" class="btn-zone-preset" onclick="applySingleGoalPreset('sw-bal-mass')">&#x1f3c6; SW + Bil + Massa</button>
-    <button type="button" class="btn-zone-preset" onclick="applySingleGoalPreset('sw-tw-mgri')">&#x1f6e1;&#xfe0f; SW + TW + MGR/I</button>
-    <button type="button" class="btn-zone-preset" onclick="applySingleGoalPreset('only-sw')">&#x1f3af; Solo SW</button>
-  </div>
-</div>
+    <!-- Base Frame Inputs -->
+    <div class="auto-card">
+      <div class="auto-card-title">&#x1f4d0; Dati Base Telaio</div>
+      <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:0">
+        <div class="form-group"><label for="goal-mass">Massa (g)</label><input type="number" id="goal-mass" value="300" step="0.1" min="100" max="500"></div>
+        <div class="form-group"><label for="goal-balance">Bilanciamento (cm)</label><input type="number" id="goal-balance" value="32.0" step="0.05" min="20" max="45"></div>
+        <div class="form-group"><label for="goal-sw">Swingweight (SW)</label><input type="number" id="goal-sw" value="315" step="0.5" min="200" max="450"></div>
+        <div class="form-group"><label for="goal-tw">Twistweight (TW)</label><input type="number" id="goal-tw" value="14.0" step="0.1" min="5" max="30"></div>
+        <div class="form-group"><label for="goal-length">Lunghezza (cm)</label><input type="number" id="goal-length" value="68.58" step="0.01" min="60" max="80"></div>
+      </div>
+      <div class="telemetry-strip" id="single-base-telemetry" style="margin-top:10px">
+        <div class="telemetry-pill"><span class="t-lbl">MGR/I</span><span class="t-val cyan" id="tele-mgri">19.73</span></div>
+        <div class="telemetry-pill"><span class="t-lbl">Recoilweight</span><span class="t-val" id="tele-rw">169.8</span></div>
+        <div class="telemetry-pill"><span class="t-lbl">Inerzia I&#x2080;</span><span class="t-val" id="tele-i0">477.0</span></div>
+        <div class="telemetry-pill"><span class="t-lbl">Polarizzazione ICO</span><span class="t-val" id="tele-ico">0.5660</span></div>
+        <div class="telemetry-pill"><span class="t-lbl">Bilanc. Punti</span><span class="t-val amber" id="tele-hl">7.2 HL</span></div>
+      </div>
+    </div>
 
-<div class="form-group" style="margin-bottom:14px">
-<label style="font-weight:700;margin-bottom:6px">Obiettivi da Raggiungere (in ordine di priorit&agrave;)</label>
-<div id="goal-list">
-<div class="goal-row" style="display:flex;gap:6px;margin-bottom:6px;align-items:center">
-<select class="goal-param" onchange="updateGoalTarget(this)" style="flex:2;padding:6px 8px;font-size:0.82rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff">
-<option value="sw" selected>Swingweight</option><option value="mgri">MGR/I</option><option value="balance">Bilanciamento</option><option value="mass">Massa</option><option value="tw">Twistweight</option><option value="rw">Recoilweight</option><option value="ico">ICO</option>
-</select>
-<input class="goal-target" type="number" value="330" step="0.1" min="0" style="flex:1;padding:6px 8px;font-size:0.82rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff;width:80px">
-<span class="goal-current" style="font-size:0.72rem;color:var(--text-secondary);white-space:nowrap"></span>
-<button class="btn btn-secondary" onclick="removeGoalRow(this)" style="padding:2px 8px;font-size:0.7rem;flex-shrink:0">&times;</button>
-</div>
-</div>
-<button class="btn btn-secondary" id="btn-add-goal" onclick="addGoalRow()" style="font-size:0.78rem;padding:4px 12px;margin-top:4px">+ Aggiungi obiettivo</button>
-</div>
+    <!-- Single Strategy & Goals Card -->
+    <div class="auto-card">
+      <div class="auto-card-title">&#x2699;&#xfe0f; Strategia e Obiettivi Singolo Telaio</div>
+      
+      <!-- Quick Goal Presets -->
+      <div style="margin-bottom:12px">
+        <div style="font-size:0.75rem;color:var(--text-secondary);font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px">&#x26a1; Combinazioni Obiettivo Rapide:</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button type="button" class="btn-zone-preset" onclick="applySingleGoalPreset('sw-mgri')">&#x2b50; SW + MGR/I (Dinamico)</button>
+          <button type="button" class="btn-zone-preset" onclick="applySingleGoalPreset('sw-bal')">&#x2696;&#xfe0f; SW + Bilanciamento</button>
+          <button type="button" class="btn-zone-preset" onclick="applySingleGoalPreset('sw-bal-mass')">&#x1f3c6; SW + Bil. + Massa</button>
+          <button type="button" class="btn-zone-preset" onclick="applySingleGoalPreset('sw-tw-mgri')">&#x1f6e1;&#xfe0f; SW + TW + MGR/I</button>
+          <button type="button" class="btn-zone-preset" onclick="applySingleGoalPreset('only-sw')">&#x1f3af; Solo SW</button>
+        </div>
+      </div>
 
-<div class="zone-selector-card" id="single-zone-card" style="margin-top:0">
-  <div class="zone-card-header">
-    <div class="zone-card-title">&#x1f3af; Zone Consentite per il Piombo</div>
-  </div>
+      <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:10px">
+        <div class="form-group" style="grid-column:1/-1">
+          <label style="font-weight:700;margin-bottom:6px">Obiettivi da Raggiungere (in ordine di priorit&agrave;)</label>
+          <div id="goal-list">
+            <div class="goal-row" style="display:flex;gap:6px;margin-bottom:6px;align-items:center">
+              <select class="goal-param" onchange="updateGoalTarget(this)" style="flex:2;padding:6px 8px;font-size:0.82rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff">
+                <option value="sw" selected>Swingweight</option><option value="mgri">MGR/I</option><option value="balance">Bilanciamento</option><option value="mass">Massa</option><option value="tw">Twistweight</option><option value="rw">Recoilweight</option><option value="ico">ICO</option>
+              </select>
+              <input class="goal-target" type="number" value="330" step="0.1" min="0" style="flex:1;padding:6px 8px;font-size:0.82rem;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff;width:80px">
+              <span class="goal-current" style="font-size:0.72rem;color:var(--text-secondary);white-space:nowrap"></span>
+              <button class="btn btn-secondary" onclick="removeGoalRow(this)" style="padding:2px 8px;font-size:0.7rem;flex-shrink:0">&times;</button>
+            </div>
+          </div>
+          <button class="btn btn-secondary" id="btn-add-goal" onclick="addGoalRow()" style="font-size:0.78rem;padding:4px 12px;margin-top:4px">+ Aggiungi obiettivo</button>
+        </div>
 
-  <!-- Mode Toggle: Tutto il Telaio vs Zone Specifiche -->
-  <div class="zone-mode-switch">
-    <button type="button" class="btn-zone-mode active" id="btn-single-zone-all" onclick="setZoneMode('single', 'all')">
-      <span class="zmode-icon">&#x1f310;</span>
-      <span class="zmode-title">Tutto il Telaio</span>
-      <span class="zmode-desc">0 cm &rarr; Lungh. (Massima libert&agrave;)</span>
+        <div class="form-group">
+          <label for="goal-max-weights">Max Zone per Telaio</label>
+          <select id="goal-max-weights">
+            <option value="1">Max 1 zona (Semplice)</option>
+            <option value="2">Max 2 zone (Consigliato)</option>
+            <option value="3" selected>Max 3 zone (Precisione)</option>
+            <option value="4">Max 4 zone (Avanzato)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Opzioni Avanzate (Limiti Massa & Vincoli) -->
+      <details class="advanced-options-card">
+        <summary>&#x2699;&#xfe0f; Opzioni Avanzate (Limiti Massa &amp; Vincoli Legacy)</summary>
+        <div class="advanced-options-body">
+          <div class="form-group" style="margin-bottom:10px">
+            <label style="font-size:0.84rem;font-weight:700;color:#cbd5e1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="toggleLimitsZone(this)">
+              &#x2696;&#xfe0f; Limiti massa per zona <span class="ml-status" style="font-size:0.75rem;color:var(--text-secondary)">(inattivi)</span> <span style="font-size:0.7rem">&#x25bc;</span>
+            </label>
+            <div style="display:none;margin-top:8px">
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <label style="font-size:0.78rem;color:var(--text-secondary)">Manico (&le; 20 cm): <input type="number" id="limit-manico" step="0.5" min="0" value="40" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"> g</label>
+                <label style="font-size:0.78rem;color:var(--text-secondary)">Cuore (21 - 35 cm): <input type="number" id="limit-cuore" step="0.5" min="0" value="10" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"> g</label>
+                <label style="font-size:0.78rem;color:var(--text-secondary)">Ovale (&ge; 35 cm): <input type="number" id="limit-ovale" step="0.5" min="0" value="10" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"> g</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06)">
+            <label style="font-size:0.84rem;font-weight:700;color:#cbd5e1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="toggleConstraints(this)">
+              &#x1f4cf; Vincoli Aggiuntivi Legacy (Range CM) <span style="font-size:0.7rem">&#x25bc;</span>
+            </label>
+            <div id="constraint-list" style="display:none;margin-top:8px">
+              <button class="btn btn-secondary" id="btn-add-constraint" onclick="addConstraintRow()" style="font-size:0.78rem;padding:4px 12px">+ Aggiungi vincolo</button>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Allowed Lead Placement Zones Component (Single) -->
+    <div class="zone-selector-card" id="single-zone-card" style="margin-top:0">
+      <div class="zone-card-header">
+        <div class="zone-card-title">&#x1f3af; Zone Consentite per il Piombo</div>
+      </div>
+
+      <!-- Mode Toggle: Tutto il Telaio vs Zone Specifiche -->
+      <div class="zone-mode-switch">
+        <button type="button" class="btn-zone-mode active" id="btn-single-zone-all" onclick="setZoneMode('single', 'all')">
+          <span class="zmode-icon">&#x1f310;</span>
+          <span class="zmode-title">Tutto il Telaio</span>
+          <span class="zmode-desc">0 cm &rarr; Lungh. (Massima libert&agrave;)</span>
+        </button>
+        <button type="button" class="btn-zone-mode" id="btn-single-zone-custom" onclick="setZoneMode('single', 'custom')">
+          <span class="zmode-icon">&#x1f3af;</span>
+          <span class="zmode-title">Zone Specifiche</span>
+          <span class="zmode-desc">Limita ai range scelti</span>
+        </button>
+      </div>
+
+      <!-- Visual Racket Ruler -->
+      <div class="racket-ruler-wrap">
+        <div class="racket-ruler-header">
+          <span class="ruler-status-label" id="single-ruler-status">&#x1f7e2; 100% Telaio Consentito (0 &rarr; 68.6 cm)</span>
+          <span class="ruler-len-badge" id="single-ruler-len">Lungh: 68.58 cm</span>
+        </div>
+        <div class="ruler-track-container">
+          <div class="ruler-track" id="single-ruler-track"></div>
+        </div>
+        <div class="ruler-landmarks">
+          <span>| 0 cm<br><small>Tappo</small></span>
+          <span>| 10 cm<br><small>Presa</small></span>
+          <span>| 27 cm<br><small>Cuore</small></span>
+          <span>| 52 cm<br><small>Ore 3&amp;9</small></span>
+          <span>| 68.6 cm<br><small>Testa 12</small></span>
+        </div>
+      </div>
+
+      <!-- Custom Zones Panel (visible when mode === 'custom') -->
+      <div class="zone-custom-panel" id="single-zone-custom-panel" style="display:none">
+        <div class="zone-presets-header">&#x26a1; Preset Rapidi:</div>
+        <div class="zone-presets-bar">
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-12')">&#x1f518; Tappo + Ore 12</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-39')">&#x2696;&#xfe0f; Tappo + Ore 3 &amp; 9</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'handle')">&#x1f5e1;&#xfe0f; Solo Manico</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'hoop')">&#x1f3be; Solo Ovale</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-39-12')">&#x2b50; Tappo + 3&amp;9 + 12</button>
+          <button type="button" class="btn-zone-preset reset" onclick="setZoneMode('single', 'all')">&#x1f504; Tutto il Telaio</button>
+        </div>
+
+        <div class="zone-ranges-title">&#x1f4cb; Range di Piombatura Consentiti (cm dal tappo):</div>
+        <div class="zone-ranges-list" id="single-zone-ranges-list"></div>
+        <button type="button" class="btn-add-zone" onclick="addZoneRange('single')">+ Aggiungi Range Consentito</button>
+      </div>
+
+      <!-- Continuous Solver Toggle -->
+      <div class="zone-continuous-toggle">
+        <label class="zone-toggle-label">
+          <input type="checkbox" id="sz-cont" checked onchange="onZoneConfigChange('single')">
+          <span class="ztoggle-text">
+            <strong>&#x1f3af; Posizionamento Continuo Millimetrico</strong>
+            <small>Ottimizza la coordinata Y esatta per la massima precisione</small>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary-action" onclick="runOptimizer()">
+      &#x1f50d; Trova Configurazione Ottimale
     </button>
-    <button type="button" class="btn-zone-mode" id="btn-single-zone-custom" onclick="setZoneMode('single', 'custom')">
-      <span class="zmode-icon">&#x1f3af;</span>
-      <span class="zmode-title">Zone Specifiche</span>
-      <span class="zmode-desc">Limita ai range scelti</span>
-    </button>
-  </div>
 
-  <!-- Visual Racket Ruler -->
-  <div class="racket-ruler-wrap">
-    <div class="racket-ruler-header">
-      <span class="ruler-status-label" id="single-ruler-status">&#x1f7e2; 100% Telaio Consentito (0 &rarr; 68.6 cm)</span>
-      <span class="ruler-len-badge" id="single-ruler-len">Lungh: 68.58 cm</span>
-    </div>
-    <div class="ruler-track-container">
-      <div class="ruler-track" id="single-ruler-track"></div>
-    </div>
-    <div class="ruler-landmarks">
-      <span>| 0 cm<br><small>Tappo</small></span>
-      <span>| 10 cm<br><small>Presa</small></span>
-      <span>| 27 cm<br><small>Cuore</small></span>
-      <span>| 52 cm<br><small>Ore 3&amp;9</small></span>
-      <span>| 68.6 cm<br><small>Testa 12</small></span>
-    </div>
-  </div>
-
-  <!-- Custom Zones Panel (visible when mode === 'custom') -->
-  <div class="zone-custom-panel" id="single-zone-custom-panel" style="display:none">
-    <div class="zone-presets-header">&#x26a1; Preset Rapidi:</div>
-    <div class="zone-presets-bar">
-      <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-12')">&#x1f518; Tappo + Ore 12</button>
-      <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-39')">&#x2696;&#xfe0f; Tappo + Ore 3 &amp; 9</button>
-      <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'handle')">&#x1f5e1;&#xfe0f; Solo Manico</button>
-      <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'hoop')">&#x1f3be; Solo Ovale</button>
-      <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-39-12')">&#x2b50; Tappo + 3&amp;9 + 12</button>
-      <button type="button" class="btn-zone-preset reset" onclick="setZoneMode('single', 'all')">&#x1f504; Tutto il Telaio</button>
-    </div>
-
-    <div class="zone-ranges-title">&#x1f4cb; Range di Piombatura Consentiti (cm dal tappo):</div>
-    <div class="zone-ranges-list" id="single-zone-ranges-list"></div>
-    <button type="button" class="btn-add-zone" onclick="addZoneRange('single')">+ Aggiungi Range Consentito</button>
-  </div>
-
-  <!-- Continuous Solver Toggle -->
-  <div class="zone-continuous-toggle">
-    <label class="zone-toggle-label">
-      <input type="checkbox" id="sz-cont" checked onchange="onZoneConfigChange('single')">
-      <span class="ztoggle-text">
-        <strong>&#x1f3af; Posizionamento Continuo Millimetrico</strong>
-        <small>Ottimizza la coordinata Y esatta per la massima precisione</small>
-      </span>
-    </label>
-  </div>
-</div>
-
-<!-- Opzioni Avanzate (Max zone, Limiti & Vincoli) -->
-<details class="advanced-options-card">
-  <summary>&#x2699;&#xfe0f; Opzioni Avanzate (Max Zone, Limiti Massa &amp; Vincoli)</summary>
-  <div class="advanced-options-body">
-    <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:12px">
-      <div class="form-group" style="margin-bottom:0">
-        <label for="goal-max-weights">Max zone applicazione piombo</label>
-        <select id="goal-max-weights">
-          <option value="1">1 zona</option>
-          <option value="2">2 zone</option>
-          <option value="3" selected>3 zone</option>
-          <option value="4">4 zone</option>
+    <div id="goal-sort-bar" style="margin-top:18px;display:none;margin-bottom:10px">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <label for="sort-select" style="font-size:0.8rem;white-space:nowrap">Ordina per:</label>
+        <select id="sort-select" onchange="reSortResults()" style="flex:1;min-width:140px;padding:6px 10px;font-size:0.82rem">
+          <option value="precision">Precisione &amp; Semplicit&agrave; (Consigliato)</option>
+          <option value="mass-asc">Massa aggiunta &#8593;</option>
+          <option value="sw-asc">SW aggiunto &#8593;</option>
+          <option value="sw-desc">SW aggiunto &#8595;</option>
+          <option value="tw-asc">TW aggiunto &#8593;</option>
+          <option value="tw-desc">TW aggiunto &#8595;</option>
+          <option value="mgri-desc">MGR/I &#8595;</option>
+          <option value="mgri-asc">MGR/I &#8593;</option>
+          <option value="ico-desc">ICO &#8595;</option>
+          <option value="ico-asc">ICO &#8593;</option>
+          <option value="rw-desc">Recoilweight &#8595;</option>
+          <option value="rw-asc">Recoilweight &#8593;</option>
         </select>
       </div>
     </div>
+    <div id="goal-results" style="margin-top:25px;display:none"><div id="goal-solutions-container"></div></div>
+    <div id="goal-no-results" style="margin-top:25px;display:none">
+      <div style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);border-radius:8px;padding:12px;text-align:center">
+        <div style="color:var(--accent-red);font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Nessuna soluzione trovata</div>
+        <div style="font-size:0.9rem;color:var(--text-secondary)">Nota fisica: aggiungendo massa puoi solo aumentare Massa, SW e TW. Controlla che i target siano fisicamente raggiungibili o abilita pi&ugrave; zone.</div>
+      </div>
+    </div>
 
-    <div class="form-group" style="margin-bottom:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06)">
-      <label style="font-size:0.84rem;font-weight:700;color:#cbd5e1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="toggleLimitsZone(this)">
-        &#x2696;&#xfe0f; Limiti massa per zona <span class="ml-status" style="font-size:0.75rem;color:var(--text-secondary)">(inattivi)</span> <span style="font-size:0.7rem">&#x25bc;</span>
-      </label>
-      <div style="display:none;margin-top:8px">
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <label style="font-size:0.78rem;color:var(--text-secondary)">Manico (&le; 20 cm): <input type="number" id="limit-manico" step="0.5" min="0" value="40" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"> g</label>
-          <label style="font-size:0.78rem;color:var(--text-secondary)">Cuore (21 - 35 cm): <input type="number" id="limit-cuore" step="0.5" min="0" value="10" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"> g</label>
-          <label style="font-size:0.78rem;color:var(--text-secondary)">Ovale (&ge; 35 cm): <input type="number" id="limit-ovale" step="0.5" min="0" value="10" style="width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff" placeholder="&#8734;"> g</label>
+    <!-- Save Single Configuration to Favorites (Collapsible Drawer) -->
+    <details class="fav-drawer">
+      <summary>&#x2b50; Configurazioni Preferite &amp; Salvataggi</summary>
+      <div class="fav-drawer-body">
+        <div class="fav-input-bar">
+          <input type="text" id="auto-fav-name" placeholder="Nome configurazione base (es. Base Blade 100)">
+          <button type="button" class="btn" onclick="saveAutoFavorite()">&#x2b50; Salva Preferito</button>
         </div>
+        <h4 style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:6px">&#x1f4c1; Configurazioni Salvate</h4>
+        <div id="auto-fav-list" style="max-height:220px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border-color) transparent"><div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div></div>
       </div>
-    </div>
+    </details>
+  </div>
 
-    <div class="form-group" style="margin-bottom:0;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06)">
-      <label style="font-size:0.84rem;font-weight:700;color:#cbd5e1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="toggleConstraints(this)">
-        &#x1f4cf; Vincoli Aggiuntivi Legacy (Range CM) <span style="font-size:0.7rem">&#x25bc;</span>
-      </label>
-      <div id="constraint-list" style="display:none;margin-top:8px">
-        <button class="btn btn-secondary" id="btn-add-constraint" onclick="addConstraintRow()" style="font-size:0.78rem;padding:4px 12px">+ Aggiungi vincolo</button>
-      </div>
+  <div class="panel" style="margin-top:20px">
+    <h2>&#x1f4ca; Confronto Parametri (Singolo Telaio)</h2>
+    <div class="data-table-container">
+      <table class="data-table">
+        <thead><tr><th>Parametro</th><th>Originale</th><th style="color:var(--accent-cyan)">Personalizzato</th></tr></thead>
+        <tbody>
+          <tr><td>Massa</td><td id="cmp-mass-o">300.0 g</td><td id="cmp-mass-c" style="color:var(--accent-cyan);font-weight:bold">300.0 g</td></tr>
+          <tr><td>Bilanciamento</td><td id="cmp-bal-o">32.00 cm</td><td id="cmp-bal-c" style="color:var(--accent-cyan);font-weight:bold">32.00 cm</td></tr>
+          <tr><td>Swingweight</td><td id="cmp-sw-o">315.0</td><td id="cmp-sw-c" style="color:var(--accent-cyan);font-weight:bold">315.0</td></tr>
+          <tr><td>Twistweight</td><td id="cmp-tw-o">14.00</td><td id="cmp-tw-c" style="color:var(--accent-cyan);font-weight:bold">14.00</td></tr>
+          <tr><td>Recoilweight</td><td id="cmp-rw-o">169.8</td><td id="cmp-rw-c" style="color:var(--accent-cyan);font-weight:bold">169.8</td></tr>
+          <tr><td>Inerzia Manico I&#x2080;</td><td id="cmp-i0-o">477.0</td><td id="cmp-i0-c" style="color:var(--accent-cyan);font-weight:bold">477.0</td></tr>
+          <tr><td>Rapporto MGR/I</td><td id="cmp-mgri-o">19.73</td><td id="cmp-mgri-c" style="color:var(--accent-cyan);font-weight:bold">19.73</td></tr>
+          <tr><td>ICO</td><td id="cmp-pol-o">0.5660</td><td id="cmp-pol-c" style="color:var(--accent-cyan);font-weight:bold">0.5660</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
-</details>
 
-<button class="btn" onclick="runOptimizer()" style="margin-top:16px;font-size:1rem;padding:13px 20px">&#x1f50d; Trova Configurazione Ottimale</button>
-
-<div id="goal-sort-bar" style="margin-top:18px;display:none;margin-bottom:10px">
-<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-<label for="sort-select" style="font-size:0.8rem;white-space:nowrap">Ordina per:</label>
-<select id="sort-select" onchange="reSortResults()" style="flex:1;min-width:140px;padding:6px 10px;font-size:0.82rem">
-<option value="precision">Precisione &amp; Semplicit&agrave; (Consigliato)</option>
-<option value="mass-asc">Massa aggiunta &#8593;</option>
-<option value="sw-asc">SW aggiunto &#8593;</option>
-<option value="sw-desc">SW aggiunto &#8595;</option>
-<option value="tw-asc">TW aggiunto &#8593;</option>
-<option value="tw-desc">TW aggiunto &#8595;</option>
-<option value="mgri-desc">MGR/I &#8595;</option>
-<option value="mgri-asc">MGR/I &#8593;</option>
-<option value="ico-desc">ICO &#8595;</option>
-<option value="ico-asc">ICO &#8593;</option>
-<option value="rw-desc">Recoilweight &#8595;</option>
-<option value="rw-asc">Recoilweight &#8593;</option>
-</select></div></div>
-<div id="goal-results" style="margin-top:25px;display:none"><div id="goal-solutions-container"></div></div>
-<div id="goal-no-results" style="margin-top:25px;display:none">
-<div style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);border-radius:8px;padding:12px;text-align:center">
-<div style="color:var(--accent-red);font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Nessuna soluzione trovata</div>
-<div style="font-size:0.9rem;color:var(--text-secondary)">Nota fisica: aggiungendo massa puoi solo aumentare Massa, SW e TW. Controlla che i target siano fisicamente raggiungibili o abilita pi&ugrave; zone.</div>
-</div></div>
-
-<!-- Save Single Configuration to Favorites (Collapsible Drawer) -->
-<details class="fav-drawer">
-  <summary>&#x2b50; Configurazioni Preferite &amp; Salvataggi</summary>
-  <div class="fav-drawer-body">
-    <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap">
-      <input type="text" id="auto-fav-name" placeholder="Nome configurazione base (es. Base Blade 100)" style="flex:1;min-width:200px;padding:8px 12px;border-radius:8px;border:1px solid var(--border-color);background:rgba(255,255,255,0.05);color:#fff">
-      <button class="btn" onclick="saveAutoFavorite()" style="width:auto;padding:8px 16px">&#x2b50; Salva Preferito</button>
+  <div class="panel" style="margin-top:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h2 style="font-size:1rem;margin:0;border:none;padding:0">&#x1f4dc; Cronologia Analisi</h2>
+      <button class="btn btn-secondary" style="padding:4px 10px;font-size:0.7rem" onclick="clearHistory()">Cancella</button>
     </div>
-    <h4 style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:6px">&#x1f4c1; Configurazioni Salvate</h4>
-    <div id="auto-fav-list" style="max-height:220px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border-color) transparent"><div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div></div>
+    <div id="history-list" style="max-height:250px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border-color) transparent"><div class="help-text" style="text-align:center;padding:15px;color:var(--text-secondary)">Nessuna cronologia.</div></div>
+    <div class="help-text" style="margin-top:8px;font-size:0.75rem">Clicca su un elemento per ripristinare i dati. Le analisi vengono salvate automaticamente.</div>
   </div>
-</details>
-</div>
-
-</div>
-
-<div class="panel" style="margin-top:20px">
-<h2>&#x1f4ca; Confronto Parametri (Singolo Telaio)</h2>
-<div class="data-table-container">
-<table class="data-table">
-<thead><tr><th>Parametro</th><th>Originale</th><th style="color:var(--accent-cyan)">Personalizzato</th></tr></thead>
-<tbody>
-<tr><td>Massa</td><td id="cmp-mass-o">300.0 g</td><td id="cmp-mass-c" style="color:var(--accent-cyan);font-weight:bold">300.0 g</td></tr>
-<tr><td>Bilanciamento</td><td id="cmp-bal-o">32.00 cm</td><td id="cmp-bal-c" style="color:var(--accent-cyan);font-weight:bold">32.00 cm</td></tr>
-<tr><td>Swingweight</td><td id="cmp-sw-o">315.0</td><td id="cmp-sw-c" style="color:var(--accent-cyan);font-weight:bold">315.0</td></tr>
-<tr><td>Twistweight</td><td id="cmp-tw-o">14.00</td><td id="cmp-tw-c" style="color:var(--accent-cyan);font-weight:bold">14.00</td></tr>
-<tr><td>Recoilweight</td><td id="cmp-rw-o">169.8</td><td id="cmp-rw-c" style="color:var(--accent-cyan);font-weight:bold">169.8</td></tr>
-<tr><td>Inerzia Manico I&#x2080;</td><td id="cmp-i0-o">477.0</td><td id="cmp-i0-c" style="color:var(--accent-cyan);font-weight:bold">477.0</td></tr>
-<tr><td>Rapporto MGR/I</td><td id="cmp-mgri-o">19.73</td><td id="cmp-mgri-c" style="color:var(--accent-cyan);font-weight:bold">19.73</td></tr>
-<tr><td>ICO</td><td id="cmp-pol-o">0.5660</td><td id="cmp-pol-c" style="color:var(--accent-cyan);font-weight:bold">0.5660</td></tr>
-</tbody>
-</table></div></div>
-
-<div class="panel" style="margin-top:20px">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-<h2 style="font-size:1rem;margin:0;border:none;padding:0">&#x1f4dc; Cronologia Analisi</h2>
-<button class="btn btn-secondary" style="padding:4px 10px;font-size:0.7rem" onclick="clearHistory()">Cancella</button>
-</div>
-<div id="history-list" style="max-height:250px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border-color) transparent"><div class="help-text" style="text-align:center;padding:15px;color:var(--text-secondary)">Nessuna cronologia.</div></div>
-<div class="help-text" style="margin-top:8px;font-size:0.75rem">Clicca su un elemento per ripristinare i dati. Le analisi vengono salvate automaticamente.</div>
-</div>
 </div> <!-- /auto-submode-single -->
 
 </div> <!-- /personalizzazione -->
@@ -2125,10 +2155,10 @@ function renderMatchRacketList(){
       '</div>'+
       '<div class="match-racket-grid">'+
         '<div><label>Massa (g)</label><input type="number" class="match-rk-mass" value="'+rk.mass+'" step="0.1" min="200" max="450" oninput="onMatchRacketInput()"></div>'+
-        '<div><label>Bilanc. (cm)</label><input type="number" class="match-rk-bal" value="'+rk.balance+'" step="0.05" min="25" max="40" oninput="onMatchRacketInput()"></div>'+
-        '<div><label>SW (kg&middot;cm&sup2;)</label><input type="number" class="match-rk-sw" value="'+rk.sw+'" step="0.5" min="200" max="450" oninput="onMatchRacketInput()"></div>'+
-        '<div><label>TW (kg&middot;cm&sup2;)</label><input type="number" class="match-rk-tw" value="'+(rk.tw||14)+'" step="0.1" min="8" max="25" oninput="onMatchRacketInput()"></div>'+
-        '<div><label>Lungh. (cm)</label><input type="number" class="match-rk-len" value="'+(rk.length||68.58)+'" step="0.1" min="60" max="75" oninput="onMatchRacketInput()"></div>'+
+        '<div><label>Bilanciamento (cm)</label><input type="number" class="match-rk-bal" value="'+rk.balance+'" step="0.05" min="25" max="40" oninput="onMatchRacketInput()"></div>'+
+        '<div><label>Swingweight (SW)</label><input type="number" class="match-rk-sw" value="'+rk.sw+'" step="0.5" min="200" max="450" oninput="onMatchRacketInput()"></div>'+
+        '<div><label>Twistweight (TW)</label><input type="number" class="match-rk-tw" value="'+(rk.tw||14)+'" step="0.1" min="8" max="25" oninput="onMatchRacketInput()"></div>'+
+        '<div><label>Lunghezza (cm)</label><input type="number" class="match-rk-len" value="'+(rk.length||68.58)+'" step="0.1" min="60" max="75" oninput="onMatchRacketInput()"></div>'+
       '</div>'+
     '</div>';
   }).join('');
