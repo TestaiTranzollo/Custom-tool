@@ -950,24 +950,35 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
   </div>
 </div>
 
-<!-- Misurazione Ottica Automatica (Scelta principale) -->
-<div class="auto-card" style="margin-bottom:12px">
-  <div class="panel-section-header" style="margin-bottom:8px">
+<!-- Misurazione Ottica Automatica (Scelta principale ad alta visibilità) -->
+<div class="auto-card" style="margin-bottom:14px;background:linear-gradient(145deg,rgba(6,182,212,0.14) 0%,rgba(15,23,42,0.85) 100%);border:2px solid rgba(6,182,212,0.65);box-shadow:0 6px 22px rgba(6,182,212,0.14);padding:14px">
+  <div class="panel-section-header" style="margin-bottom:10px">
     <div class="panel-section-title">
-      <span class="step-badge">&#x1f4f7;</span>
-      <span>Misurazione Ottica Automatica</span>
+      <span class="step-badge" style="background:var(--accent-cyan);color:#0f172a;font-weight:800;border:none;padding:3px 8px">&#x1f4f7; AUTO</span>
+      <span style="font-size:0.96rem;font-weight:800;color:#fff">Misurazione Ottica Automatica</span>
     </div>
-    <span style="font-size:0.66rem;color:var(--accent-cyan);font-weight:600">Consigliata &middot; OLS</span>
+    <span style="font-size:0.68rem;background:rgba(6,182,212,0.2);color:var(--accent-cyan);border:1px solid rgba(6,182,212,0.45);padding:2px 8px;border-radius:999px;font-weight:700">Consigliata &middot; OLS</span>
   </div>
-  <div style="display:flex;flex-direction:column;gap:8px">
-    <div style="font-size:0.73rem;color:var(--text-secondary)">
-      Posiziona lo smartphone <strong>esattamente al centro</strong> sotto l'estremit&#xe0; inferiore della racchetta a riposo, in modo che l'oscillazione attraversi il mirino centrale.
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="font-size:0.76rem;color:#e2e8f0;line-height:1.4">
+      Posiziona lo smartphone <strong>esattamente al centro</strong> sotto l'estremit&#xe0; inferiore della racchetta a riposo, poi avvia la fotocamera preferita:
     </div>
 
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:rgba(255,255,255,0.025);padding:8px 10px;border-radius:6px;border:1px solid var(--border-color)">
-      <label style="font-size:0.74rem;color:var(--text-secondary);flex:1;min-width:180px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <button type="button" class="btn" style="margin:0;padding:12px 10px;font-size:0.86rem;font-weight:700;background:linear-gradient(135deg,#0891b2 0%,#0284c7 100%);border:1px solid rgba(255,255,255,0.25);box-shadow:0 4px 12px rgba(6,182,212,0.28);display:flex;align-items:center;justify-content:center;gap:6px" onclick="startAutoMeasurement('camera-front')">
+        <span style="font-size:1.05rem">&#x1f4f7;</span>
+        <span>Fotocamera Frontale</span>
+      </button>
+      <button type="button" class="btn" style="margin:0;padding:12px 10px;font-size:0.86rem;font-weight:700;background:linear-gradient(135deg,#0284c7 0%,#2563eb 100%);border:1px solid rgba(255,255,255,0.25);box-shadow:0 4px 12px rgba(37,99,235,0.28);display:flex;align-items:center;justify-content:center;gap:6px" onclick="startAutoMeasurement('camera-back')">
+        <span style="font-size:1.05rem">&#x1f4f8;</span>
+        <span>Fotocamera Posteriore</span>
+      </button>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:rgba(15,23,42,0.65);padding:8px 10px;border-radius:8px;border:1px solid rgba(6,182,212,0.3)">
+      <label style="font-size:0.73rem;color:var(--text-secondary);flex:1;min-width:170px">
         Modalit&#xe0; arresto:
-        <select id="auto-stop-mode" style="width:100%;margin-top:3px;padding:5px 8px;font-size:0.82rem;border-radius:5px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff">
+        <select id="auto-stop-mode" style="width:100%;margin-top:3px;padding:6px 8px;font-size:0.82rem;font-weight:600;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff">
           <option value="auto" selected>Automatico (Alta Stabilit&#xe0; OLS)</option>
           <option value="10">Target Fisso (10 Oscillazioni)</option>
           <option value="20">Target Fisso (20 Oscillazioni)</option>
@@ -977,36 +988,31 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
           <option value="60">Target Fisso (60 Oscillazioni)</option>
         </select>
       </label>
-      <details style="font-size:0.7rem;color:var(--text-secondary)">
-        <summary style="cursor:pointer;user-select:none;padding:4px 0">&#x2699; Opzioni Lente</summary>
-        <div style="margin-top:4px;display:flex;flex-direction:column;gap:4px;padding-left:10px;border-left:1px solid var(--border-color)">
-          <label style="display:flex;align-items:center;gap:5px" title="Evita il cambio automatico verso la lente macro/grandangolo sui telefoni multi-fotocamera"><input type="checkbox" id="auto-lock-lens" checked> Blocca lente principale 1x (no macro auto-switch)</label>
-          <label style="display:flex;align-items:center;gap:5px" title="Fissa messa a fuoco ed esposizione dopo la messa a fuoco iniziale"><input type="checkbox" id="auto-lock-expo" checked> Blocca fuoco/esposizione dopo avvio</label>
+      <details style="font-size:0.72rem;color:var(--text-secondary)">
+        <summary style="cursor:pointer;user-select:none;padding:4px 0;font-weight:600;color:#cbd5e1">&#x2699; Opzioni Lente</summary>
+        <div style="margin-top:5px;display:flex;flex-direction:column;gap:5px;padding-left:10px;border-left:2px solid var(--accent-cyan)">
+          <label style="display:flex;align-items:center;gap:5px" title="Evita il cambio automatico verso la lente macro/grandangolo sui telefoni multi-fotocamera"><input type="checkbox" id="auto-lock-lens" checked> Blocca lente principale 1x (no macro switch)</label>
+          <label style="display:flex;align-items:center;gap:5px" title="Fissa messa a fuoco e bilanciamento evitando il calo di luminosità"><input type="checkbox" id="auto-lock-expo" checked> Blocca messa a fuoco / stabilizza luce</label>
         </div>
       </details>
     </div>
 
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-secondary" style="flex:1;min-width:110px;padding:8px 10px;font-size:0.76rem;display:flex;align-items:center;justify-content:center;gap:5px" onclick="startAutoMeasurement('camera-front')">&#x1f4f7; Fotocamera Frontale</button>
-      <button class="btn btn-secondary" style="flex:1;min-width:110px;padding:8px 10px;font-size:0.76rem;display:flex;align-items:center;justify-content:center;gap:5px" onclick="startAutoMeasurement('camera-back')">&#x1f4f7; Fotocamera Posteriore</button>
-    </div>
-
-    <div id="auto-ui-container" style="display:none;background:rgba(0,0,0,0.35);border-radius:8px;padding:10px;margin-top:4px;border:1px solid rgba(6,182,212,0.35)">
+    <div id="auto-ui-container" style="display:none;background:rgba(0,0,0,0.45);border-radius:8px;padding:10px;margin-top:2px;border:1px solid rgba(6,182,212,0.45)">
       <div id="auto-countdown" style="font-size:1.15rem;font-weight:700;color:var(--accent-amber);text-align:center;margin-bottom:8px">Posiziona il dispositivo... 5</div>
       <div id="auto-stats" style="display:none;grid-template-columns:repeat(2,1fr);gap:6px;text-align:center">
-        <div style="background:rgba(255,255,255,0.03);padding:7px;border-radius:6px">
+        <div style="background:rgba(255,255,255,0.04);padding:7px;border-radius:6px">
            <div style="font-size:0.62rem;color:var(--text-secondary);text-transform:uppercase">Oscillazioni</div>
            <div id="auto-val-swings" style="font-size:1.3rem;font-weight:700;color:#fff">0</div>
         </div>
-        <div style="background:rgba(255,255,255,0.03);padding:7px;border-radius:6px">
+        <div style="background:rgba(255,255,255,0.04);padding:7px;border-radius:6px">
            <div style="font-size:0.62rem;color:var(--text-secondary);text-transform:uppercase">Periodo OLS</div>
            <div id="auto-val-avg" style="font-size:1.3rem;font-weight:700;color:#fff">0.000 s</div>
         </div>
-        <div style="background:rgba(255,255,255,0.03);padding:7px;border-radius:6px">
+        <div style="background:rgba(255,255,255,0.04);padding:7px;border-radius:6px">
            <div style="font-size:0.62rem;color:var(--text-secondary);text-transform:uppercase">SW Live Stimato</div>
            <div id="auto-val-live-sw" style="font-size:1.05rem;font-weight:700;color:var(--accent-cyan)">---</div>
         </div>
-        <div style="background:rgba(255,255,255,0.03);padding:7px;border-radius:6px">
+        <div style="background:rgba(255,255,255,0.04);padding:7px;border-radius:6px">
            <div style="font-size:0.62rem;color:var(--text-secondary);text-transform:uppercase">Framerate &amp; Jitter</div>
            <div id="auto-val-acc" style="font-size:0.9rem;font-weight:700;color:var(--accent-green)">-- fps</div>
         </div>
@@ -1066,19 +1072,19 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
   </div>
 
   <div style="margin-top:10px;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:9px 10px">
-    <div style="font-size:0.68rem;color:var(--text-secondary);margin-bottom:6px;font-weight:600">&#x1f517; Usa subito questa racchetta nelle altre schede (copia automatica dei dati):</div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap">
-      <button type="button" class="btn btn-secondary" style="flex:1;min-width:115px;padding:7px 8px;font-size:0.75rem;line-height:1.25" onclick="sendCurrentPendToManual()" title="Copia Massa, Bilanciamento e SW nella Scheda 2 (Personalizzazione Manuale)">
-        <div>&#x1f9ee; <strong>Invia a Manuale</strong></div>
-        <div style="font-size:0.62rem;color:var(--text-secondary);font-weight:400;margin-top:2px">Simula pesi a mano (Tab 2)</div>
+    <div style="font-size:0.68rem;color:var(--text-secondary);margin-bottom:7px;font-weight:600">&#x1f517; Porta questa racchetta nelle altre schede:</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+      <button type="button" class="btn btn-secondary" style="margin:0;padding:8px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:100%;border-color:rgba(6,182,212,0.35);color:#fff" onclick="sendCurrentPendToManual()" title="Copia Massa, Bilanciamento e SW nella Scheda 2 (Personalizzazione Manuale)">
+        <span style="font-size:0.74rem;font-weight:700;white-space:nowrap">&#x1f9ee; Invia a Manuale</span>
+        <span style="font-size:0.6rem;color:var(--text-secondary);font-weight:500;white-space:nowrap">Simulatore (Tab 2)</span>
       </button>
-      <button type="button" class="btn btn-secondary" style="flex:1;min-width:115px;padding:7px 8px;font-size:0.75rem;line-height:1.25" onclick="sendCurrentPendToAutoSingle()" title="Copia Massa, Bilanciamento e SW come racchetta base in Target Singolo (Scheda 3)">
-        <div>&#x1f3af; <strong>Invia a Target Singolo</strong></div>
-        <div style="font-size:0.62rem;color:var(--text-secondary);font-weight:400;margin-top:2px">Custom automatico 1 telaio (Tab 3)</div>
+      <button type="button" class="btn btn-secondary" style="margin:0;padding:8px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:100%;border-color:rgba(6,182,212,0.35);color:#fff" onclick="sendCurrentPendToAutoSingle()" title="Copia Massa, Bilanciamento e SW come racchetta base in Target Singolo (Scheda 3)">
+        <span style="font-size:0.74rem;font-weight:700;white-space:nowrap">&#x1f3af; Invia a Singolo</span>
+        <span style="font-size:0.6rem;color:var(--text-secondary);font-weight:500;white-space:nowrap">Target 1 telaio (Tab 3)</span>
       </button>
-      <button type="button" class="btn btn-secondary" style="flex:1;min-width:115px;padding:7px 8px;font-size:0.75rem;line-height:1.25;border-color:rgba(6,182,212,0.4);color:var(--accent-cyan)" onclick="sendCurrentPendToMatching()" title="Aggiunge questa racchetta alla lista dei telai da uniformare nel Matching Multi-Racchetta (Scheda 3)">
-        <div>&#x2696;&#xfe0f; <strong>+ Aggiungi al Matching</strong></div>
-        <div style="font-size:0.62rem;color:var(--text-secondary);font-weight:400;margin-top:2px">Pareggia pi&#xf9; racchette (Tab 3)</div>
+      <button type="button" class="btn btn-secondary" style="margin:0;padding:8px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:100%;border-color:rgba(6,182,212,0.35);color:#fff" onclick="sendCurrentPendToMatching()" title="Aggiunge questa racchetta alla lista dei telai da uniformare nel Matching Multi-Racchetta (Scheda 3)">
+        <span style="font-size:0.74rem;font-weight:700;white-space:nowrap">&#x2696;&#xfe0f; Invia a Matching</span>
+        <span style="font-size:0.6rem;color:var(--text-secondary);font-weight:500;white-space:nowrap">Lotto telai (Tab 3)</span>
       </button>
     </div>
   </div>
@@ -3590,11 +3596,25 @@ async function initCamera(mode) {
       } catch (zErr) {}
     }
 
+    function sampleCurrentRoiLuminance() {
+      try {
+        const vw = video.videoWidth, vh = video.videoHeight;
+        if (!vw || !vh) return null;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        const size = Math.min(vw, vh) * 0.2;
+        ctx.drawImage(video, (vw - size) / 2, (vh - size) / 2, size, size, 0, 0, canvas.width, canvas.height);
+        const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        let sum = 0;
+        for (let i = 0; i < d.length; i += 4) sum += (d[i] + d[i+1] + d[i+2]) / 3;
+        return sum / (d.length / 4);
+      } catch (e) { return null; }
+    }
+
     // Apply Focus / Exposure / WB lock after 1.2s of stream warm-up so AE/AF settles on the scene first
     if ((lockLens || lockExpo) && statusEl) {
       statusEl.style.display = 'block';
       statusEl.textContent = lockExpo
-        ? '\u23f3 Stabilizzazione fuoco/esposizione in corso...'
+        ? '\u23f3 Stabilizzazione fuoco/luce in corso...'
         : (appliedLocks.length ? ('\ud83d\udd12 Attivo: ' + appliedLocks.join(' \u00b7 ')) : '\u2139\ufe0f Lente standard attiva');
     }
 
@@ -3605,8 +3625,9 @@ async function initCamera(mode) {
         if (!activeTrack || !activeTrack.getCapabilities) return;
         const caps = activeTrack.getCapabilities() || {};
         const settings = activeTrack.getSettings ? activeTrack.getSettings() : {};
+        const lumBefore = sampleCurrentRoiLuminance();
 
-        // 1. Lock Focus individually
+        // 1. Lock Focus individually (never affects brightness)
         if (Array.isArray(caps.focusMode)) {
           const modeToUse = caps.focusMode.includes('manual') ? 'manual' : (caps.focusMode.includes('single-shot') ? 'single-shot' : null);
           if (modeToUse) {
@@ -3621,41 +3642,45 @@ async function initCamera(mode) {
           }
         }
 
-        // 2. Lock Exposure individually
-        if (Array.isArray(caps.exposureMode)) {
-          const expMode = caps.exposureMode.includes('manual') ? 'manual' : (caps.exposureMode.includes('single-shot') ? 'single-shot' : null);
-          if (expMode) {
-            try {
-              const ec = { exposureMode: expMode };
-              if (expMode === 'manual' && caps.exposureTime && typeof settings.exposureTime === 'number') {
-                ec.exposureTime = settings.exposureTime;
-              }
-              await activeTrack.applyConstraints({ advanced: [ec] });
-              appliedLocks.push('Esposizione bloccata');
-            } catch (e) {}
-          }
+        // 2. Stabilize Exposure WITHOUT using 'manual' mode on Android Camera2 (which disables auto-ISO gain and darkens the image)
+        // We only try 'single-shot' (AE lock at current gain), and verify luminance doesn't drop.
+        if (Array.isArray(caps.exposureMode) && caps.exposureMode.includes('single-shot')) {
+          try {
+            await activeTrack.applyConstraints({ advanced: [{ exposureMode: 'single-shot' }] });
+            await new Promise(r => setTimeout(r, 250));
+            const lumAfter = sampleCurrentRoiLuminance();
+            if (lumBefore !== null && lumAfter !== null && lumAfter < lumBefore * 0.85 && caps.exposureMode.includes('continuous')) {
+              // Driver darkened the frame -> immediately restore continuous auto-exposure
+              await activeTrack.applyConstraints({ advanced: [{ exposureMode: 'continuous' }] });
+            } else {
+              appliedLocks.push('Luce AE bloccata');
+            }
+          } catch (e) {}
         }
 
         // 3. Lock White Balance individually
-        if (Array.isArray(caps.whiteBalanceMode) && caps.whiteBalanceMode.includes('manual')) {
-          try {
-            const wbc = { whiteBalanceMode: 'manual' };
-            if (caps.colorTemperature && typeof settings.colorTemperature === 'number') {
-              wbc.colorTemperature = settings.colorTemperature;
-            }
-            await activeTrack.applyConstraints({ advanced: [wbc] });
-            appliedLocks.push('WB bloccato');
-          } catch (e) {}
+        if (Array.isArray(caps.whiteBalanceMode)) {
+          const wbMode = caps.whiteBalanceMode.includes('single-shot') ? 'single-shot' : (caps.whiteBalanceMode.includes('manual') ? 'manual' : null);
+          if (wbMode) {
+            try {
+              const wbc = { whiteBalanceMode: wbMode };
+              if (wbMode === 'manual' && caps.colorTemperature && typeof settings.colorTemperature === 'number') {
+                wbc.colorTemperature = settings.colorTemperature;
+              }
+              await activeTrack.applyConstraints({ advanced: [wbc] });
+              appliedLocks.push('WB bloccato');
+            } catch (e) {}
+          }
         }
 
         if (statusEl) {
           statusEl.style.display = 'block';
           if (appliedLocks.length > 0) {
             statusEl.style.color = 'var(--accent-green)';
-            statusEl.textContent = '\ud83d\udd12 Blocchi hardware attivi: ' + appliedLocks.join(' \u00b7 ');
+            statusEl.textContent = '\ud83d\udd12 Blocchi attivi: ' + appliedLocks.join(' \u00b7 ');
           } else {
             statusEl.style.color = 'var(--text-secondary)';
-            statusEl.textContent = '\u2139\ufe0f Il browser non espone il blocco manuale AE/AF su questo dispositivo (compensazione software attiva)';
+            statusEl.textContent = '\u2139\ufe0f Luminosit\u00e0 automatica attiva con compensazione software del fondo';
           }
         }
       }, 1200);
