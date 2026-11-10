@@ -431,9 +431,24 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
   .hud-old{font-size:0.72rem}
   .hud-new{font-size:0.80rem}
 }
+/* Misura SW Transfer Buttons */
+.pend-transfer-container{margin-top:10px;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:9px 10px}
+.pend-transfer-label{font-size:0.68rem;color:var(--text-secondary);margin-bottom:7px;font-weight:600}
+.pend-transfer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.btn.pend-transfer-btn{margin:0;padding:8px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:100%;min-height:46px;width:100%;min-width:0;border-color:rgba(6,182,212,0.35);color:#fff;text-align:center;box-sizing:border-box;-webkit-user-select:none;user-select:none}
+.btn.pend-transfer-btn:hover{background:rgba(6,182,212,0.12);border-color:var(--accent-cyan)}
+.btn.pend-transfer-btn:active{background:rgba(6,182,212,0.22);border-color:var(--accent-cyan);transform:scale(0.995)}
+.btn.pend-transfer-btn:focus-visible{outline:2px solid var(--accent-cyan);outline-offset:2px}
+.pend-transfer-title{font-size:0.74rem;font-weight:700;line-height:1.2;display:block;width:100%;text-align:center;min-width:0;overflow-wrap:break-word;word-break:break-word}
+.pend-transfer-sub{font-size:0.60rem;color:var(--text-secondary);font-weight:500;line-height:1.2;display:block;width:100%;text-align:center;min-width:0;overflow-wrap:break-word;word-break:break-word}
+
 @media(max-width:600px){
   .submode-bar{grid-template-columns:1fr}
   .match-racket-name{width:100%}
+  .pend-transfer-grid{grid-template-columns:1fr;gap:6px}
+  .btn.pend-transfer-btn{padding:9px 12px;min-height:44px}
+  .pend-transfer-title{font-size:0.80rem}
+  .pend-transfer-sub{font-size:0.66rem}
 }
 </style>
 </head>
@@ -1071,20 +1086,20 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
     </div>
   </div>
 
-  <div style="margin-top:10px;background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:9px 10px">
-    <div style="font-size:0.68rem;color:var(--text-secondary);margin-bottom:7px;font-weight:600">&#x1f517; Porta questa racchetta nelle altre schede:</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
-      <button type="button" class="btn btn-secondary" style="margin:0;padding:8px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:100%;border-color:rgba(6,182,212,0.35);color:#fff" onclick="sendCurrentPendToManual()" title="Copia Massa, Bilanciamento e SW nella Scheda 2 (Personalizzazione Manuale)">
-        <span style="font-size:0.74rem;font-weight:700;white-space:nowrap">&#x1f9ee; Invia a Manuale</span>
-        <span style="font-size:0.6rem;color:var(--text-secondary);font-weight:500;white-space:nowrap">Simulatore (Tab 2)</span>
+  <div class="pend-transfer-container">
+    <div class="pend-transfer-label">&#x1f517; Porta questa racchetta nelle altre schede:</div>
+    <div class="pend-transfer-grid">
+      <button type="button" class="btn btn-secondary pend-transfer-btn" onclick="sendCurrentPendToManual()" title="Copia Massa, Bilanciamento e SW nella Scheda 2 (Personalizzazione Manuale)">
+        <span class="pend-transfer-title">&#x1f9ee; Invia a Manuale</span>
+        <span class="pend-transfer-sub">Simulatore (Tab 2)</span>
       </button>
-      <button type="button" class="btn btn-secondary" style="margin:0;padding:8px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:100%;border-color:rgba(6,182,212,0.35);color:#fff" onclick="sendCurrentPendToAutoSingle()" title="Copia Massa, Bilanciamento e SW come racchetta base in Target Singolo (Scheda 3)">
-        <span style="font-size:0.74rem;font-weight:700;white-space:nowrap">&#x1f3af; Invia a Singolo</span>
-        <span style="font-size:0.6rem;color:var(--text-secondary);font-weight:500;white-space:nowrap">Target 1 telaio (Tab 3)</span>
+      <button type="button" class="btn btn-secondary pend-transfer-btn" onclick="sendCurrentPendToAutoSingle()" title="Copia Massa, Bilanciamento e SW come racchetta base in Target Singolo (Scheda 3)">
+        <span class="pend-transfer-title">&#x1f3af; Invia a Singolo</span>
+        <span class="pend-transfer-sub">Target 1 telaio (Tab 3)</span>
       </button>
-      <button type="button" class="btn btn-secondary" style="margin:0;padding:8px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:100%;border-color:rgba(6,182,212,0.35);color:#fff" onclick="sendCurrentPendToMatching()" title="Aggiunge questa racchetta alla lista dei telai da uniformare nel Matching Multi-Racchetta (Scheda 3)">
-        <span style="font-size:0.74rem;font-weight:700;white-space:nowrap">&#x2696;&#xfe0f; Invia a Matching</span>
-        <span style="font-size:0.6rem;color:var(--text-secondary);font-weight:500;white-space:nowrap">Lotto telai (Tab 3)</span>
+      <button type="button" class="btn btn-secondary pend-transfer-btn" onclick="sendCurrentPendToMatching()" title="Aggiunge questa racchetta alla lista dei telai da uniformare nel Matching Multi-Racchetta (Scheda 3)">
+        <span class="pend-transfer-title">&#x2696;&#xfe0f; Invia a Matching</span>
+        <span class="pend-transfer-sub">Lotto telai (Tab 3)</span>
       </button>
     </div>
   </div>
