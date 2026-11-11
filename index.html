@@ -2817,7 +2817,8 @@ function runMultiRacketMatcher(){
       const cBal=parseFloat(document.getElementById('match-cust-bal')?document.getElementById('match-cust-bal').value:'')||avgBal;
       const cMass=parseFloat(document.getElementById('match-cust-mass')?document.getElementById('match-cust-mass').value:'')||maxMass;
       const cTW=parseFloat(document.getElementById('match-cust-tw')?document.getElementById('match-cust-tw').value:'')||maxTW;
-      const customPlan=evaluateFleetCandidateTarget(baseObjs,{sw:cSW,mgri:cMGRI,bal:cBal,mass:cMass,tw:cTW},pw,allowedZones,maxZones,maxAddMass);
+      const cRk=new Racket(cMass,cBal,cSW,cTW,baseObjs[0].length);
+      const customPlan=evaluateFleetCandidateTarget(baseObjs,{sw:cSW,mgri:cMGRI,bal:cBal,mass:cMass,tw:cTW,rw:cRk.recoilweight},pw,allowedZones,maxZones,maxAddMass);
       if(customPlan){
         customPlan.title='\u{1f3af} Piano su Specifiche Target Personalizzate';
         customPlan.subtitle='Target richiesto: SW '+cSW.toFixed(1)+' | MGR/I '+cMGRI.toFixed(2)+' | Bil '+cBal.toFixed(2)+' cm';
@@ -2828,7 +2829,7 @@ function runMultiRacketMatcher(){
       const mObj=baseObjs[mIdx]||baseObjs[0];
       const mName=matchRackets[mIdx]?matchRackets[mIdx].name:'Master';
       const swT=Math.max(mObj.swingweight,maxSW);
-      const mPlan=evaluateFleetCandidateTarget(baseObjs,{sw:swT,mgri:mObj.mgr_i,bal:mObj.balance,mass:Math.max(mObj.mass,maxMass),tw:Math.max(mObj.twistweight,maxTW)},pw,allowedZones,maxZones,maxAddMass);
+      const mPlan=evaluateFleetCandidateTarget(baseObjs,{sw:swT,mgri:mObj.mgr_i,bal:mObj.balance,mass:Math.max(mObj.mass,maxMass),tw:Math.max(mObj.twistweight,maxTW),rw:mObj.recoilweight},pw,allowedZones,maxZones,maxAddMass);
       if(mPlan){
         mPlan.title='\u{1f451} Allineamento a '+mName;
         mPlan.subtitle='Tutti i telai portati alle caratteristiche dinamiche di '+mName+' (SW '+swT.toFixed(1)+', MGR/I '+mObj.mgr_i.toFixed(2)+')';
@@ -2848,7 +2849,8 @@ function runMultiRacketMatcher(){
           const impliedBal=(swT-0.1*(maxMass+2))/((maxMass+2)/1000*(980.5/mgT-20));
           const bT=(impliedBal>=29&&impliedBal<=36)?impliedBal:avgBal;
           const mT=maxMass+Math.max(1.5,dSW*0.9);
-          const cand=evaluateFleetCandidateTarget(baseObjs,{sw:swT,mgri:mgT,bal:bT,mass:mT,tw:maxTW},pw,allowedZones,maxZones,maxAddMass);
+          const rkT=new Racket(mT,bT,swT,maxTW,baseObjs[0].length);
+          const cand=evaluateFleetCandidateTarget(baseObjs,{sw:swT,mgri:mgT,bal:bT,mass:mT,tw:maxTW,rw:rkT.recoilweight},pw,allowedZones,maxZones,maxAddMass);
           if(cand)candidates.push(cand);
         }
       }
@@ -2859,7 +2861,7 @@ function runMultiRacketMatcher(){
             for(const dM of [1.0,2.5,4.5,6.5]){
               const mT=+(maxMass+dM).toFixed(1);
               const rkT=new Racket(mT,bT,swT,maxTW,baseObjs[0].length);
-              const cand=evaluateFleetCandidateTarget(baseObjs,{sw:swT,mgri:rkT.mgr_i,bal:bT,mass:mT,tw:maxTW},pw,allowedZones,maxZones,maxAddMass);
+              const cand=evaluateFleetCandidateTarget(baseObjs,{sw:swT,mgri:rkT.mgr_i,bal:bT,mass:mT,tw:maxTW,rw:rkT.recoilweight},pw,allowedZones,maxZones,maxAddMass);
               if(cand)candidates.push(cand);
             }
           }
