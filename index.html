@@ -290,6 +290,15 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 .zri-input-group input.zri-input:focus{border-color:var(--accent-cyan);background:rgba(0,0,0,0.6);box-shadow:0 0 0 2px var(--accent-cyan-glow)}
 .zri-unit{font-size:0.75rem;color:var(--text-secondary);font-weight:600}
 .zri-sep{color:var(--accent-cyan);font-weight:800;font-size:1.05rem}
+.zri-limit-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:6px;margin-top:2px;border-top:1px dashed rgba(255,255,255,0.08);flex-wrap:wrap}
+.zri-limit-chk-label{display:inline-flex;align-items:center;gap:7px;font-size:0.78rem;color:var(--text-secondary);font-weight:600;cursor:pointer;user-select:none}
+.zri-limit-chk-label input[type="checkbox"]{width:16px;height:16px;accent-color:var(--accent-amber);cursor:pointer;flex-shrink:0}
+.zri-limit-chk-label.active{color:var(--accent-amber);font-weight:700}
+.zri-limit-box{display:inline-flex;align-items:center;gap:5px;transition:opacity 0.15s ease}
+.zri-limit-box.disabled{opacity:0.4;pointer-events:none}
+.zri-limit-box label{font-size:0.74rem;color:var(--text-secondary);font-weight:700}
+.zri-limit-input{background:rgba(0,0,0,0.45);border:1px solid rgba(245,158,11,0.45);border-radius:6px;color:var(--accent-amber);padding:4px 8px;font-size:0.86rem;font-weight:700;width:72px;min-height:32px;text-align:center}
+.zri-limit-input:focus{outline:none;border-color:var(--accent-amber);box-shadow:0 0 0 2px rgba(245,158,11,0.25)}
 .btn-add-zone{background:rgba(6,182,212,0.1);border:1.5px dashed rgba(6,182,212,0.45);border-radius:8px;color:var(--accent-cyan);padding:8px 14px;font-size:0.82rem;font-weight:700;cursor:pointer;width:100%;text-align:center;transition:all 0.15s ease;min-height:40px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .btn-add-zone:hover{background:rgba(6,182,212,0.2);border-color:var(--accent-cyan);color:#fff}
 
@@ -645,8 +654,10 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
           <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-12')">&#x1f518; Tappo + Ore 12</button>
           <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-39')">&#x2696;&#xfe0f; Tappo + Ore 3 &amp; 9</button>
           <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'handle')">&#x1f5e1;&#xfe0f; Solo Manico</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'handle-high')">&#x2b06;&#xfe0f; Solo Manico Alto (16-22 cm)</button>
           <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'hoop')">&#x1f3be; Solo Ovale</button>
           <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-39-12')">&#x2b50; Tappo + 3&amp;9 + 12</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('match', 'butt-throat-39-12')">&#x1f451; Tappo + Cuore + 3&amp;9 + 12</button>
           <button type="button" class="btn-zone-preset reset" onclick="setZoneMode('match', 'all')">&#x1f504; Tutto il Telaio</button>
         </div>
 
@@ -833,8 +844,10 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
           <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-12')">&#x1f518; Tappo + Ore 12</button>
           <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-39')">&#x2696;&#xfe0f; Tappo + Ore 3 &amp; 9</button>
           <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'handle')">&#x1f5e1;&#xfe0f; Solo Manico</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'handle-high')">&#x2b06;&#xfe0f; Solo Manico Alto (16-22 cm)</button>
           <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'hoop')">&#x1f3be; Solo Ovale</button>
           <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-39-12')">&#x2b50; Tappo + 3&amp;9 + 12</button>
+          <button type="button" class="btn-zone-preset" onclick="applyZonePreset('single', 'butt-throat-39-12')">&#x1f451; Tappo + Cuore + 3&amp;9 + 12</button>
           <button type="button" class="btn-zone-preset reset" onclick="setZoneMode('single', 'all')">&#x1f504; Tutto il Telaio</button>
         </div>
 
@@ -1401,14 +1414,14 @@ document.getElementById('cmp-mass-o').textContent=f(b.mass,1)+' g';document.getE
 /* ================= ZONE SELECTOR & RACKET RULER LOGIC ================= */
 let matchZoneMode = 'all'; // 'all' | 'custom'
 let matchZoneRanges = [
-  {yMin: 0.0, yMax: 4.0},
-  {yMin: 50.0, yMax: 55.0}
+  {yMin: 0.0, yMax: 4.0, limitEnabled: false, maxMass: 6.0},
+  {yMin: 50.0, yMax: 55.0, limitEnabled: false, maxMass: 5.0}
 ];
 
 let singleZoneMode = 'all'; // 'all' | 'custom'
 let singleZoneRanges = [
-  {yMin: 0.0, yMax: 4.0},
-  {yMin: 50.0, yMax: 55.0}
+  {yMin: 0.0, yMax: 4.0, limitEnabled: false, maxMass: 6.0},
+  {yMin: 50.0, yMax: 55.0, limitEnabled: false, maxMass: 5.0}
 ];
 
 function isYInRanges(y, ranges){
@@ -1421,15 +1434,50 @@ function isYInRanges(y, ranges){
   });
 }
 
+function getActiveZoneRangeLimits(prefix){
+  const mode = prefix === 'match' ? matchZoneMode : singleZoneMode;
+  if(mode !== 'custom') return [];
+  const ranges = prefix === 'match' ? matchZoneRanges : singleZoneRanges;
+  return (ranges || []).filter(r => !isNaN(r.yMin) && !isNaN(r.yMax) && r.yMin < r.yMax && r.limitEnabled && !isNaN(parseFloat(r.maxMass)) && parseFloat(r.maxMass) > 0);
+}
+
+function getRangeMaxMassForY(y, rangeLimits){
+  if(!rangeLimits || rangeLimits.length === 0) return null;
+  let minCap = null;
+  for(const r of rangeLimits){
+    if(y >= r.yMin - 0.25 && y <= r.yMax + 0.25){
+      const cap = parseFloat(r.maxMass);
+      if(minCap === null || cap < minCap) minCap = cap;
+    }
+  }
+  return minCap;
+}
+
+function checkWeightsAgainstRangeLimits(weights, rangeLimits){
+  if(!rangeLimits || rangeLimits.length === 0) return true;
+  for(const r of rangeLimits){
+    const cap = parseFloat(r.maxMass);
+    let sumInZone = 0;
+    for(const w of weights){
+      if(w.y >= r.yMin - 0.25 && w.y <= r.yMax + 0.25){
+        sumInZone += w.mass;
+      }
+    }
+    if(sumInZone > cap + 0.05) return false;
+  }
+  return true;
+}
+
 function getRangeLandmarkHint(yMin, yMax, len){
   const L = len || 68.58;
   const mn = parseFloat(yMin) || 0;
   const mx = parseFloat(yMax) || 0;
   if(mn <= 1 && mx >= L - 1) return '\u{1f310} Tutto il Telaio (0 - ' + L.toFixed(1) + ' cm)';
   if(mx <= 4.0) return '\u{1f4cd} Tappo (Base manico)';
+  if(mn >= 15 && mx <= 23) return '\u{1f4cd} Manico Alto (' + mn.toFixed(0) + ' - ' + mx.toFixed(0) + ' cm)';
   if(mn <= 5 && mx <= 20) return '\u{1f4cd} Manico completo (0 - ' + mx.toFixed(0) + ' cm)';
   if(mn >= 4 && mx <= 20) return '\u{1f4cd} Manico (6 - 18 cm)';
-  if(mn >= 20 && mx <= 36) return '\u{1f4cd} Cuore / Gola (22 - 34 cm)';
+  if(mn >= 20 && mx <= 36) return '\u{1f4cd} Cuore / Gola (' + mn.toFixed(0) + ' - ' + mx.toFixed(0) + ' cm)';
   if(mn >= 38 && mx <= 47) return '\u{1f4cd} Ovale Basso (Ore 4 & 8)';
   if(mn >= 48 && mx <= 56) return '\u{1f4cd} Ovale Centro (Ore 3 & 9 / TW)';
   if(mn >= 56 && mx <= 63) return '\u{1f4cd} Ovale Alto (Ore 2 & 10)';
@@ -1469,37 +1517,50 @@ function applyZonePreset(prefix, presetKey){
   switch(presetKey){
     case 'butt-12':
       newRanges = [
-        {yMin: 0.0, yMax: 4.0},
-        {yMin: +(L - 4.5).toFixed(1), yMax: +L.toFixed(1)}
+        {yMin: 0.0, yMax: 4.0, limitEnabled: false, maxMass: 8.0},
+        {yMin: +(L - 4.5).toFixed(1), yMax: +L.toFixed(1), limitEnabled: false, maxMass: 4.0}
       ];
       break;
     case 'butt-39':
       newRanges = [
-        {yMin: 0.0, yMax: 4.0},
-        {yMin: 50.0, yMax: 55.0}
+        {yMin: 0.0, yMax: 4.0, limitEnabled: false, maxMass: 8.0},
+        {yMin: 50.0, yMax: 55.0, limitEnabled: false, maxMass: 5.0}
       ];
       break;
     case 'handle':
       newRanges = [
-        {yMin: 0.0, yMax: 20.0}
+        {yMin: 0.0, yMax: 20.0, limitEnabled: false, maxMass: 10.0}
+      ];
+      break;
+    case 'handle-high':
+      newRanges = [
+        {yMin: 16.0, yMax: 22.0, limitEnabled: false, maxMass: 6.0}
       ];
       break;
     case 'hoop':
       newRanges = [
-        {yMin: 42.0, yMax: +L.toFixed(1)}
+        {yMin: 42.0, yMax: +L.toFixed(1), limitEnabled: false, maxMass: 8.0}
       ];
       break;
     case 'butt-39-12':
       newRanges = [
-        {yMin: 0.0, yMax: 4.0},
-        {yMin: 50.0, yMax: 55.0},
-        {yMin: +(L - 3.5).toFixed(1), yMax: +L.toFixed(1)}
+        {yMin: 0.0, yMax: 4.0, limitEnabled: false, maxMass: 8.0},
+        {yMin: 50.0, yMax: 55.0, limitEnabled: false, maxMass: 5.0},
+        {yMin: +(L - 3.5).toFixed(1), yMax: +L.toFixed(1), limitEnabled: false, maxMass: 4.0}
+      ];
+      break;
+    case 'butt-throat-39-12':
+      newRanges = [
+        {yMin: 0.0, yMax: 4.0, limitEnabled: false, maxMass: 8.0},
+        {yMin: 24.0, yMax: 31.0, limitEnabled: false, maxMass: 6.0},
+        {yMin: 50.0, yMax: 55.0, limitEnabled: false, maxMass: 5.0},
+        {yMin: +(L - 3.5).toFixed(1), yMax: +L.toFixed(1), limitEnabled: false, maxMass: 4.0}
       ];
       break;
     default:
       newRanges = [
-        {yMin: 0.0, yMax: 4.0},
-        {yMin: 50.0, yMax: 55.0}
+        {yMin: 0.0, yMax: 4.0, limitEnabled: false, maxMass: 8.0},
+        {yMin: 50.0, yMax: 55.0, limitEnabled: false, maxMass: 5.0}
       ];
   }
 
@@ -1528,11 +1589,11 @@ function addZoneRange(prefix){
     }else if(!ranges.some(r => r.yMin >= 22 && r.yMax <= 35)){
       defaultMin = 25.0; defaultMax = 32.0;
     }else{
-      defaultMin = 10.0; defaultMax = 16.0;
+      defaultMin = 16.0; defaultMax = 22.0;
     }
   }
 
-  ranges.push({yMin: defaultMin, yMax: defaultMax});
+  ranges.push({yMin: defaultMin, yMax: defaultMax, limitEnabled: false, maxMass: 5.0});
   if(prefix === 'match'){
     matchZoneMode = 'custom';
     saveMatchState();
@@ -1577,6 +1638,31 @@ function onZoneRangeInput(prefix, idx, field, val){
   else saveState();
 }
 
+function onZoneLimitToggle(prefix, idx, checked){
+  const ranges = prefix === 'match' ? matchZoneRanges : singleZoneRanges;
+  if(!ranges[idx]) return;
+  ranges[idx].limitEnabled = !!checked;
+  if(ranges[idx].maxMass === undefined || ranges[idx].maxMass === null || isNaN(parseFloat(ranges[idx].maxMass)) || parseFloat(ranges[idx].maxMass) <= 0){
+    ranges[idx].maxMass = 5.0;
+  }
+  if(prefix === 'match') saveMatchState();
+  else saveState();
+  renderZoneUI(prefix);
+}
+
+function onZoneLimitInput(prefix, idx, val){
+  const ranges = prefix === 'match' ? matchZoneRanges : singleZoneRanges;
+  if(!ranges[idx]) return;
+  const num = parseFloat(val);
+  if(!isNaN(num) && num > 0){
+    ranges[idx].maxMass = num;
+  }
+  const L = getZoneRacketLength(prefix);
+  renderZoneRuler(prefix, prefix === 'match' ? matchZoneMode : singleZoneMode, ranges, L);
+  if(prefix === 'match') saveMatchState();
+  else saveState();
+}
+
 function onZoneConfigChange(prefix){
   if(prefix === 'match') saveMatchState();
   else saveState();
@@ -1602,8 +1688,11 @@ function renderZoneRuler(prefix, mode, ranges, len){
     const leftPct = Math.max(0, Math.min(100, (r.yMin / L) * 100));
     const rightPct = Math.max(0, Math.min(100, (r.yMax / L) * 100));
     const widthPct = Math.max(2, rightPct - leftPct);
-    const label = widthPct > 12 ? (r.yMin.toFixed(0) + '-' + r.yMax.toFixed(0) + ' cm') : '';
-    return '<div class="ruler-active-segment" style="left:' + leftPct.toFixed(1) + '%;width:' + widthPct.toFixed(1) + '%;" title="Zona #' + (idx+1) + ': ' + r.yMin + ' - ' + r.yMax + ' cm"><span>' + label + '</span></div>';
+    const hasLim = r.limitEnabled && !isNaN(parseFloat(r.maxMass)) && parseFloat(r.maxMass) > 0;
+    const limShort = hasLim ? (' \u2264' + (+r.maxMass).toFixed(1).replace(/\.0$/, '') + 'g') : '';
+    const label = widthPct > 12 ? (r.yMin.toFixed(0) + '-' + r.yMax.toFixed(0) + ' cm' + limShort) : (widthPct > 6 && hasLim ? limShort.trim() : '');
+    const titleLim = hasLim ? (' (Max ' + (+r.maxMass).toFixed(1) + ' g)') : '';
+    return '<div class="ruler-active-segment" style="left:' + leftPct.toFixed(1) + '%;width:' + widthPct.toFixed(1) + '%;" title="Zona #' + (idx+1) + ': ' + r.yMin + ' - ' + r.yMax + ' cm' + titleLim + '"><span>' + label + '</span></div>';
   }).join('');
 }
 
@@ -1619,6 +1708,8 @@ function renderZoneRangesList(prefix, ranges, len){
 
   listEl.innerHTML = ranges.map((r, idx) => {
     const hint = getRangeLandmarkHint(r.yMin, r.yMax, L);
+    const isLim = !!r.limitEnabled;
+    const mVal = (r.maxMass !== undefined && r.maxMass !== null && !isNaN(parseFloat(r.maxMass))) ? r.maxMass : 5.0;
     return '<div class="zone-range-item" data-index="' + idx + '">' +
       '<div class="zri-header">' +
         '<span class="zri-badge">' + hint + '</span>' +
@@ -1635,6 +1726,17 @@ function renderZoneRangesList(prefix, ranges, len){
           '<label>A</label>' +
           '<input type="number" class="zri-input" value="' + r.yMax + '" min="0" max="' + L.toFixed(1) + '" step="0.5" oninput="onZoneRangeInput(\'' + prefix + '\', ' + idx + ', \'max\', this.value)" aria-label="Fine range cm">' +
           '<span class="zri-unit">cm</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="zri-limit-row">' +
+        '<label class="zri-limit-chk-label' + (isLim ? ' active' : '') + '">' +
+          '<input type="checkbox" ' + (isLim ? 'checked' : '') + ' onchange="onZoneLimitToggle(\'' + prefix + '\', ' + idx + ', this.checked)">' +
+          '<span>Limita massa massima in questa zona</span>' +
+        '</label>' +
+        '<div class="zri-limit-box' + (isLim ? '' : ' disabled') + '">' +
+          '<label>Max</label>' +
+          '<input type="number" class="zri-limit-input" value="' + mVal + '" min="0.5" max="50" step="0.5" ' + (isLim ? '' : 'disabled') + ' oninput="onZoneLimitInput(\'' + prefix + '\', ' + idx + ', this.value)" aria-label="Massa massima zona in grammi">' +
+          '<span class="zri-unit">g</span>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -1672,7 +1774,9 @@ function renderZoneUI(prefix){
       statusEl.innerHTML = '<span style="color:var(--accent-green)">&#x1f7e2; 100% Telaio Consentito (0 &rarr; ' + len.toFixed(1) + ' cm)</span> &middot; <span style="color:var(--text-secondary);font-size:0.75rem">Libert&agrave; Totale</span>';
     }else{
       const count = (ranges || []).length;
-      statusEl.innerHTML = '<span style="color:var(--accent-amber)">&#x1f3af; ' + count + (count === 1 ? ' Zona Consentita' : ' Zone Consentite') + '</span> &middot; <span style="color:var(--text-secondary);font-size:0.75rem">Zone escluse bloccate</span>';
+      const limCount = (ranges || []).filter(r => r.limitEnabled && parseFloat(r.maxMass) > 0).length;
+      const limBadge = limCount > 0 ? (' &middot; <span style="color:var(--accent-amber);font-size:0.75rem;font-weight:700">' + limCount + ' con limite g</span>') : ' &middot; <span style="color:var(--text-secondary);font-size:0.75rem">Zone escluse bloccate</span>';
+      statusEl.innerHTML = '<span style="color:var(--accent-amber)">&#x1f3af; ' + count + (count === 1 ? ' Zona Consentita' : ' Zone Consentite') + '</span>' + limBadge;
     }
   }
 
@@ -1690,6 +1794,8 @@ function getSymmetricZoneCatalog(len){
     {id:'handle_low',chk:'sz-manico',y:6.0,x:0,paired:false,label:'Manico basso (6 cm)'},
     {id:'handle_mid',chk:'sz-manico',y:10.0,x:0,paired:false,label:'Manico 10 cm (neutro SW)'},
     {id:'handle_high',chk:'sz-manico',y:16.0,x:0,paired:false,label:'Manico alto (16 cm)'},
+    {id:'handle_top19',chk:'sz-manico',y:19.0,x:0,paired:false,label:'Manico alto (19 cm)'},
+    {id:'handle_top21',chk:'sz-manico',y:21.5,x:0,paired:false,label:'Fine manico (21.5 cm)'},
     {id:'throat',chk:'sz-cuore',y:27.0,x:0,paired:false,label:'Cuore / Gola centro (27 cm)'},
     {id:'throat_lat',chk:'sz-cuore',y:33.0,x:7.0,paired:true,label:'Gola laterale'},
     {id:'hoop_48',chk:'sz-ovale',y:43.0,x:10.5,paired:true,label:'Ore 4 & 8'},
@@ -1879,6 +1985,8 @@ function evaluateMultiGoalObjective(base,goals,zoneCombo,masses,limits,constrain
     if(lim!==null&&item.mass>lim)return 1e9;
   }
   const weights=zonesToWeights(zm);
+  const singleRangeLimits=getActiveZoneRangeLimits('single');
+  if(!checkWeightsAgainstRangeLimits(weights,singleRangeLimits))return 1e9;
   const r=customizeRacketFromWeights(base,weights);
   if(constraints){
     for(const c of constraints){
@@ -1949,6 +2057,7 @@ function solveExactAndRefinedOnZones(base,goals,zoneCombo,limits,constraints){
     if(lim!==null&&zm.mass>lim)return null;
   }
   const weights=zonesToWeights(activeZM);
+  if(!checkWeightsAgainstRangeLimits(weights,getActiveZoneRangeLimits('single')))return null;
   if(constraints){
     for(const c of constraints){
       if(c.type==='include'&&!weights.some(w=>w.y>=c.yMin&&w.y<=c.yMax))return null;
@@ -1989,6 +2098,7 @@ function solveContinuousTwoPointFromMB(base,mT,bT,swT,limits,constraints,allowed
   if(M<0.5||S2<=0)return res;
   const mu=S1/M,u=mu-10,sig2=S2/M-u*u;
   if(sig2<=0.01)return res;
+  const activeRangeLimits=(allowedRanges||[]).filter(r=>!isNaN(r.yMin)&&!isNaN(r.yMax)&&r.yMin<r.yMax&&r.limitEnabled&&!isNaN(parseFloat(r.maxMass))&&parseFloat(r.maxMass)>0);
   let anchorYs=[1.5,4.0,8.0,12.0,+(base.length-1.0).toFixed(1),+(base.length-2.5).toFixed(1)];
   if(allowedRanges&&allowedRanges.length>0){
     const customAnchors=[];
@@ -2021,7 +2131,10 @@ function solveContinuousTwoPointFromMB(base,mT,bT,swT,limits,constraints,allowed
     if(constraints&&constraints.some(c=>c.type==='exclude'&&((ya>=c.yMin&&ya<=c.yMax)||(yb>=c.yMin&&yb<=c.yMax))))continue;
     const limA=getMaxMassForWeight(za,limits),limB=getMaxMassForWeight(zb,limits);
     if((limA!==null&&ma>limA)||(limB!==null&&mb>limB))continue;
+    const rLimA=getRangeMaxMassForY(ya,activeRangeLimits),rLimB=getRangeMaxMassForY(yb,activeRangeLimits);
+    if((rLimA!==null&&ma>rLimA)||(rLimB!==null&&mb>rLimB))continue;
     const ws=[{mass:+ma.toFixed(2),y:ya,x:0,label:za.label},{mass:+mb.toFixed(2),y:yb,x:0,label:zb.label}];
+    if(!checkWeightsAgainstRangeLimits(ws,activeRangeLimits))continue;
     if(constraints&&constraints.some(c=>c.type==='include'&&!ws.some(w=>w.y>=c.yMin&&w.y<=c.yMax)))continue;
     const r=customizeRacketFromWeights(base,ws);
     res.push({weights:ws,achieved:r.swingweight,totalMass:+(ma+mb).toFixed(2),nWeights:2});
@@ -2066,7 +2179,18 @@ function toggleExtra(el){const expanded=el.getAttribute('data-expanded')==='1';c
 function computeMultiGoalScoreSort(sol,base,goals){const n=goals.length;if(n===0)return 0;const scales={sw:0.8,mgri:0.04,balance:0.12,mass:1.5,tw:0.15,rw:0.8,ico:0.004};let sc=0;const r=customizeRacketFromWeights(base,sol.weights);for(let i=0;i<n;i++){const g=goals[i];const av=getParamValue(r,g.param);const s=scales[g.param]||1;sc+=Math.max(1-0.08*i,0.6)*Math.abs(av-g.target)/s}return sc}
 function reSortResults(){const sols=window._rawSolutions;if(!sols||!sols.length)return;displayGoalResults(sols,window._rawGoals,window._rawParam,window._rawTarget,window._rawMaxW)}
 function getMassLimits(){const limitEl=document.getElementById('limit-manico');const container=limitEl?limitEl.closest('.form-group').querySelector('div'):null;if(!container||container.style.display==='none')return{manico:null,cuore:null,ovale:null};const m=parseFloat(document.getElementById('limit-manico').value);const c=parseFloat(document.getElementById('limit-cuore').value);const o=parseFloat(document.getElementById('limit-ovale').value);return{manico:isNaN(m)?null:m,cuore:isNaN(c)?null:c,ovale:isNaN(o)?null:o}}
-function getMaxMassForWeight(w,limits){const y=w.y;if(y<=20)return limits.manico;if(y<=35)return limits.cuore;return limits.ovale}
+function getMaxMassForWeight(w,limits){
+  const y=w.y;
+  let legLim=null;
+  if(limits){
+    if(y<=20)legLim=limits.manico;
+    else if(y<=35)legLim=limits.cuore;
+    else legLim=limits.ovale;
+  }
+  const rangeLim=getRangeMaxMassForY(y,getActiveZoneRangeLimits('single'));
+  if(legLim!==null&&rangeLim!==null)return Math.min(legLim,rangeLim);
+  return rangeLim!==null?rangeLim:legLim;
+}
 function solutionExceedsLimits(sol,limits){for(const w of sol.weights){const maxM=getMaxMassForWeight(w,limits);if(maxM!==null&&w.mass>maxM)return true}return false}
 function runOptimizer(){const base=getGoalBaseRacket();const goals=getGoals();if(!goals||goals.length===0){alert('Aggiungi almeno un obiettivo.');return}const param=goals[0].param;const target=goals[0].target;const maxW=parseInt(document.getElementById('goal-max-weights').value)||3
 if(isNaN(target)){alert('Inserisci un valore target valido.');return}
@@ -2486,6 +2610,8 @@ function getAllowedMatchingZones(len){
     {key:'handle',chk:'mz-manico',y:6.5,x:0,paired:false,label:'Manico basso (6.5 cm)'},
     {key:'handle10',chk:'mz-manico',y:10.0,x:0,paired:false,label:'Manico 10 cm (neutro SW)'},
     {key:'handle16',chk:'mz-manico',y:16.0,x:0,paired:false,label:'Manico alto (16 cm)'},
+    {key:'handle19',chk:'mz-manico',y:19.0,x:0,paired:false,label:'Manico alto (19 cm)'},
+    {key:'handle21',chk:'mz-manico',y:21.5,x:0,paired:false,label:'Fine manico (21.5 cm)'},
     {key:'throat',chk:'mz-cuore',y:27.0,x:0,paired:false,label:'Cuore / Gola (27 cm)'},
     {key:'hoop48',chk:'mz-ovale',y:43.0,x:10.5,paired:true,label:'Ore 4 & 8 (43 cm)'},
     {key:'hoop39',chk:'mz-ovale',y:52.0,x:12.0,paired:true,label:'Ore 3 & 9 (52 cm)'},
@@ -2562,6 +2688,11 @@ function evaluateRacketTargetLoss(rObj,targetSpec,pw,addedMass){
 }
 function optimizeZoneComboForTarget(baseObj,targetSpec,pw,zoneCombo,maxAddMass){
   const k=zoneCombo.length;
+  const matchRangeLimits=getActiveZoneRangeLimits('match');
+  const getCapForIdx=(idx)=>{
+    const rCap=getRangeMaxMassForY(zoneCombo[idx].y,matchRangeLimits);
+    return rCap!==null?Math.min(maxAddMass,rCap):maxAddMass;
+  };
   const rows=[];
   const pushRow=(fn,rhs,sc,weight)=>{
     const wSqrt=Math.sqrt(weight);
@@ -2577,13 +2708,18 @@ function optimizeZoneComboForTarget(baseObj,targetSpec,pw,zoneCombo,maxAddMass){
   let cur=new Array(k).fill(0);
   const ls=solveLinearLeastSquares(rows.map(r=>r.a),rows.map(r=>r.b));
   if(ls&&ls.every(v=>!isNaN(v))){
-    cur=ls.map(v=>Math.max(0,Math.min(maxAddMass,v)));
+    cur=ls.map((v,i)=>Math.max(0,Math.min(getCapForIdx(i),v)));
   }
   const evalMasses=(ms)=>{
-    let tot=0;for(let i=0;i<k;i++){if(ms[i]<0)return 1e12;tot+=ms[i];}
+    let tot=0;
+    for(let i=0;i<k;i++){
+      if(ms[i]<0||ms[i]>getCapForIdx(i)+1e-5)return 1e12;
+      tot+=ms[i];
+    }
     if(tot>maxAddMass+0.01)return 1e12;
     const zm=zoneCombo.map((z,i)=>({zone:z,mass:ms[i]}));
     const ws=zonesToWeights(zm);
+    if(!checkWeightsAgainstRangeLimits(ws,matchRangeLimits))return 1e12;
     const r=customizeRacketFromWeights(baseObj,ws);
     return evaluateRacketTargetLoss(r,targetSpec,pw,tot);
   };
@@ -2596,7 +2732,7 @@ function optimizeZoneComboForTarget(baseObj,targetSpec,pw,zoneCombo,maxAddMass){
       for(let i=0;i<k;i++){
         for(const dir of [1,-1]){
           const cand=[...cur];
-          cand[i]=Math.max(0,Math.min(maxAddMass,cand[i]+dir*st));
+          cand[i]=Math.max(0,Math.min(getCapForIdx(i),cand[i]+dir*st));
           const sc=evalMasses(cand);
           if(sc+1e-7<bestScore){bestScore=sc;cur=cand;improved=true;}
         }
@@ -2606,8 +2742,8 @@ function optimizeZoneComboForTarget(baseObj,targetSpec,pw,zoneCombo,maxAddMass){
           for(let j=i+1;j<k;j++){
             for(const dir of [1,-1]){
               const cand=[...cur];
-              cand[i]=Math.max(0,cand[i]+dir*st);
-              cand[j]=Math.max(0,cand[j]-dir*st);
+              cand[i]=Math.max(0,Math.min(getCapForIdx(i),cand[i]+dir*st));
+              cand[j]=Math.max(0,Math.min(getCapForIdx(j),cand[j]-dir*st));
               const sc=evalMasses(cand);
               if(sc+1e-7<bestScore){bestScore=sc;cur=cand;improved=true;}
             }
@@ -2616,10 +2752,11 @@ function optimizeZoneComboForTarget(baseObj,targetSpec,pw,zoneCombo,maxAddMass){
       }
     }
   }
-  const roundedZM=zoneCombo.map((z,i)=>({zone:z,mass:Math.round(cur[i]*10)/10})).filter(zm=>zm.mass>=0.2);
+  const roundedZM=zoneCombo.map((z,i)=>({zone:z,mass:Math.min(getCapForIdx(i),Math.round(cur[i]*10)/10)})).filter(zm=>zm.mass>=0.2);
   const totM=roundedZM.reduce((s,zm)=>s+zm.mass,0);
   if(totM>maxAddMass+0.1)return null;
   const ws=zonesToWeights(roundedZM);
+  if(!checkWeightsAgainstRangeLimits(ws,matchRangeLimits))return null;
   const modR=customizeRacketFromWeights(baseObj,ws);
   const finalLoss=evaluateRacketTargetLoss(modR,targetSpec,pw,totM);
   return{weights:ws,modRacket:modR,loss:finalLoss,totalMass:totM,nZones:roundedZM.length};
