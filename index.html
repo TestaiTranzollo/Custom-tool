@@ -350,10 +350,10 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 .match-racket-grid label{font-size:0.74rem;color:#cbd5e1;text-transform:uppercase;font-weight:600}
 .match-racket-grid input[type="number"]{padding:7px 10px;font-size:0.95rem;font-weight:600;background:rgba(0,0,0,0.4)}
 
-.spread-banner{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px 15px;margin:14px 0 18px 0}
-.spread-item,.spread-metric{display:flex;flex-direction:column;gap:3px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:8px 12px}
-.spread-lbl,.sm-lbl{font-size:0.68rem;color:var(--text-secondary);text-transform:uppercase;font-weight:700;letter-spacing:0.04em}
-.spread-val,.sm-val{font-size:1.05rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.3}
+.spread-banner{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px 15px;margin:14px 0 18px 0;align-items:stretch}
+.spread-item,.spread-metric{display:flex;flex-direction:column;justify-content:space-between;gap:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:8px 12px;min-height:68px}
+.spread-lbl,.sm-lbl{font-size:0.68rem;color:var(--text-secondary);text-transform:uppercase;font-weight:700;letter-spacing:0.04em;min-height:2.2em;display:flex;align-items:center;line-height:1.2}
+.spread-val,.sm-val{font-size:1.05rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.3;margin-top:auto}
 .spread-sub{font-size:0.72rem;color:var(--text-secondary)}
 
 .match-racket-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
@@ -371,6 +371,14 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 
 .recipe-card{background:rgba(255,255,255,0.025);border:1px solid var(--border-color);border-radius:12px;padding:15px 18px;margin-bottom:12px}
 .recipe-card.untouched{border-color:rgba(16,185,129,0.4);background:rgba(16,185,129,0.05)}
+
+.match-recipe-mass-box{background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.25);border-radius:8px;padding:8px 12px;display:flex;flex-direction:column;gap:3px;min-width:180px}
+.mrmb-main{font-size:0.92rem;color:#fff;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
+.mrmb-mass{font-size:1.02rem;font-weight:800;color:#fff}
+.mrmb-sep{color:var(--text-secondary);font-size:0.80rem}
+.mrmb-dist{font-size:1.0rem;font-weight:700;color:var(--accent-cyan)}
+.mrmb-unit{color:var(--text-secondary);font-size:0.80rem}
+.mrmb-sub{font-size:0.74rem;color:var(--accent-amber);font-weight:600;display:flex;align-items:center;gap:4px}
 
 .comparison-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border-color);border-radius:10px;margin-top:8px;background:rgba(15,23,42,0.65);position:relative;scrollbar-width:thin;scrollbar-color:rgba(6,182,212,0.3) transparent}
 .comparison-table-wrap::-webkit-scrollbar{height:6px}
@@ -393,6 +401,7 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 .comp-val-new.cyan{color:var(--accent-cyan)}
 .comp-val-new.green{color:var(--accent-green)}
 .comp-val-new.amber{color:var(--accent-amber)}
+.comp-val-new.red{color:var(--accent-red)}
 
 /* Floating Live Comparison HUD for Manual Customization */
 .calc-hud{position:fixed;bottom:0;left:0;right:0;z-index:990;background:rgba(11,16,28,0.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(6,182,212,0.35);box-shadow:0 -3px 20px rgba(0,0,0,0.6);transition:all 0.2s ease;user-select:none}
@@ -500,12 +509,10 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <!-- Sub-Mode Selector: Target Singolo vs Matching Multi-Racchetta -->
 <div class="submode-bar">
   <button type="button" class="submode-btn active" id="subbtn-matching" onclick="switchAutoSubMode('matching')">
-    <span>&#x2696;&#xfe0f; Matching Multi-Racchetta</span>
-    <span class="sub-desc">Allinea 2+ telai su SW e MGR/I</span>
+    <span>&#x2696;&#xfe0f; Matching 2+ telai</span>
   </button>
   <button type="button" class="submode-btn" id="subbtn-single" onclick="switchAutoSubMode('single')">
-    <span>&#x1f3af; Target Singolo Telaio</span>
-    <span class="sub-desc">Ottimizza una racchetta su target</span>
+    <span>&#x1f3af; Target singolo telaio</span>
   </button>
 </div>
 
@@ -513,7 +520,7 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <div id="auto-submode-matching">
   <div class="panel">
     <div class="panel-section-header">
-      <h2>&#x2696;&#xfe0f; Parco Telai da Allineare</h2>
+      <h2>&#x2696;&#xfe0f; Matching 2+ telai</h2>
       <div class="header-actions">
         <button type="button" class="btn" onclick="addMatchRacketRow()">+ Aggiungi Telaio</button>
         <button type="button" class="btn btn-secondary" onclick="loadSampleMatchingSet()">&#x1f4cb; Esempio</button>
@@ -544,14 +551,14 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
       <div class="auto-card-title">&#x2699;&#xfe0f; Strategia e Target di Matching</div>
       <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:10px">
         <div class="form-group">
-          <label for="match-priority-mode">Parametri Prioritari</label>
+          <label for="match-priority-mode">Strategia di Matching</label>
           <select id="match-priority-mode" onchange="onMatchConfigChange()">
-            <option value="sw-mgri" selected>&#x2b50; SW + MGR/I (Dinamico - Consigliato)</option>
+            <option value="full" selected>&#x1f3c6; Matching Completo (SW + Bil. + Massa)</option>
+            <option value="sw-mgri">&#x2b50; SW + MGR/I (Minimo Piombo)</option>
             <option value="sw-mgri-bal">&#x2696;&#xfe0f; SW + Bilanciamento</option>
-            <option value="full">&#x1f3c6; SW + Bil. + Massa (Match Totale)</option>
             <option value="sw-tw-mgri">&#x1f6e1;&#xfe0f; SW + TW + MGR/I (Stabilit&agrave; Torzionale)</option>
           </select>
-          <div class="help-text" id="match-priority-hint" style="font-size:0.74rem;line-height:1.3;margin-top:4px;padding:4px 8px;border-radius:6px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2)"><strong>Consigliato:</strong> allinea SW e MGR/I col minimo piombo per pari inerzia e sensazione dinamica.</div>
+          <div class="help-text" id="match-priority-hint" style="font-size:0.74rem;line-height:1.3;margin-top:4px;padding:4px 8px;border-radius:6px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2)"><strong>Matching Completo:</strong> allinea SW, Bilanciamento, Massa e MGR/I per rendere i telai identici.</div>
         </div>
 
         <div class="form-group">
@@ -685,7 +692,7 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
 <div id="auto-submode-single" style="display:none">
   <div class="panel">
     <div class="panel-section-header">
-      <h2>&#x1f3af; Specifiche Telaio Singolo</h2>
+      <h2>&#x1f3af; Target singolo telaio</h2>
       <div class="header-actions">
         <button type="button" class="btn btn-secondary" onclick="importLatestPendToSingle()">&#x1f4e5; Importa da SW</button>
       </div>
@@ -706,7 +713,6 @@ input[type="number"],select{padding:8px 10px;font-size:0.9rem}
         <div class="telemetry-pill"><span class="t-lbl">Recoilweight</span><span class="t-val" id="tele-rw">169.8</span></div>
         <div class="telemetry-pill"><span class="t-lbl">Inerzia I&#x2080;</span><span class="t-val" id="tele-i0">477.0</span></div>
         <div class="telemetry-pill"><span class="t-lbl">Polarizzazione ICO</span><span class="t-val" id="tele-ico">0.5660</span></div>
-        <div class="telemetry-pill"><span class="t-lbl">Bilanc. Punti</span><span class="t-val amber" id="tele-hl">7.2 HL</span></div>
       </div>
     </div>
 
@@ -1384,12 +1390,10 @@ function updateBaseTelemetry(){
   const rwEl=document.getElementById('tele-rw');
   const i0El=document.getElementById('tele-i0');
   const icEl=document.getElementById('tele-ico');
-  const hlEl=document.getElementById('tele-hl');
   if(mgEl)mgEl.textContent=r.mgr_i.toFixed(2);
   if(rwEl)rwEl.textContent=r.recoilweight.toFixed(1);
   if(i0El)i0El.textContent=r.moment_of_inertia_handle.toFixed(1);
   if(icEl)icEl.textContent=r.polarization_index.toFixed(4);
-  if(hlEl){const hl=r.points_hl;hlEl.textContent=(hl>=0?hl.toFixed(1)+' HL':Math.abs(hl).toFixed(1)+' HH')}
 }
 function updateGoalCurrentValues(){const r=getGoalBaseRacket();updateBaseTelemetry();document.querySelectorAll('#goal-list .goal-row').forEach(row=>{const p=row.querySelector('.goal-param').value;const v=getParamValue(r,p);row.querySelector('.goal-current').textContent=v.toFixed(getParamDecimals(p))+' '+getParamUnit(p)})}
 function updateComparison(){const c=computeCustomSpecs();const b=baseRacket;const f=(v,d)=>v.toFixed(d);const df=(a,b,d,u)=>{const v=a-b;return Math.abs(v)<1e-4?'':' ('+(v>0?'+':'')+v.toFixed(d)+(u||'')+')'}
@@ -1753,8 +1757,81 @@ function getParamValue(r,p){switch(p){case'sw':return r.swingweight;case'tw':ret
 function getParamUnit(p){return{sw:'kg\u00b7cm\u00b2',rw:'kg\u00b7cm\u00b2',mgri:'',balance:'cm',tw:'kg\u00b7cm\u00b2',mass:'g',ico:''}[p]||''}
 function getParamDecimals(p){return{sw:1,rw:1,mgri:2,balance:2,tw:2,mass:1,ico:4}[p]||1}
 function getErrorColor(p,a){const t={sw:{g:0.8,y:2.5},mgri:{g:0.04,y:0.12},balance:{g:0.1,y:0.25},tw:{g:0.15,y:0.4},mass:{g:1.0,y:2.5},rw:{g:0.8,y:2.5},ico:{g:0.003,y:0.01}}[p];if(!t)return a<0.5?'var(--accent-green)':a<2?'var(--accent-amber)':'var(--accent-red)';if(a<=t.g)return'var(--accent-green)';if(a<=t.y)return'var(--accent-amber)';return'var(--accent-red)'}
-function renderWeightEntry(w){return'<div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.18);border-radius:6px;padding:5px 12px;margin-bottom:4px;font-size:0.84rem"><strong style="color:#fff;font-size:0.92rem">'+w.mass.toFixed(1)+' g</strong> @ '+w.label+'<br><span style="color:var(--text-secondary)">Y = <strong style="color:var(--accent-cyan)">'+w.y.toFixed(1)+' cm</strong>'+(w.x!==0?' &nbsp; X = <span style="font-size:0.72rem">'+w.x.toFixed(1)+' cm</span>':'')+'</span></div>'}
-function renderCombinedWeights(weights){const used=new Set();const out=[];for(let i=0;i<weights.length;i++){if(used.has(i))continue;used.add(i);let paired=false;for(let j=i+1;j<weights.length;j++){if(used.has(j))continue;if(Math.abs(weights[i].x)===Math.abs(weights[j].x)&&Math.abs(weights[i].y-weights[j].y)<0.01&&weights[i].x!==0){used.add(j);const l1=weights[i].label.replace(/ (DX|SX)$/,'');const tt=weights[i].mass+weights[j].mass;out.push('<div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.18);border-radius:6px;padding:5px 12px;margin-bottom:4px;font-size:0.84rem"><strong style="color:#fff;font-size:0.92rem">'+tt.toFixed(1)+' g tot</strong> @ '+l1+' (DX+SX)<br><span style="color:var(--text-secondary)">Y = <strong style="color:var(--accent-cyan)">'+weights[i].y.toFixed(1)+' cm</strong> &middot; <span style="font-size:0.75rem;color:var(--accent-amber)">'+weights[i].mass.toFixed(2)+' g per lato</span></span></div>');paired=true;break}}if(!paired)out.push(renderWeightEntry(weights[i]))}return out.join('')}
+function getWeightPositionComment(w1, w2){
+  const y = typeof w1.y === 'number' ? w1.y : parseFloat(w1.y) || 0;
+  const x = typeof w1.x === 'number' ? w1.x : parseFloat(w1.x) || 0;
+  const ax = Math.abs(x);
+  if(w2){
+    let clock = 'Ore 3 & 9';
+    if(y >= 57) clock = 'Ore 2 & 10';
+    else if(y >= 46) clock = 'Ore 3 & 9';
+    else if(y >= 38) clock = 'Ore 4 & 8';
+    else if(y >= 24) clock = 'Cuore / Gola laterale';
+    else clock = 'Lati manico';
+    const sideMass = w1.mass.toFixed(1);
+    return '\u{1f4cd} ' + clock + ': ' + sideMass + ' g per lato (DX e SX)';
+  }
+  let lbl = (w1.label || '').replace(/ (DX|SX)$/, '').trim();
+  if(lbl && !lbl.startsWith('Posizione ') && !lbl.startsWith('Zona ')){
+    return '\u{1f4cd} ' + lbl + (ax > 0 ? (x > 0 ? ' (DX)' : ' (SX)') : '');
+  }
+  if(y <= 3.5) return '\u{1f4cd} Tappo (Base manico)';
+  if(y <= 18) return '\u{1f4cd} Manico (sotto il grip)';
+  if(y <= 34) return '\u{1f4cd} Cuore / Gola';
+  if(ax >= 5){
+    if(y >= 58) return '\u{1f4cd} ' + (x > 0 ? 'Ore 2 (DX)' : 'Ore 10 (SX)');
+    if(y >= 46) return '\u{1f4cd} ' + (x > 0 ? 'Ore 3 (DX)' : 'Ore 9 (SX)');
+    return '\u{1f4cd} ' + (x > 0 ? 'Ore 4 (DX)' : 'Ore 8 (SX)');
+  }
+  if(y >= 64) return '\u{1f4cd} Ore 12 (Testa)';
+  if(y >= 55) return '\u{1f4cd} Ore 12 basso';
+  if(y >= 38) return '\u{1f4cd} Centro piatto corde';
+  return '\u{1f4cd} Ponte telaio';
+}
+function renderWeightEntry(w){
+  const comment = getWeightPositionComment(w, null);
+  return '<div class="match-recipe-mass-box">'+
+    '<div class="mrmb-main">'+
+      '<strong class="mrmb-mass">'+w.mass.toFixed(1)+' g</strong>'+
+      '<span class="mrmb-sep">a</span>'+
+      '<strong class="mrmb-dist">'+w.y.toFixed(1)+' cm</strong>'+
+      '<span class="mrmb-unit">dal tappo</span>'+
+    '</div>'+
+    '<div class="mrmb-sub">'+comment+'</div>'+
+  '</div>';
+}
+function renderCombinedWeights(weights){
+  const used = new Set();
+  const out = [];
+  for(let i = 0; i < weights.length; i++){
+    if(used.has(i)) continue;
+    used.add(i);
+    let paired = false;
+    for(let j = i + 1; j < weights.length; j++){
+      if(used.has(j)) continue;
+      if(Math.abs(weights[i].x) === Math.abs(weights[j].x) && Math.abs(weights[i].y - weights[j].y) < 0.01 && weights[i].x !== 0){
+        used.add(j);
+        const tt = weights[i].mass + weights[j].mass;
+        const comment = getWeightPositionComment(weights[i], weights[j]);
+        out.push(
+          '<div class="match-recipe-mass-box">'+
+            '<div class="mrmb-main">'+
+              '<strong class="mrmb-mass">'+tt.toFixed(1)+' g</strong>'+
+              '<span class="mrmb-sep">a</span>'+
+              '<strong class="mrmb-dist">'+weights[i].y.toFixed(1)+' cm</strong>'+
+              '<span class="mrmb-unit">dal tappo</span>'+
+            '</div>'+
+            '<div class="mrmb-sub">'+comment+'</div>'+
+          '</div>'
+        );
+        paired = true;
+        break;
+      }
+    }
+    if(!paired) out.push(renderWeightEntry(weights[i]));
+  }
+  return out.join('');
+}
 function solveLinearLeastSquares(A,b){
   const m=A.length,n=A[0].length;
   const ATA=Array.from({length:n},()=>new Array(n).fill(0));
@@ -2185,7 +2262,7 @@ function saveMatchState(){
     syncMatchRacketsFromDOM();
     const st={
       rackets:matchRackets,
-      priority:document.getElementById('match-priority-mode')?document.getElementById('match-priority-mode').value:'sw-mgri',
+      priority:document.getElementById('match-priority-mode')?document.getElementById('match-priority-mode').value:'full',
       targetMode:document.getElementById('match-target-mode')?document.getElementById('match-target-mode').value:'auto',
       maxZones:document.getElementById('match-max-zones')?document.getElementById('match-max-zones').value:'2',
       zoneMode:matchZoneMode,
@@ -2203,6 +2280,7 @@ function loadMatchState(){
       if(st.rackets&&st.rackets.length>=2)matchRackets=st.rackets;
       else loadDefaultMatchRackets();
       if(st.priority&&document.getElementById('match-priority-mode'))document.getElementById('match-priority-mode').value=st.priority;
+      else if(document.getElementById('match-priority-mode'))document.getElementById('match-priority-mode').value='full';
       if(st.targetMode&&document.getElementById('match-target-mode'))document.getElementById('match-target-mode').value=st.targetMode;
       if(st.maxZones&&document.getElementById('match-max-zones'))document.getElementById('match-max-zones').value=st.maxZones;
       if(st.zoneMode)matchZoneMode=st.zoneMode;
@@ -2210,8 +2288,12 @@ function loadMatchState(){
       if(st.cont!==undefined&&document.getElementById('mz-cont'))document.getElementById('mz-cont').checked=!!st.cont;
     }else{
       loadDefaultMatchRackets();
+      if(document.getElementById('match-priority-mode'))document.getElementById('match-priority-mode').value='full';
     }
-  }catch(e){loadDefaultMatchRackets();}
+  }catch(e){
+    loadDefaultMatchRackets();
+    if(document.getElementById('match-priority-mode'))document.getElementById('match-priority-mode').value='full';
+  }
   renderMatchRacketList();
   renderZoneUI('match');
   onMatchConfigChange();
@@ -2224,8 +2306,6 @@ function renderMatchRacketList(){
   if(!c)return;
   c.innerHTML=matchRackets.map((rk,idx)=>{
     const rObj=new Racket(rk.mass,rk.balance,rk.sw,rk.tw||14,rk.length||68.58);
-    const hl=rObj.points_hl;
-    const hlTxt=hl>=0?hl.toFixed(1)+' HL':Math.abs(hl).toFixed(1)+' HH';
     return '<div class="match-racket-card" data-idx="'+idx+'">'+
       '<div class="match-racket-header">'+
         '<div style="display:flex;align-items:center;gap:8px;flex:1">'+
@@ -2235,7 +2315,6 @@ function renderMatchRacketList(){
         '<div class="match-racket-badges">'+
           '<span class="match-badge match-badge-cyan">MGR/I <span class="match-rk-mgri">'+rObj.mgr_i.toFixed(2)+'</span></span>'+
           '<span class="match-badge match-badge-amber">RW <span class="match-rk-rw">'+rObj.recoilweight.toFixed(1)+'</span></span>'+
-          '<span class="match-badge" style="background:rgba(255,255,255,0.06);color:var(--text-secondary)">'+hlTxt+'</span>'+
           (matchRackets.length>2?'<button type="button" class="calc-del-btn" onclick="removeMatchRacketRow('+idx+')" style="padding:3px 8px;font-size:0.72rem">&#x2715;</button>':'')+
         '</div>'+
       '</div>'+
@@ -2367,21 +2446,21 @@ function updateMatchDiagnostics(){
   banner.innerHTML=
     '<div class="spread-metric"><div class="sm-lbl">Spread SW</div><div class="sm-val" style="color:'+fmtCol(sp.sw,1.0,3.0)+'">\u0394 '+sp.sw.toFixed(1)+' kg&middot;cm&sup2;</div></div>'+
     '<div class="spread-metric"><div class="sm-lbl">Spread MGR/I</div><div class="sm-val" style="color:'+fmtCol(sp.mgri,0.05,0.15)+'">\u0394 '+sp.mgri.toFixed(2)+'</div></div>'+
-    '<div class="spread-metric"><div class="sm-lbl">Spread Bilanciamento</div><div class="sm-val" style="color:'+fmtCol(sp.bal,0.15,0.35)+'">\u0394 '+sp.bal.toFixed(2)+' cm</div></div>'+
+    '<div class="spread-metric"><div class="sm-lbl">Spread Bilanc.</div><div class="sm-val" style="color:'+fmtCol(sp.bal,0.15,0.35)+'">\u0394 '+sp.bal.toFixed(2)+' cm</div></div>'+
     '<div class="spread-metric"><div class="sm-lbl">Spread Massa</div><div class="sm-val" style="color:'+fmtCol(sp.mass,1.5,4.0)+'">\u0394 '+sp.mass.toFixed(1)+' g</div></div>'+
-    '<div class="spread-metric"><div class="sm-lbl">Spread Recoilweight</div><div class="sm-val" style="color:'+fmtCol(sp.rw,1.0,3.0)+'">\u0394 '+sp.rw.toFixed(1)+' kg&middot;cm&sup2;</div></div>';
+    '<div class="spread-metric"><div class="sm-lbl">Spread RW</div><div class="sm-val" style="color:'+fmtCol(sp.rw,1.0,3.0)+'">\u0394 '+sp.rw.toFixed(1)+' kg&middot;cm&sup2;</div></div>';
 }
 function onMatchConfigChange(){
-  const mode=document.getElementById('match-priority-mode')?document.getElementById('match-priority-mode').value:'sw-mgri';
+  const mode=document.getElementById('match-priority-mode')?document.getElementById('match-priority-mode').value:'full';
   const hint=document.getElementById('match-priority-hint');
   if(!hint)return;
   const hints={
-    'sw-mgri':'<strong>Consigliato:</strong> allinea SW e MGR/I col minimo piombo per pari inerzia e sensazione dinamica.',
-    'sw-mgri-bal':'<strong>SW + MGR/I + Bil.:</strong> allinea inerzia dinamica e punto di bilanciamento statico.',
-    'full':'<strong>Match Totale:</strong> clonazione 4 parametri (SW, MGR/I, Bil., Massa). Richiede pi\u00f9 piombo.',
-    'sw-tw-mgri':'<strong>SW + MGR/I + TW:</strong> allinea anche la stabilit\u00e0 torsionale con piombo a ore 3&amp;9.'
+    'full':'<strong>Matching Completo:</strong> allinea SW, Bilanciamento, Massa e MGR/I per rendere i telai identici.',
+    'sw-mgri':'<strong>Minimo Piombo:</strong> allinea SW e MGR/I col minor peso possibile per pari sensazione dinamica.',
+    'sw-mgri-bal':'<strong>SW + Bilanciamento:</strong> allinea inerzia dinamica e punto di bilanciamento statico.',
+    'sw-tw-mgri':'<strong>SW + TW + MGR/I:</strong> allinea anche la stabilit\u00e0 torsionale con piombo a ore 3&amp;9.'
   };
-  hint.innerHTML=hints[mode]||hints['sw-mgri'];
+  hint.innerHTML=hints[mode]||hints['full'];
   saveMatchState();
 }
 function onMatchTargetModeChange(){
@@ -2572,7 +2651,7 @@ function runMultiRacketMatcher(){
   if(matchRackets.length<2){alert('Inserisci almeno 2 racchette per eseguire il matching.');return;}
   const allowedZones=getAllowedMatchingZones(matchRackets[0].length||68.58);
   if(allowedZones.length===0){alert('Seleziona almeno una zona consentita per il posizionamento dei pesi.');return;}
-  const priorityMode=document.getElementById('match-priority-mode')?document.getElementById('match-priority-mode').value:'sw-mgri';
+  const priorityMode=document.getElementById('match-priority-mode')?document.getElementById('match-priority-mode').value:'full';
   const targetMode=document.getElementById('match-target-mode')?document.getElementById('match-target-mode').value:'auto';
   const maxZones=parseInt(document.getElementById('match-max-zones')?document.getElementById('match-max-zones').value:'2')||2;
   const maxAddMass=22;
@@ -2657,8 +2736,10 @@ function runMultiRacketMatcher(){
           if(Math.abs(sa-sb)>0.08)return sa-sb;
           return a.totalAddedMass-b.totalAddedMass;
         })[0];
-        bestPrecision.title='\u2b50 Massima Uniformit\u00e0 (Consigliato)';
-        bestPrecision.subtitle='Allineamento ottimale di SW e MGR/I (sensazioni identiche in gioco col minimo piombo)';
+        bestPrecision.title=priorityMode==='full'?'\u{1f3c6} Matching Completo':'\u2b50 Massima Uniformit\u00e0 (Consigliato)';
+        bestPrecision.subtitle=priorityMode==='full'
+          ?'Allineamento di SW, Bilanciamento, Massa e MGR/I'
+          :'Allineamento ottimale di SW e MGR/I (sensazioni identiche in gioco col minimo piombo)';
         plans.push(bestPrecision);
 
         const lightCands=candidates.filter(c=>c.spread.sw<=Math.max(0.8,bestPrecision.spread.sw+0.4)&&c.spread.mgri<=Math.max(0.04,bestPrecision.spread.mgri+0.02));
@@ -2709,6 +2790,15 @@ function renderMatchingPlan(idx){
   const finSp=plan.spread;
 
   const avgMod=(fn)=>(plan.modObjs.reduce((s,o)=>s+fn(o),0)/plan.modObjs.length);
+  const refSpec={
+    mass:(plan.targetSpec&&plan.targetSpec.mass!=null&&!isNaN(plan.targetSpec.mass))?plan.targetSpec.mass:avgMod(o=>o.mass),
+    balance:(plan.targetSpec&&plan.targetSpec.bal!=null&&!isNaN(plan.targetSpec.bal))?plan.targetSpec.bal:avgMod(o=>o.balance),
+    sw:(plan.targetSpec&&plan.targetSpec.sw!=null&&!isNaN(plan.targetSpec.sw))?plan.targetSpec.sw:avgMod(o=>o.swingweight),
+    mgri:(plan.targetSpec&&plan.targetSpec.mgri!=null&&!isNaN(plan.targetSpec.mgri))?plan.targetSpec.mgri:avgMod(o=>o.mgr_i),
+    rw:(plan.targetSpec&&plan.targetSpec.rw!=null&&!isNaN(plan.targetSpec.rw))?plan.targetSpec.rw:avgMod(o=>o.recoilweight),
+    tw:(plan.targetSpec&&plan.targetSpec.tw!=null&&!isNaN(plan.targetSpec.tw))?plan.targetSpec.tw:avgMod(o=>o.twistweight)
+  };
+  const clsOf=(col)=>col==='var(--accent-green)'?'green':(col==='var(--accent-amber)'?'amber':'red');
   const spBadge=(v,g,y,u,d)=>{
     const col=v<=g?'var(--accent-green)':v<=y?'var(--accent-amber)':'var(--accent-red)';
     return '<strong style="color:'+col+'">\u0394 '+v.toFixed(d)+(u?' '+u:'')+'</strong>';
@@ -2746,6 +2836,14 @@ function renderMatchingPlan(idx){
     const rec=plan.recipes[i];
     const mObj=rec.modRacket;
     const isRef=rec.totalMass<0.15;
+
+    const colMass = getErrorColor('mass', Math.abs(mObj.mass - refSpec.mass));
+    const colBal  = getErrorColor('balance', Math.abs(mObj.balance - refSpec.balance));
+    const colSW   = getErrorColor('sw', Math.abs(mObj.swingweight - refSpec.sw));
+    const colMGRI = getErrorColor('mgri', Math.abs(mObj.mgr_i - refSpec.mgri));
+    const colRW   = getErrorColor('rw', Math.abs(mObj.recoilweight - refSpec.rw));
+    const colTW   = getErrorColor('tw', Math.abs(mObj.twistweight - refSpec.tw));
+
     html+='<div class="recipe-card" style="border-color:'+(isRef?'rgba(16,185,129,0.4)':'rgba(6,182,212,0.3)')+'">'+
       '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px">'+
         '<div>'+
@@ -2758,12 +2856,12 @@ function renderMatchingPlan(idx){
         '</div>'+
       '</div>'+
       '<div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:8px;display:flex;flex-wrap:wrap;gap:12px">'+
-        '<span>Massa: <strong>'+bObj.mass.toFixed(1)+' g</strong> \u2192 <strong style="color:#fff">'+mObj.mass.toFixed(1)+' g</strong></span>'+
-        '<span>Bil: <strong>'+bObj.balance.toFixed(2)+' cm</strong> \u2192 <strong style="color:#fff">'+mObj.balance.toFixed(2)+' cm</strong></span>'+
-        '<span>SW: <strong>'+bObj.swingweight.toFixed(1)+'</strong> \u2192 <strong style="color:var(--accent-cyan)">'+mObj.swingweight.toFixed(1)+'</strong></span>'+
-        '<span>MGR/I: <strong>'+bObj.mgr_i.toFixed(2)+'</strong> \u2192 <strong style="color:var(--accent-cyan)">'+mObj.mgr_i.toFixed(2)+'</strong></span>'+
-        '<span>RW: <strong>'+bObj.recoilweight.toFixed(1)+'</strong> \u2192 <strong style="color:#fff">'+mObj.recoilweight.toFixed(1)+'</strong></span>'+
-        '<span>TW: <strong>'+bObj.twistweight.toFixed(2)+'</strong> \u2192 <strong style="color:#fff">'+mObj.twistweight.toFixed(2)+'</strong></span>'+
+        '<span>Massa: <strong>'+bObj.mass.toFixed(1)+' g</strong> \u2192 <strong style="color:'+colMass+'">'+mObj.mass.toFixed(1)+' g</strong></span>'+
+        '<span>Bil: <strong>'+bObj.balance.toFixed(2)+' cm</strong> \u2192 <strong style="color:'+colBal+'">'+mObj.balance.toFixed(2)+' cm</strong></span>'+
+        '<span>SW: <strong>'+bObj.swingweight.toFixed(1)+'</strong> \u2192 <strong style="color:'+colSW+'">'+mObj.swingweight.toFixed(1)+'</strong></span>'+
+        '<span>MGR/I: <strong>'+bObj.mgr_i.toFixed(2)+'</strong> \u2192 <strong style="color:'+colMGRI+'">'+mObj.mgr_i.toFixed(2)+'</strong></span>'+
+        '<span>RW: <strong>'+bObj.recoilweight.toFixed(1)+'</strong> \u2192 <strong style="color:'+colRW+'">'+mObj.recoilweight.toFixed(1)+'</strong></span>'+
+        '<span>TW: <strong>'+bObj.twistweight.toFixed(2)+'</strong> \u2192 <strong style="color:'+colTW+'">'+mObj.twistweight.toFixed(2)+'</strong></span>'+
       '</div>'+
       (isRef?'<div style="font-size:0.82rem;color:var(--accent-green);padding:4px 0">\u2705 Nessuna modifica necessaria: questo telaio fa già da riferimento per il lotto.</div>':'<div style="display:flex;flex-wrap:wrap;gap:6px">'+renderCombinedWeights(rec.weights)+'</div>')+
     '</div>';
@@ -2778,25 +2876,32 @@ function renderMatchingPlan(idx){
   '</tr></thead><tbody>';
   for(let i=0;i<matchRackets.length;i++){
     const rk=matchRackets[i],bObj=baseObjs[i],rec=plan.recipes[i],mObj=rec.modRacket;
+    const clsMass = clsOf(getErrorColor('mass', Math.abs(mObj.mass - refSpec.mass)));
+    const clsBal  = clsOf(getErrorColor('balance', Math.abs(mObj.balance - refSpec.balance)));
+    const clsSW   = clsOf(getErrorColor('sw', Math.abs(mObj.swingweight - refSpec.sw)));
+    const clsMGRI = clsOf(getErrorColor('mgri', Math.abs(mObj.mgr_i - refSpec.mgri)));
+    const clsRW   = clsOf(getErrorColor('rw', Math.abs(mObj.recoilweight - refSpec.rw)));
+    const clsTW   = clsOf(getErrorColor('tw', Math.abs(mObj.twistweight - refSpec.tw)));
     html+='<tr>'+
       '<td title="'+escapeHTML(rk.name)+'">'+escapeHTML(rk.name)+'</td>'+
-      '<td><span class="comp-val-old">'+bObj.mass.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+mObj.mass.toFixed(1)+'</strong></td>'+
-      '<td><span class="comp-val-old">'+bObj.balance.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+mObj.balance.toFixed(2)+'</strong></td>'+
-      '<td><span class="comp-val-old">'+bObj.swingweight.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new cyan">'+mObj.swingweight.toFixed(1)+'</strong></td>'+
-      '<td><span class="comp-val-old">'+bObj.mgr_i.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new cyan">'+mObj.mgr_i.toFixed(2)+'</strong></td>'+
-      '<td><span class="comp-val-old">'+bObj.recoilweight.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+mObj.recoilweight.toFixed(1)+'</strong></td>'+
-      '<td><span class="comp-val-old">'+bObj.twistweight.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+mObj.twistweight.toFixed(2)+'</strong></td>'+
+      '<td><span class="comp-val-old">'+bObj.mass.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+clsMass+'">'+mObj.mass.toFixed(1)+'</strong></td>'+
+      '<td><span class="comp-val-old">'+bObj.balance.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+clsBal+'">'+mObj.balance.toFixed(2)+'</strong></td>'+
+      '<td><span class="comp-val-old">'+bObj.swingweight.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+clsSW+'">'+mObj.swingweight.toFixed(1)+'</strong></td>'+
+      '<td><span class="comp-val-old">'+bObj.mgr_i.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+clsMGRI+'">'+mObj.mgr_i.toFixed(2)+'</strong></td>'+
+      '<td><span class="comp-val-old">'+bObj.recoilweight.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+clsRW+'">'+mObj.recoilweight.toFixed(1)+'</strong></td>'+
+      '<td><span class="comp-val-old">'+bObj.twistweight.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+clsTW+'">'+mObj.twistweight.toFixed(2)+'</strong></td>'+
       '<td><strong class="comp-val-new amber">+'+rec.totalMass.toFixed(1)+' g</strong></td>'+
     '</tr>';
   }
+  const spCls = (v, g, y) => v <= g ? 'green' : (v <= y ? 'amber' : 'red');
   html+='<tr class="comparison-spread-row" style="background:rgba(6,182,212,0.08);font-weight:700">'+
     '<td style="color:var(--accent-cyan)">Spread Max (&Delta;)</td>'+
-    '<td><span class="comp-val-old">'+initSp.mass.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+finSp.mass.toFixed(1)+' g</strong></td>'+
-    '<td><span class="comp-val-old">'+initSp.bal.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+finSp.bal.toFixed(2)+' cm</strong></td>'+
-    '<td><span class="comp-val-old">'+initSp.sw.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new green">'+finSp.sw.toFixed(1)+'</strong></td>'+
-    '<td><span class="comp-val-old">'+initSp.mgri.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new green">'+finSp.mgri.toFixed(2)+'</strong></td>'+
-    '<td><span class="comp-val-old">'+initSp.rw.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+finSp.rw.toFixed(1)+'</strong></td>'+
-    '<td><span class="comp-val-old">'+initSp.tw.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new">'+finSp.tw.toFixed(2)+'</strong></td>'+
+    '<td><span class="comp-val-old">'+initSp.mass.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+spCls(finSp.mass,1.2,3.0)+'">'+finSp.mass.toFixed(1)+' g</strong></td>'+
+    '<td><span class="comp-val-old">'+initSp.bal.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+spCls(finSp.bal,0.12,0.28)+'">'+finSp.bal.toFixed(2)+' cm</strong></td>'+
+    '<td><span class="comp-val-old">'+initSp.sw.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+spCls(finSp.sw,0.8,2.0)+'">'+finSp.sw.toFixed(1)+'</strong></td>'+
+    '<td><span class="comp-val-old">'+initSp.mgri.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+spCls(finSp.mgri,0.03,0.08)+'">'+finSp.mgri.toFixed(2)+'</strong></td>'+
+    '<td><span class="comp-val-old">'+initSp.rw.toFixed(1)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+spCls(finSp.rw,0.8,2.0)+'">'+finSp.rw.toFixed(1)+'</strong></td>'+
+    '<td><span class="comp-val-old">'+initSp.tw.toFixed(2)+'</span><span class="comp-val-arr">&rarr;</span><strong class="comp-val-new '+spCls(finSp.tw,0.15,0.35)+'">'+finSp.tw.toFixed(2)+'</strong></td>'+
     '<td><strong class="comp-val-new amber">Tot +'+plan.totalAddedMass.toFixed(1)+' g</strong></td>'+
   '</tr></tbody></table></div>';
 
@@ -2826,7 +2931,7 @@ function saveMatchFavorite(){
     name,
     date:new Date().toLocaleString('it-IT'),
     rackets:matchRackets,
-    priority:document.getElementById('match-priority-mode')?document.getElementById('match-priority-mode').value:'sw-mgri',
+    priority:document.getElementById('match-priority-mode')?document.getElementById('match-priority-mode').value:'full',
     zoneMode:matchZoneMode,
     zoneRanges:matchZoneRanges
   };
