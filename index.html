@@ -1969,21 +1969,36 @@
     .match-racket-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-      gap: 10px
+      gap: 10px;
+      align-items: stretch
+    }
+
+    .match-racket-grid > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end
     }
 
     .match-racket-grid label {
       font-size: 0.74rem;
       color: #cbd5e1;
       text-transform: uppercase;
-      font-weight: 600
+      font-weight: 600;
+      min-height: 2.3em;
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 4px;
+      line-height: 1.15
     }
 
     .match-racket-grid input[type="number"] {
       padding: 7px 10px;
       font-size: 0.95rem;
       font-weight: 600;
-      background: rgba(0, 0, 0, 0.4)
+      background: rgba(0, 0, 0, 0.4);
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: auto
     }
 
     .spread-banner {
@@ -2002,13 +2017,14 @@
     .spread-metric {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 6px;
+      justify-content: flex-start;
+      gap: 4px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 8px;
       padding: 8px 12px;
-      min-height: 68px
+      min-height: 72px;
+      box-sizing: border-box
     }
 
     .spread-lbl,
@@ -2029,13 +2045,17 @@
       font-size: 1.05rem;
       font-weight: 800;
       font-variant-numeric: tabular-nums;
-      line-height: 1.3;
+      line-height: 1.25;
       margin-top: auto
     }
 
-    .spread-sub {
-      font-size: 0.72rem;
-      color: var(--text-secondary)
+    .spread-sub,
+    .sm-sub {
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      line-height: 1.2;
+      margin-top: 2px
     }
 
     .match-racket-badges {
@@ -2150,7 +2170,9 @@
       display: flex;
       flex-direction: column;
       gap: 3px;
-      min-width: 180px
+      flex: 1 1 180px;
+      min-width: 140px;
+      box-sizing: border-box
     }
 
     .mrmb-main {
@@ -2670,18 +2692,9 @@
       .pend-transfer-sub {
         font-size: 0.66rem
       }
-
-      .btn-layout-opt {
-        padding: 6px 3px;
-        font-size: 0.69rem;
-      }
     }
 
     @media(max-width:380px) {
-      .btn-layout-opt {
-        padding: 5px 2px;
-        font-size: 0.63rem;
-      }
       .auto-cam-grid {
         grid-template-columns: 1fr !important;
         gap: 6px !important;
@@ -2707,123 +2720,11 @@
       border-radius: 999px;
       letter-spacing: 0.04em;
     }
-    .btn-layout-opt {
-      flex: 1;
-      min-width: 0;
-      background: transparent;
-      color: var(--text-secondary);
-      border: none;
-      padding: 6px 8px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      white-space: nowrap;
-      text-align: center;
-    }
-    .btn-layout-opt:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.08);
-    }
-    .btn-layout-opt.active {
-      background: var(--accent-cyan);
-      color: #0f172a;
-      box-shadow: 0 2px 8px rgba(6, 182, 212, 0.4);
-    }
 
-    /* Forza display: none anche se la classe layout è attiva */
+    /* Forza display: none */
     #auto-stats[style*="display: none"],
     #auto-stats[style*="display:none"] {
       display: none !important;
-    }
-
-    /* Layout Mode 1: Maxi Numeri (Distance reading) */
-    #auto-stats.layout-maxi {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    #auto-stats.layout-maxi .card-hero-swings {
-      grid-column: 1 / -1;
-      background: linear-gradient(145deg, rgba(6,182,212,0.22) 0%, rgba(15,23,42,0.92) 100%);
-      border: 2px solid var(--accent-cyan);
-      border-radius: 10px;
-      padding: 14px 10px 10px 10px;
-      text-align: center;
-      box-shadow: 0 6px 20px rgba(6,182,212,0.2);
-    }
-    #auto-stats.layout-maxi .card-hero-swings .auto-stat-val {
-      font-size: 3.8rem;
-      font-weight: 900;
-      color: #ffffff;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      text-shadow: 0 0 22px rgba(6,182,212,0.7);
-    }
-    #auto-stats.layout-maxi .card-hero-sw {
-      grid-column: 1 / -1;
-      background: linear-gradient(145deg, rgba(16,185,129,0.18) 0%, rgba(15,23,42,0.85) 100%);
-      border: 1.5px solid rgba(16,185,129,0.55);
-      border-radius: 10px;
-      padding: 10px;
-      text-align: center;
-    }
-    #auto-stats.layout-maxi .card-hero-sw .auto-stat-val {
-      font-size: 2.3rem;
-      font-weight: 800;
-      color: #34d399;
-      line-height: 1.1;
-    }
-    #auto-stats.layout-maxi .card-sub-stat {
-      background: rgba(255,255,255,0.04);
-      padding: 9px 8px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.08);
-      text-align: center;
-    }
-    #auto-stats.layout-maxi .card-sub-stat .auto-stat-val {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #e2e8f0;
-      line-height: 1.2;
-    }
-
-    /* Layout Mode 2: HUD Grid (Balanced Technical) */
-    #auto-stats.layout-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    #auto-stats.layout-grid .card-hero-swings,
-    #auto-stats.layout-grid .card-hero-sw,
-    #auto-stats.layout-grid .card-sub-stat {
-      grid-column: auto;
-      background: rgba(255,255,255,0.04);
-      padding: 11px 8px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.1);
-      text-align: center;
-    }
-    #auto-stats.layout-grid .card-hero-swings .auto-stat-val {
-      font-size: 2.1rem;
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 1.1;
-    }
-    #auto-stats.layout-grid .card-hero-sw .auto-stat-val {
-      font-size: 1.7rem;
-      font-weight: 800;
-      color: var(--accent-cyan);
-      line-height: 1.1;
-    }
-    #auto-stats.layout-grid .card-sub-stat .auto-stat-val {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #e2e8f0;
-      line-height: 1.1;
     }
 
     /* R1: Layout Stability for Sensitivity Trigger Hint */
@@ -2856,12 +2757,12 @@
       font-weight: 700;
     }
 
-    /* Layout Mode 3: Mirino Focus (Reticle-First View) (R2 Centering) */
+    /* Layout Mode 3: Mirino Focus Modificato Permanente (R2/R3) */
     #auto-stats.layout-reticle {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin: 10px auto 0 auto;
+      gap: 6px;
+      margin: 8px auto 0 auto;
       width: 100%;
       box-sizing: border-box;
       align-items: stretch;
@@ -2870,20 +2771,30 @@
     #auto-stats.layout-reticle .card-hero-sw,
     #auto-stats.layout-reticle .card-sub-stat {
       grid-column: auto;
-      background: rgba(15, 23, 42, 0.75);
-      padding: 8px 6px;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 6px 6px;
       border-radius: 8px;
-      border: 1px solid rgba(6, 182, 212, 0.25);
+      border: 1px solid rgba(6, 182, 212, 0.3);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      min-height: 62px;
+      min-height: 52px;
       box-sizing: border-box;
     }
+    #auto-stats.layout-reticle .auto-stat-lbl {
+      font-size: 0.66rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      line-height: 1.15;
+      margin-bottom: 2px;
+      text-align: center;
+    }
     #auto-stats.layout-reticle .card-hero-swings .auto-stat-val {
-      font-size: 1.55rem;
+      font-size: 1.5rem;
       font-weight: 800;
       color: #ffffff;
       line-height: 1.1;
@@ -2891,7 +2802,7 @@
       font-feature-settings: "tnum";
     }
     #auto-stats.layout-reticle .card-hero-sw .auto-stat-val {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 800;
       color: var(--accent-cyan);
       line-height: 1.1;
@@ -2899,7 +2810,7 @@
       font-feature-settings: "tnum";
     }
     #auto-stats.layout-reticle .card-sub-stat .auto-stat-val {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: #e2e8f0;
       line-height: 1.1;
@@ -2907,51 +2818,61 @@
       font-feature-settings: "tnum";
     }
     #auto-preview-container.reticle-expanded {
-      height: 175px !important;
+      height: 135px !important;
     }
     #auto-preview-container.reticle-expanded #auto-target-box {
-      width: 56px !important;
-      height: 56px !important;
+      width: 48px !important;
+      height: 48px !important;
     }
 
-    /* Countdown Dimensional Stability (R4) */
+    /* Countdown Overlay Dimensional Stability (R2/R4) */
     #auto-countdown {
-      min-height: 124px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 15;
       box-sizing: border-box;
       text-align: center;
-      padding: 12px 10px;
-      margin: 10px 0;
-      border-radius: 8px;
-      background: rgba(245, 158, 11, 0.12);
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       border: 2px solid var(--accent-amber);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     #auto-countdown-val {
-      font-size: 3.2rem;
+      font-size: 2.8rem;
       font-weight: 900;
       color: var(--accent-amber);
       line-height: 1;
       font-variant-numeric: tabular-nums;
       font-feature-settings: "tnum";
-      min-width: 60px;
-      height: 54px;
+      min-width: 50px;
+      height: 46px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       margin: 0 auto;
+      text-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
     }
     #auto-countdown-msg {
-      font-size: 0.78rem;
-      color: #cbd5e1;
-      margin-top: 4px;
-      min-height: 36px;
-      line-height: 1.35;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-size: 0.72rem;
+      color: #f1f5f9;
+      font-weight: 600;
+      margin-top: 2px;
+      line-height: 1.25;
+      max-width: 90%;
       text-align: center;
-      width: 100%;
-      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   </style>
 </head>
@@ -3670,10 +3591,10 @@
               racchetta a riposo, poi attiva la fotocamera:
             </div>
 
-            <!-- Modalità Arresto e Selettore Layout Distanza (R4) -->
+            <!-- Modalità Arresto -->
             <div
-              style="display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:rgba(15,23,42,0.65);padding:8px 10px;border-radius:8px;border:1px solid rgba(6,182,212,0.3)">
-              <label style="font-size:0.73rem;color:var(--text-secondary);flex:1;min-width:150px">
+              style="display:flex;gap:10px;align-items:center;background:rgba(15,23,42,0.65);padding:8px 10px;border-radius:8px;border:1px solid rgba(6,182,212,0.3)">
+              <label style="font-size:0.73rem;color:var(--text-secondary);flex:1;width:100%;margin:0">
                 Modalit&#xe0; arresto:
                 <select id="auto-stop-mode"
                   style="width:100%;margin-top:3px;padding:6px 8px;font-size:0.82rem;font-weight:600;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff">
@@ -3686,15 +3607,6 @@
                   <option value="60">Target Fisso (60 Oscillazioni)</option>
                 </select>
               </label>
-
-              <div style="flex:1 1 240px;min-width:0;max-width:100%">
-                <div style="font-size:0.73rem;color:var(--text-secondary);margin-bottom:3px">Layout Display da Distanza:</div>
-                <div class="auto-layout-toggle-group" style="display:flex;background:rgba(0,0,0,0.45);border-radius:6px;padding:2px;gap:2px;border:1px solid rgba(255,255,255,0.12)">
-                  <button type="button" class="btn-layout-opt active" data-layout="maxi" onclick="setAutoDisplayLayout('maxi')" title="Caratteri ingranditi per massima leggibilità a distanza da terra/banco">&#x1f50d; Maxi Numeri</button>
-                  <button type="button" class="btn-layout-opt" data-layout="grid" onclick="setAutoDisplayLayout('grid')" title="Griglia bilanciata 4 quadranti con metriche chiare">&#x1f4ca; HUD Grid</button>
-                  <button type="button" class="btn-layout-opt" data-layout="reticle" onclick="setAutoDisplayLayout('reticle')" title="Mirino e canvas ingranditi per allineamento visivo">&#x1f3af; Mirino Focus</button>
-                </div>
-              </div>
             </div>
 
             <!-- Pulsanti Selezione Fotocamera -->
@@ -3719,22 +3631,28 @@
 
               <!-- Live Camera Preview con Mirino -->
               <div
-                style="width:100%;height:120px;background:#000;border-radius:6px;overflow:hidden;position:relative;border:2px solid transparent;transition:all 0.15s ease"
-                id="auto-preview-container">
+                style="width:100%;height:135px;background:#000;border-radius:6px;overflow:hidden;position:relative;border:2px solid transparent;transition:all 0.15s ease"
+                id="auto-preview-container" class="reticle-expanded">
                 <video id="auto-video" playsinline muted
                   style="width:100%;height:100%;object-fit:cover;display:none;transform:scaleX(-1)"></video>
                 <canvas id="auto-canvas"
                   style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
                 <div id="auto-target-box"
-                  style="display:none;position:absolute;top:50%;left:50%;width:44px;height:44px;transform:translate(-50%,-50%);border:2px solid rgba(239,68,68,0.85);border-radius:6px;box-shadow:0 0 10px rgba(0,0,0,0.6);pointer-events:none;transition:border-color 0.15s,transform 0.15s,box-shadow 0.15s;background:radial-gradient(circle,rgba(239,68,68,0.12) 0%,transparent 65%)">
+                  style="display:none;position:absolute;top:50%;left:50%;width:48px;height:48px;transform:translate(-50%,-50%);border:2px solid rgba(239,68,68,0.85);border-radius:6px;box-shadow:0 0 10px rgba(0,0,0,0.6);pointer-events:none;transition:border-color 0.15s,transform 0.15s,box-shadow 0.15s;background:radial-gradient(circle,rgba(239,68,68,0.12) 0%,transparent 65%)">
                   <div style="position:absolute;top:50%;left:4px;right:4px;height:1px;background:rgba(239,68,68,0.45);transform:translateY(-50%)"></div>
                   <div style="position:absolute;left:50%;top:4px;bottom:4px;width:1px;background:rgba(239,68,68,0.45);transform:translateX(-50%)"></div>
+                </div>
+                <!-- Countdown Overlay (R2/R4 Inquadratura Stabile) -->
+                <div id="auto-countdown" style="display:none">
+                  <div id="auto-countdown-title" style="font-size:0.72rem;text-transform:uppercase;color:var(--text-secondary);letter-spacing:0.08em;margin-bottom:2px">Preparazione al tracciamento</div>
+                  <div id="auto-countdown-val">3</div>
+                  <div id="auto-countdown-msg">Posiziona la racchetta e lasciala oscillare liberamente</div>
                 </div>
               </div>
 
               <!-- R3: Controllo Sensibilità Integrato direttamente adiacente al Mirino con Feedback Live -->
               <div id="auto-pass-feedback"
-                style="margin-top:8px;padding:9px 11px;background:rgba(15,23,42,0.9);border:1px solid rgba(6,182,212,0.4);border-radius:6px;display:flex;flex-direction:column;gap:7px">
+                style="margin-top:6px;padding:7px 10px;background:rgba(15,23,42,0.9);border:1px solid rgba(6,182,212,0.4);border-radius:6px;display:flex;flex-direction:column;gap:5px">
                 <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
                   <label style="display:flex;align-items:center;gap:6px;font-size:0.74rem;font-weight:700;color:#e2e8f0;margin:0">
                     <span>&#x1f4a1; Sensibilit&#xe0;:</span>
@@ -3747,7 +3665,7 @@
                     </select>
                   </label>
                   <span id="auto-pass-status"
-                    style="font-size:0.80rem;font-weight:700;color:#38bdf8;transition:color 0.15s">In attesa avvio...</span>
+                    style="font-size:0.78rem;font-weight:700;color:#38bdf8;transition:color 0.15s;min-height:18px;display:inline-flex;align-items:center">In attesa avvio...</span>
                 </div>
 
                 <div style="display:flex;align-items:center;gap:8px">
@@ -3784,50 +3702,43 @@
                   onclick="stopAutoMeasurement(false)">Chiudi Fotocamera</button>
               </div>
 
-              <!-- Countdown Display (R4 Stable Dimensions) -->
-              <div id="auto-countdown" style="display:none">
-                <div style="font-size:0.74rem;text-transform:uppercase;color:var(--text-secondary);letter-spacing:0.08em;margin-bottom:2px">Preparazione al tracciamento</div>
-                <div id="auto-countdown-val">3</div>
-                <div id="auto-countdown-msg">Posiziona la racchetta e lasciala oscillare liberamente</div>
-              </div>
-
-              <!-- R4: Display Metriche Ingrandito e Leggibile da Distanza (3 Layout) -->
-              <div id="auto-stats" class="layout-maxi" style="display:none">
+              <!-- Display Metriche Mirino Focus Modificato (R2 Inquadratura Completa) -->
+              <div id="auto-stats" class="layout-reticle" style="display:none">
                 <!-- Hero Oscillazioni -->
                 <div class="card-hero-swings">
-                  <div style="font-size:0.72rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.07em;font-weight:700">Oscillazioni Conteggiate</div>
+                  <div class="auto-stat-lbl">Oscillazioni Conteggiate</div>
                   <div id="auto-val-swings" class="auto-stat-val">0</div>
                 </div>
 
                 <!-- Hero SW Live -->
                 <div class="card-hero-sw">
-                  <div style="font-size:0.72rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.07em;font-weight:700">SW Live Stimato (I&#x2081;&#x2080;)</div>
+                  <div class="auto-stat-lbl">SW Live Stimato (I&#x2081;&#x2080;)</div>
                   <div id="auto-val-live-sw" class="auto-stat-val">---</div>
                 </div>
 
                 <!-- Sub Periodo OLS -->
                 <div class="card-sub-stat">
-                  <div style="font-size:0.65rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.05em">Periodo OLS</div>
+                  <div class="auto-stat-lbl">Periodo OLS</div>
                   <div id="auto-val-avg" class="auto-stat-val">0.000 s</div>
                 </div>
 
                 <!-- Sub Framerate & Jitter -->
                 <div class="card-sub-stat">
-                  <div style="font-size:0.65rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.05em">Framerate &amp; Jitter</div>
+                  <div class="auto-stat-lbl">Framerate &amp; Jitter</div>
                   <div id="auto-val-acc" class="auto-stat-val" style="color:var(--accent-green)">-- fps</div>
                 </div>
               </div>
 
               <!-- Azioni durante Misurazione Attiva -->
-              <div id="auto-measuring-actions" style="display:none;gap:8px;margin-top:10px">
+              <div id="auto-measuring-actions" style="display:none;gap:6px;margin-top:8px">
                 <button id="btn-auto-stop" class="btn"
-                  style="flex:2;padding:10px;font-size:0.90rem;font-weight:800;background:linear-gradient(135deg,var(--accent-green) 0%,#059669 100%)"
+                  style="flex:2;padding:8px 8px;font-size:0.86rem;font-weight:800;background:linear-gradient(135deg,var(--accent-green) 0%,#059669 100%)"
                   onclick="stopAutoMeasurement(true)">&#x2705; Applica Misura</button>
                 <button type="button" class="btn btn-secondary"
-                  style="flex:1;padding:10px;font-size:0.82rem;color:#38bdf8"
+                  style="flex:1;padding:8px 6px;font-size:0.80rem;color:#38bdf8"
                   onclick="restartAutoMeasurement()">&#x1f504; Riavvia</button>
                 <button type="button" class="btn btn-secondary"
-                  style="flex:1;padding:10px;font-size:0.82rem;color:var(--accent-red)"
+                  style="flex:1;padding:8px 6px;font-size:0.80rem;color:var(--accent-red)"
                   onclick="stopAutoMeasurement(false)">Annulla</button>
               </div>
 
@@ -5886,11 +5797,11 @@
           '</div>' +
           '</div>' +
           '<div class="spread-banner" style="margin-bottom:0;background:rgba(15,19,34,0.65)">' +
-          '<div class="spread-metric"><div class="sm-lbl">SW Finale Medio / Spread</div><div class="sm-val" style="color:#fff">' + avgMod(o => o.swingweight).toFixed(1) + ' <span style="font-size:0.8rem">(' + spBadge(finSp.sw, 0.6, 1.8, '', 1) + ' vs ' + initSp.sw.toFixed(1) + ')</span></div></div>' +
-          '<div class="spread-metric"><div class="sm-lbl">MGR/I Finale Medio / Spread</div><div class="sm-val" style="color:#fff">' + avgMod(o => o.mgr_i).toFixed(2) + ' <span style="font-size:0.8rem">(' + spBadge(finSp.mgri, 0.03, 0.08, '', 2) + ' vs ' + initSp.mgri.toFixed(2) + ')</span></div></div>' +
-          '<div class="spread-metric"><div class="sm-lbl">Bilanc. Finale / Spread</div><div class="sm-val" style="color:#fff">' + avgMod(o => o.balance).toFixed(2) + ' cm <span style="font-size:0.8rem">(' + spBadge(finSp.bal, 0.12, 0.28, 'cm', 2) + ' vs ' + initSp.bal.toFixed(2) + ' cm)</span></div></div>' +
-          '<div class="spread-metric"><div class="sm-lbl">Massa Finale / Spread</div><div class="sm-val" style="color:#fff">' + avgMod(o => o.mass).toFixed(1) + ' g <span style="font-size:0.8rem">(' + spBadge(finSp.mass, 1.2, 3.0, 'g', 1) + ' vs ' + initSp.mass.toFixed(1) + ' g)</span></div></div>' +
-          '<div class="spread-metric"><div class="sm-lbl">RW Finale / Spread</div><div class="sm-val" style="color:#fff">' + avgMod(o => o.recoilweight).toFixed(1) + ' <span style="font-size:0.8rem">(' + spBadge(finSp.rw, 0.8, 2.0, '', 1) + ' vs ' + initSp.rw.toFixed(1) + ')</span></div></div>' +
+          '<div class="spread-metric"><div class="sm-lbl">SW Finale Medio / Spread</div><div class="sm-val" style="color:#fff">' + avgMod(o => o.swingweight).toFixed(1) + '</div><div class="sm-sub">(' + spBadge(finSp.sw, 0.6, 1.8, '', 1) + ' vs ' + initSp.sw.toFixed(1) + ')</div></div>' +
+          '<div class="spread-metric"><div class="sm-lbl">MGR/I Finale Medio / Spread</div><div class="sm-val" style="color:#fff">' + avgMod(o => o.mgr_i).toFixed(2) + '</div><div class="sm-sub">(' + spBadge(finSp.mgri, 0.03, 0.08, '', 2) + ' vs ' + initSp.mgri.toFixed(2) + ')</div></div>' +
+          '<div class="spread-metric"><div class="sm-lbl">Bilanc. Finale / Spread</div><div class="sm-val" style="color:#fff">' + avgMod(o => o.balance).toFixed(2) + ' cm</div><div class="sm-sub">(' + spBadge(finSp.bal, 0.12, 0.28, 'cm', 2) + ' vs ' + initSp.bal.toFixed(2) + ' cm)</div></div>' +
+          '<div class="spread-metric"><div class="sm-lbl">Massa Finale / Spread</div><div class="sm-val" style="color:#fff">' + avgMod(o => o.mass).toFixed(1) + ' g</div><div class="sm-sub">(' + spBadge(finSp.mass, 1.2, 3.0, 'g', 1) + ' vs ' + initSp.mass.toFixed(1) + ' g)</div></div>' +
+          '<div class="spread-metric"><div class="sm-lbl">RW Finale / Spread</div><div class="sm-val" style="color:#fff">' + avgMod(o => o.recoilweight).toFixed(1) + '</div><div class="sm-sub">(' + spBadge(finSp.rw, 0.8, 2.0, '', 1) + ' vs ' + initSp.rw.toFixed(1) + ')</div></div>' +
           '</div>' +
           '</div>';
 
@@ -5920,7 +5831,7 @@
             '<button type="button" class="btn btn-secondary" style="padding:4px 10px;font-size:0.75rem;border-color:rgba(245,158,11,0.4);color:var(--accent-amber)" onclick="sendMatchRacketToManual(' + idx + ',' + i + ')">\u{1f9ee} Apri in Manuale</button>' +
             '</div>' +
             '</div>' +
-            '<div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:8px;display:flex;flex-wrap:wrap;gap:12px">' +
+            '<div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:8px;display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:5px 14px">' +
             '<span>Massa: <strong>' + bObj.mass.toFixed(1) + ' g</strong> \u2192 <strong style="color:' + colMass + '">' + mObj.mass.toFixed(1) + ' g</strong></span>' +
             '<span>Bil: <strong>' + bObj.balance.toFixed(2) + ' cm</strong> \u2192 <strong style="color:' + colBal + '">' + mObj.balance.toFixed(2) + ' cm</strong></span>' +
             '<span>SW: <strong>' + bObj.swingweight.toFixed(1) + '</strong> \u2192 <strong style="color:' + colSW + '">' + mObj.swingweight.toFixed(1) + '</strong></span>' +
@@ -6660,7 +6571,7 @@
       let autoOscTimestamps = [];
       let autoCurrentOLSPeriodS = 0;
       let autoCurrentOLSSigmaMs = 0;
-      let autoDisplayLayoutMode = 'maxi';
+      let autoDisplayLayoutMode = 'reticle';
       let autoCameraInitSeq = 0;
       let autoMeasurementSaved = false;
 
@@ -6690,24 +6601,50 @@
         updateSensitivityUI();
       }
 
+      // R3: Layout permanente su "Mirino Focus modificato" (nessuna scelta alternativa)
       function setAutoDisplayLayout(mode) {
-        const allowed = ['maxi', 'grid', 'reticle'];
-        autoDisplayLayoutMode = allowed.includes(mode) ? mode : 'maxi';
+        autoDisplayLayoutMode = 'reticle';
         const statsEl = document.getElementById('auto-stats');
         if (statsEl) {
-          statsEl.classList.remove('layout-maxi', 'layout-grid', 'layout-reticle');
-          statsEl.classList.add('layout-' + autoDisplayLayoutMode);
+          statsEl.classList.remove('layout-maxi', 'layout-grid');
+          statsEl.classList.add('layout-reticle');
         }
         const prevContainer = document.getElementById('auto-preview-container');
         if (prevContainer) {
-          prevContainer.classList.toggle('reticle-expanded', autoDisplayLayoutMode === 'reticle');
+          prevContainer.classList.add('reticle-expanded');
         }
-        document.querySelectorAll('.btn-layout-opt').forEach(btn => {
-          btn.classList.toggle('active', btn.getAttribute('data-layout') === autoDisplayLayoutMode);
-        });
         try {
-          localStorage.setItem('sw_optical_layout_mode', autoDisplayLayoutMode);
+          localStorage.setItem('sw_optical_layout_mode', 'reticle');
         } catch (e) { }
+      }
+
+      // R2: Inquadra e mantiene visibile l'intera area di misura e la griglia inferiore (OLS e Framerate)
+      function frameAutoMeasurementView() {
+        const statsEl = document.getElementById('auto-stats');
+        const actionsEl = document.getElementById('auto-measuring-actions');
+        const container = document.getElementById('auto-ui-container');
+        if (!container) return;
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const target = (actionsEl && actionsEl.style.display !== 'none') ? actionsEl : statsEl;
+        if (!target) return;
+        const targetRect = target.getBoundingClientRect();
+        const uiRect = container.getBoundingClientRect();
+        if (targetRect.bottom > vh - 8 || uiRect.top < 6) {
+          const currentScrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
+          const scrollDocBottom = targetRect.bottom + currentScrollY;
+          const targetY = Math.max(0, Math.round(scrollDocBottom - vh + 10));
+          try {
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+          } catch (e) {
+            window.scrollTo(0, targetY);
+          }
+          setTimeout(() => {
+            const checkRect = target.getBoundingClientRect();
+            if (checkRect.bottom > vh - 4) {
+              window.scrollTo(0, targetY);
+            }
+          }, 80);
+        }
       }
 
       // R2: Selezione fotocamera con apertura preview, reticolo e centraggio viewport (senza avvio automatico)
@@ -6874,7 +6811,7 @@
         }
       }
 
-      // R2: Avvio manuale tramite pulsante prominente: esegue countdown e poi avvia tracciamento
+      // R2: Avvio manuale tramite pulsante prominente: inquadra l'interfaccia, mostra metriche e countdown
       function startManualCountdown() {
         if (!autoStream) {
           alert('Attiva prima la fotocamera.');
@@ -6887,15 +6824,19 @@
         const measuringActions = document.getElementById('auto-measuring-actions');
         if (measuringActions) measuringActions.style.display = 'flex';
 
+        // Mirino Focus modificato: mostra immediatamente la griglia inferiore con le 4 card
+        const statsEl = document.getElementById('auto-stats');
+        if (statsEl) statsEl.style.display = 'grid';
+
         const countdownEl = document.getElementById('auto-countdown');
+        const countdownTitleEl = document.getElementById('auto-countdown-title');
         const countdownValEl = document.getElementById('auto-countdown-val');
         const countdownMsgEl = document.getElementById('auto-countdown-msg');
         let count = 3;
 
-        if (countdownEl) countdownEl.style.display = 'block';
+        if (countdownEl) countdownEl.style.display = 'flex';
+        if (countdownTitleEl) countdownTitleEl.textContent = 'Preparazione al tracciamento';
         if (countdownValEl) {
-          countdownValEl.style.fontSize = '3.2rem';
-          countdownValEl.style.color = 'var(--accent-amber)';
           countdownValEl.textContent = count;
         }
         if (countdownMsgEl) countdownMsgEl.textContent = 'Posiziona la racchetta e lasciala oscillare liberamente';
@@ -6905,6 +6846,10 @@
           passStatusEl.textContent = 'Posiziona sotto la racchetta (' + count + 's)';
           passStatusEl.style.color = 'var(--accent-amber)';
         }
+
+        // R2: Inquadra e mantiene visibile l'intera area di misura e la griglia inferiore (OLS e Framerate)
+        setTimeout(frameAutoMeasurementView, 50);
+        setTimeout(frameAutoMeasurementView, 120);
 
         startCountdown(count);
       }
@@ -6934,6 +6879,7 @@
             const statsEl = document.getElementById('auto-stats');
             if (statsEl) statsEl.style.display = 'grid';
             startCounting();
+            setTimeout(frameAutoMeasurementView, 50);
           }
         }, 1000);
       }
@@ -6985,8 +6931,12 @@
           clearInterval(autoCountdownInterval);
           autoCountdownInterval = null;
         }
-        const statsEl = document.getElementById('auto-stats');
-        if (statsEl) statsEl.style.display = 'none';
+        const valSwings = document.getElementById('auto-val-swings');
+        const valAvg = document.getElementById('auto-val-avg');
+        const liveSwEl = document.getElementById('auto-val-live-sw');
+        if (valSwings) valSwings.textContent = '0';
+        if (valAvg) valAvg.textContent = '0.000 s';
+        if (liveSwEl) liveSwEl.textContent = '---';
         if (!autoStream) {
           if (autoMode) {
             selectAutoCamera(autoMode);
@@ -7216,9 +7166,11 @@
 
       function completeAutoMeasurementStable(message) {
         const countdownEl = document.getElementById('auto-countdown');
+        const countdownTitleEl = document.getElementById('auto-countdown-title');
         const countdownValEl = document.getElementById('auto-countdown-val');
         const countdownMsgEl = document.getElementById('auto-countdown-msg');
-        if (countdownEl) countdownEl.style.display = 'block';
+        if (countdownEl) countdownEl.style.display = 'flex';
+        if (countdownTitleEl) countdownTitleEl.textContent = 'Misurazione Completata';
         if (countdownValEl) {
           countdownValEl.style.fontSize = '1.6rem';
           countdownValEl.style.color = 'var(--accent-green)';
@@ -7308,6 +7260,8 @@
         if (preview) preview.style.borderColor = 'transparent';
 
         const countdownValEl = document.getElementById('auto-countdown-val');
+        const countdownTitleEl = document.getElementById('auto-countdown-title');
+        if (countdownTitleEl) countdownTitleEl.textContent = 'Preparazione al tracciamento';
         if (countdownValEl) {
           countdownValEl.style.fontSize = '3.2rem';
           countdownValEl.style.color = 'var(--accent-amber)';
@@ -7345,7 +7299,7 @@
       }
 
       function initButtons() { const a = document.getElementById('btn-add-goal'); if (a && !a.dataset.inited) { a.dataset.inited = '1'; a.onclick = null; a.addEventListener('click', () => addGoalRow()) } const b = document.getElementById('btn-add-constraint'); if (b && !b.dataset.inited) { b.dataset.inited = '1'; b.onclick = null; b.addEventListener('click', () => addConstraintRow()) } }
-      function boot() { loadState(); loadMatchState(); renderZoneUI('match'); renderZoneUI('single'); updateGoalCurrentValues(); updateBaseTelemetry();['goal-mass', 'goal-balance', 'goal-sw', 'goal-tw', 'goal-length'].forEach(id => document.getElementById(id).addEventListener('input', () => onBaseChange())); document.getElementById('goal-list').addEventListener('input', () => updateGoalCurrentValues()); initButtons(); renderHistory(); renderPendHistory(); if (!document.querySelectorAll('#calc-mass-tbody .calc-mass-row').length) { addCalcMassRow(0, 0, 66, 0); addCalcMassRow(0, 0, 18, 0) } renderCalcFavorites(); renderPendFavorites(); renderAutoFavorites(); renderMatchFavorites(); recalcCustomizationTab(); calcPendulum(false); initJokeBannerScrollObserver(); initBackExitGuard(); const savedAutoLayout = (function(){ try { return localStorage.getItem('sw_optical_layout_mode') || 'maxi'; } catch(e){ return 'maxi'; } })(); setAutoDisplayLayout(savedAutoLayout); updateSensitivityUI(); switchTab('misura-sw') } if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', boot) } else { boot() }
+      function boot() { loadState(); loadMatchState(); renderZoneUI('match'); renderZoneUI('single'); updateGoalCurrentValues(); updateBaseTelemetry();['goal-mass', 'goal-balance', 'goal-sw', 'goal-tw', 'goal-length'].forEach(id => document.getElementById(id).addEventListener('input', () => onBaseChange())); document.getElementById('goal-list').addEventListener('input', () => updateGoalCurrentValues()); initButtons(); renderHistory(); renderPendHistory(); if (!document.querySelectorAll('#calc-mass-tbody .calc-mass-row').length) { addCalcMassRow(0, 0, 66, 0); addCalcMassRow(0, 0, 18, 0) } renderCalcFavorites(); renderPendFavorites(); renderAutoFavorites(); renderMatchFavorites(); recalcCustomizationTab(); calcPendulum(false); initJokeBannerScrollObserver(); initBackExitGuard(); setAutoDisplayLayout('reticle'); updateSensitivityUI(); switchTab('misura-sw') } if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', boot) } else { boot() }
     </script>
   </div>
 </body>
