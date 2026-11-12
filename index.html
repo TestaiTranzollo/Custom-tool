@@ -899,11 +899,17 @@
 
     @media(max-width:700px) {
       body {
-        padding: 12px
+        padding: 8px 6px;
       }
 
       .panel {
-        padding: 18px
+        padding: 14px 10px;
+        border-radius: 14px;
+      }
+
+      .auto-card,
+      #optical-sw-card {
+        padding: 12px 10px !important;
       }
 
       .panel h2 {
@@ -964,41 +970,86 @@
       }
     }
 
-    @media(max-width:400px) {
+    @media(max-width:480px) {
       body {
-        padding: 8px
+        padding: 6px 4px;
+        padding-left: max(4px, env(safe-area-inset-left, 4px));
+        padding-right: max(4px, env(safe-area-inset-right, 4px));
       }
 
       .panel {
-        padding: 14px
+        padding: 10px 8px;
+        border-radius: 12px;
       }
 
       .panel h2 {
-        font-size: 1rem
+        font-size: 1rem;
+      }
+
+      .auto-card,
+      #optical-sw-card {
+        padding: 10px 8px !important;
+      }
+
+      #auto-ui-container {
+        padding: 8px 6px !important;
+      }
+
+      #auto-pass-feedback {
+        padding: 8px 8px !important;
+      }
+
+      .calc-base-panel {
+        padding: 12px 8px;
+        border-radius: 10px;
       }
 
       .btn {
         padding: 10px 14px;
-        font-size: 0.9rem
+        font-size: 0.9rem;
       }
 
       input[type="number"],
       select {
         padding: 8px 10px;
-        font-size: 0.9rem
+        font-size: 0.9rem;
       }
 
       .modal-box {
         padding: 14px;
-        width: 98%
+        width: 98%;
       }
 
       .modal-actions {
-        flex-direction: column
+        flex-direction: column;
       }
 
       .modal-actions .btn {
-        width: 100%
+        width: 100%;
+      }
+    }
+
+    @media(max-width:380px) {
+      body {
+        padding: 4px 2px;
+      }
+
+      .panel {
+        padding: 8px 5px;
+        border-radius: 10px;
+      }
+
+      .auto-card,
+      #optical-sw-card {
+        padding: 8px 6px !important;
+      }
+
+      #auto-ui-container {
+        padding: 6px 4px !important;
+      }
+
+      #auto-pass-feedback {
+        padding: 7px 6px !important;
       }
     }
 
@@ -2775,37 +2826,85 @@
       line-height: 1.1;
     }
 
-    /* Layout Mode 3: Mirino Focus (Reticle-First View) */
+    /* R1: Layout Stability for Sensitivity Trigger Hint */
+    .auto-signal-hint-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 20px;
+      line-height: 1.2;
+      gap: 6px;
+      font-size: 0.66rem;
+      color: var(--text-secondary);
+    }
+    .auto-signal-instruction {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+      min-width: 0;
+    }
+    .auto-signal-trigger-badge {
+      display: inline-block;
+      min-width: 105px;
+      min-height: 18px;
+      line-height: 18px;
+      text-align: right;
+      white-space: nowrap;
+      flex-shrink: 0;
+      color: var(--accent-amber);
+      font-weight: 700;
+    }
+
+    /* Layout Mode 3: Mirino Focus (Reticle-First View) (R2 Centering) */
     #auto-stats.layout-reticle {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      margin-top: 10px;
+      gap: 8px;
+      margin: 10px auto 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+      align-items: stretch;
     }
     #auto-stats.layout-reticle .card-hero-swings,
     #auto-stats.layout-reticle .card-hero-sw,
     #auto-stats.layout-reticle .card-sub-stat {
       grid-column: auto;
-      background: rgba(15,23,42,0.7);
-      padding: 7px 6px;
-      border-radius: 6px;
-      border: 1px solid rgba(6,182,212,0.25);
+      background: rgba(15, 23, 42, 0.75);
+      padding: 8px 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      min-height: 62px;
+      box-sizing: border-box;
     }
     #auto-stats.layout-reticle .card-hero-swings .auto-stat-val {
-      font-size: 1.6rem;
+      font-size: 1.55rem;
       font-weight: 800;
       color: #ffffff;
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
     }
     #auto-stats.layout-reticle .card-hero-sw .auto-stat-val {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       font-weight: 800;
       color: var(--accent-cyan);
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
     }
     #auto-stats.layout-reticle .card-sub-stat .auto-stat-val {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: #e2e8f0;
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
     }
     #auto-preview-container.reticle-expanded {
       height: 175px !important;
@@ -2813,6 +2912,46 @@
     #auto-preview-container.reticle-expanded #auto-target-box {
       width: 56px !important;
       height: 56px !important;
+    }
+
+    /* Countdown Dimensional Stability (R4) */
+    #auto-countdown {
+      min-height: 124px;
+      box-sizing: border-box;
+      text-align: center;
+      padding: 12px 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 2px solid var(--accent-amber);
+    }
+    #auto-countdown-val {
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: var(--accent-amber);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+      min-width: 60px;
+      height: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin: 0 auto;
+    }
+    #auto-countdown-msg {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      margin-top: 4px;
+      min-height: 36px;
+      line-height: 1.35;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
     }
   </style>
 </head>
@@ -3587,16 +3726,18 @@
                 <canvas id="auto-canvas"
                   style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
                 <div id="auto-target-box"
-                  style="display:none;position:absolute;top:50%;left:50%;width:44px;height:44px;transform:translate(-50%,-50%);border:2px solid rgba(239,68,68,0.85);border-radius:6px;box-shadow:0 0 10px rgba(0,0,0,0.6);pointer-events:none;transition:border-color 0.12s,transform 0.12s,box-shadow 0.12s">
+                  style="display:none;position:absolute;top:50%;left:50%;width:44px;height:44px;transform:translate(-50%,-50%);border:2px solid rgba(239,68,68,0.85);border-radius:6px;box-shadow:0 0 10px rgba(0,0,0,0.6);pointer-events:none;transition:border-color 0.15s,transform 0.15s,box-shadow 0.15s;background:radial-gradient(circle,rgba(239,68,68,0.12) 0%,transparent 65%)">
+                  <div style="position:absolute;top:50%;left:4px;right:4px;height:1px;background:rgba(239,68,68,0.45);transform:translateY(-50%)"></div>
+                  <div style="position:absolute;left:50%;top:4px;bottom:4px;width:1px;background:rgba(239,68,68,0.45);transform:translateX(-50%)"></div>
                 </div>
               </div>
 
-              <!-- R3: Controllo Sensibilità Luce Integrato direttamente adiacente al Mirino con Feedback Live -->
+              <!-- R3: Controllo Sensibilità Integrato direttamente adiacente al Mirino con Feedback Live -->
               <div id="auto-pass-feedback"
                 style="margin-top:8px;padding:9px 11px;background:rgba(15,23,42,0.9);border:1px solid rgba(6,182,212,0.4);border-radius:6px;display:flex;flex-direction:column;gap:7px">
                 <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
                   <label style="display:flex;align-items:center;gap:6px;font-size:0.74rem;font-weight:700;color:#e2e8f0;margin:0">
-                    <span>&#x1f4a1; Sensibilit&#xe0; Luce:</span>
+                    <span>&#x1f4a1; Sensibilit&#xe0;:</span>
                     <select id="auto-light-sens" onchange="onAutoSensChange()"
                       style="padding:4px 8px;font-size:0.80rem;font-weight:700;border-radius:6px;border:1px solid var(--accent-cyan);background:var(--bg-card);color:#fff"
                       title="Regola la sensibilità ottica: verifica il picco sulla barra sottostante prima di avviare">
@@ -3614,7 +3755,7 @@
                   <div
                     style="flex:1;height:10px;background:rgba(255,255,255,0.08);border-radius:5px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.12)">
                     <div id="auto-signal-bar"
-                      style="height:100%;width:0%;background:linear-gradient(90deg,#0891b2,#06b6d4);border-radius:4px;transition:width 0.05s ease-out">
+                      style="height:100%;width:0%;background:linear-gradient(90deg,#0891b2,#06b6d4);border-radius:4px;transition:none">
                     </div>
                     <div id="auto-signal-thresh-marker"
                       style="position:absolute;top:0;bottom:0;width:3px;background:#ef4444;box-shadow:0 0 4px #ef4444;pointer-events:none;left:42%"
@@ -3624,9 +3765,9 @@
                     style="font-size:0.74rem;font-weight:700;color:var(--accent-cyan);min-width:30px;text-align:right">0.0</span>
                 </div>
 
-                <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.65rem;color:var(--text-secondary)">
-                  <span>Muovi la racchetta sul mirino per testare il picco</span>
-                  <span id="auto-signal-trigger-hint" style="color:var(--accent-amber);font-weight:700"></span>
+                <div class="auto-signal-hint-row" style="display:flex;justify-content:space-between;align-items:center;min-height:20px;line-height:1.2;gap:6px;font-size:0.66rem;color:var(--text-secondary)">
+                  <span class="auto-signal-instruction" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0">Muovi racchetta per testare il picco</span>
+                  <span id="auto-signal-trigger-hint" class="auto-signal-trigger-badge" style="display:inline-block;min-width:105px;min-height:18px;line-height:18px;text-align:right;white-space:nowrap;flex-shrink:0;color:var(--accent-amber);font-weight:700"></span>
                 </div>
               </div>
 
@@ -3643,12 +3784,11 @@
                   onclick="stopAutoMeasurement(false)">Chiudi Fotocamera</button>
               </div>
 
-              <!-- Countdown Display -->
-              <div id="auto-countdown"
-                style="display:none;text-align:center;padding:12px 10px;margin:10px 0;border-radius:8px;background:rgba(245,158,11,0.12);border:2px solid var(--accent-amber)">
+              <!-- Countdown Display (R4 Stable Dimensions) -->
+              <div id="auto-countdown" style="display:none">
                 <div style="font-size:0.74rem;text-transform:uppercase;color:var(--text-secondary);letter-spacing:0.08em;margin-bottom:2px">Preparazione al tracciamento</div>
-                <div id="auto-countdown-val" style="font-size:3.2rem;font-weight:900;color:var(--accent-amber);line-height:1">3</div>
-                <div id="auto-countdown-msg" style="font-size:0.78rem;color:#cbd5e1;margin-top:4px">Posiziona la racchetta e lasciala oscillare liberamente</div>
+                <div id="auto-countdown-val">3</div>
+                <div id="auto-countdown-msg">Posiziona la racchetta e lasciala oscillare liberamente</div>
               </div>
 
               <!-- R4: Display Metriche Ingrandito e Leggibile da Distanza (3 Layout) -->
@@ -6515,6 +6655,7 @@
       let autoPassCooldown = 0;
       let autoLastFrameTime = 0;
       let autoSmoothFps = 60;
+      let autoVisualSignal = 0; // Purely visual smoothed reticle signal (R3)
       let autoAvgHistory = [];
       let autoOscTimestamps = [];
       let autoCurrentOLSPeriodS = 0;
@@ -6628,6 +6769,7 @@
         if (signalBar) signalBar.style.width = '0%';
         const signalVal = document.getElementById('auto-signal-val');
         if (signalVal) signalVal.textContent = '0.0';
+        autoVisualSignal = 0;
         updateSensitivityUI();
 
         initCamera(mode, currentSeq).then(success => {
@@ -6829,6 +6971,7 @@
           passStatusEl.style.color = '#38bdf8';
         }
 
+        autoVisualSignal = 0;
         updateSensitivityUI();
 
         if (!autoRafId) {
@@ -6917,21 +7060,28 @@
           }
           const avgDiff = diffSum / numChannels;
 
-          // Aggiornamento barra segnale ottico live in tempo reale (R3)
+          // Raw trigger condition for authentic physical measurement (100% UNTOUCHED)
+          const isTriggered = avgDiff >= threshVal;
+
+          // Purely visual smoothing filter (Asymmetric EMA: fast attack, smooth decay) (R3)
+          const vAlpha = avgDiff > autoVisualSignal ? 0.45 : 0.14;
+          autoVisualSignal = autoVisualSignal + vAlpha * (avgDiff - autoVisualSignal);
+          if (autoVisualSignal < 0.04) autoVisualSignal = 0;
+
+          // Aggiornamento barra segnale ottico live con smoothing visivo (R3)
           const signalBar = document.getElementById('auto-signal-bar');
           const signalValEl = document.getElementById('auto-signal-val');
           const threshMarker = document.getElementById('auto-signal-thresh-marker');
-          const isTriggered = avgDiff >= threshVal;
 
           if (signalBar) {
-            const pct = Math.min(100, Math.max(0, Math.round((avgDiff / 35) * 100)));
+            const pct = Math.min(100, Math.max(0, Math.round((autoVisualSignal / 35) * 100)));
             signalBar.style.width = pct + '%';
             signalBar.style.background = isTriggered
               ? 'linear-gradient(90deg, #10b981, #34d399)'
               : 'linear-gradient(90deg, #0891b2, #06b6d4)';
           }
           if (signalValEl) {
-            signalValEl.textContent = avgDiff.toFixed(1);
+            signalValEl.textContent = autoVisualSignal.toFixed(1);
           }
           if (threshMarker) {
             threshMarker.style.left = Math.min(100, Math.max(0, Math.round((threshVal / 35) * 100))) + '%';
@@ -7083,6 +7233,9 @@
         }
         const signalBar = document.getElementById('auto-signal-bar');
         if (signalBar) signalBar.style.width = '0%';
+        const signalVal = document.getElementById('auto-signal-val');
+        if (signalVal) signalVal.textContent = '0.0';
+        autoVisualSignal = 0;
         const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
         if (triggerHintEl) triggerHintEl.textContent = '';
 
@@ -7142,6 +7295,7 @@
         if (signalBar) signalBar.style.width = '0%';
         const signalVal = document.getElementById('auto-signal-val');
         if (signalVal) signalVal.textContent = '0.0';
+        autoVisualSignal = 0;
         const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
         if (triggerHintEl) triggerHintEl.textContent = '';
         const targetBox = document.getElementById('auto-target-box');
