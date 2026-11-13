@@ -999,6 +999,15 @@
         padding: 8px 8px !important;
       }
 
+      #auto-measuring-actions {
+        padding-bottom: max(6px, env(safe-area-inset-bottom, 0px));
+      }
+
+      #auto-measuring-actions .btn {
+        min-height: 44px;
+        touch-action: manipulation;
+      }
+
       .calc-base-panel {
         padding: 12px 8px;
         border-radius: 10px;
@@ -3514,7 +3523,7 @@
     </div> <!-- /personalizzazione -->
 
     <div data-tab="misura-sw" class="tab-pane">
-      <div class="panel" style="margin-top:0">
+      <div class="panel" style="margin-top:0;padding-bottom:calc(95px + env(safe-area-inset-bottom, 0px))">
 
         <div class="calc-base-panel" style="margin-bottom:10px">
           <div class="panel-section-header" style="margin-bottom:10px">
@@ -3730,15 +3739,15 @@
               </div>
 
               <!-- Azioni durante Misurazione Attiva -->
-              <div id="auto-measuring-actions" style="display:none;gap:6px;margin-top:8px">
+              <div id="auto-measuring-actions" style="display:none;gap:6px;margin-top:8px;padding-bottom:max(4px,env(safe-area-inset-bottom,0px))">
                 <button id="btn-auto-stop" class="btn"
-                  style="flex:2;padding:8px 8px;font-size:0.86rem;font-weight:800;background:linear-gradient(135deg,var(--accent-green) 0%,#059669 100%)"
+                  style="flex:2;padding:8px 8px;min-height:44px;font-size:0.86rem;font-weight:800;background:linear-gradient(135deg,var(--accent-green) 0%,#059669 100%);touch-action:manipulation;-webkit-tap-highlight-color:transparent"
                   onclick="stopAutoMeasurement(true)">&#x2705; Applica Misura</button>
                 <button type="button" class="btn btn-secondary"
-                  style="flex:1;padding:8px 6px;font-size:0.80rem;color:#38bdf8"
+                  style="flex:1;padding:8px 6px;min-height:44px;font-size:0.80rem;color:#38bdf8;touch-action:manipulation;-webkit-tap-highlight-color:transparent"
                   onclick="restartAutoMeasurement()">&#x1f504; Riavvia</button>
                 <button type="button" class="btn btn-secondary"
-                  style="flex:1;padding:8px 6px;font-size:0.80rem;color:var(--accent-red)"
+                  style="flex:1;padding:8px 6px;min-height:44px;font-size:0.80rem;color:var(--accent-red);touch-action:manipulation;-webkit-tap-highlight-color:transparent"
                   onclick="stopAutoMeasurement(false)">Annulla</button>
               </div>
 
@@ -6563,8 +6572,25 @@
       let autoOscillations = 0;
       let autoCountdownInterval = null;
       let autoPrevImageData = null;
-      let autoPassCooldown = 0;
+      let autoTransitState = 'IDLE'; // 'IDLE' or 'IN_TRANSIT'
+      let autoBgBuffer = new Float32Array(32 * 32 * 3);
+      let autoBgAnchorFrames = 0;
+      let autoPeakBgDiff = 0;
+      let autoQuietSince = 0;
+      let autoMotionlessSince = 0;
       let autoLastFrameTime = 0;
+
+      function resetTransitStateMachine() {
+        autoTransitState = 'IDLE';
+        autoBgAnchorFrames = 0;
+        autoPeakBgDiff = 0;
+        autoQuietSince = 0;
+        autoMotionlessSince = 0;
+        autoLastPassTime = 0;
+        if (autoBgBuffer) {
+          autoBgBuffer.fill(0);
+        }
+      }
       let autoSmoothFps = 60;
       let autoVisualSignal = 0; // Purely visual smoothed reticle signal (R3)
       let autoAvgHistory = [];
@@ -6624,15 +6650,16 @@
         const actionsEl = document.getElementById('auto-measuring-actions');
         const container = document.getElementById('auto-ui-container');
         if (!container) return;
-        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const vh = (window.visualViewport && window.visualViewport.height) ? window.visualViewport.height : (window.innerHeight || document.documentElement.clientHeight);
         const target = (actionsEl && actionsEl.style.display !== 'none') ? actionsEl : statsEl;
         if (!target) return;
         const targetRect = target.getBoundingClientRect();
         const uiRect = container.getBoundingClientRect();
-        if (targetRect.bottom > vh - 8 || uiRect.top < 6) {
+        const bottomBuffer = 84;
+        if (targetRect.bottom > vh - bottomBuffer || uiRect.top < 6) {
           const currentScrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
           const scrollDocBottom = targetRect.bottom + currentScrollY;
-          const targetY = Math.max(0, Math.round(scrollDocBottom - vh + 10));
+          const targetY = Math.max(0, Math.round(scrollDocBottom - vh + bottomBuffer));
           try {
             window.scrollTo({ top: targetY, behavior: 'smooth' });
           } catch (e) {
@@ -6640,7 +6667,7 @@
           }
           setTimeout(() => {
             const checkRect = target.getBoundingClientRect();
-            if (checkRect.bottom > vh - 4) {
+            if (checkRect.bottom > vh - 20) {
               window.scrollTo(0, targetY);
             }
           }, 80);
@@ -6667,6 +6694,7 @@
         autoIsCounting = false;
         autoIsStreaming = false;
         autoMode = mode;
+        resetTransitStateMachine();
 
         // Evidenzia visivamente il pulsante della camera selezionata
         const btnFront = document.getElementById('btn-cam-front');
@@ -6823,6 +6851,7 @@
 
         const measuringActions = document.getElementById('auto-measuring-actions');
         if (measuringActions) measuringActions.style.display = 'flex';
+        resetTransitStateMachine();
 
         // Mirino Focus modificato: mostra immediatamente la griglia inferiore con le 4 card
         const statsEl = document.getElementById('auto-stats');
@@ -6893,7 +6922,7 @@
         autoPasses = 0;
         autoOscillations = 0;
         autoPrevImageData = null;
-        autoPassCooldown = 0;
+        resetTransitStateMachine();
         autoLastFrameTime = performance.now();
         autoSmoothFps = 60;
         autoAvgHistory = [];
@@ -6931,6 +6960,7 @@
           clearInterval(autoCountdownInterval);
           autoCountdownInterval = null;
         }
+        resetTransitStateMachine();
         const valSwings = document.getElementById('auto-val-swings');
         const valAvg = document.getElementById('auto-val-avg');
         const liveSwEl = document.getElementById('auto-val-live-sw');
@@ -7001,6 +7031,8 @@
         const numChannels = (len / 4) * 3;
 
         const threshVal = parseFloat(document.getElementById('auto-light-sens')?.value || '15');
+        const quietMotionThresh = Math.min(threshVal * 0.45, 5.0);
+        const settleThresh = Math.max(threshVal * 0.68, 6.5);
 
         if (autoPrevImageData) {
           const prevData = autoPrevImageData.data;
@@ -7010,8 +7042,15 @@
           }
           const avgDiff = diffSum / numChannels;
 
-          // Raw trigger condition for authentic physical measurement (100% UNTOUCHED)
-          const isTriggered = avgDiff >= threshVal;
+          let bgDiffSum = 0;
+          let cIdx = 0;
+          for (let i = 0; i < len; i += 4) {
+            bgDiffSum += Math.abs(data[i] - autoBgBuffer[cIdx]) +
+                         Math.abs(data[i + 1] - autoBgBuffer[cIdx + 1]) +
+                         Math.abs(data[i + 2] - autoBgBuffer[cIdx + 2]);
+            cIdx += 3;
+          }
+          const bgDiff = autoBgAnchorFrames > 0 ? (bgDiffSum / numChannels) : 0;
 
           // Purely visual smoothing filter (Asymmetric EMA: fast attack, smooth decay) (R3)
           const vAlpha = avgDiff > autoVisualSignal ? 0.45 : 0.14;
@@ -7026,7 +7065,7 @@
           if (signalBar) {
             const pct = Math.min(100, Math.max(0, Math.round((autoVisualSignal / 35) * 100)));
             signalBar.style.width = pct + '%';
-            signalBar.style.background = isTriggered
+            signalBar.style.background = (avgDiff >= threshVal)
               ? 'linear-gradient(90deg, #10b981, #34d399)'
               : 'linear-gradient(90deg, #0891b2, #06b6d4)';
           }
@@ -7037,25 +7076,104 @@
             threshMarker.style.left = Math.min(100, Math.max(0, Math.round((threshVal / 35) * 100))) + '%';
           }
 
-          if (autoIsCounting) {
-            // Durante la misurazione attiva: traccia passaggi
-            if (now > autoPassCooldown && isTriggered) {
-              autoPassCooldown = now + 250;
-              flashTargetBoxPass();
-              registerPass(now);
+          // Optical Transit State Machine (Anti-Double Trigger)
+          if (autoTransitState === 'IDLE') {
+            // Background Model: Update via EMA ONLY while in IDLE and motion is calm
+            if (avgDiff < quietMotionThresh) {
+              const alpha = autoBgAnchorFrames < 2 ? 0.45 : 0.12;
+              if (autoBgAnchorFrames === 0) {
+                let c = 0;
+                for (let i = 0; i < len; i += 4) {
+                  autoBgBuffer[c] = data[i];
+                  autoBgBuffer[c + 1] = data[i + 1];
+                  autoBgBuffer[c + 2] = data[i + 2];
+                  c += 3;
+                }
+                autoBgAnchorFrames = 1;
+              } else {
+                let c = 0;
+                for (let i = 0; i < len; i += 4) {
+                  autoBgBuffer[c] += alpha * (data[i] - autoBgBuffer[c]);
+                  autoBgBuffer[c + 1] += alpha * (data[i + 1] - autoBgBuffer[c + 1]);
+                  autoBgBuffer[c + 2] += alpha * (data[i + 2] - autoBgBuffer[c + 2]);
+                  c += 3;
+                }
+                autoBgAnchorFrames++;
+              }
             }
-          } else {
-            // Durante l'anteprima/calibrazione: feedback visivo immediato della sensibilità
-            const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
-            if (isTriggered) {
-              if (triggerHintEl) triggerHintEl.textContent = '⚡ Rilevato picco!';
-              if (now > autoPassCooldown) {
-                autoPassCooldown = now + 350;
-                flashTargetBoxPass();
+
+            // Trigger (IDLE -> IN_TRANSIT)
+            if (avgDiff >= threshVal && autoBgAnchorFrames >= 2 && (now - autoLastPassTime) >= 150) {
+              autoTransitState = 'IN_TRANSIT';
+              autoPeakBgDiff = bgDiff;
+              autoLastPassTime = now;
+              autoQuietSince = 0;
+              autoMotionlessSince = 0;
+
+              flashTargetBoxPass();
+              if (autoIsCounting) {
+                registerPass(now);
+              } else {
+                const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
+                if (triggerHintEl) triggerHintEl.textContent = '⚡ Rilevato picco!';
+              }
+            } else if (!autoIsCounting) {
+              const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
+              if (triggerHintEl && triggerHintEl.textContent && avgDiff < threshVal * 0.7) {
+                triggerHintEl.textContent = '';
+              }
+            }
+          } else if (autoTransitState === 'IN_TRANSIT') {
+            // Re-arm (IN_TRANSIT -> IDLE): Track peak bg deviation, settle motion, restore background
+            autoPeakBgDiff = Math.max(autoPeakBgDiff, bgDiff);
+            const bgExitThresh = Math.max(20, Math.min(28, threshVal * 1.8), Math.min(36, autoPeakBgDiff * 0.42));
+
+            // Motion settle tracking (continuous for >= 50 ms, independent of frame rate)
+            if (avgDiff < settleThresh) {
+              if (autoQuietSince === 0) {
+                const frameDt = Math.max(1, Math.min(200, dt || 16.6));
+                autoQuietSince = now - frameDt;
               }
             } else {
-              if (triggerHintEl && triggerHintEl.textContent) {
-                triggerHintEl.textContent = '';
+              autoQuietSince = 0;
+            }
+
+            // Motionless safety escape tracking (>= 3000 ms)
+            if (avgDiff < quietMotionThresh) {
+              if (autoMotionlessSince === 0) {
+                const frameDt = Math.max(1, Math.min(200, dt || 16.6));
+                autoMotionlessSince = now - frameDt;
+              }
+            } else {
+              autoMotionlessSince = 0;
+            }
+
+            const motionSettled = autoQuietSince > 0 && (now - autoQuietSince) >= 50;
+            const bgRestored = bgDiff <= bgExitThresh;
+            const safetyEscape = autoMotionlessSince > 0 && (now - autoMotionlessSince) >= 3000;
+
+            if ((motionSettled && bgRestored) || safetyEscape) {
+              if (safetyEscape) {
+                // Safety escape: re-anchor background to new static scene
+                let c = 0;
+                for (let i = 0; i < len; i += 4) {
+                  autoBgBuffer[c] = data[i];
+                  autoBgBuffer[c + 1] = data[i + 1];
+                  autoBgBuffer[c + 2] = data[i + 2];
+                  c += 3;
+                }
+                autoBgAnchorFrames = 2;
+              }
+              autoTransitState = 'IDLE';
+              autoQuietSince = 0;
+              autoMotionlessSince = 0;
+              autoPeakBgDiff = 0;
+
+              if (!autoIsCounting) {
+                const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
+                if (triggerHintEl && triggerHintEl.textContent) {
+                  triggerHintEl.textContent = '';
+                }
               }
             }
           }
@@ -7197,6 +7315,7 @@
         if (btnBack) btnBack.classList.remove('active-camera');
 
         autoIsCounting = false;
+        resetTransitStateMachine();
         playBeep();
         if (autoRafId) { cancelAnimationFrame(autoRafId); autoRafId = null; }
         if (autoStream) { autoStream.getTracks().forEach(t => t.stop()); autoStream = null; }
@@ -7216,7 +7335,7 @@
         autoCameraInitSeq++;
         autoIsCounting = false;
         autoIsStreaming = false;
-        autoPassCooldown = 0;
+        resetTransitStateMachine();
 
         if (autoCountdownInterval) {
           clearInterval(autoCountdownInterval);
