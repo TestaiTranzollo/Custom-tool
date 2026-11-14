@@ -2972,10 +2972,10 @@
       left: 0;
       right: 0;
       top: 50%;
-      height: 18%;
-      min-height: 28px;
+      height: 12%;
+      min-height: 24px;
       transform: translateY(-50%);
-      background: rgba(6, 182, 212, 0.09);
+      background: linear-gradient(90deg, rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.35) 8%, rgba(6, 182, 212, 0.09) 8.5%, rgba(6, 182, 212, 0.09) 91.5%, rgba(15, 23, 42, 0.35) 92%, rgba(15, 23, 42, 0.35) 100%);
       border-top: 1px dashed rgba(56, 189, 248, 0.42);
       border-bottom: 1px dashed rgba(56, 189, 248, 0.42);
       pointer-events: none;
@@ -2984,8 +2984,8 @@
 
     #exp-guide-line {
       position: absolute;
-      left: 4%;
-      right: 4%;
+      left: 8%;
+      right: 8%;
       top: 50%;
       height: 2px;
       transform: translateY(-50%);
@@ -3164,7 +3164,7 @@
         style="text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; gap: 15px;">
         <h2
           style="font-size: 1.2rem; font-weight: 800; text-shadow: 1px 1px 2px black; line-height: 1.3; margin: 0; padding: 0 45px;">
-          Attenzione<br>Gotica fredda con tanto piombo a 5 minuti da te!<br>Clicca qui se vuoi la tua dose</h2>
+          Attenzione!<br>Fredda gotica culona con tanto piombo a 5 minuti da te!<br>Clicca qui se vuoi la tua dose</h2>
         <img src="Gemini_Generated_Image_t8tt9vt8tt9vt8tt.jpg" alt="Scam Image"
           style="max-width: 100%; border-radius: 8px; border: 3px solid white; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
       </a>
@@ -3180,7 +3180,7 @@
       <div id="app-version-badge"
         style="font-size:0.72rem;font-weight:600;color:var(--accent-cyan);background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.28);border-radius:999px;padding:4px 10px;white-space:nowrap;letter-spacing:0.02em"
         title="Versione e data ultimo aggiornamento">
-        v3.0 &middot; 14/11/2026 22:20
+        v3.1 &middot; 14/11/2026 22:50
       </div>
     </header>
 
@@ -4002,7 +4002,8 @@
                   <div class="auto-stat-lbl">Oscillazioni</div>
                   <div style="display:inline-flex;align-items:baseline;justify-content:center;gap:3px">
                     <span id="auto-val-swings" class="auto-stat-val">0</span>
-                    <span id="auto-val-swings-target" style="font-size:0.80rem;font-weight:700;color:var(--text-secondary)">/ 18+</span>
+                    <span id="auto-val-swings-target"
+                      style="font-size:0.80rem;font-weight:700;color:var(--text-secondary)">/ 18+</span>
                   </div>
                 </div>
 
@@ -4165,7 +4166,8 @@
           </div>
         </details>
 
-        <div style="margin-top:14px;padding-top:12px;border-top:1px dashed rgba(148,163,184,0.22);display:flex;flex-direction:column;gap:6px">
+        <div
+          style="margin-top:14px;padding-top:12px;border-top:1px dashed rgba(148,163,184,0.22);display:flex;flex-direction:column;gap:6px">
           <button type="button" id="btn-open-experimental" class="btn btn-secondary"
             style="width:100%;padding:10px 12px;font-size:0.82rem;font-weight:700;border-color:rgba(245,158,11,0.45);color:#fde68a;background:rgba(245,158,11,0.08);display:flex;align-items:center;justify-content:center;gap:8px"
             onclick="switchTab('experimental-sw')">
@@ -4420,18 +4422,21 @@
 
     <div data-tab="experimental-sw" class="tab-pane" style="display:none">
       <div class="panel" style="margin-top:0;padding-bottom:calc(95px + env(safe-area-inset-bottom, 0px))">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+        <div
+          style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;flex-wrap:wrap">
           <button type="button" id="btn-exp-back" class="btn btn-secondary"
-            style="padding:7px 11px;font-size:0.78rem;font-weight:700"
-            onclick="switchTab('misura-sw')">&larr; Torna a Misura SW</button>
-          <span style="font-size:0.68rem;background:rgba(245,158,11,0.16);color:#fbbf24;border:1px solid rgba(245,158,11,0.45);padding:3px 9px;border-radius:999px;font-weight:800;letter-spacing:0.03em">
+            style="padding:7px 11px;font-size:0.78rem;font-weight:700" onclick="switchTab('misura-sw')">&larr; Torna a
+            Misura SW</button>
+          <span
+            style="font-size:0.68rem;background:rgba(245,158,11,0.16);color:#fbbf24;border:1px solid rgba(245,158,11,0.45);padding:3px 9px;border-radius:999px;font-weight:800;letter-spacing:0.03em">
             &#x1f9ea; EXPERIMENTAL &middot; ESTREMI
           </span>
         </div>
 
         <div id="exp-racket-summary"
           style="margin-bottom:10px;padding:8px 10px;border-radius:8px;background:rgba(15,23,42,0.75);border:1px solid var(--border-color);font-size:0.74rem;color:var(--text-secondary);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
-          <span>Parametri da Misura SW: <strong style="color:#f1f5f9">300g &middot; 32.0cm &middot; Y=64.3cm</strong></span>
+          <span>Parametri da Misura SW: <strong style="color:#f1f5f9">300g &middot; 32.0cm &middot;
+              Y=64.3cm</strong></span>
           <a href="#" onclick="event.preventDefault();switchTab('misura-sw')"
             style="color:var(--accent-cyan);font-size:0.72rem;font-weight:700;text-decoration:none">Modifica &rarr;</a>
         </div>
@@ -4441,7 +4446,8 @@
           <div class="panel-section-header" style="margin-bottom:10px">
             <div class="panel-section-title">
               <span class="step-badge"
-                style="background:#f59e0b;color:#0f172a;font-weight:800;border:none;padding:3px 8px">&#x1f4c8; LAB</span>
+                style="background:#f59e0b;color:#0f172a;font-weight:800;border:none;padding:3px 8px">&#x1f4c8;
+                LAB</span>
               <span style="font-size:0.95rem;font-weight:800;color:#fff">Tracciamento Estremi di Oscillazione</span>
             </div>
             <span
@@ -4451,7 +4457,7 @@
 
           <div style="display:flex;flex-direction:column;gap:10px">
             <div style="font-size:0.75rem;color:#e2e8f0;line-height:1.42">
-              Inquadra <strong>entrambi gli estremi</strong> dell'oscillazione destra-sinistra lungo la linea azzurra sullo schermo (ideale davanti a una parete uniforme). L'algoritmo isola i punti di inversione a velocit&#xe0; nulla e calcola il periodo sub-frame resistente al framerate variabile.
+              Inquadra il <strong>tappo / manico</strong> lungo la linea azzurra mantenendo entrambi gli estremi dentro la zona luminosa (lascia liberi i bordi esterni ~8% per compensare automaticamente l'esposizione). L'algoritmo isola i punti d'inversione a velocit&#xe0; nulla.
             </div>
 
             <div
@@ -4492,7 +4498,7 @@
                 <div id="exp-preview-badge">&#x25cf; ANTEPRIMA</div>
                 <video id="exp-video" playsinline muted
                   style="width:100%;height:100%;object-fit:cover;display:none;transform:scaleX(-1)"></video>
-                <canvas id="exp-canvas" width="160" height="18"
+                <canvas id="exp-canvas" width="160" height="12"
                   style="display:none;position:absolute;top:0;left:0;width:100%;height:100%"></canvas>
 
                 <!-- Banda e Linea Guida Orizzontale di Oscillazione -->
@@ -4511,7 +4517,8 @@
                     style="font-size:0.72rem;text-transform:uppercase;color:var(--text-secondary);letter-spacing:0.08em;margin-bottom:2px">
                     Calibrazione Sfondo &amp; Avvio</div>
                   <div id="exp-countdown-val">3</div>
-                  <div id="exp-countdown-msg">Fai oscillare la racchetta sulla linea azzurra senza uscire dai bordi</div>
+                  <div id="exp-countdown-msg">Fai oscillare la racchetta sulla linea azzurra senza uscire dai bordi
+                  </div>
                 </div>
               </div>
 
@@ -4520,7 +4527,8 @@
                 style="margin-top:8px;padding:9px 11px;background:rgba(15,23,42,0.92);border:1px solid rgba(56,189,248,0.32);border-radius:8px;display:flex;flex-direction:column;gap:7px">
                 <div class="auto-hud-top">
                   <span id="exp-pass-status"
-                    style="font-size:0.74rem;font-weight:700;color:#38bdf8;transition:color 0.12s">In attesa avvio...</span>
+                    style="font-size:0.74rem;font-weight:700;color:#38bdf8;transition:color 0.12s">In attesa
+                    avvio...</span>
                   <span id="exp-edge-hint" class="auto-signal-trigger-badge"></span>
                 </div>
 
@@ -4533,7 +4541,8 @@
                     <span id="exp-signal-val">0.0</span>
                   </div>
                   <div class="auto-cal-controls-row">
-                    <span class="auto-cal-help">Muovi la racchetta lungo la linea: il punto azzurro deve seguirla fino ai 2 estremi</span>
+                    <span class="auto-cal-help">Muovi la racchetta lungo la linea: il punto azzurro deve seguirla fino
+                      ai 2 estremi</span>
                     <select id="exp-light-sens" onchange="onExpSensChange()"
                       title="Regola la soglia di contrasto rispetto allo sfondo">
                       <option value="12">Contrasto Alto (sfondo simile)</option>
@@ -4571,7 +4580,8 @@
                   <div class="auto-stat-lbl">Oscillazioni</div>
                   <div style="display:inline-flex;align-items:baseline;justify-content:center;gap:3px">
                     <span id="exp-val-swings" class="auto-stat-val">0</span>
-                    <span id="exp-val-swings-target" style="font-size:0.80rem;font-weight:700;color:var(--text-secondary)">/ 14+</span>
+                    <span id="exp-val-swings-target"
+                      style="font-size:0.80rem;font-weight:700;color:var(--text-secondary)">/ 14+</span>
                   </div>
                 </div>
 
@@ -4610,20 +4620,25 @@
         <div id="exp-result-card" style="display:none;margin-bottom:12px">
           <div
             style="background:linear-gradient(135deg,rgba(16,185,129,0.16),rgba(6,182,212,0.06));border:2px solid var(--accent-green);border-radius:12px;padding:14px 16px;text-align:center;margin-bottom:10px">
-            <div style="font-size:0.68rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">
+            <div
+              style="font-size:0.68rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">
               &#x1f9ea; Swingweight Rilevato (Metodo Estremi)</div>
             <div id="exp-res-sw" style="font-size:2.2rem;font-weight:800;color:#fff;line-height:1.15">---</div>
-            <div id="exp-res-meta" style="font-size:0.74rem;color:var(--accent-green);font-weight:700;margin-top:3px">---</div>
+            <div id="exp-res-meta" style="font-size:0.74rem;color:var(--accent-green);font-weight:700;margin-top:3px">
+              ---</div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;text-align:center">
-              <div style="background:rgba(15,23,42,0.65);border:1px solid var(--border-color);border-radius:6px;padding:6px">
+              <div
+                style="background:rgba(15,23,42,0.65);border:1px solid var(--border-color);border-radius:6px;padding:6px">
                 <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase">Periodo T</div>
                 <div id="exp-res-period" style="font-size:0.84rem;font-weight:700;color:#f1f5f9">---</div>
               </div>
-              <div style="background:rgba(15,23,42,0.65);border:1px solid var(--border-color);border-radius:6px;padding:6px">
+              <div
+                style="background:rgba(15,23,42,0.65);border:1px solid var(--border-color);border-radius:6px;padding:6px">
                 <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase">Errore OLS</div>
                 <div id="exp-res-sigma" style="font-size:0.84rem;font-weight:700;color:var(--accent-cyan)">---</div>
               </div>
-              <div style="background:rgba(15,23,42,0.65);border:1px solid var(--border-color);border-radius:6px;padding:6px">
+              <div
+                style="background:rgba(15,23,42,0.65);border:1px solid var(--border-color);border-radius:6px;padding:6px">
                 <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase">Simmetria</div>
                 <div id="exp-res-symmetry" style="font-size:0.84rem;font-weight:700;color:#f1f5f9">---</div>
               </div>
@@ -8445,9 +8460,9 @@
         autoMeasurementSaved = false;
       }
 
-      // --- Experimental Extrema Tracker (Harmonic Lobe Fitting + Temporal Median Bg) ---
+      // --- Experimental Extrema Tracker (2D Border Exposure Compensation + Harmonic Lobe OLS) ---
       const EXP_STRIP_W = 160;
-      const EXP_STRIP_H = 18;
+      const EXP_STRIP_H = 12;
 
       function medianFloat32(arr, len, scratchSorted) {
         for (let i = 0; i < len; i++) scratchSorted[i] = arr[i];
@@ -8549,21 +8564,30 @@
       function createExpExtremaEngine(priorPeriodS, options) {
         const opts = options || {};
         const W = opts.width || EXP_STRIP_W;
+        const H = opts.height || EXP_STRIP_H;
+        const NPIX = W * H;
         let minContrast = opts.minContrast || 18;
-        const MAX_BG_SLOTS = 22;
-        const BG_INTERVAL_MS = 85;
+        const MAX_BG_SLOTS = 21;
+        const BG_INTERVAL_MS = 105;
+        const MARGIN_COLS = Math.max(8, Math.round(W * 0.08));
 
-        const lumBuf = new Float32Array(W);
-        const diffBuf = new Float32Array(W);
+        const lum2DBuf = new Float32Array(NPIX);
+        const predBg2DBuf = new Float32Array(NPIX);
         const residBuf = new Float32Array(W);
         const smoothBuf = new Float32Array(W);
-        const sortScratch = new Float32Array(Math.max(W, MAX_BG_SLOTS));
+        const sortScratch = new Float32Array(Math.max(W, MAX_BG_SLOTS, MARGIN_COLS * 2 * H));
+        const edgeDarkBg = new Float32Array(MARGIN_COLS * 2 * H);
+        const edgeDarkCur = new Float32Array(MARGIN_COLS * 2 * H);
+        const edgeBrightBg = new Float32Array(MARGIN_COLS * 2 * H);
+        const edgeBrightCur = new Float32Array(MARGIN_COLS * 2 * H);
         const bgSlots = [];
-        const bgMedian = new Float32Array(W);
+        const bgMedian2D = new Float32Array(NPIX);
         let lastBgPushMs = -1e9;
         let lastBgTrackX = null;
 
         let predX = null;
+        let predVx = 0;
+        let lastPredT = null;
         let lastValidX = null;
         let sampleRing = [];
         let dir = 0;
@@ -8592,6 +8616,8 @@
           pendingExt = null;
           lastCommittedApproxT = -1e9;
           records.length = 0;
+          predVx = 0;
+          lastPredT = null;
           refPeriodMs = Math.max(650, Math.min(2600, (nextPriorS || priorPeriodS || 1.36) * 1000));
           lastOLS = { periodS: 0, sigmaMs: 0, totalTimeS: 0, n: 0, symmetryPct: 50, isSinglePassMode: false };
           minExtX = null;
@@ -8605,11 +8631,8 @@
             if (detectedX !== null && lastBgTrackX !== null && Math.abs(detectedX - lastBgTrackX) <= 0.055) {
               return; // Avoid absorbing a stationary held racket into background
             }
-            if (detectedX !== null && bgSlots.length >= MAX_BG_SLOTS && (tMs - lastBgPushMs) < 135) {
-              return;
-            }
           }
-          const copy = new Float32Array(lumBuf);
+          const copy = new Float32Array(lum2DBuf);
           if (bgSlots.length < MAX_BG_SLOTS) {
             bgSlots.push(copy);
           } else {
@@ -8619,15 +8642,78 @@
           lastBgPushMs = tMs;
           lastBgTrackX = detectedX;
           const nSlots = bgSlots.length;
-          for (let x = 0; x < W; x++) {
-            for (let s = 0; s < nSlots; s++) sortScratch[s] = bgSlots[s][x];
+          for (let p = 0; p < NPIX; p++) {
+            for (let s = 0; s < nSlots; s++) sortScratch[s] = bgSlots[s][p];
             sortScratch.subarray(0, nSlots).sort();
             const mid = nSlots >> 1;
-            bgMedian[x] = (nSlots & 1) ? sortScratch[mid] : 0.5 * (sortScratch[mid - 1] + sortScratch[mid]);
+            bgMedian2D[p] = (nSlots & 1) ? sortScratch[mid] : 0.5 * (sortScratch[mid - 1] + sortScratch[mid]);
           }
         }
 
-        function extractClusterFromSmooth() {
+        // Calibrate camera exposure gain & bias solely from static outer border columns
+        function estimateBorderExposure() {
+          let n = 0;
+          for (let y = 0; y < H; y++) {
+            const rowBase = y * W;
+            for (let x = 0; x < MARGIN_COLS; x++) {
+              sortScratch[n++] = bgMedian2D[rowBase + x];
+            }
+            for (let x = W - MARGIN_COLS; x < W; x++) {
+              sortScratch[n++] = bgMedian2D[rowBase + x];
+            }
+          }
+          sortScratch.subarray(0, n).sort();
+          const medBg = sortScratch[n >> 1];
+
+          let nDark = 0, nBright = 0, nAll = 0;
+          for (let y = 0; y < H; y++) {
+            const rowBase = y * W;
+            for (let pass = 0; pass < 2; pass++) {
+              const x0 = pass === 0 ? 0 : (W - MARGIN_COLS);
+              const x1 = pass === 0 ? MARGIN_COLS : W;
+              for (let x = x0; x < x1; x++) {
+                const idx = rowBase + x;
+                const b = bgMedian2D[idx];
+                const l = lum2DBuf[idx];
+                sortScratch[nAll++] = l;
+                if (b <= medBg - 4) {
+                  edgeDarkBg[nDark] = b;
+                  edgeDarkCur[nDark] = l;
+                  nDark++;
+                } else if (b >= medBg + 4) {
+                  edgeBrightBg[nBright] = b;
+                  edgeBrightCur[nBright] = l;
+                  nBright++;
+                }
+              }
+            }
+          }
+
+          if (nDark >= Math.max(12, H * 2) && nBright >= Math.max(12, H * 2)) {
+            edgeDarkBg.subarray(0, nDark).sort();
+            edgeDarkCur.subarray(0, nDark).sort();
+            edgeBrightBg.subarray(0, nBright).sort();
+            edgeBrightCur.subarray(0, nBright).sort();
+            const mBgL = edgeDarkBg[nDark >> 1];
+            const mCurL = edgeDarkCur[nDark >> 1];
+            const mBgH = edgeBrightBg[nBright >> 1];
+            const mCurH = edgeBrightCur[nBright >> 1];
+            if ((mBgH - mBgL) >= 16) {
+              const gain = Math.max(0.65, Math.min(1.45, (mCurH - mCurL) / (mBgH - mBgL)));
+              const bias = Math.max(-45, Math.min(45, mCurL - gain * mBgL));
+              return { gain, bias };
+            }
+          }
+
+          sortScratch.subarray(0, nAll).sort();
+          const medCur = sortScratch[nAll >> 1];
+          if (medBg >= 18) {
+            return { gain: Math.max(0.68, Math.min(1.42, medCur / medBg)), bias: 0 };
+          }
+          return { gain: 1, bias: Math.max(-45, Math.min(45, medCur - medBg)) };
+        }
+
+        function extractClusterFromSmooth(tMs) {
           let maxVal = 0;
           for (let x = 0; x < W; x++) {
             if (smoothBuf[x] > maxVal) maxVal = smoothBuf[x];
@@ -8635,33 +8721,40 @@
           if (maxVal < minContrast) {
             return { detected: false, peak: maxVal, xNorm: null, xMinNorm: 0, xMaxNorm: 0, clipped: false, quality: 0 };
           }
-          const thr = Math.max(7.5, minContrast * 0.44);
+          const thr = Math.max(7.0, minContrast * 0.42);
           const runs = [];
-          let inRun = false, rs = 0, rPeak = 0, rMass = 0, rXSum = 0;
+          let inRun = false, rs = 0, rPeak = 0, rMass = 0, rWXSum = 0, rWMass = 0;
           for (let x = 0; x < W; x++) {
             const v = smoothBuf[x];
             if (v >= thr) {
-              if (!inRun) { inRun = true; rs = x; rPeak = 0; rMass = 0; rXSum = 0; }
+              if (!inRun) { inRun = true; rs = x; rPeak = 0; rMass = 0; rWXSum = 0; rWMass = 0; }
               if (v > rPeak) rPeak = v;
+              const w2 = v * v;
               rMass += v;
-              rXSum += x * v;
+              rWXSum += x * w2;
+              rWMass += w2;
             } else if (inRun) {
-              runs.push({ s: rs, e: x - 1, peak: rPeak, mass: rMass, xSum: rXSum });
+              if ((x - rs) >= 2 || rPeak >= minContrast * 1.15) {
+                runs.push({ s: rs, e: x - 1, peak: rPeak, mass: rMass, wXSum: rWXSum, wMass: rWMass });
+              }
               inRun = false;
             }
           }
-          if (inRun) runs.push({ s: rs, e: W - 1, peak: rPeak, mass: rMass, xSum: rXSum });
+          if (inRun && ((W - rs) >= 2 || rPeak >= minContrast * 1.15)) {
+            runs.push({ s: rs, e: W - 1, peak: rPeak, mass: rMass, wXSum: rWXSum, wMass: rWMass });
+          }
           if (runs.length === 0) {
             return { detected: false, peak: maxVal, xNorm: null, xMinNorm: 0, xMaxNorm: 0, clipped: false, quality: 0 };
           }
 
-          // Merge hollow racket hoop rim pairs separated by <= 16% frame width
-          const maxGap = Math.round(W * 0.16);
-          const maxSpan = Math.round(W * 0.36);
+          // Merge tight adjacent splits (<= 8.5% width) without spanning unrelated racket parts
+          const maxGap = Math.round(W * 0.085);
+          const maxSpan = Math.round(W * 0.20);
           const groups = [];
           for (let i = 0; i < runs.length; i++) {
-            let gS = runs[i].s, gE = runs[i].e, gPeak = runs[i].peak, gMass = runs[i].mass, gXSum = runs[i].xSum;
-            groups.push({ s: gS, e: gE, peak: gPeak, mass: gMass, centerNorm: (gXSum / gMass) / (W - 1) });
+            let gS = runs[i].s, gE = runs[i].e, gPeak = runs[i].peak;
+            let gMass = runs[i].mass, gWXSum = runs[i].wXSum, gWMass = runs[i].wMass;
+            groups.push({ s: gS, e: gE, peak: gPeak, mass: gMass, centerNorm: (gWXSum / gWMass) / (W - 1) });
             for (let j = i + 1; j < runs.length; j++) {
               const gap = runs[j].s - gE - 1;
               const spanCols = runs[j].e - gS;
@@ -8669,8 +8762,17 @@
               gE = runs[j].e;
               if (runs[j].peak > gPeak) gPeak = runs[j].peak;
               gMass += runs[j].mass;
-              gXSum += runs[j].xSum;
-              groups.push({ s: gS, e: gE, peak: gPeak, mass: gMass, centerNorm: (gXSum / gMass) / (W - 1) });
+              gWXSum += runs[j].wXSum;
+              gWMass += runs[j].wMass;
+              groups.push({ s: gS, e: gE, peak: gPeak, mass: gMass, centerNorm: (gWXSum / gWMass) / (W - 1) });
+            }
+          }
+
+          let extrapX = predX;
+          if (predX !== null && lastPredT !== null) {
+            const dtS = (tMs - lastPredT) / 1000;
+            if (dtS > 0 && dtS < 0.22) {
+              extrapX = Math.max(0.02, Math.min(0.98, predX + predVx * dtS));
             }
           }
 
@@ -8678,8 +8780,8 @@
           for (let i = 0; i < groups.length; i++) {
             const g = groups[i];
             if (g.peak < minContrast) continue;
-            const cont = predX !== null
-              ? (0.32 + 0.68 * Math.exp(-Math.pow((g.centerNorm - predX) / 0.18, 2)))
+            const cont = extrapX !== null
+              ? (0.18 + 0.82 * Math.exp(-Math.pow((g.centerNorm - extrapX) / 0.11, 2)))
               : 1.0;
             const score = g.mass * cont;
             if (score > bestScore) {
@@ -8701,6 +8803,21 @@
           };
         }
 
+        function rebuildStepIndices(convPeriodMs) {
+          if (records.length === 0) return;
+          records[0].h = 0;
+          for (let i = 1; i < records.length; i++) {
+            const prev = records[i - 1];
+            const cur = records[i];
+            const dtS = (cur.t - prev.t) / 1000;
+            const dhRaw = dtS / (convPeriodMs * 0.0005);
+            const dh = (cur.sgn === prev.sgn)
+              ? Math.max(2, 2 * Math.round(dhRaw / 2))
+              : Math.max(1, 2 * Math.round((dhRaw - 1) / 2) + 1);
+            cur.h = prev.h + dh;
+          }
+        }
+
         function retroRefineAllRecords() {
           if (records.length < 4 || !lastOLS.periodS) return;
           const convPeriodMs = Math.max(650, Math.min(2600, lastOLS.periodS * 1000));
@@ -8709,8 +8826,9 @@
             const rec = records[i];
             rec.t = fitHarmonicExtremum(sampleRing, rec.approxT, convOmega, rec.sgn, convPeriodMs);
           }
+          rebuildStepIndices(convPeriodMs);
           lastOLS = computeDualSemiPeriodOLS(records, convPeriodMs / 1000);
-          if (lastOLS.periodS > 0.65 && lastOLS.periodS < 2.6) {
+          if (lastOLS.periodS > 0.65 && lastOLS.periodS < 2.6 && lastOLS.sigmaMs < 15.0) {
             refPeriodMs = lastOLS.periodS * 1000;
           }
         }
@@ -8728,7 +8846,7 @@
               return null;
             }
             const dtS = (tStar - prev.t) / 1000;
-            if (dtS <= 0.12) return null;
+            if (dtS <= 0.14) return null;
             const dhRaw = dtS / (refPeriodMs * 0.0005);
             const dh = (ext.sgn === prev.sgn)
               ? Math.max(2, 2 * Math.round(dhRaw / 2))
@@ -8743,7 +8861,7 @@
 
           if (records.length >= 2) {
             lastOLS = computeDualSemiPeriodOLS(records, refPeriodMs / 1000);
-            if (records.length >= 4 && lastOLS.periodS > 0.65 && lastOLS.periodS < 2.6) {
+            if (records.length >= 6 && lastOLS.periodS > 0.65 && lastOLS.periodS < 2.6 && lastOLS.sigmaMs < 15.0) {
               refPeriodMs = lastOLS.periodS * 1000;
               if ((records.length === 8 || records.length === 16) && records.length !== lastRetroRefineCount) {
                 lastRetroRefineCount = records.length;
@@ -8756,7 +8874,7 @@
 
         function queueExtremum(sgn, approxT, approxX) {
           if (pendingExt) commitPendingExtremum();
-          const minHalfMs = Math.max(220, refPeriodMs * 0.30);
+          const minHalfMs = Math.max(260, refPeriodMs * 0.35);
           if ((approxT - lastCommittedApproxT) < minHalfMs) return;
           pendingExt = {
             sgn,
@@ -8786,7 +8904,17 @@
             };
           }
 
+          if (predX !== null && lastPredT !== null) {
+            const dtS = (tMs - lastPredT) / 1000;
+            if (dtS > 0.005 && dtS < 0.25) {
+              const instVx = (xNorm - predX) / dtS;
+              predVx = 0.55 * predVx + 0.45 * Math.max(-2.5, Math.min(2.5, instVx));
+            } else if (dtS >= 0.25) {
+              predVx = 0;
+            }
+          }
           predX = xNorm;
+          lastPredT = tMs;
           lastValidX = xNorm;
 
           if (!isCounting) {
@@ -8800,7 +8928,7 @@
               minExtX: null,
               maxExtX: null,
               span: 0,
-              nearEdge: xNorm <= 0.06 || xNorm >= 0.94
+              nearEdge: xNorm <= 0.08 || xNorm >= 0.92
             };
           }
 
@@ -8817,7 +8945,7 @@
             if (sx > rMax) rMax = sx;
           }
           const span = Math.max(0, rMax - rMin);
-          const hyst = Math.max(0.022, Math.min(0.11, 0.24 * (span * 0.5)));
+          const hyst = Math.max(0.030, Math.min(0.11, 0.28 * (span * 0.5)));
 
           if (span >= 0.08) {
             if (dir === 0) {
@@ -8875,12 +9003,11 @@
             minExtX,
             maxExtX,
             span,
-            nearEdge: xNorm <= 0.06 || xNorm >= 0.94
+            nearEdge: xNorm <= 0.08 || xNorm >= 0.92
           };
         }
 
-        function processLuminanceRow(tMs, lumRow, isCounting) {
-          for (let x = 0; x < W; x++) lumBuf[x] = lumRow[x];
+        function processLuminance2D(tMs, isCounting) {
           if (bgSlots.length === 0) {
             pushBgFrame(tMs, null, true);
             return Object.assign(
@@ -8889,9 +9016,26 @@
             );
           }
 
-          for (let x = 0; x < W; x++) diffBuf[x] = lumBuf[x] - bgMedian[x];
-          const globalShift = medianFloat32(diffBuf, W, sortScratch);
-          for (let x = 0; x < W; x++) residBuf[x] = Math.abs(diffBuf[x] - globalShift);
+          const { gain, bias } = estimateBorderExposure();
+          for (let p = 0; p < NPIX; p++) {
+            predBg2DBuf[p] = gain * bgMedian2D[p] + bias;
+          }
+
+          const invH = 1 / H;
+          for (let x = 0; x < W; x++) {
+            let colSum = 0;
+            const xm = x > 0 ? x - 1 : 0;
+            const xp = x < W - 1 ? x + 1 : W - 1;
+            for (let y = 0; y < H; y++) {
+              const rowOff = y * W;
+              const l = lum2DBuf[rowOff + x];
+              const d0 = Math.abs(l - predBg2DBuf[rowOff + x]);
+              const dL = Math.abs(l - predBg2DBuf[rowOff + xm]);
+              const dR = Math.abs(l - predBg2DBuf[rowOff + xp]);
+              colSum += Math.min(d0, dL, dR);
+            }
+            residBuf[x] = colSum * invH;
+          }
 
           smoothBuf[0] = 0.75 * residBuf[0] + 0.25 * residBuf[1];
           for (let x = 1; x < W - 1; x++) {
@@ -8899,7 +9043,7 @@
           }
           smoothBuf[W - 1] = 0.25 * residBuf[W - 2] + 0.75 * residBuf[W - 1];
 
-          const cl = extractClusterFromSmooth();
+          const cl = extractClusterFromSmooth(tMs);
           pushBgFrame(tMs, cl.detected ? cl.xNorm : null, false);
           const state = processPositionSample(tMs, cl.detected ? cl.xNorm : null, cl.quality, isCounting, cl.clipped);
           state.peakContrast = cl.peak;
@@ -8908,21 +9052,27 @@
           return state;
         }
 
+        function processLuminanceRow(tMs, lumRow, isCounting) {
+          for (let y = 0; y < H; y++) {
+            const rowOff = y * W;
+            for (let x = 0; x < W; x++) lum2DBuf[rowOff + x] = lumRow[x];
+          }
+          return processLuminance2D(tMs, isCounting);
+        }
+
         function processFramePixels(tMs, rgba, w, h, isCounting) {
           const cols = Math.min(W, w);
           const rows = Math.max(1, h);
-          const inv = 1 / (4 * rows);
-          for (let x = 0; x < cols; x++) {
-            let sum = 0;
-            let idx = x * 4;
-            const stride = w * 4;
-            for (let y = 0; y < rows; y++) {
-              sum += rgba[idx] + 2 * rgba[idx + 1] + rgba[idx + 2];
-              idx += stride;
+          for (let y = 0; y < H; y++) {
+            const sy = Math.min(rows - 1, Math.floor(((y + 0.5) * rows) / H));
+            const srcRow = sy * w * 4;
+            const dstRow = y * W;
+            for (let x = 0; x < cols; x++) {
+              const idx = srcRow + x * 4;
+              lum2DBuf[dstRow + x] = (rgba[idx] + 2 * rgba[idx + 1] + rgba[idx + 2]) * 0.25;
             }
-            lumBuf[x] = sum * inv;
           }
-          return processLuminanceRow(tMs, lumBuf, isCounting);
+          return processLuminance2D(tMs, isCounting);
         }
 
         function finalizeRun() {
@@ -9379,8 +9529,8 @@
         if (layout.changed) expLastRoiSyncKey = layout.key;
 
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        const bandY = vh * 0.41;
-        const bandH = Math.max(2, vh * 0.18);
+        const bandY = vh * 0.44;
+        const bandH = Math.max(2, vh * 0.12);
         ctx.drawImage(video, 0, bandY, vw, bandH, 0, 0, canvas.width, canvas.height);
         const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const state = expEngine.processFramePixels(now, imgData.data, canvas.width, canvas.height, expIsCounting);
