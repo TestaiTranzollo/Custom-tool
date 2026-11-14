@@ -1982,7 +1982,7 @@
       align-items: stretch
     }
 
-    .match-racket-grid > div {
+    .match-racket-grid>div {
       display: flex;
       flex-direction: column;
       justify-content: flex-end
@@ -2716,6 +2716,7 @@
       box-shadow: 0 0 16px rgba(56, 189, 248, 0.55) !important;
       position: relative;
     }
+
     .auto-cam-btn.active-camera::after {
       content: '● ATTIVA';
       position: absolute;
@@ -2747,6 +2748,7 @@
       font-size: 0.66rem;
       color: var(--text-secondary);
     }
+
     .auto-signal-instruction {
       white-space: nowrap;
       overflow: hidden;
@@ -2754,6 +2756,7 @@
       flex: 1;
       min-width: 0;
     }
+
     .auto-signal-trigger-badge {
       display: inline-block;
       min-width: 105px;
@@ -2776,6 +2779,7 @@
       box-sizing: border-box;
       align-items: stretch;
     }
+
     #auto-stats.layout-reticle .card-hero-swings,
     #auto-stats.layout-reticle .card-hero-sw,
     #auto-stats.layout-reticle .card-sub-stat {
@@ -2792,6 +2796,7 @@
       min-height: 52px;
       box-sizing: border-box;
     }
+
     #auto-stats.layout-reticle .auto-stat-lbl {
       font-size: 0.66rem;
       font-weight: 700;
@@ -2802,6 +2807,7 @@
       margin-bottom: 2px;
       text-align: center;
     }
+
     #auto-stats.layout-reticle .card-hero-swings .auto-stat-val {
       font-size: 1.5rem;
       font-weight: 800;
@@ -2810,6 +2816,7 @@
       font-variant-numeric: tabular-nums;
       font-feature-settings: "tnum";
     }
+
     #auto-stats.layout-reticle .card-hero-sw .auto-stat-val {
       font-size: 1.35rem;
       font-weight: 800;
@@ -2818,6 +2825,7 @@
       font-variant-numeric: tabular-nums;
       font-feature-settings: "tnum";
     }
+
     #auto-stats.layout-reticle .card-sub-stat .auto-stat-val {
       font-size: 1.15rem;
       font-weight: 700;
@@ -2826,9 +2834,11 @@
       font-variant-numeric: tabular-nums;
       font-feature-settings: "tnum";
     }
+
     #auto-preview-container.reticle-expanded {
       height: 135px !important;
     }
+
     #auto-preview-container.reticle-expanded #auto-target-box {
       width: 48px !important;
       height: 48px !important;
@@ -2855,6 +2865,7 @@
       align-items: center;
       justify-content: center;
     }
+
     #auto-countdown-val {
       font-size: 2.8rem;
       font-weight: 900;
@@ -2871,6 +2882,7 @@
       margin: 0 auto;
       text-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
     }
+
     #auto-countdown-msg {
       font-size: 0.72rem;
       color: #f1f5f9;
@@ -3001,7 +3013,8 @@
                 <div class="help-text" id="match-priority-hint"
                   style="font-size:0.74rem;line-height:1.3;margin-top:4px;padding:4px 8px;border-radius:6px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2)">
                   <strong>Matching Completo:</strong> allinea SW, Bilanciamento, Massa e MGR/I per rendere i telai
-                  identici.</div>
+                  identici.
+                </div>
               </div>
 
               <div class="form-group">
@@ -3648,12 +3661,18 @@
                   style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
                 <div id="auto-target-box"
                   style="display:none;position:absolute;top:50%;left:50%;width:48px;height:48px;transform:translate(-50%,-50%);border:2px solid rgba(239,68,68,0.85);border-radius:6px;box-shadow:0 0 10px rgba(0,0,0,0.6);pointer-events:none;transition:border-color 0.15s,transform 0.15s,box-shadow 0.15s;background:radial-gradient(circle,rgba(239,68,68,0.12) 0%,transparent 65%)">
-                  <div style="position:absolute;top:50%;left:4px;right:4px;height:1px;background:rgba(239,68,68,0.45);transform:translateY(-50%)"></div>
-                  <div style="position:absolute;left:50%;top:4px;bottom:4px;width:1px;background:rgba(239,68,68,0.45);transform:translateX(-50%)"></div>
+                  <div
+                    style="position:absolute;top:50%;left:4px;right:4px;height:1px;background:rgba(239,68,68,0.45);transform:translateY(-50%)">
+                  </div>
+                  <div
+                    style="position:absolute;left:50%;top:4px;bottom:4px;width:1px;background:rgba(239,68,68,0.45);transform:translateX(-50%)">
+                  </div>
                 </div>
                 <!-- Countdown Overlay (R2/R4 Inquadratura Stabile) -->
                 <div id="auto-countdown" style="display:none">
-                  <div id="auto-countdown-title" style="font-size:0.72rem;text-transform:uppercase;color:var(--text-secondary);letter-spacing:0.08em;margin-bottom:2px">Preparazione al tracciamento</div>
+                  <div id="auto-countdown-title"
+                    style="font-size:0.72rem;text-transform:uppercase;color:var(--text-secondary);letter-spacing:0.08em;margin-bottom:2px">
+                    Preparazione al tracciamento</div>
                   <div id="auto-countdown-val">3</div>
                   <div id="auto-countdown-msg">Posiziona la racchetta e lasciala oscillare liberamente</div>
                 </div>
@@ -3663,7 +3682,8 @@
               <div id="auto-pass-feedback"
                 style="margin-top:6px;padding:7px 10px;background:rgba(15,23,42,0.9);border:1px solid rgba(6,182,212,0.4);border-radius:6px;display:flex;flex-direction:column;gap:5px">
                 <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
-                  <label style="display:flex;align-items:center;gap:6px;font-size:0.74rem;font-weight:700;color:#e2e8f0;margin:0">
+                  <label
+                    style="display:flex;align-items:center;gap:6px;font-size:0.74rem;font-weight:700;color:#e2e8f0;margin:0">
                     <span>&#x1f4a1; Sensibilit&#xe0;:</span>
                     <select id="auto-light-sens" onchange="onAutoSensChange()"
                       style="padding:4px 8px;font-size:0.80rem;font-weight:700;border-radius:6px;border:1px solid var(--accent-cyan);background:var(--bg-card);color:#fff"
@@ -3674,11 +3694,13 @@
                     </select>
                   </label>
                   <span id="auto-pass-status"
-                    style="font-size:0.78rem;font-weight:700;color:#38bdf8;transition:color 0.15s;min-height:18px;display:inline-flex;align-items:center">In attesa avvio...</span>
+                    style="font-size:0.78rem;font-weight:700;color:#38bdf8;transition:color 0.15s;min-height:18px;display:inline-flex;align-items:center">In
+                    attesa avvio...</span>
                 </div>
 
                 <div style="display:flex;align-items:center;gap:8px">
-                  <span style="font-size:0.66rem;color:var(--text-secondary);white-space:nowrap;font-weight:600">Segnale Mirino:</span>
+                  <span style="font-size:0.66rem;color:var(--text-secondary);white-space:nowrap;font-weight:600">Segnale
+                    Mirino:</span>
                   <div
                     style="flex:1;height:10px;background:rgba(255,255,255,0.08);border-radius:5px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.12)">
                     <div id="auto-signal-bar"
@@ -3692,9 +3714,13 @@
                     style="font-size:0.74rem;font-weight:700;color:var(--accent-cyan);min-width:30px;text-align:right">0.0</span>
                 </div>
 
-                <div class="auto-signal-hint-row" style="display:flex;justify-content:space-between;align-items:center;min-height:20px;line-height:1.2;gap:6px;font-size:0.66rem;color:var(--text-secondary)">
-                  <span class="auto-signal-instruction" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0">Muovi racchetta per testare il picco</span>
-                  <span id="auto-signal-trigger-hint" class="auto-signal-trigger-badge" style="display:inline-block;min-width:105px;min-height:18px;line-height:18px;text-align:right;white-space:nowrap;flex-shrink:0;color:var(--accent-amber);font-weight:700"></span>
+                <div class="auto-signal-hint-row"
+                  style="display:flex;justify-content:space-between;align-items:center;min-height:20px;line-height:1.2;gap:6px;font-size:0.66rem;color:var(--text-secondary)">
+                  <span class="auto-signal-instruction"
+                    style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0">Muovi racchetta
+                    per testare il picco</span>
+                  <span id="auto-signal-trigger-hint" class="auto-signal-trigger-badge"
+                    style="display:inline-block;min-width:105px;min-height:18px;line-height:18px;text-align:right;white-space:nowrap;flex-shrink:0;color:var(--accent-amber);font-weight:700"></span>
                 </div>
               </div>
 
@@ -3739,7 +3765,8 @@
               </div>
 
               <!-- Azioni durante Misurazione Attiva -->
-              <div id="auto-measuring-actions" style="display:none;gap:6px;margin-top:8px;padding-bottom:max(4px,env(safe-area-inset-bottom,0px))">
+              <div id="auto-measuring-actions"
+                style="display:none;gap:6px;margin-top:8px;padding-bottom:max(4px,env(safe-area-inset-bottom,0px))">
                 <button id="btn-auto-stop" class="btn"
                   style="flex:2;padding:8px 8px;min-height:44px;font-size:0.86rem;font-weight:800;background:linear-gradient(135deg,var(--accent-green) 0%,#059669 100%);touch-action:manipulation;-webkit-tap-highlight-color:transparent"
                   onclick="stopAutoMeasurement(true)">&#x2705; Applica Misura</button>
@@ -6520,7 +6547,23 @@
       function renderCalcFavorites() { const container = document.getElementById('calc-fav-list'); if (!container) return; try { const list = JSON.parse(localStorage.getItem(CALC_FAV_KEY) || '[]'); if (list.length === 0) { container.innerHTML = '<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>'; return } container.innerHTML = list.map((item, idx) => '<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px"><div><div style="font-weight:700;color:#fff;font-size:0.9rem">\u2b50 ' + escapeHTML(item.name) + '</div><div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Base: ' + item.base.mass + ' g / ' + item.base.balance + ' cm / SW ' + item.base.sw + ' &middot; ' + (item.masses ? item.masses.length : 0) + ' masse &middot; <span style="opacity:0.6">' + item.date + '</span></div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-secondary" onclick="loadCalcFavorite(' + idx + ')" style="padding:6px 14px;font-size:0.8rem">Carica</button><button class="btn btn-secondary" onclick="deleteCalcFavorite(' + idx + ')" style="padding:6px 12px;font-size:0.8rem;color:var(--accent-red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);margin-left:8px" title="Elimina preferito">&#x2715; Elimina</button></div></div>').join('') } catch (e) { } }
       function loadCalcFavorite(idx) { try { const list = JSON.parse(localStorage.getItem(CALC_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; document.getElementById('calc-base-mass').value = item.base.mass; document.getElementById('calc-base-bal').value = item.base.balance; document.getElementById('calc-base-sw').value = item.base.sw; document.getElementById('calc-base-tw').value = item.base.tw; document.getElementById('calc-base-len').value = item.base.length; const tbody = document.getElementById('calc-mass-tbody'); tbody.innerHTML = ''; if (item.masses && item.masses.length) { item.masses.forEach(m => { const massVal = m.mass || 0; const lenVal = m.len !== undefined ? m.len : 0; const yVal = m.y !== undefined ? m.y : 0; const xVal = m.x !== undefined ? m.x : 0; addCalcMassRow(massVal, lenVal, yVal, xVal) }) } recalcCustomizationTab() } catch (e) { } }
       function deleteCalcFavorite(idx) { try { const list = JSON.parse(localStorage.getItem(CALC_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; if (!confirm('Sei sicuro di voler eliminare la configurazione preferita "' + item.name + '"?')) return; list.splice(idx, 1); localStorage.setItem(CALC_FAV_KEY, JSON.stringify(list)); renderCalcFavorites() } catch (e) { } }
-      // --- OLS Linear Regression Period Estimator ---
+      // --- OLS Linear Regression Period Estimator (Legacy + Dual Semi-Period Off-Center Compensated) ---
+      function estimatePriorPeriodS() {
+        const m = parseFloat(document.getElementById('pend-mass')?.value);
+        const b = parseFloat(document.getElementById('pend-balance')?.value);
+        const hng = parseFloat(document.getElementById('pend-hang')?.value);
+        if (!isNaN(m) && m >= 100 && m <= 600 && !isNaN(b) && b >= 15 && b <= 50 && !isNaN(hng)) {
+          const d = Math.abs(hng - b);
+          if (d >= 2.0) {
+            const tMin = 2 * Math.PI * Math.sqrt(d / PEND_G);
+            const mKg = m / 1000;
+            const tPrior = tMin * Math.sqrt(1 + (150 / (mKg * d * d)));
+            return Math.min(1.85, Math.max(0.95, tPrior));
+          }
+        }
+        return 1.36;
+      }
+
       function computeOLSPeriod(timestampsMs) {
         const n = timestampsMs.length - 1;
         if (n < 1) return { periodS: 0, sigmaMs: 0, totalTimeS: 0, n: 0 };
@@ -6559,7 +6602,174 @@
         };
       }
 
-      // --- Optical Camera Auto-Measurement with Adaptive Thresholding & OLS Regression ---
+      function computeDualSemiPeriodOLS(records, priorPeriodS) {
+        if (!records || records.length < 2) {
+          return { periodS: 0, sigmaMs: 0, totalTimeS: 0, n: 0, symmetryPct: 50, isSinglePassMode: false };
+        }
+        const nTotalOsc = Math.floor(records[records.length - 1].h / 2);
+        if (records.length === 2) {
+          const dh = records[1].h - records[0].h;
+          const dtMs = records[1].t - records[0].t;
+          const periodS = dh > 0 ? ((2.0 * dtMs / dh) / 1000) : 0;
+          return {
+            periodS,
+            sigmaMs: 0,
+            totalTimeS: periodS * Math.max(1, nTotalOsc),
+            n: Math.max(1, nTotalOsc),
+            symmetryPct: 50,
+            isSinglePassMode: dh >= 2
+          };
+        }
+
+        // 1. Auto-trim release transient on very first pass once >= 6 passes exist
+        let pts = records.slice();
+        if (pts.length >= 6) {
+          const fullCycles = [];
+          for (let i = 2; i < pts.length; i++) {
+            if (pts[i].h - pts[i - 2].h === 2) {
+              fullCycles.push(pts[i].t - pts[i - 2].t);
+            }
+          }
+          if (fullCycles.length >= 4) {
+            const sortedTail = fullCycles.slice(1).sort((a, b) => a - b);
+            const mid = Math.floor(sortedTail.length / 2);
+            const medT = sortedTail.length % 2 === 0
+              ? 0.5 * (sortedTail[mid - 1] + sortedTail[mid])
+              : sortedTail[mid];
+            if (Math.abs(fullCycles[0] - medT) > 15.0) {
+              pts = pts.slice(1);
+            }
+          }
+        }
+
+        // 2. Build consecutive semi-period midpoints (exact cancellation of off-center delta & damping drift)
+        const midPts = [];
+        const semiEven = [];
+        const semiOdd = [];
+        let maxDh = 0;
+
+        for (let i = 0; i < pts.length - 1; i++) {
+          const p0 = pts[i];
+          const p1 = pts[i + 1];
+          const dh = p1.h - p0.h;
+          if (dh > maxDh) maxDh = dh;
+          if (dh === 1) {
+            midPts.push({
+              x: (p0.h + p1.h) * 0.25, // ((h0 + h1) / 2) / 2 in full-oscillation units
+              y: 0.5 * (p0.t + p1.t)
+            });
+            const semiDt = p1.t - p0.t;
+            if (p0.h % 2 === 0) semiEven.push(semiDt);
+            else semiOdd.push(semiDt);
+          }
+        }
+
+        const isSinglePassMode = midPts.length < 2 && maxDh >= 2;
+        let fitPts = midPts;
+
+        if (fitPts.length < 2) {
+          // Extreme turning point (1 pass/cycle) or sparse midpoints: keep same parity to avoid off-center bias
+          const evenPts = pts.filter(p => p.h % 2 === 0).map(p => ({ x: p.h * 0.5, y: p.t }));
+          const oddPts = pts.filter(p => p.h % 2 === 1).map(p => ({ x: p.h * 0.5, y: p.t }));
+          fitPts = evenPts.length >= oddPts.length ? evenPts : oddPts;
+          if (fitPts.length < 2) {
+            fitPts = pts.map(p => ({ x: p.h * 0.5, y: p.t }));
+          }
+        }
+
+        const m = fitPts.length;
+        if (m < 2) {
+          return { periodS: 0, sigmaMs: 0, totalTimeS: 0, n: nTotalOsc, symmetryPct: 50, isSinglePassMode };
+        }
+
+        let sumX = 0, sumY = 0;
+        for (let i = 0; i < m; i++) {
+          sumX += fitPts[i].x;
+          sumY += fitPts[i].y;
+        }
+        let meanX = sumX / m;
+        let meanY = sumY / m;
+        let num = 0, den = 0;
+        for (let i = 0; i < m; i++) {
+          const dx = fitPts[i].x - meanX;
+          num += dx * (fitPts[i].y - meanY);
+          den += dx * dx;
+        }
+        let slopeMs = den > 0 ? (num / den) : ((priorPeriodS || 1.36) * 1000);
+
+        // 3. 1-step Robust Huber/Biweight IRLS refinement for m >= 5
+        let sse = 0;
+        if (m >= 5 && den > 0) {
+          const res = new Array(m);
+          for (let i = 0; i < m; i++) {
+            res[i] = Math.abs(fitPts[i].y - (meanY + slopeMs * (fitPts[i].x - meanX)));
+          }
+          const sortedRes = res.slice().sort((a, b) => a - b);
+          const medRes = sortedRes[Math.floor(m / 2)];
+          const scale = Math.max(3.0, 1.4826 * medRes);
+          const cutoff = 2.5 * scale;
+          const ws = new Array(m);
+          let wSum = 0;
+          meanX = 0;
+          meanY = 0;
+          for (let i = 0; i < m; i++) {
+            const r = res[i];
+            const w = r <= cutoff ? 1.0 : Math.pow(cutoff / r, 2);
+            ws[i] = w;
+            wSum += w;
+            meanX += w * fitPts[i].x;
+            meanY += w * fitPts[i].y;
+          }
+          if (wSum > 0) {
+            meanX /= wSum;
+            meanY /= wSum;
+            num = 0;
+            den = 0;
+            for (let i = 0; i < m; i++) {
+              const dx = fitPts[i].x - meanX;
+              num += ws[i] * dx * (fitPts[i].y - meanY);
+              den += ws[i] * dx * dx;
+            }
+            if (den > 0) slopeMs = num / den;
+            for (let i = 0; i < m; i++) {
+              const err = fitPts[i].y - (meanY + slopeMs * (fitPts[i].x - meanX));
+              sse += ws[i] * err * err;
+            }
+          }
+        } else {
+          for (let i = 0; i < m; i++) {
+            const err = fitPts[i].y - (meanY + slopeMs * (fitPts[i].x - meanX));
+            sse += err * err;
+          }
+        }
+
+        const dof = Math.max(1, m - 2);
+        const overlapFactor = fitPts === midPts ? Math.sqrt(1.5) : 1.0;
+        const sigmaMs = den > 0 ? (Math.sqrt(sse / dof) / Math.sqrt(den) * overlapFactor) : 0;
+        const periodS = slopeMs / 1000;
+
+        let symmetryPct = 50;
+        if (semiEven.length > 0 && semiOdd.length > 0) {
+          const seSorted = semiEven.slice().sort((a, b) => a - b);
+          const soSorted = semiOdd.slice().sort((a, b) => a - b);
+          const medE = seSorted[Math.floor(seSorted.length / 2)];
+          const medO = soSorted[Math.floor(soSorted.length / 2)];
+          if (medE + medO > 0) {
+            symmetryPct = Math.max(5, Math.min(50, Math.round((Math.min(medE, medO) / (medE + medO)) * 100)));
+          }
+        }
+
+        return {
+          periodS,
+          sigmaMs,
+          totalTimeS: periodS * nTotalOsc,
+          n: nTotalOsc,
+          symmetryPct,
+          isSinglePassMode
+        };
+      }
+
+      // --- Optical Camera Auto-Measurement with Pulse-Coalescing Hybrid Centroid & Off-Center OLS ---
       let autoMode = null;
       let autoStream = null;
       let autoRafId = null;
@@ -6572,23 +6782,31 @@
       let autoOscillations = 0;
       let autoCountdownInterval = null;
       let autoPrevImageData = null;
-      let autoTransitState = 'IDLE'; // 'IDLE' or 'IN_TRANSIT'
-      let autoBgBuffer = new Float32Array(32 * 32 * 3);
-      let autoBgAnchorFrames = 0;
-      let autoPeakBgDiff = 0;
-      let autoQuietSince = 0;
-      let autoMotionlessSince = 0;
+      let autoInPassPulse = false;
+      let autoPulseStartTime = 0;
+      let autoPulseLastActiveTime = 0;
+      let autoLastPulseEndTime = 0;
+      let autoPulseSamples = [];
+      let autoPrePulseLum = null;
+      let autoRollingPeakDiff = 35;
+      let autoPreviewTriggerUntil = 0;
+      let autoHalfStepRecords = [];
+      let autoRefPeriodS = 1.36;
       let autoLastFrameTime = 0;
 
       function resetTransitStateMachine() {
-        autoTransitState = 'IDLE';
-        autoBgAnchorFrames = 0;
-        autoPeakBgDiff = 0;
-        autoQuietSince = 0;
-        autoMotionlessSince = 0;
+        autoInPassPulse = false;
+        autoPulseStartTime = 0;
+        autoPulseLastActiveTime = 0;
+        autoLastPulseEndTime = 0;
         autoLastPassTime = 0;
-        if (autoBgBuffer) {
-          autoBgBuffer.fill(0);
+        autoPulseSamples = [];
+        autoPrePulseLum = null;
+        autoRollingPeakDiff = 35;
+        autoPreviewTriggerUntil = 0;
+        const targetBox = document.getElementById('auto-target-box');
+        if (targetBox) {
+          targetBox.style.borderColor = 'rgba(239,68,68,0.85)';
         }
       }
       let autoSmoothFps = 60;
@@ -6921,6 +7139,8 @@
         autoLastFullOscillationTime = 0;
         autoPasses = 0;
         autoOscillations = 0;
+        autoHalfStepRecords = [];
+        autoRefPeriodS = estimatePriorPeriodS();
         autoPrevImageData = null;
         resetTransitStateMachine();
         autoLastFrameTime = performance.now();
@@ -6939,6 +7159,9 @@
         document.getElementById('auto-val-avg').textContent = '0.000 s';
         const liveSwEl = document.getElementById('auto-val-live-sw');
         if (liveSwEl) liveSwEl.textContent = '---';
+
+        const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
+        if (triggerHintEl) triggerHintEl.textContent = '';
 
         const passStatusEl = document.getElementById('auto-pass-status');
         if (passStatusEl) {
@@ -6960,7 +7183,26 @@
           clearInterval(autoCountdownInterval);
           autoCountdownInterval = null;
         }
+        autoHalfStepRecords = [];
+        autoRefPeriodS = estimatePriorPeriodS();
+        autoOscillations = 0;
+        autoPasses = 0;
+        autoAvgHistory = [];
+        autoOscTimestamps = [];
+        autoCurrentOLSPeriodS = 0;
+        autoCurrentOLSSigmaMs = 0;
         resetTransitStateMachine();
+
+        const countdownTitleEl = document.getElementById('auto-countdown-title');
+        const countdownValEl = document.getElementById('auto-countdown-val');
+        if (countdownTitleEl) countdownTitleEl.textContent = 'Preparazione al tracciamento';
+        if (countdownValEl) {
+          countdownValEl.style.fontSize = '3.2rem';
+          countdownValEl.style.color = 'var(--accent-amber)';
+        }
+        const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
+        if (triggerHintEl) triggerHintEl.textContent = '';
+
         const valSwings = document.getElementById('auto-val-swings');
         const valAvg = document.getElementById('auto-val-avg');
         const liveSwEl = document.getElementById('auto-val-live-sw');
@@ -6999,6 +7241,59 @@
         }, 180);
       }
 
+      function finalizeOpticalPulse(now, threshVal) {
+        const samples = autoPulseSamples;
+        const closedAt = autoPulseLastActiveTime || now;
+        autoInPassPulse = false;
+        autoLastPulseEndTime = closedAt;
+        autoPulseSamples = [];
+
+        if (!samples || !samples.length) return;
+
+        let peakDiff = 0;
+        let peakLumDev = 0;
+        for (let i = 0; i < samples.length; i++) {
+          const s = samples[i];
+          if (s.diff > peakDiff) peakDiff = s.diff;
+          if (s.lumDev > peakLumDev) peakLumDev = s.lumDev;
+        }
+
+        const minProminence = autoIsCounting
+          ? Math.max(threshVal, autoRollingPeakDiff * 0.30)
+          : threshVal;
+
+        const targetBox = document.getElementById('auto-target-box');
+        if (peakDiff >= minProminence) {
+          if (autoIsCounting) {
+            autoRollingPeakDiff = 0.80 * autoRollingPeakDiff + 0.20 * peakDiff;
+          }
+          const cutDiff = peakDiff * 0.30;
+          const cutLum = peakLumDev * 0.45;
+          let twSum = 0;
+          let wSum = 0;
+          for (let i = 0; i < samples.length; i++) {
+            const s = samples[i];
+            const w = Math.max(0, s.diff - cutDiff) + 1.5 * Math.max(0, s.lumDev - cutLum);
+            if (w > 0) {
+              twSum += s.t * w;
+              wSum += w;
+            }
+          }
+          const passTime = wSum > 0 ? (twSum / wSum) : closedAt;
+          autoLastPassTime = passTime;
+          flashTargetBoxPass();
+          if (autoIsCounting) {
+            registerPass(passTime, peakDiff);
+          } else {
+            autoPreviewTriggerUntil = now + 450;
+            const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
+            if (triggerHintEl) triggerHintEl.textContent = '⚡ Rilevato picco!';
+          }
+        } else if (targetBox) {
+          targetBox.style.borderColor = 'rgba(239,68,68,0.85)';
+        }
+      }
+
       function processCameraFrame(now) {
         if (!autoIsStreaming) return;
 
@@ -7019,38 +7314,39 @@
 
         const vw = video.videoWidth;
         const vh = video.videoHeight;
-        if (vw && vh) {
-          const size = Math.min(vw, vh) * 0.2;
-          const sx = (vw - size) / 2;
-          const sy = (vh - size) / 2;
-          ctx.drawImage(video, sx, sy, size, size, 0, 0, canvas.width, canvas.height);
+        if (!vw || !vh) {
+          if (autoIsStreaming) {
+            autoRafId = requestAnimationFrame(processCameraFrame);
+          }
+          return;
         }
+
+        const size = Math.min(vw, vh) * 0.2;
+        const sx = (vw - size) / 2;
+        const sy = (vh - size) / 2;
+        ctx.drawImage(video, sx, sy, size, size, 0, 0, canvas.width, canvas.height);
+
         const currentImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = currentImageData.data;
         const len = data.length;
         const numChannels = (len / 4) * 3;
 
         const threshVal = parseFloat(document.getElementById('auto-light-sens')?.value || '15');
-        const quietMotionThresh = Math.min(threshVal * 0.45, 5.0);
-        const settleThresh = Math.max(threshVal * 0.68, 6.5);
 
         if (autoPrevImageData) {
           const prevData = autoPrevImageData.data;
           let diffSum = 0;
+          let lumSum = 0;
           for (let i = 0; i < len; i += 4) {
-            diffSum += Math.abs(data[i] - prevData[i]) + Math.abs(data[i + 1] - prevData[i + 1]) + Math.abs(data[i + 2] - prevData[i + 2]);
+            const r = data[i], g = data[i + 1], b = data[i + 2];
+            diffSum += Math.abs(r - prevData[i]) + Math.abs(g - prevData[i + 1]) + Math.abs(b - prevData[i + 2]);
+            lumSum += r + g + b;
           }
           const avgDiff = diffSum / numChannels;
-
-          let bgDiffSum = 0;
-          let cIdx = 0;
-          for (let i = 0; i < len; i += 4) {
-            bgDiffSum += Math.abs(data[i] - autoBgBuffer[cIdx]) +
-                         Math.abs(data[i + 1] - autoBgBuffer[cIdx + 1]) +
-                         Math.abs(data[i + 2] - autoBgBuffer[cIdx + 2]);
-            cIdx += 3;
+          const roiLum = lumSum / numChannels;
+          if (autoPrePulseLum === null) {
+            autoPrePulseLum = roiLum;
           }
-          const bgDiff = autoBgAnchorFrames > 0 ? (bgDiffSum / numChannels) : 0;
 
           // Purely visual smoothing filter (Asymmetric EMA: fast attack, smooth decay) (R3)
           const vAlpha = avgDiff > autoVisualSignal ? 0.45 : 0.14;
@@ -7076,103 +7372,55 @@
             threshMarker.style.left = Math.min(100, Math.max(0, Math.round((threshVal / 35) * 100))) + '%';
           }
 
-          // Optical Transit State Machine (Anti-Double Trigger)
-          if (autoTransitState === 'IDLE') {
-            // Background Model: Update via EMA ONLY while in IDLE and motion is calm
-            if (avgDiff < quietMotionThresh) {
-              const alpha = autoBgAnchorFrames < 2 ? 0.45 : 0.12;
-              if (autoBgAnchorFrames === 0) {
-                let c = 0;
-                for (let i = 0; i < len; i += 4) {
-                  autoBgBuffer[c] = data[i];
-                  autoBgBuffer[c + 1] = data[i + 1];
-                  autoBgBuffer[c + 2] = data[i + 2];
-                  c += 3;
-                }
-                autoBgAnchorFrames = 1;
-              } else {
-                let c = 0;
-                for (let i = 0; i < len; i += 4) {
-                  autoBgBuffer[c] += alpha * (data[i] - autoBgBuffer[c]);
-                  autoBgBuffer[c + 1] += alpha * (data[i + 1] - autoBgBuffer[c + 1]);
-                  autoBgBuffer[c + 2] += alpha * (data[i + 2] - autoBgBuffer[c + 2]);
-                  c += 3;
-                }
-                autoBgAnchorFrames++;
-              }
+          const effThresh = autoIsCounting
+            ? Math.max(threshVal, Math.min(threshVal * 1.65, autoRollingPeakDiff * 0.28))
+            : threshVal;
+          const lowThresh = Math.max(threshVal * 0.58, effThresh * 0.55);
+          const targetBox = document.getElementById('auto-target-box');
+
+          // Gradual decay of rolling peak when idle for > 2.5s
+          if (!autoInPassPulse && autoLastPassTime > 0 && (now - autoLastPassTime) > 2500) {
+            const baselinePeak = Math.max(threshVal * 2.2, 25);
+            const decayAlpha = Math.min(0.15, Math.max(1, dt || 16.6) / 1500);
+            autoRollingPeakDiff = autoRollingPeakDiff + decayAlpha * (baselinePeak - autoRollingPeakDiff);
+          }
+
+          // Time-Bounded Pulse-Coalescing & Hybrid Centroid Optical Transit Detector
+          if (!autoInPassPulse) {
+            if (avgDiff < threshVal && diffSum > 0) {
+              autoPrePulseLum = 0.75 * autoPrePulseLum + 0.25 * roiLum;
             }
-
-            // Trigger (IDLE -> IN_TRANSIT)
-            if (avgDiff >= threshVal && autoBgAnchorFrames >= 2 && (now - autoLastPassTime) >= 150) {
-              autoTransitState = 'IN_TRANSIT';
-              autoPeakBgDiff = bgDiff;
-              autoLastPassTime = now;
-              autoQuietSince = 0;
-              autoMotionlessSince = 0;
-
-              flashTargetBoxPass();
-              if (autoIsCounting) {
-                registerPass(now);
-              } else {
-                const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
-                if (triggerHintEl) triggerHintEl.textContent = '⚡ Rilevato picco!';
+            if ((now - autoLastPassTime) >= 210 && (now - autoLastPulseEndTime) >= 105 && avgDiff >= effThresh) {
+              autoInPassPulse = true;
+              autoPulseStartTime = now;
+              autoPulseLastActiveTime = now;
+              autoPulseSamples = [{ t: now, diff: avgDiff, lumDev: Math.abs(roiLum - autoPrePulseLum) }];
+              if (targetBox) {
+                targetBox.style.borderColor = '#38bdf8';
               }
             } else if (!autoIsCounting) {
               const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
-              if (triggerHintEl && triggerHintEl.textContent && avgDiff < threshVal * 0.7) {
+              if (triggerHintEl && triggerHintEl.textContent && now > autoPreviewTriggerUntil && avgDiff < threshVal * 0.7) {
                 triggerHintEl.textContent = '';
               }
             }
-          } else if (autoTransitState === 'IN_TRANSIT') {
-            // Re-arm (IN_TRANSIT -> IDLE): Track peak bg deviation, settle motion, restore background
-            autoPeakBgDiff = Math.max(autoPeakBgDiff, bgDiff);
-            const bgExitThresh = Math.max(20, Math.min(28, threshVal * 1.8), Math.min(36, autoPeakBgDiff * 0.42));
-
-            // Motion settle tracking (continuous for >= 50 ms, independent of frame rate)
-            if (avgDiff < settleThresh) {
-              if (autoQuietSince === 0) {
-                const frameDt = Math.max(1, Math.min(200, dt || 16.6));
-                autoQuietSince = now - frameDt;
+          } else {
+            if ((now - autoPulseLastActiveTime) <= 115 && (now - autoPulseStartTime) <= 350) {
+              if (diffSum > 0) {
+                autoPulseSamples.push({ t: now, diff: avgDiff, lumDev: Math.abs(roiLum - autoPrePulseLum) });
+              }
+              if (avgDiff >= lowThresh) {
+                autoPulseLastActiveTime = now;
               }
             } else {
-              autoQuietSince = 0;
-            }
-
-            // Motionless safety escape tracking (>= 3000 ms)
-            if (avgDiff < quietMotionThresh) {
-              if (autoMotionlessSince === 0) {
-                const frameDt = Math.max(1, Math.min(200, dt || 16.6));
-                autoMotionlessSince = now - frameDt;
-              }
-            } else {
-              autoMotionlessSince = 0;
-            }
-
-            const motionSettled = autoQuietSince > 0 && (now - autoQuietSince) >= 50;
-            const bgRestored = bgDiff <= bgExitThresh;
-            const safetyEscape = autoMotionlessSince > 0 && (now - autoMotionlessSince) >= 3000;
-
-            if ((motionSettled && bgRestored) || safetyEscape) {
-              if (safetyEscape) {
-                // Safety escape: re-anchor background to new static scene
-                let c = 0;
-                for (let i = 0; i < len; i += 4) {
-                  autoBgBuffer[c] = data[i];
-                  autoBgBuffer[c + 1] = data[i + 1];
-                  autoBgBuffer[c + 2] = data[i + 2];
-                  c += 3;
-                }
-                autoBgAnchorFrames = 2;
-              }
-              autoTransitState = 'IDLE';
-              autoQuietSince = 0;
-              autoMotionlessSince = 0;
-              autoPeakBgDiff = 0;
-
-              if (!autoIsCounting) {
-                const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
-                if (triggerHintEl && triggerHintEl.textContent) {
-                  triggerHintEl.textContent = '';
+              finalizeOpticalPulse(now, threshVal);
+              if (!autoInPassPulse && autoIsStreaming && (now - autoLastPassTime) >= 210 && (now - autoLastPulseEndTime) >= 105 && avgDiff >= effThresh) {
+                autoInPassPulse = true;
+                autoPulseStartTime = now;
+                autoPulseLastActiveTime = now;
+                autoPulseSamples = [{ t: now, diff: avgDiff, lumDev: Math.abs(roiLum - autoPrePulseLum) }];
+                if (targetBox) {
+                  targetBox.style.borderColor = '#38bdf8';
                 }
               }
             }
@@ -7185,12 +7433,44 @@
         }
       }
 
-      function registerPass(passTime) {
-        const passesPerOscillation = 2;
+      function updateLiveOpticalEstimate(ols) {
+        if (!ols || ols.periodS <= 0) return;
+        autoCurrentOLSPeriodS = ols.periodS;
+        autoCurrentOLSSigmaMs = ols.sigmaMs;
+        autoRefPeriodS = 0.25 * estimatePriorPeriodS() + 0.75 * ols.periodS;
+
+        const avgEl = document.getElementById('auto-val-avg');
+        if (avgEl) avgEl.textContent = ols.periodS.toFixed(4) + ' s';
+
+        const m = parseFloat(document.getElementById('pend-mass').value);
+        const b = parseFloat(document.getElementById('pend-balance').value);
+        const hng = parseFloat(document.getElementById('pend-hang').value);
+        const liveDet = computePendulumDetails(m, b, hng, Math.max(1, ols.n || 1), ols.periodS * Math.max(1, ols.n || 1));
+        const liveSwEl = document.getElementById('auto-val-live-sw');
+        if (liveSwEl) {
+          liveSwEl.textContent = (liveDet.valid && liveDet.sw > 100 && liveDet.sw < 600) ? (liveDet.sw.toFixed(1) + ' kg\u00b7cm\u00b2') : '---';
+        }
+
+        if (autoHalfStepRecords.length >= 3) {
+          const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
+          if (triggerHintEl) {
+            if (ols.isSinglePassMode) {
+              triggerHintEl.textContent = '📐 Estremo (1 pass/ciclo)';
+            } else if (ols.symmetryPct >= 44) {
+              triggerHintEl.textContent = '🎯 Centrato (' + ols.symmetryPct + '%/' + (100 - ols.symmetryPct) + '%)';
+            } else {
+              triggerHintEl.textContent = '↔️ Off-center comp. (' + ols.symmetryPct + '%/' + (100 - ols.symmetryPct) + '%)';
+            }
+          }
+        }
+      }
+
+      function registerPass(passTime, passPeak = 0) {
         const passStatusEl = document.getElementById('auto-pass-status');
 
         // 1° passaggio rilevato: aggancia istantaneamente il cronometro al punto zero
-        if (autoStartTime === 0) {
+        if (autoHalfStepRecords.length === 0) {
+          autoHalfStepRecords.push({ h: 0, t: passTime, peak: passPeak });
           autoStartTime = passTime;
           autoLastPassTime = passTime;
           autoLastFullOscillationTime = passTime;
@@ -7204,20 +7484,82 @@
           return;
         }
 
-        autoPasses++;
+        const last = autoHalfStepRecords[autoHalfStepRecords.length - 1];
+        const dtS = (passTime - last.t) / 1000;
+
+        // Filtro rimbalzo ravvicinato (< 16% del periodo atteso)
+        if (dtS < 0.16 * autoRefPeriodS) {
+          return;
+        }
+
+        const prev2 = autoHalfStepRecords.length >= 2 ? autoHalfStepRecords[autoHalfStepRecords.length - 2] : null;
+        const prevDtS = prev2 ? ((last.t - prev2.t) / 1000) : 0;
+        const pairSIfPrev = prev2 ? ((passTime - prev2.t) / 1000) : 0;
+        const prevWasShortHalf = prev2 && (last.h - prev2.h === 1) && prevDtS < 0.42 * autoRefPeriodS;
+        const isHalfStep = dtS <= 0.84 * autoRefPeriodS || (prevWasShortHalf && pairSIfPrev <= 1.22 * autoRefPeriodS);
+
+        if (isHalfStep) {
+          // Caso A: Semiperiodo (centrato o decentrato) con invariante fisico sul periodo a 2 passaggi
+          if (prev2 && (last.h + 1) - prev2.h === 2) {
+            const pairS = (passTime - prev2.t) / 1000;
+            if (pairS < 0.78 * autoRefPeriodS) {
+              if (passPeak >= (last.peak || 0) * 0.95 || prevDtS < 0.28 * autoRefPeriodS) {
+                // Auto-guarigione di un pre-trigger spurio
+                autoHalfStepRecords[autoHalfStepRecords.length - 1] = { h: last.h, t: passTime, peak: passPeak };
+                autoLastPassTime = passTime;
+              }
+              return;
+            }
+          }
+          autoHalfStepRecords.push({ h: last.h + 1, t: passTime, peak: passPeak });
+        } else if (dtS <= 1.25 * autoRefPeriodS) {
+          // Caso B: Periodo intero singolo (passaggio di ritorno mancato o posizionamento all'estremo)
+          autoHalfStepRecords.push({ h: last.h + 2, t: passTime, peak: passPeak });
+        } else {
+          // Caso C: Pausa lunga / riavvio movimento
+          if (last.h <= 3) {
+            autoHalfStepRecords = [{ h: 0, t: passTime, peak: passPeak }];
+            autoStartTime = passTime;
+            autoLastPassTime = passTime;
+            autoLastFullOscillationTime = passTime;
+            autoPasses = 0;
+            autoOscillations = 0;
+            autoAvgHistory = [];
+            autoOscTimestamps = [passTime];
+            if (passStatusEl) {
+              passStatusEl.textContent = '🟢 Avvio riagganciato! (Inizio oscillazione 1)';
+              passStatusEl.style.color = '#10b981';
+            }
+            return;
+          }
+          const stepsJumped = Math.max(2, Math.round(dtS / (autoRefPeriodS * 0.5)));
+          autoHalfStepRecords.push({ h: last.h + stepsJumped, t: passTime, peak: passPeak });
+        }
+
+        const curr = autoHalfStepRecords[autoHalfStepRecords.length - 1];
+        autoPasses = curr.h;
         autoLastPassTime = passTime;
 
-        if (autoPasses % passesPerOscillation !== 0) {
-          // Passaggio intermedio (Andata, ½ ciclo)
+        const prevOsc = autoOscillations;
+        const newOsc = Math.floor(curr.h / 2);
+        const completedFullOsc = newOsc > prevOsc;
+
+        const ols = computeDualSemiPeriodOLS(autoHalfStepRecords, autoRefPeriodS);
+
+        if (!completedFullOsc) {
+          // Passaggio intermedio (Semiperiodo andata)
           if (passStatusEl) {
-            passStatusEl.textContent = '⚡ Passaggio andata rilevato (½)';
+            passStatusEl.textContent = '⚡ Semiperiodo andata rilevato (½)';
             passStatusEl.style.color = '#38bdf8';
+          }
+          if (curr.h >= 3 && ols.periodS > 0) {
+            updateLiveOpticalEstimate(ols);
           }
           return;
         }
 
-        // Passaggio di ritorno: 1 oscillazione intera completata!
-        autoOscillations++;
+        // Oscillazione intera completata!
+        autoOscillations = newOsc;
         autoLastFullOscillationTime = passTime;
         autoOscTimestamps.push(passTime);
 
@@ -7226,34 +7568,25 @@
           passStatusEl.style.color = '#10b981';
         }
 
-        const ols = computeOLSPeriod(autoOscTimestamps);
-        autoCurrentOLSPeriodS = ols.periodS;
-        autoCurrentOLSSigmaMs = ols.sigmaMs;
-
         document.getElementById('auto-val-swings').textContent = autoOscillations;
-        document.getElementById('auto-val-avg').textContent = ols.periodS.toFixed(4) + ' s';
-
-        const m = parseFloat(document.getElementById('pend-mass').value);
-        const b = parseFloat(document.getElementById('pend-balance').value);
-        const hng = parseFloat(document.getElementById('pend-hang').value);
-        const liveDet = computePendulumDetails(m, b, hng, ols.n, ols.totalTimeS);
-        const liveSwEl = document.getElementById('auto-val-live-sw');
-        if (liveSwEl) {
-          liveSwEl.textContent = (liveDet.valid && liveDet.sw > 100 && liveDet.sw < 600) ? (liveDet.sw.toFixed(1) + ' kg\u00b7cm\u00b2') : '---';
-        }
+        updateLiveOpticalEstimate(ols);
 
         const stopMode = document.getElementById('auto-stop-mode').value;
 
         if (stopMode === 'auto') {
-          autoAvgHistory.push(ols.periodS);
-          if (autoAvgHistory.length > 8) {
-            autoAvgHistory.shift();
+          if (ols.periodS > 0) {
+            autoAvgHistory.push(ols.periodS);
+            if (autoAvgHistory.length > 6) {
+              autoAvgHistory.shift();
+            }
           }
 
-          if (autoOscillations >= 10 && autoAvgHistory.length === 8) {
+          if (autoOscillations >= 10 && autoAvgHistory.length === 6) {
             const maxAvg = Math.max(...autoAvgHistory);
             const minAvg = Math.min(...autoAvgHistory);
-            if ((maxAvg - minAvg) <= 0.0018 && ols.sigmaMs <= 0.8) {
+            const spread = maxAvg - minAvg;
+            if ((spread <= 0.0018 && ols.sigmaMs <= 0.85) ||
+              (autoOscillations >= 14 && spread <= 0.0022 && ols.sigmaMs <= 1.0)) {
               completeAutoMeasurementStable('Misurazione OLS Stabile Terminata! (\u00b1' + ols.sigmaMs.toFixed(2) + ' ms)');
             }
           }
@@ -7315,6 +7648,7 @@
         if (btnBack) btnBack.classList.remove('active-camera');
 
         autoIsCounting = false;
+        autoIsStreaming = false;
         resetTransitStateMachine();
         playBeep();
         if (autoRafId) { cancelAnimationFrame(autoRafId); autoRafId = null; }
@@ -7408,11 +7742,14 @@
 
         autoOscillations = 0;
         autoPasses = 0;
+        autoHalfStepRecords = [];
+        autoRefPeriodS = estimatePriorPeriodS();
         autoStartTime = 0;
         autoLastPassTime = 0;
         autoLastFullOscillationTime = 0;
         autoCurrentOLSPeriodS = 0;
         autoCurrentOLSSigmaMs = 0;
+        autoAvgHistory = [];
         autoOscTimestamps = [];
         autoMeasurementSaved = false;
       }
