@@ -3006,6 +3006,35 @@
       white-space: normal;
       overflow-wrap: break-word;
     }
+
+    #app-toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(22px, env(safe-area-inset-bottom, 22px));
+      transform: translateX(-50%) translateY(16px);
+      z-index: 9999;
+      background: rgba(15, 23, 42, 0.95);
+      color: #f8fafc;
+      border: 1px solid rgba(16, 185, 129, 0.6);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), 0 0 16px rgba(16, 185, 129, 0.22);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      max-width: calc(100vw - 28px);
+      text-align: center;
+      line-height: 1.3;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.22s ease;
+    }
+
+    #app-toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
   </style>
 </head>
 
@@ -3037,7 +3066,7 @@
       <div id="app-version-badge"
         style="font-size:0.72rem;font-weight:600;color:var(--accent-cyan);background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.28);border-radius:999px;padding:4px 10px;white-space:nowrap;letter-spacing:0.02em"
         title="Versione e data ultimo aggiornamento">
-        v2.7 &middot; 14/11/2026 19:50
+        v2.8 &middot; 14/11/2026 22:02
       </div>
     </header>
 
@@ -4278,6 +4307,8 @@
         </div>
       </div>
     </div>
+
+    <div id="app-toast" role="status" aria-live="polite"></div>
 
     <script>
       class Racket {
@@ -5537,6 +5568,7 @@
         const it = window._importableMatchItems && window._importableMatchItems[idx];
         if (!it) return;
         addMatchRacketRow(it.name, it.mass, it.balance, it.sw, it.tw, 68.58);
+        showAppToast('\u2705 "' + it.name + '" aggiunta al Lotto Matching');
       }
       function computeFleetSpread(racketObjs) {
         if (!racketObjs || racketObjs.length === 0) return { sw: 0, mgri: 0, bal: 0, mass: 0, rw: 0, tw: 0 };
@@ -6102,6 +6134,7 @@
           onMatchConfigChange();
           updateMatchDiagnostics();
           saveMatchState();
+          showAppToast('\u2705 Set "' + item.name + '" caricato (' + item.rackets.length + ' telai)');
         } catch (e) { }
       }
       function deleteMatchFavorite(idx) {
@@ -6411,14 +6444,14 @@
         } catch (e) { }
       }
       function renderPendFavorites() { const container = document.getElementById('pend-fav-list'); if (!container) return; try { const list = JSON.parse(localStorage.getItem(PEND_FAV_KEY) || '[]'); if (list.length === 0) { container.innerHTML = '<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>'; return } container.innerHTML = list.map((item, idx) => { const freshSw = computePendulumSW(item.data.mass, item.data.balance, item.data.hang, item.data.nswings, item.data.time); const sw = !isNaN(freshSw) && freshSw > 0 ? freshSw : item.data.sw; const swTxt = !isNaN(sw) && sw > 0 ? ' / <strong style="color:var(--accent-cyan)">SW ' + sw.toFixed(1) + '</strong>' : ''; const rk = !isNaN(sw) && sw > 0 ? new Racket(item.data.mass, item.data.balance, sw, item.data.tw || 14) : null; const mgriTxt = rk ? ' / MGR/I ' + rk.mgr_i.toFixed(2) : ''; return '<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:10px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><div><div style="font-weight:700;color:#fff;font-size:0.86rem">\u2b50 ' + escapeHTML(item.name) + '</div><div style="font-size:0.73rem;color:var(--text-secondary);margin-top:2px">Massa: ' + item.data.mass + 'g / Bil: ' + item.data.balance + 'cm' + swTxt + mgriTxt + ' &middot; <span style="opacity:0.6">' + item.date + '</span></div></div><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><button class="btn btn-secondary" onclick="loadPendFavorite(' + idx + ')" style="padding:5px 10px;font-size:0.75rem">Carica</button><button class="btn" onclick="loadPendFavToManual(' + idx + ')" style="width:auto;padding:5px 10px;font-size:0.75rem;background:linear-gradient(135deg,var(--accent-amber) 0%,#d97706 100%)">&#x1f9ee; Manuale</button><button class="btn btn-secondary" onclick="addPendFavToMatching(' + idx + ')" style="padding:5px 10px;font-size:0.75rem;border-color:rgba(6,182,212,0.4);color:var(--accent-cyan)" title="Aggiungi al Matching Multi-Racchetta">&#x2696;&#xfe0f; + Matching</button><button class="btn btn-secondary" onclick="deletePendFavorite(' + idx + ')" style="padding:5px 9px;font-size:0.75rem;color:var(--accent-red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08)" title="Elimina preferito">&#x2715;</button></div></div>' }).join('') } catch (e) { } }
-      function loadPendFavorite(idx) { try { const list = JSON.parse(localStorage.getItem(PEND_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; document.getElementById('pend-mass').value = item.data.mass; document.getElementById('pend-balance').value = item.data.balance; document.getElementById('pend-hang').value = item.data.hang; document.getElementById('pend-nswings').value = item.data.nswings; document.getElementById('pend-time').value = item.data.time; document.getElementById('pend-tw').value = item.data.tw || ''; calcPendulum(false) } catch (e) { } }
+      function loadPendFavorite(idx) { try { const list = JSON.parse(localStorage.getItem(PEND_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; document.getElementById('pend-mass').value = item.data.mass; document.getElementById('pend-balance').value = item.data.balance; document.getElementById('pend-hang').value = item.data.hang; document.getElementById('pend-nswings').value = item.data.nswings; document.getElementById('pend-time').value = item.data.time; document.getElementById('pend-tw').value = item.data.tw || ''; calcPendulum(false); showAppToast('\u2705 Racchetta "' + item.name + '" caricata (' + item.data.mass + ' g / ' + item.data.balance + ' cm)'); } catch (e) { } }
       function deletePendFavorite(idx) { try { const list = JSON.parse(localStorage.getItem(PEND_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; if (!confirm('Sei sicuro di voler eliminare la misurazione preferita "' + item.name + '"?')) return; list.splice(idx, 1); localStorage.setItem(PEND_FAV_KEY, JSON.stringify(list)); renderPendFavorites() } catch (e) { } }
-      function loadPendFavToManual(idx) { try { const list = JSON.parse(localStorage.getItem(PEND_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; const m = +item.data.mass; const b = +item.data.balance; const hng = +item.data.hang; const n = +item.data.nswings; const tN = +item.data.time; const tw = item.data.tw ? parseFloat(item.data.tw) : 14; const freshSw = computePendulumSW(m, b, hng, n, tN); const sw = !isNaN(freshSw) && freshSw > 0 ? freshSw : item.data.sw; if (isNaN(sw) || sw <= 0) { alert('I dati di questa misurazione non sono validi per calcolare il SW.'); return; } document.getElementById('calc-base-mass').value = m.toFixed(1); document.getElementById('calc-base-bal').value = b.toFixed(2); document.getElementById('calc-base-sw').value = sw.toFixed(1); document.getElementById('calc-base-tw').value = tw.toFixed(2); document.getElementById('calc-mass-tbody').innerHTML = ''; addCalcMassRow(0, 0, 66, 0); addCalcMassRow(0, 0, 18, 0); recalcCustomizationTab(); switchTab('calc-customization'); } catch (e) { console.error(e); } }
-      function addPendFavToMatching(idx) { try { const list = JSON.parse(localStorage.getItem(PEND_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; const m = +item.data.mass; const b = +item.data.balance; const hng = +item.data.hang; const n = +item.data.nswings; const tN = +item.data.time; const tw = item.data.tw ? parseFloat(item.data.tw) : 14; const freshSw = computePendulumSW(m, b, hng, n, tN); const sw = !isNaN(freshSw) && freshSw > 0 ? freshSw : item.data.sw; if (isNaN(sw) || sw <= 0) { alert('Dati non validi per calcolare il SW.'); return; } addMatchRacketRow(item.name || ('Telaio ' + (matchRackets.length + 1)), m, b, +sw.toFixed(1), tw, 68.58); switchTab('personalizzazione'); switchAutoSubMode('matching'); } catch (e) { console.error(e); } }
+      function loadPendFavToManual(idx) { try { const list = JSON.parse(localStorage.getItem(PEND_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; const m = +item.data.mass; const b = +item.data.balance; const hng = +item.data.hang; const n = +item.data.nswings; const tN = +item.data.time; const tw = item.data.tw ? parseFloat(item.data.tw) : 14; const freshSw = computePendulumSW(m, b, hng, n, tN); const sw = !isNaN(freshSw) && freshSw > 0 ? freshSw : item.data.sw; if (isNaN(sw) || sw <= 0) { alert('I dati di questa misurazione non sono validi per calcolare il SW.'); return; } document.getElementById('calc-base-mass').value = m.toFixed(1); document.getElementById('calc-base-bal').value = b.toFixed(2); document.getElementById('calc-base-sw').value = sw.toFixed(1); document.getElementById('calc-base-tw').value = tw.toFixed(2); document.getElementById('calc-mass-tbody').innerHTML = ''; addCalcMassRow(0, 0, 66, 0); addCalcMassRow(0, 0, 18, 0); recalcCustomizationTab(); switchTab('calc-customization'); showAppToast('\u2705 "' + item.name + '" caricata in Customizzazione Manuale'); } catch (e) { console.error(e); } }
+      function addPendFavToMatching(idx) { try { const list = JSON.parse(localStorage.getItem(PEND_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; const m = +item.data.mass; const b = +item.data.balance; const hng = +item.data.hang; const n = +item.data.nswings; const tN = +item.data.time; const tw = item.data.tw ? parseFloat(item.data.tw) : 14; const freshSw = computePendulumSW(m, b, hng, n, tN); const sw = !isNaN(freshSw) && freshSw > 0 ? freshSw : item.data.sw; if (isNaN(sw) || sw <= 0) { alert('Dati non validi per calcolare il SW.'); return; } addMatchRacketRow(item.name || ('Telaio ' + (matchRackets.length + 1)), m, b, +sw.toFixed(1), tw, 68.58); switchTab('personalizzazione'); switchAutoSubMode('matching'); showAppToast('\u2705 "' + item.name + '" aggiunta al Lotto Matching'); } catch (e) { console.error(e); } }
 
       function saveAutoFavorite() { const nameInput = document.getElementById('auto-fav-name'); const name = nameInput ? nameInput.value.trim() : ''; if (!name) { alert('Inserisci un nome per la configurazione preferita.'); return } const data = { base: { mass: +document.getElementById('goal-mass').value || 0, balance: +document.getElementById('goal-balance').value || 0, sw: +document.getElementById('goal-sw').value || 0, tw: +document.getElementById('goal-tw').value || 0, length: +document.getElementById('goal-length').value || 0 }, goals: getGoals(), maxW: document.getElementById('goal-max-weights').value, constraints: getConstraints(), limits: getMassLimits(), zoneMode: singleZoneMode, zoneRanges: singleZoneRanges }; const favItem = { id: Date.now(), name, date: new Date().toLocaleString('it-IT'), data }; try { const list = JSON.parse(localStorage.getItem(AUTO_FAV_KEY) || '[]'); list.unshift(favItem); localStorage.setItem(AUTO_FAV_KEY, JSON.stringify(list)); nameInput.value = ''; renderAutoFavorites() } catch (e) { } }
       function renderAutoFavorites() { const container = document.getElementById('auto-fav-list'); if (!container) return; try { const list = JSON.parse(localStorage.getItem(AUTO_FAV_KEY) || '[]'); if (list.length === 0) { container.innerHTML = '<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>'; return } container.innerHTML = list.map((item, idx) => '<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px"><div><div style="font-weight:700;color:#fff;font-size:0.9rem">\u2b50 ' + escapeHTML(item.name) + '</div><div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Base: ' + item.data.base.mass + 'g / ' + item.data.base.balance + 'cm / SW' + item.data.base.sw + ' &middot; ' + (item.data.goals ? item.data.goals.length : 0) + ' obiettivi &middot; <span style="opacity:0.6">' + item.date + '</span></div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-secondary" onclick="loadAutoFavorite(' + idx + ')" style="padding:6px 14px;font-size:0.8rem">Carica</button><button class="btn btn-secondary" onclick="deleteAutoFavorite(' + idx + ')" style="padding:6px 12px;font-size:0.8rem;color:var(--accent-red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);margin-left:8px" title="Elimina preferito">&#x2715; Elimina</button></div></div>').join('') } catch (e) { } }
-      function loadAutoFavorite(idx) { try { const list = JSON.parse(localStorage.getItem(AUTO_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; document.getElementById('goal-mass').value = item.data.base.mass; document.getElementById('goal-balance').value = item.data.base.balance; document.getElementById('goal-sw').value = item.data.base.sw; document.getElementById('goal-tw').value = item.data.base.tw; document.getElementById('goal-length').value = item.data.base.length; if (item.data.maxW) document.getElementById('goal-max-weights').value = item.data.maxW; document.querySelectorAll('#goal-list .goal-row').forEach(r => r.remove()); if (item.data.goals && item.data.goals.length) { item.data.goals.forEach(g => addGoalRow(g.param, g.target)) } else { addGoalRow() } document.querySelectorAll('#constraint-list .constraint-row').forEach(r => r.remove()); if (item.data.constraints) { item.data.constraints.forEach(c => addConstraintRow(c.type, c.yMin, c.yMax)) } if (item.data.limits) { document.getElementById('limit-manico').value = item.data.limits.manico !== null ? item.data.limits.manico : ''; document.getElementById('limit-cuore').value = item.data.limits.cuore !== null ? item.data.limits.cuore : ''; document.getElementById('limit-ovale').value = item.data.limits.ovale !== null ? item.data.limits.ovale : ''; } if (item.data.zoneMode) singleZoneMode = item.data.zoneMode; if (item.data.zoneRanges && Array.isArray(item.data.zoneRanges)) singleZoneRanges = item.data.zoneRanges; renderZoneUI('single'); onBaseChange() } catch (e) { } }
+      function loadAutoFavorite(idx) { try { const list = JSON.parse(localStorage.getItem(AUTO_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; document.getElementById('goal-mass').value = item.data.base.mass; document.getElementById('goal-balance').value = item.data.base.balance; document.getElementById('goal-sw').value = item.data.base.sw; document.getElementById('goal-tw').value = item.data.base.tw; document.getElementById('goal-length').value = item.data.base.length; if (item.data.maxW) document.getElementById('goal-max-weights').value = item.data.maxW; document.querySelectorAll('#goal-list .goal-row').forEach(r => r.remove()); if (item.data.goals && item.data.goals.length) { item.data.goals.forEach(g => addGoalRow(g.param, g.target)) } else { addGoalRow() } document.querySelectorAll('#constraint-list .constraint-row').forEach(r => r.remove()); if (item.data.constraints) { item.data.constraints.forEach(c => addConstraintRow(c.type, c.yMin, c.yMax)) } if (item.data.limits) { document.getElementById('limit-manico').value = item.data.limits.manico !== null ? item.data.limits.manico : ''; document.getElementById('limit-cuore').value = item.data.limits.cuore !== null ? item.data.limits.cuore : ''; document.getElementById('limit-ovale').value = item.data.limits.ovale !== null ? item.data.limits.ovale : ''; } if (item.data.zoneMode) singleZoneMode = item.data.zoneMode; if (item.data.zoneRanges && Array.isArray(item.data.zoneRanges)) singleZoneRanges = item.data.zoneRanges; renderZoneUI('single'); onBaseChange(); showAppToast('\u2705 Racchetta "' + item.name + '" caricata (' + item.data.base.mass + ' g / SW ' + item.data.base.sw + ')'); } catch (e) { } }
       function deleteAutoFavorite(idx) { try { const list = JSON.parse(localStorage.getItem(AUTO_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; if (!confirm('Sei sicuro di voler eliminare la configurazione preferita "' + item.name + '"?')) return; list.splice(idx, 1); localStorage.setItem(AUTO_FAV_KEY, JSON.stringify(list)); renderAutoFavorites() } catch (e) { } }
 
       function getMassPositionHint(y, x) {
@@ -6663,7 +6696,7 @@
       }
       function saveCalcFavorite() { const nameInput = document.getElementById('calc-fav-name'); const name = nameInput ? nameInput.value.trim() : ''; if (!name) { alert('Inserisci un nome per la configurazione preferita.'); return } const base = { mass: +document.getElementById('calc-base-mass').value || 0, balance: +document.getElementById('calc-base-bal').value || 0, sw: +document.getElementById('calc-base-sw').value || 0, tw: +document.getElementById('calc-base-tw').value || 0, length: +document.getElementById('calc-base-len').value || 68.58 }; const masses = []; document.querySelectorAll('#calc-mass-tbody .calc-mass-row').forEach(r => { masses.push({ mass: +r.querySelector('.calc-row-mass').value || 0, len: +r.querySelector('.calc-row-len').value || 0, y: +r.querySelector('.calc-row-y').value || 0, x: +r.querySelector('.calc-row-x').value || 0 }) }); const favItem = { id: Date.now(), name, date: new Date().toLocaleString('it-IT'), base, masses }; try { const list = JSON.parse(localStorage.getItem(CALC_FAV_KEY) || '[]'); list.unshift(favItem); localStorage.setItem(CALC_FAV_KEY, JSON.stringify(list)); nameInput.value = ''; renderCalcFavorites() } catch (e) { } }
       function renderCalcFavorites() { const container = document.getElementById('calc-fav-list'); if (!container) return; try { const list = JSON.parse(localStorage.getItem(CALC_FAV_KEY) || '[]'); if (list.length === 0) { container.innerHTML = '<div class="help-text" style="text-align:center;padding:12px;color:var(--text-secondary)">Nessun preferito salvato.</div>'; return } container.innerHTML = list.map((item, idx) => '<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-color);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px"><div><div style="font-weight:700;color:#fff;font-size:0.9rem">\u2b50 ' + escapeHTML(item.name) + '</div><div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Base: ' + item.base.mass + ' g / ' + item.base.balance + ' cm / SW ' + item.base.sw + ' &middot; ' + (item.masses ? item.masses.length : 0) + ' masse &middot; <span style="opacity:0.6">' + item.date + '</span></div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-secondary" onclick="loadCalcFavorite(' + idx + ')" style="padding:6px 14px;font-size:0.8rem">Carica</button><button class="btn btn-secondary" onclick="deleteCalcFavorite(' + idx + ')" style="padding:6px 12px;font-size:0.8rem;color:var(--accent-red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);margin-left:8px" title="Elimina preferito">&#x2715; Elimina</button></div></div>').join('') } catch (e) { } }
-      function loadCalcFavorite(idx) { try { const list = JSON.parse(localStorage.getItem(CALC_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; document.getElementById('calc-base-mass').value = item.base.mass; document.getElementById('calc-base-bal').value = item.base.balance; document.getElementById('calc-base-sw').value = item.base.sw; document.getElementById('calc-base-tw').value = item.base.tw; document.getElementById('calc-base-len').value = item.base.length; const tbody = document.getElementById('calc-mass-tbody'); tbody.innerHTML = ''; if (item.masses && item.masses.length) { item.masses.forEach(m => { const massVal = m.mass || 0; const lenVal = m.len !== undefined ? m.len : 0; const yVal = m.y !== undefined ? m.y : 0; const xVal = m.x !== undefined ? m.x : 0; addCalcMassRow(massVal, lenVal, yVal, xVal) }) } recalcCustomizationTab() } catch (e) { } }
+      function loadCalcFavorite(idx) { try { const list = JSON.parse(localStorage.getItem(CALC_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; document.getElementById('calc-base-mass').value = item.base.mass; document.getElementById('calc-base-bal').value = item.base.balance; document.getElementById('calc-base-sw').value = item.base.sw; document.getElementById('calc-base-tw').value = item.base.tw; document.getElementById('calc-base-len').value = item.base.length; const tbody = document.getElementById('calc-mass-tbody'); tbody.innerHTML = ''; if (item.masses && item.masses.length) { item.masses.forEach(m => { const massVal = m.mass || 0; const lenVal = m.len !== undefined ? m.len : 0; const yVal = m.y !== undefined ? m.y : 0; const xVal = m.x !== undefined ? m.x : 0; addCalcMassRow(massVal, lenVal, yVal, xVal) }) } recalcCustomizationTab(); showAppToast('\u2705 Setup "' + item.name + '" caricato (' + item.base.mass + ' g / SW ' + item.base.sw + ')'); } catch (e) { } }
       function deleteCalcFavorite(idx) { try { const list = JSON.parse(localStorage.getItem(CALC_FAV_KEY) || '[]'); const item = list[idx]; if (!item) return; if (!confirm('Sei sicuro di voler eliminare la configurazione preferita "' + item.name + '"?')) return; list.splice(idx, 1); localStorage.setItem(CALC_FAV_KEY, JSON.stringify(list)); renderCalcFavorites() } catch (e) { } }
       // --- OLS Linear Regression Period Estimator (Legacy + Dual Semi-Period Off-Center Compensated) ---
       function estimatePriorPeriodS() {
@@ -8062,6 +8095,18 @@
         autoAvgHistory = [];
         autoOscTimestamps = [];
         autoMeasurementSaved = false;
+      }
+
+      let appToastTimer = null;
+      function showAppToast(msg) {
+        const el = document.getElementById('app-toast');
+        if (!el) return;
+        el.textContent = msg;
+        el.classList.add('visible');
+        if (appToastTimer) clearTimeout(appToastTimer);
+        appToastTimer = setTimeout(() => {
+          el.classList.remove('visible');
+        }, 2800);
       }
 
       function initButtons() { const a = document.getElementById('btn-add-goal'); if (a && !a.dataset.inited) { a.dataset.inited = '1'; a.onclick = null; a.addEventListener('click', () => addGoalRow()) } const b = document.getElementById('btn-add-constraint'); if (b && !b.dataset.inited) { b.dataset.inited = '1'; b.onclick = null; b.addEventListener('click', () => addConstraintRow()) } }
