@@ -2742,9 +2742,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 6px;
+      flex-wrap: nowrap;
+      gap: 8px;
       min-height: 22px;
+    }
+
+    #auto-pass-status {
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .auto-signal-trigger-badge {
@@ -2752,7 +2760,7 @@
       align-items: center;
       justify-content: flex-end;
       min-height: 20px;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       text-align: right;
       white-space: nowrap;
       flex-shrink: 0;
@@ -2938,7 +2946,7 @@
     }
 
     #auto-preview-container.reticle-expanded {
-      height: 230px !important;
+      height: 225px;
       max-height: 36vh;
     }
 
@@ -3029,7 +3037,7 @@
       <div id="app-version-badge"
         style="font-size:0.72rem;font-weight:600;color:var(--accent-cyan);background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.28);border-radius:999px;padding:4px 10px;white-space:nowrap;letter-spacing:0.02em"
         title="Versione e data ultimo aggiornamento">
-        v2.6 &middot; 14/11/2026 18:45
+        v2.7 &middot; 14/11/2026 19:50
       </div>
     </header>
 
@@ -3762,11 +3770,11 @@
 
               <!-- Live Camera Preview con Mirino -->
               <div
-                style="width:100%;height:230px;max-height:36vh;background:#020617;border-radius:10px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.16);box-shadow:inset 0 0 24px rgba(0,0,0,0.6);transition:border-color 0.1s ease"
+                style="width:100%;height:225px;max-height:36vh;background:#020617;border-radius:10px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.16);box-shadow:inset 0 0 24px rgba(0,0,0,0.6);transition:border-color 0.1s ease"
                 id="auto-preview-container" class="reticle-expanded">
                 <div id="auto-preview-badge">&#x25cf; ANTEPRIMA</div>
                 <video id="auto-video" playsinline muted
-                  style="width:100%;height:100%;object-fit:contain;display:none;transform:scaleX(-1)"></video>
+                  style="width:100%;height:100%;object-fit:cover;display:none;transform:scaleX(-1)"></video>
                 <canvas id="auto-canvas"
                   style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
                 <div id="auto-target-box"
@@ -3793,7 +3801,7 @@
                 style="margin-top:8px;padding:9px 11px;background:rgba(15,23,42,0.92);border:1px solid rgba(56,189,248,0.32);border-radius:8px;display:flex;flex-direction:column;gap:7px">
                 <div class="auto-hud-top">
                   <span id="auto-pass-status"
-                    style="font-size:0.78rem;font-weight:700;color:#38bdf8;transition:color 0.12s;display:inline-flex;align-items:center">In
+                    style="font-size:0.74rem;font-weight:700;color:#38bdf8;transition:color 0.12s">In
                     attesa avvio...</span>
                   <span id="auto-signal-trigger-hint" class="auto-signal-trigger-badge"></span>
                 </div>
@@ -6949,13 +6957,17 @@
         const targetBox = document.getElementById('auto-target-box');
         if (!preview || !targetBox || vw <= 0 || vh <= 0) return;
         const cw = preview.clientWidth;
-        const ch = preview.clientHeight;
-        if (cw <= 0 || ch <= 0) return;
-        const key = vw + 'x' + vh + '@' + cw + 'x' + ch;
+        if (cw <= 0) return;
+        const key = vw + 'x' + vh + '@' + cw;
         if (key === autoLastRoiSyncKey) return;
         autoLastRoiSyncKey = key;
-        const scale = Math.min(cw / vw, ch / vh);
-        const roiPx = Math.max(30, Math.min(96, Math.round(Math.min(vw, vh) * 0.2 * scale)));
+        const maxBoxH = Math.min(230, Math.round((window.innerHeight || 720) * 0.36));
+        const naturalFullWidthH = Math.round(cw * (vh / vw));
+        const targetH = Math.max(140, Math.min(maxBoxH, naturalFullWidthH));
+        preview.style.height = targetH + 'px';
+        const ch = preview.clientHeight || targetH;
+        const scale = Math.max(cw / vw, ch / vh);
+        const roiPx = Math.max(32, Math.min(110, Math.round(Math.min(vw, vh) * 0.2 * scale)));
         targetBox.style.width = roiPx + 'px';
         targetBox.style.height = roiPx + 'px';
       }
@@ -7726,13 +7738,13 @@
           const triggerHintEl = document.getElementById('auto-signal-trigger-hint');
           if (triggerHintEl) {
             if (ols.isSinglePassMode) {
-              triggerHintEl.textContent = '📐 Estremo (1 pass/ciclo)';
+              triggerHintEl.textContent = '\uD83D\uDCD0 1 pass/ciclo';
               triggerHintEl.style.color = '#38bdf8';
             } else if (ols.symmetryPct >= 44) {
-              triggerHintEl.textContent = '🎯 Centrato (' + ols.symmetryPct + '%/' + (100 - ols.symmetryPct) + '%)';
+              triggerHintEl.textContent = '\uD83C\uDFAF Centrato (' + ols.symmetryPct + '/' + (100 - ols.symmetryPct) + ')';
               triggerHintEl.style.color = '#10b981';
             } else {
-              triggerHintEl.textContent = '↔️ Off-center comp. (' + ols.symmetryPct + '%/' + (100 - ols.symmetryPct) + '%)';
+              triggerHintEl.textContent = '\u2194\uFE0F Off-center (' + ols.symmetryPct + '/' + (100 - ols.symmetryPct) + ')';
               triggerHintEl.style.color = '#38bdf8';
             }
           }
@@ -7823,7 +7835,7 @@
         if (!completedFullOsc) {
           // Passaggio intermedio (Semiperiodo andata)
           if (passStatusEl) {
-            passStatusEl.textContent = '⚡ Semiperiodo andata rilevato (½)';
+            passStatusEl.textContent = '⚡ Semiperiodo (½)';
             passStatusEl.style.color = '#38bdf8';
           }
           if (curr.h >= 3 && ols.periodS > 0) {
@@ -7868,8 +7880,7 @@
           }
 
           if (passStatusEl && ols.periodS > 0) {
-            const targetHint = autoOscillations < 18 ? ' · attesa \u226518' : ' · controllo stabilit\u00e0';
-            passStatusEl.textContent = '🟢 Osc. ' + autoOscillations + ' · \u00b1' + ols.sigmaMs.toFixed(2) + ' ms' + targetHint;
+            passStatusEl.textContent = '🟢 Osc. ' + autoOscillations + ' · ±' + ols.sigmaMs.toFixed(2) + ' ms';
             passStatusEl.style.color = '#10b981';
           }
 
