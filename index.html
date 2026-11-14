@@ -2747,7 +2747,8 @@
       min-height: 22px;
     }
 
-    #auto-pass-status {
+    #auto-pass-status,
+    #exp-pass-status {
       flex: 1;
       min-width: 0;
       white-space: nowrap;
@@ -2792,7 +2793,8 @@
       border: 1px solid rgba(255, 255, 255, 0.14);
     }
 
-    #auto-signal-bar {
+    #auto-signal-bar,
+    #exp-signal-bar {
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, #0891b2, #38bdf8);
@@ -2800,7 +2802,8 @@
       transition: none;
     }
 
-    #auto-progress-bar {
+    #auto-progress-bar,
+    #exp-progress-bar {
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, #06b6d4, #10b981);
@@ -2820,7 +2823,9 @@
     }
 
     #auto-signal-val,
-    #auto-progress-pct {
+    #auto-progress-pct,
+    #exp-signal-val,
+    #exp-progress-pct {
       font-size: 0.72rem;
       font-weight: 700;
       color: var(--accent-cyan);
@@ -2846,7 +2851,8 @@
       min-width: 150px;
     }
 
-    #auto-light-sens {
+    #auto-light-sens,
+    #exp-light-sens {
       padding: 4px 8px;
       font-size: 0.74rem;
       font-weight: 700;
@@ -2857,7 +2863,8 @@
       flex-shrink: 0;
     }
 
-    #auto-preview-badge {
+    #auto-preview-badge,
+    #exp-preview-badge {
       position: absolute;
       top: 8px;
       left: 8px;
@@ -2879,8 +2886,9 @@
       transition: border-color 0.04s linear, background-color 0.05s linear, box-shadow 0.05s linear, transform 0.06s ease-out;
     }
 
-    /* Layout Mode 3: Mirino Focus Modificato Permanente (R2/R3) */
-    #auto-stats.layout-reticle {
+    /* Layout Mode 3: Mirino Focus Modificato Permanente (R2/R3) + Experimental Extrema */
+    #auto-stats.layout-reticle,
+    #exp-stats.layout-reticle {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 6px;
@@ -2892,7 +2900,10 @@
 
     #auto-stats.layout-reticle .card-hero-swings,
     #auto-stats.layout-reticle .card-hero-sw,
-    #auto-stats.layout-reticle .card-sub-stat {
+    #auto-stats.layout-reticle .card-sub-stat,
+    #exp-stats.layout-reticle .card-hero-swings,
+    #exp-stats.layout-reticle .card-hero-sw,
+    #exp-stats.layout-reticle .card-sub-stat {
       grid-column: auto;
       background: rgba(15, 23, 42, 0.85);
       padding: 7px 6px;
@@ -2907,7 +2918,8 @@
       box-sizing: border-box;
     }
 
-    #auto-stats.layout-reticle .auto-stat-lbl {
+    #auto-stats.layout-reticle .auto-stat-lbl,
+    #exp-stats.layout-reticle .auto-stat-lbl {
       font-size: 0.65rem;
       font-weight: 700;
       color: var(--text-secondary);
@@ -2918,7 +2930,8 @@
       text-align: center;
     }
 
-    #auto-stats.layout-reticle .card-hero-swings .auto-stat-val {
+    #auto-stats.layout-reticle .card-hero-swings .auto-stat-val,
+    #exp-stats.layout-reticle .card-hero-swings .auto-stat-val {
       font-size: 1.45rem;
       font-weight: 800;
       color: #ffffff;
@@ -2927,7 +2940,8 @@
       font-feature-settings: "tnum";
     }
 
-    #auto-stats.layout-reticle .card-hero-sw .auto-stat-val {
+    #auto-stats.layout-reticle .card-hero-sw .auto-stat-val,
+    #exp-stats.layout-reticle .card-hero-sw .auto-stat-val {
       font-size: 1.32rem;
       font-weight: 800;
       color: var(--accent-cyan);
@@ -2936,7 +2950,8 @@
       font-feature-settings: "tnum";
     }
 
-    #auto-stats.layout-reticle .card-sub-stat .auto-stat-val {
+    #auto-stats.layout-reticle .card-sub-stat .auto-stat-val,
+    #exp-stats.layout-reticle .card-sub-stat .auto-stat-val {
       font-size: 1.08rem;
       font-weight: 700;
       color: #e2e8f0;
@@ -2945,9 +2960,105 @@
       font-feature-settings: "tnum";
     }
 
-    #auto-preview-container.reticle-expanded {
+    #auto-preview-container.reticle-expanded,
+    #exp-preview-container {
       height: 225px;
       max-height: 36vh;
+    }
+
+    /* Experimental Oscillation Guide Overlay */
+    #exp-guide-band {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 18%;
+      min-height: 28px;
+      transform: translateY(-50%);
+      background: rgba(6, 182, 212, 0.09);
+      border-top: 1px dashed rgba(56, 189, 248, 0.42);
+      border-bottom: 1px dashed rgba(56, 189, 248, 0.42);
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    #exp-guide-line {
+      position: absolute;
+      left: 4%;
+      right: 4%;
+      top: 50%;
+      height: 2px;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.85), rgba(34, 211, 238, 0.95) 50%, rgba(245, 158, 11, 0.85));
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.75);
+      border-radius: 999px;
+    }
+
+    #exp-guide-label {
+      position: absolute;
+      left: 50%;
+      top: -20px;
+      transform: translateX(-50%);
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #e0f2fe;
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 1px 7px;
+      border-radius: 999px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    #exp-center-tick {
+      position: absolute;
+      left: 50%;
+      top: 18%;
+      bottom: 18%;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.35);
+      transform: translateX(-50%);
+    }
+
+    .exp-ext-marker {
+      position: absolute;
+      top: 12%;
+      bottom: 12%;
+      width: 3px;
+      border-radius: 2px;
+      background: #f59e0b;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.95);
+      transform: translateX(-50%);
+      display: none;
+      transition: left 0.08s ease-out, background-color 0.1s linear;
+    }
+
+    .exp-ext-marker.flash {
+      background: #34d399;
+      box-shadow: 0 0 12px rgba(52, 211, 153, 1);
+      width: 4px;
+    }
+
+    #exp-track-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: #22d3ee;
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.95);
+      display: none;
+      transition: background-color 0.08s linear, transform 0.08s ease-out;
+    }
+
+    #exp-track-dot.turning {
+      background: #34d399;
+      box-shadow: 0 0 14px rgba(52, 211, 153, 1);
+      transform: translate(-50%, -50%) scale(1.22);
     }
 
     #auto-preview-container.reticle-expanded #auto-target-box {
@@ -2956,7 +3067,8 @@
     }
 
     /* Countdown & Completion Overlay */
-    #auto-countdown {
+    #auto-countdown,
+    #exp-countdown {
       position: absolute;
       top: 0;
       left: 0;
@@ -2978,7 +3090,8 @@
       gap: 4px;
     }
 
-    #auto-countdown-val {
+    #auto-countdown-val,
+    #exp-countdown-val {
       font-size: 2.8rem;
       font-weight: 900;
       color: var(--accent-amber);
@@ -2995,7 +3108,8 @@
       text-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
     }
 
-    #auto-countdown-msg {
+    #auto-countdown-msg,
+    #exp-countdown-msg {
       font-size: 0.74rem;
       color: #f1f5f9;
       font-weight: 600;
@@ -3050,8 +3164,8 @@
         style="text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; gap: 15px;">
         <h2
           style="font-size: 1.2rem; font-weight: 800; text-shadow: 1px 1px 2px black; line-height: 1.3; margin: 0; padding: 0 45px;">
-          🔥🔥ATTENZIONE🔥🔥<br>DONNA CALDA CON TANTO PIOMBO A 5 MINUTI DA TE !! CLICCA QUI SE VUOI LA TUA DOSE😎</h2>
-        <img src="1784829928613.png" alt="Scam Image"
+          Attenzione<br>Gotica fredda con tanto piombo a 5 minuti da te!<br>Clicca qui se vuoi la tua dose</h2>
+        <img src="Gemini_Generated_Image_t8tt9vt8tt9vt8tt.jpg" alt="Scam Image"
           style="max-width: 100%; border-radius: 8px; border: 3px solid white; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
       </a>
       <button type="button" class="joke-close-btn" style="bottom: 10px; right: 10px;" onclick="closeJokeBanner(event)"
@@ -3066,7 +3180,7 @@
       <div id="app-version-badge"
         style="font-size:0.72rem;font-weight:600;color:var(--accent-cyan);background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.28);border-radius:999px;padding:4px 10px;white-space:nowrap;letter-spacing:0.02em"
         title="Versione e data ultimo aggiornamento">
-        v2.8 &middot; 14/11/2026 22:02
+        v3.0 &middot; 14/11/2026 22:20
       </div>
     </header>
 
@@ -4051,6 +4165,16 @@
           </div>
         </details>
 
+        <div style="margin-top:14px;padding-top:12px;border-top:1px dashed rgba(148,163,184,0.22);display:flex;flex-direction:column;gap:6px">
+          <button type="button" id="btn-open-experimental" class="btn btn-secondary"
+            style="width:100%;padding:10px 12px;font-size:0.82rem;font-weight:700;border-color:rgba(245,158,11,0.45);color:#fde68a;background:rgba(245,158,11,0.08);display:flex;align-items:center;justify-content:center;gap:8px"
+            onclick="switchTab('experimental-sw')">
+            <span>&#x1f9ea;</span>
+            <span>Experimental</span>
+            <span style="font-size:0.68rem;font-weight:600;color:var(--text-secondary)">(Test Estremi)</span>
+          </button>
+        </div>
+
       </div>
     </div>
 
@@ -4288,6 +4412,225 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div data-tab="experimental-sw" class="tab-pane" style="display:none">
+      <div class="panel" style="margin-top:0;padding-bottom:calc(95px + env(safe-area-inset-bottom, 0px))">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+          <button type="button" id="btn-exp-back" class="btn btn-secondary"
+            style="padding:7px 11px;font-size:0.78rem;font-weight:700"
+            onclick="switchTab('misura-sw')">&larr; Torna a Misura SW</button>
+          <span style="font-size:0.68rem;background:rgba(245,158,11,0.16);color:#fbbf24;border:1px solid rgba(245,158,11,0.45);padding:3px 9px;border-radius:999px;font-weight:800;letter-spacing:0.03em">
+            &#x1f9ea; EXPERIMENTAL &middot; ESTREMI
+          </span>
+        </div>
+
+        <div id="exp-racket-summary"
+          style="margin-bottom:10px;padding:8px 10px;border-radius:8px;background:rgba(15,23,42,0.75);border:1px solid var(--border-color);font-size:0.74rem;color:var(--text-secondary);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+          <span>Parametri da Misura SW: <strong style="color:#f1f5f9">300g &middot; 32.0cm &middot; Y=64.3cm</strong></span>
+          <a href="#" onclick="event.preventDefault();switchTab('misura-sw')"
+            style="color:var(--accent-cyan);font-size:0.72rem;font-weight:700;text-decoration:none">Modifica &rarr;</a>
+        </div>
+
+        <div class="auto-card"
+          style="margin-bottom:14px;background:linear-gradient(145deg,rgba(245,158,11,0.10) 0%,rgba(15,23,42,0.88) 100%);border:2px solid rgba(245,158,11,0.48);box-shadow:0 6px 22px rgba(245,158,11,0.10);padding:14px">
+          <div class="panel-section-header" style="margin-bottom:10px">
+            <div class="panel-section-title">
+              <span class="step-badge"
+                style="background:#f59e0b;color:#0f172a;font-weight:800;border:none;padding:3px 8px">&#x1f4c8; LAB</span>
+              <span style="font-size:0.95rem;font-weight:800;color:#fff">Tracciamento Estremi di Oscillazione</span>
+            </div>
+            <span
+              style="font-size:0.66rem;background:rgba(6,182,212,0.16);color:var(--accent-cyan);border:1px solid rgba(6,182,212,0.4);padding:2px 8px;border-radius:999px;font-weight:700">Lobo
+              Armonico + OLS</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:0.75rem;color:#e2e8f0;line-height:1.42">
+              Inquadra <strong>entrambi gli estremi</strong> dell'oscillazione destra-sinistra lungo la linea azzurra sullo schermo (ideale davanti a una parete uniforme). L'algoritmo isola i punti di inversione a velocit&#xe0; nulla e calcola il periodo sub-frame resistente al framerate variabile.
+            </div>
+
+            <div
+              style="display:flex;gap:10px;align-items:center;background:rgba(15,23,42,0.65);padding:8px 10px;border-radius:8px;border:1px solid rgba(245,158,11,0.28)">
+              <label style="font-size:0.73rem;color:var(--text-secondary);flex:1;width:100%;margin:0">
+                Modalit&#xe0; arresto:
+                <select id="exp-stop-mode"
+                  style="width:100%;margin-top:3px;padding:6px 8px;font-size:0.82rem;font-weight:600;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff">
+                  <option value="auto" selected>Automatico (Alta Precisione Estremi &middot; 14&ndash;28 osc.)</option>
+                  <option value="10">Target Fisso (10 Oscillazioni)</option>
+                  <option value="20">Target Fisso (20 Oscillazioni)</option>
+                  <option value="30">Target Fisso (30 Oscillazioni)</option>
+                  <option value="40">Target Fisso (40 Oscillazioni)</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="auto-cam-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <button type="button" id="btn-exp-cam-front" class="btn auto-cam-btn"
+                style="margin:0;padding:12px 10px;font-size:0.86rem;font-weight:700;background:linear-gradient(135deg,#0891b2 0%,#0284c7 100%);border:1px solid rgba(255,255,255,0.25);box-shadow:0 4px 12px rgba(6,182,212,0.28);display:flex;align-items:center;justify-content:center;gap:6px"
+                onclick="selectExpCamera('camera-front')">
+                <span style="font-size:1.05rem">&#x1f4f7;</span>
+                <span>Fotocamera Frontale</span>
+              </button>
+              <button type="button" id="btn-exp-cam-back" class="btn auto-cam-btn"
+                style="margin:0;padding:12px 10px;font-size:0.86rem;font-weight:700;background:linear-gradient(135deg,#0284c7 0%,#2563eb 100%);border:1px solid rgba(255,255,255,0.25);box-shadow:0 4px 12px rgba(37,99,235,0.28);display:flex;align-items:center;justify-content:center;gap:6px"
+                onclick="selectExpCamera('camera-back')">
+                <span style="font-size:1.05rem">&#x1f4f8;</span>
+                <span>Fotocamera Posteriore</span>
+              </button>
+            </div>
+
+            <div id="exp-ui-container"
+              style="display:none;background:rgba(0,0,0,0.45);border-radius:8px;padding:10px;margin-top:2px;border:1px solid rgba(245,158,11,0.42)">
+
+              <div id="exp-preview-container"
+                style="width:100%;height:225px;max-height:36vh;background:#020617;border-radius:10px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.16);box-shadow:inset 0 0 24px rgba(0,0,0,0.6);transition:border-color 0.1s ease">
+                <div id="exp-preview-badge">&#x25cf; ANTEPRIMA</div>
+                <video id="exp-video" playsinline muted
+                  style="width:100%;height:100%;object-fit:cover;display:none;transform:scaleX(-1)"></video>
+                <canvas id="exp-canvas" width="160" height="18"
+                  style="display:none;position:absolute;top:0;left:0;width:100%;height:100%"></canvas>
+
+                <!-- Banda e Linea Guida Orizzontale di Oscillazione -->
+                <div id="exp-guide-band">
+                  <div id="exp-guide-label">LINEA DI OSCILLAZIONE &harr; INQUADRA ENTRAMBI GLI ESTREMI</div>
+                  <div id="exp-guide-line"></div>
+                  <div id="exp-center-tick"></div>
+                  <div id="exp-ext-min" class="exp-ext-marker" title="Estremo Sinistro"></div>
+                  <div id="exp-ext-max" class="exp-ext-marker" title="Estremo Destro"></div>
+                  <div id="exp-track-dot" title="Posizione rilevata sulla linea"></div>
+                </div>
+
+                <!-- Countdown / Completion Overlay -->
+                <div id="exp-countdown" style="display:none">
+                  <div id="exp-countdown-title"
+                    style="font-size:0.72rem;text-transform:uppercase;color:var(--text-secondary);letter-spacing:0.08em;margin-bottom:2px">
+                    Calibrazione Sfondo &amp; Avvio</div>
+                  <div id="exp-countdown-val">3</div>
+                  <div id="exp-countdown-msg">Fai oscillare la racchetta sulla linea azzurra senza uscire dai bordi</div>
+                </div>
+              </div>
+
+              <!-- HUD Feedback Experimental -->
+              <div id="exp-pass-feedback"
+                style="margin-top:8px;padding:9px 11px;background:rgba(15,23,42,0.92);border:1px solid rgba(56,189,248,0.32);border-radius:8px;display:flex;flex-direction:column;gap:7px">
+                <div class="auto-hud-top">
+                  <span id="exp-pass-status"
+                    style="font-size:0.74rem;font-weight:700;color:#38bdf8;transition:color 0.12s">In attesa avvio...</span>
+                  <span id="exp-edge-hint" class="auto-signal-trigger-badge"></span>
+                </div>
+
+                <div id="exp-cal-panel" style="display:flex;flex-direction:column;gap:5px">
+                  <div class="auto-cal-bar-row">
+                    <span class="auto-cal-lbl">Contrasto linea:</span>
+                    <div class="auto-bar-track">
+                      <div id="exp-signal-bar"></div>
+                    </div>
+                    <span id="exp-signal-val">0.0</span>
+                  </div>
+                  <div class="auto-cal-controls-row">
+                    <span class="auto-cal-help">Muovi la racchetta lungo la linea: il punto azzurro deve seguirla fino ai 2 estremi</span>
+                    <select id="exp-light-sens" onchange="onExpSensChange()"
+                      title="Regola la soglia di contrasto rispetto allo sfondo">
+                      <option value="12">Contrasto Alto (sfondo simile)</option>
+                      <option value="18" selected>Contrasto Normale (18)</option>
+                      <option value="28">Contrasto Forte (antiriflesso)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div id="exp-progress-panel" style="display:none;flex-direction:column;gap:4px">
+                  <div class="auto-cal-bar-row">
+                    <span class="auto-progress-lbl" id="exp-progress-text">Progresso (min 14 osc.)</span>
+                    <div class="auto-bar-track">
+                      <div id="exp-progress-bar"></div>
+                    </div>
+                    <span id="exp-progress-pct">0%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div id="exp-start-control-box" style="margin-top:10px">
+                <button type="button" id="btn-exp-start" class="btn"
+                  style="width:100%;margin:0;padding:14px 12px;font-size:1.02rem;font-weight:800;letter-spacing:0.02em;background:linear-gradient(135deg,#10b981 0%,#059669 100%);border:2px solid rgba(255,255,255,0.4);box-shadow:0 6px 18px rgba(16,185,129,0.38);border-radius:8px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"
+                  onclick="startExpManualCountdown()">
+                  <span style="font-size:1.25rem">&#x25b6;</span>
+                  <span>AVVIA MISURAZIONE ESTREMI (3s)</span>
+                </button>
+                <button type="button" class="btn btn-secondary"
+                  style="width:100%;margin-top:6px;padding:6px 10px;font-size:0.75rem;color:var(--text-secondary)"
+                  onclick="stopExpMeasurement(false)">Chiudi Fotocamera</button>
+              </div>
+
+              <div id="exp-stats" class="layout-reticle" style="display:none">
+                <div class="card-hero-swings">
+                  <div class="auto-stat-lbl">Oscillazioni</div>
+                  <div style="display:inline-flex;align-items:baseline;justify-content:center;gap:3px">
+                    <span id="exp-val-swings" class="auto-stat-val">0</span>
+                    <span id="exp-val-swings-target" style="font-size:0.80rem;font-weight:700;color:var(--text-secondary)">/ 14+</span>
+                  </div>
+                </div>
+
+                <div class="card-hero-sw">
+                  <div class="auto-stat-lbl">SW Live Estremi (I&#x2081;&#x2080;)</div>
+                  <div id="exp-val-live-sw" class="auto-stat-val">---</div>
+                </div>
+
+                <div class="card-sub-stat">
+                  <div class="auto-stat-lbl">Periodo OLS</div>
+                  <div id="exp-val-avg" class="auto-stat-val">0.000 s</div>
+                </div>
+
+                <div class="card-sub-stat">
+                  <div class="auto-stat-lbl">Framerate &amp; Jitter</div>
+                  <div id="exp-val-acc" class="auto-stat-val" style="color:var(--accent-green)">-- fps</div>
+                </div>
+              </div>
+
+              <div id="exp-measuring-actions"
+                style="display:none;gap:6px;margin-top:8px;padding-bottom:max(4px,env(safe-area-inset-bottom,0px))">
+                <button type="button" id="btn-exp-apply" class="btn"
+                  style="flex:2;padding:8px 8px;min-height:44px;font-size:0.86rem;font-weight:800;background:linear-gradient(135deg,var(--accent-green) 0%,#059669 100%);touch-action:manipulation;-webkit-tap-highlight-color:transparent"
+                  onclick="stopExpMeasurement(true)">&#x2705; Applica Misura</button>
+                <button type="button" class="btn btn-secondary"
+                  style="flex:1;padding:8px 6px;min-height:44px;font-size:0.80rem;color:#38bdf8;touch-action:manipulation;-webkit-tap-highlight-color:transparent"
+                  onclick="restartExpMeasurement()">&#x1f504; Riavvia</button>
+                <button type="button" class="btn btn-secondary"
+                  style="flex:1;padding:8px 6px;min-height:44px;font-size:0.80rem;color:var(--accent-red);touch-action:manipulation;-webkit-tap-highlight-color:transparent"
+                  onclick="stopExpMeasurement(false)">Annulla</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="exp-result-card" style="display:none;margin-bottom:12px">
+          <div
+            style="background:linear-gradient(135deg,rgba(16,185,129,0.16),rgba(6,182,212,0.06));border:2px solid var(--accent-green);border-radius:12px;padding:14px 16px;text-align:center;margin-bottom:10px">
+            <div style="font-size:0.68rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">
+              &#x1f9ea; Swingweight Rilevato (Metodo Estremi)</div>
+            <div id="exp-res-sw" style="font-size:2.2rem;font-weight:800;color:#fff;line-height:1.15">---</div>
+            <div id="exp-res-meta" style="font-size:0.74rem;color:var(--accent-green);font-weight:700;margin-top:3px">---</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;text-align:center">
+              <div style="background:rgba(15,23,42,0.65);border:1px solid var(--border-color);border-radius:6px;padding:6px">
+                <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase">Periodo T</div>
+                <div id="exp-res-period" style="font-size:0.84rem;font-weight:700;color:#f1f5f9">---</div>
+              </div>
+              <div style="background:rgba(15,23,42,0.65);border:1px solid var(--border-color);border-radius:6px;padding:6px">
+                <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase">Errore OLS</div>
+                <div id="exp-res-sigma" style="font-size:0.84rem;font-weight:700;color:var(--accent-cyan)">---</div>
+              </div>
+              <div style="background:rgba(15,23,42,0.65);border:1px solid var(--border-color);border-radius:6px;padding:6px">
+                <div style="font-size:0.58rem;color:var(--text-secondary);text-transform:uppercase">Simmetria</div>
+                <div id="exp-res-symmetry" style="font-size:0.84rem;font-weight:700;color:#f1f5f9">---</div>
+              </div>
+            </div>
+            <button type="button" id="btn-exp-goto-main" class="btn btn-secondary"
+              style="width:100%;margin-top:10px;padding:8px 10px;font-size:0.78rem;border-color:rgba(6,182,212,0.45);color:var(--accent-cyan)"
+              onclick="switchTab('misura-sw')">Vedi Risultato completo in Misura SW &rarr;</button>
           </div>
         </div>
 
@@ -5354,7 +5697,7 @@
         } catch (e) { console.error('renderHistory error:', e) }
       }
       function onBaseChange() { baseRacket = new Racket(+document.getElementById('goal-mass').value || 300, +document.getElementById('goal-balance').value || 32, +document.getElementById('goal-sw').value || 315, +document.getElementById('goal-tw').value || 14, +document.getElementById('goal-length').value || 68.58); buildHoopGeometry(baseRacket.length); updateComparison(); updateGoalCurrentValues(); renderZoneUI('single'); saveState() }
-      function switchTab(name) { if (name !== 'misura-sw' && typeof stopAutoMeasurement === 'function') { const _ui = document.getElementById('auto-ui-container'); if (autoStream || autoIsStreaming || autoIsCounting || (_ui && _ui.style.display !== 'none')) { stopAutoMeasurement(false); } } document.querySelectorAll('.tab-pane').forEach(e => e.style.display = 'none'); document.querySelectorAll('.tab-btn').forEach(e => { e.classList.toggle('active', e.dataset.tab === name); e.style.borderBottomColor = ''; e.style.color = ''; }); const ap = document.querySelector('.tab-pane[data-tab="' + name + '"]'); if (ap) ap.style.display = ''; const hud = document.getElementById('calc-floating-hud'); if (hud) hud.style.display = (name === 'calc-customization' ? 'block' : 'none'); if (name === 'personalizzazione') { renderZoneUI('match'); renderZoneUI('single'); } }
+      function switchTab(name) { if (name !== 'misura-sw' && typeof stopAutoMeasurement === 'function') { const _ui = document.getElementById('auto-ui-container'); if (autoStream || autoIsStreaming || autoIsCounting || (_ui && _ui.style.display !== 'none')) { stopAutoMeasurement(false); } } if (name !== 'experimental-sw' && typeof stopExpMeasurement === 'function') { const _expUi = document.getElementById('exp-ui-container'); if (expStream || expIsStreaming || expIsCounting || (_expUi && _expUi.style.display !== 'none')) { stopExpMeasurement(false); } } document.querySelectorAll('.tab-pane').forEach(e => e.style.display = 'none'); document.querySelectorAll('.tab-btn').forEach(e => { e.classList.toggle('active', e.dataset.tab === name); e.style.borderBottomColor = ''; e.style.color = ''; }); const ap = document.querySelector('.tab-pane[data-tab="' + name + '"]'); if (ap) ap.style.display = ''; const hud = document.getElementById('calc-floating-hud'); if (hud) hud.style.display = (name === 'calc-customization' ? 'block' : 'none'); if (name === 'personalizzazione') { renderZoneUI('match'); renderZoneUI('single'); } if (name === 'experimental-sw' && typeof refreshExpRacketSummary === 'function') { refreshExpRacketSummary(); } }
       function switchAutoSubMode(mode) {
         const mDiv = document.getElementById('auto-submode-matching');
         const sDiv = document.getElementById('auto-submode-single');
@@ -6985,24 +7328,77 @@
       let autoTargetIsLit = false;
       let autoLastRoiSyncKey = '';
 
-      function syncTargetBoxSize(vw, vh) {
-        const preview = document.getElementById('auto-preview-container');
-        const targetBox = document.getElementById('auto-target-box');
-        if (!preview || !targetBox || vw <= 0 || vh <= 0) return;
-        const cw = preview.clientWidth;
-        if (cw <= 0) return;
+      function applyPreviewWidthLayout(previewEl, vw, vh, lastKey) {
+        if (!previewEl || vw <= 0 || vh <= 0) return { key: lastKey, changed: false, cw: 0, ch: 0 };
+        const cw = previewEl.clientWidth;
+        if (cw <= 0) return { key: lastKey, changed: false, cw: 0, ch: 0 };
         const key = vw + 'x' + vh + '@' + cw;
-        if (key === autoLastRoiSyncKey) return;
-        autoLastRoiSyncKey = key;
+        if (key === lastKey) return { key, changed: false, cw, ch: previewEl.clientHeight || 0 };
         const maxBoxH = Math.min(230, Math.round((window.innerHeight || 720) * 0.36));
         const naturalFullWidthH = Math.round(cw * (vh / vw));
         const targetH = Math.max(140, Math.min(maxBoxH, naturalFullWidthH));
-        preview.style.height = targetH + 'px';
-        const ch = preview.clientHeight || targetH;
-        const scale = Math.max(cw / vw, ch / vh);
+        previewEl.style.height = targetH + 'px';
+        return { key, changed: true, cw, ch: previewEl.clientHeight || targetH };
+      }
+
+      function syncTargetBoxSize(vw, vh) {
+        const preview = document.getElementById('auto-preview-container');
+        const targetBox = document.getElementById('auto-target-box');
+        if (!preview || !targetBox) return;
+        const layout = applyPreviewWidthLayout(preview, vw, vh, autoLastRoiSyncKey);
+        if (!layout.changed) return;
+        autoLastRoiSyncKey = layout.key;
+        const scale = Math.max(layout.cw / vw, layout.ch / vh);
         const roiPx = Math.max(32, Math.min(110, Math.round(Math.min(vw, vh) * 0.2 * scale)));
         targetBox.style.width = roiPx + 'px';
         targetBox.style.height = roiPx + 'px';
+      }
+
+      async function acquireCameraVideoStream(mode, videoEl, shouldAbort) {
+        if (!videoEl || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          console.error('navigator.mediaDevices.getUserMedia non supportato in questo browser/contesto');
+          return null;
+        }
+        const videoConstraints = {
+          width: { ideal: 320 },
+          height: { ideal: 240 },
+          frameRate: { ideal: 60, max: 120 }
+        };
+        let selectedDeviceId = null;
+        if (mode === 'camera-back' && navigator.mediaDevices.enumerateDevices) {
+          try {
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            selectedDeviceId = pickPrimaryBackCameraDeviceId(devices);
+          } catch (e) { }
+        }
+        if (selectedDeviceId) {
+          videoConstraints.deviceId = { exact: selectedDeviceId };
+        } else {
+          videoConstraints.facingMode = mode === 'camera-back' ? { ideal: 'environment' } : { ideal: 'user' };
+        }
+        const stream = await navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: false });
+        if (typeof shouldAbort === 'function' && shouldAbort()) {
+          try { stream.getTracks().forEach(t => t.stop()); } catch (e) { }
+          return null;
+        }
+        videoEl.setAttribute('playsinline', 'true');
+        videoEl.setAttribute('webkit-playsinline', 'true');
+        videoEl.muted = true;
+        videoEl.srcObject = stream;
+        await videoEl.play();
+        videoEl.style.display = 'block';
+        videoEl.style.transform = mode === 'camera-front' ? 'scaleX(-1)' : 'scaleX(1)';
+        const track = stream.getVideoTracks()[0];
+        if (track && track.getCapabilities) {
+          try {
+            const caps = track.getCapabilities();
+            if (caps && caps.zoom) {
+              const targetZoom = Math.max(caps.zoom.min || 1, Math.min(caps.zoom.max || 1, 1.0));
+              await track.applyConstraints({ advanced: [{ zoom: targetZoom }] });
+            }
+          } catch (zErr) { }
+        }
+        return stream;
       }
 
       function setTargetBoxActive(active) {
@@ -7231,69 +7627,21 @@
       async function initCamera(mode, seq) {
         try {
           const video = document.getElementById('auto-video');
-          if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            console.error('navigator.mediaDevices.getUserMedia non supportato in questo browser/contesto');
-            return false;
-          }
-
-          let videoConstraints = {
-            width: { ideal: 320 },
-            height: { ideal: 240 },
-            frameRate: { ideal: 60, max: 120 }
-          };
-
-          let selectedDeviceId = null;
-          if (mode === 'camera-back' && navigator.mediaDevices.enumerateDevices) {
-            try {
-              const devices = await navigator.mediaDevices.enumerateDevices();
-              selectedDeviceId = pickPrimaryBackCameraDeviceId(devices);
-            } catch (e) { }
-          }
-
-          if (selectedDeviceId) {
-            videoConstraints.deviceId = { exact: selectedDeviceId };
-          } else {
-            videoConstraints.facingMode = mode === 'camera-back' ? { ideal: 'environment' } : { ideal: 'user' };
-          }
-
-          const stream = await navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: false });
-          if (seq && seq !== autoCameraInitSeq) {
-            try { stream.getTracks().forEach(t => t.stop()); } catch (e) { }
-            return false;
-          }
+          const stream = await acquireCameraVideoStream(mode, video, () => !!(seq && seq !== autoCameraInitSeq));
+          if (!stream) return false;
           autoStream = stream;
 
-          // Garanzia playsinline e muted per Safari iOS e Chrome mobile
-          video.setAttribute('playsinline', 'true');
-          video.setAttribute('webkit-playsinline', 'true');
-          video.muted = true;
-          video.srcObject = autoStream;
-          await video.play();
-
-          video.style.display = 'block';
           const targetBox = document.getElementById('auto-target-box');
           if (targetBox) {
             targetBox.style.display = 'block';
             autoTargetIsLit = true;
             setTargetBoxActive(false);
           }
-          video.style.transform = mode === 'camera-front' ? 'scaleX(-1)' : 'scaleX(1)';
 
           const canvas = document.getElementById('auto-canvas');
           if (canvas) {
             canvas.width = 32;
             canvas.height = 32;
-          }
-
-          const track = autoStream.getVideoTracks()[0];
-          if (track && track.getCapabilities) {
-            try {
-              const caps = track.getCapabilities();
-              if (caps && caps.zoom) {
-                const targetZoom = Math.max(caps.zoom.min || 1, Math.min(caps.zoom.max || 1, 1.0));
-                await track.applyConstraints({ advanced: [{ zoom: targetZoom }] });
-              }
-            } catch (zErr) { }
           }
 
           autoIsStreaming = true;
@@ -8095,6 +8443,1023 @@
         autoAvgHistory = [];
         autoOscTimestamps = [];
         autoMeasurementSaved = false;
+      }
+
+      // --- Experimental Extrema Tracker (Harmonic Lobe Fitting + Temporal Median Bg) ---
+      const EXP_STRIP_W = 160;
+      const EXP_STRIP_H = 18;
+
+      function medianFloat32(arr, len, scratchSorted) {
+        for (let i = 0; i < len; i++) scratchSorted[i] = arr[i];
+        scratchSorted.subarray(0, len).sort();
+        const mid = len >> 1;
+        return (len & 1) ? scratchSorted[mid] : 0.5 * (scratchSorted[mid - 1] + scratchSorted[mid]);
+      }
+
+      function solve3x3Linear(M, rhs) {
+        const a = [
+          [M[0][0], M[0][1], M[0][2], rhs[0]],
+          [M[1][0], M[1][1], M[1][2], rhs[1]],
+          [M[2][0], M[2][1], M[2][2], rhs[2]]
+        ];
+        for (let col = 0; col < 3; col++) {
+          let piv = col;
+          let maxAbs = Math.abs(a[col][col]);
+          for (let r = col + 1; r < 3; r++) {
+            const v = Math.abs(a[r][col]);
+            if (v > maxAbs) { maxAbs = v; piv = r; }
+          }
+          if (maxAbs < 1e-10) return null;
+          if (piv !== col) {
+            const tmp = a[col]; a[col] = a[piv]; a[piv] = tmp;
+          }
+          const inv = 1 / a[col][col];
+          for (let c = col; c < 4; c++) a[col][c] *= inv;
+          for (let r = 0; r < 3; r++) {
+            if (r === col || a[r][col] === 0) continue;
+            const f = a[r][col];
+            for (let c = col; c < 4; c++) a[r][c] -= f * a[col][c];
+          }
+        }
+        return [a[0][3], a[1][3], a[2][3]];
+      }
+
+      function fitHarmonicExtremum(samples, approxT, omega0, sgn, periodMs) {
+        const winHalf = Math.min(340, periodMs * 0.24);
+        const allWin = [];
+        for (let i = 0; i < samples.length; i++) {
+          const dt = samples[i].t - approxT;
+          if (dt >= -winHalf && dt <= winHalf) allWin.push(samples[i]);
+        }
+        if (allWin.length < 3) return approxT;
+
+        const unclipped = allWin.filter(p => !p.clipped);
+        const pts = unclipped.length >= 5 ? unclipped : allWin;
+
+        if (pts.length >= 4) {
+          const M = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+          const rhs = [0, 0, 0];
+          for (let i = 0; i < pts.length; i++) {
+            const p = pts[i];
+            const w = (0.35 + 0.65 * Math.min(1, Math.max(0.1, p.q || 1))) * (p.clipped ? 0.25 : 1.0);
+            const ph = omega0 * (p.t - approxT);
+            const c = Math.cos(ph);
+            const s = Math.sin(ph);
+            const row = [1, c, s];
+            for (let r = 0; r < 3; r++) {
+              rhs[r] += w * row[r] * p.x;
+              for (let k = 0; k < 3; k++) M[r][k] += w * row[r] * row[k];
+            }
+          }
+          const beta = solve3x3Linear(M, rhs);
+          if (beta) {
+            const c1 = beta[1], c2 = beta[2];
+            const amp = Math.hypot(c1, c2);
+            if (amp >= 0.025 && (sgn * c1) > 0) {
+              const tauStar = Math.atan2(sgn * c2, sgn * c1) / omega0;
+              if (Number.isFinite(tauStar) && Math.abs(tauStar) <= periodMs * 0.16) {
+                return approxT + tauStar;
+              }
+            }
+          }
+        }
+
+        // Quadratic 3+ point vertex fallback for ultra-sparse edges
+        let bestIdx = 0, bestDt = Infinity;
+        for (let i = 0; i < pts.length; i++) {
+          const d = Math.abs(pts[i].t - approxT);
+          if (d < bestDt) { bestDt = d; bestIdx = i; }
+        }
+        if (bestIdx > 0 && bestIdx < pts.length - 1) {
+          const p0 = pts[bestIdx - 1], p1 = pts[bestIdx], p2 = pts[bestIdx + 1];
+          const t0 = p0.t - p1.t, t2 = p2.t - p1.t;
+          const d0 = p0.x - p1.x, d2 = p2.x - p1.x;
+          const denom = 2 * (t0 * d2 - t2 * d0);
+          if (Math.abs(denom) > 1e-9) {
+            const num = t0 * t0 * d2 - t2 * t2 * d0;
+            const dtStar = num / denom;
+            if (Number.isFinite(dtStar) && Math.abs(dtStar) <= periodMs * 0.14) {
+              return p1.t + dtStar;
+            }
+          }
+        }
+        return approxT;
+      }
+
+      function createExpExtremaEngine(priorPeriodS, options) {
+        const opts = options || {};
+        const W = opts.width || EXP_STRIP_W;
+        let minContrast = opts.minContrast || 18;
+        const MAX_BG_SLOTS = 22;
+        const BG_INTERVAL_MS = 85;
+
+        const lumBuf = new Float32Array(W);
+        const diffBuf = new Float32Array(W);
+        const residBuf = new Float32Array(W);
+        const smoothBuf = new Float32Array(W);
+        const sortScratch = new Float32Array(Math.max(W, MAX_BG_SLOTS));
+        const bgSlots = [];
+        const bgMedian = new Float32Array(W);
+        let lastBgPushMs = -1e9;
+        let lastBgTrackX = null;
+
+        let predX = null;
+        let lastValidX = null;
+        let sampleRing = [];
+        let dir = 0;
+        let candX = 0, candT = 0;
+        let initHiX = -1, initHiT = 0, initLoX = 2, initLoT = 0;
+        let pendingExt = null;
+        let lastCommittedApproxT = -1e9;
+        let records = [];
+        let refPeriodMs = Math.max(650, Math.min(2600, (priorPeriodS || 1.36) * 1000));
+        let lastOLS = { periodS: 0, sigmaMs: 0, totalTimeS: 0, n: 0, symmetryPct: 50, isSinglePassMode: false };
+        let minExtX = null, maxExtX = null;
+        let lastRetroRefineCount = 0;
+
+        function resetBg() {
+          bgSlots.length = 0;
+          lastBgPushMs = -1e9;
+          lastBgTrackX = null;
+        }
+
+        function resetCounting(nextPriorS) {
+          sampleRing.length = 0;
+          dir = 0;
+          candX = 0; candT = 0;
+          initHiX = -1; initHiT = 0;
+          initLoX = 2; initLoT = 0;
+          pendingExt = null;
+          lastCommittedApproxT = -1e9;
+          records.length = 0;
+          refPeriodMs = Math.max(650, Math.min(2600, (nextPriorS || priorPeriodS || 1.36) * 1000));
+          lastOLS = { periodS: 0, sigmaMs: 0, totalTimeS: 0, n: 0, symmetryPct: 50, isSinglePassMode: false };
+          minExtX = null;
+          maxExtX = null;
+          lastRetroRefineCount = 0;
+        }
+
+        function pushBgFrame(tMs, detectedX, force) {
+          if (!force && (tMs - lastBgPushMs) < BG_INTERVAL_MS) return;
+          if (!force && bgSlots.length >= 6) {
+            if (detectedX !== null && lastBgTrackX !== null && Math.abs(detectedX - lastBgTrackX) <= 0.055) {
+              return; // Avoid absorbing a stationary held racket into background
+            }
+            if (detectedX !== null && bgSlots.length >= MAX_BG_SLOTS && (tMs - lastBgPushMs) < 135) {
+              return;
+            }
+          }
+          const copy = new Float32Array(lumBuf);
+          if (bgSlots.length < MAX_BG_SLOTS) {
+            bgSlots.push(copy);
+          } else {
+            bgSlots.shift();
+            bgSlots.push(copy);
+          }
+          lastBgPushMs = tMs;
+          lastBgTrackX = detectedX;
+          const nSlots = bgSlots.length;
+          for (let x = 0; x < W; x++) {
+            for (let s = 0; s < nSlots; s++) sortScratch[s] = bgSlots[s][x];
+            sortScratch.subarray(0, nSlots).sort();
+            const mid = nSlots >> 1;
+            bgMedian[x] = (nSlots & 1) ? sortScratch[mid] : 0.5 * (sortScratch[mid - 1] + sortScratch[mid]);
+          }
+        }
+
+        function extractClusterFromSmooth() {
+          let maxVal = 0;
+          for (let x = 0; x < W; x++) {
+            if (smoothBuf[x] > maxVal) maxVal = smoothBuf[x];
+          }
+          if (maxVal < minContrast) {
+            return { detected: false, peak: maxVal, xNorm: null, xMinNorm: 0, xMaxNorm: 0, clipped: false, quality: 0 };
+          }
+          const thr = Math.max(7.5, minContrast * 0.44);
+          const runs = [];
+          let inRun = false, rs = 0, rPeak = 0, rMass = 0, rXSum = 0;
+          for (let x = 0; x < W; x++) {
+            const v = smoothBuf[x];
+            if (v >= thr) {
+              if (!inRun) { inRun = true; rs = x; rPeak = 0; rMass = 0; rXSum = 0; }
+              if (v > rPeak) rPeak = v;
+              rMass += v;
+              rXSum += x * v;
+            } else if (inRun) {
+              runs.push({ s: rs, e: x - 1, peak: rPeak, mass: rMass, xSum: rXSum });
+              inRun = false;
+            }
+          }
+          if (inRun) runs.push({ s: rs, e: W - 1, peak: rPeak, mass: rMass, xSum: rXSum });
+          if (runs.length === 0) {
+            return { detected: false, peak: maxVal, xNorm: null, xMinNorm: 0, xMaxNorm: 0, clipped: false, quality: 0 };
+          }
+
+          // Merge hollow racket hoop rim pairs separated by <= 16% frame width
+          const maxGap = Math.round(W * 0.16);
+          const maxSpan = Math.round(W * 0.36);
+          const groups = [];
+          for (let i = 0; i < runs.length; i++) {
+            let gS = runs[i].s, gE = runs[i].e, gPeak = runs[i].peak, gMass = runs[i].mass, gXSum = runs[i].xSum;
+            groups.push({ s: gS, e: gE, peak: gPeak, mass: gMass, centerNorm: (gXSum / gMass) / (W - 1) });
+            for (let j = i + 1; j < runs.length; j++) {
+              const gap = runs[j].s - gE - 1;
+              const spanCols = runs[j].e - gS;
+              if (gap > maxGap || spanCols > maxSpan) break;
+              gE = runs[j].e;
+              if (runs[j].peak > gPeak) gPeak = runs[j].peak;
+              gMass += runs[j].mass;
+              gXSum += runs[j].xSum;
+              groups.push({ s: gS, e: gE, peak: gPeak, mass: gMass, centerNorm: (gXSum / gMass) / (W - 1) });
+            }
+          }
+
+          let best = null, bestScore = -1;
+          for (let i = 0; i < groups.length; i++) {
+            const g = groups[i];
+            if (g.peak < minContrast) continue;
+            const cont = predX !== null
+              ? (0.32 + 0.68 * Math.exp(-Math.pow((g.centerNorm - predX) / 0.18, 2)))
+              : 1.0;
+            const score = g.mass * cont;
+            if (score > bestScore) {
+              bestScore = score;
+              best = g;
+            }
+          }
+          if (!best) {
+            return { detected: false, peak: maxVal, xNorm: null, xMinNorm: 0, xMaxNorm: 0, clipped: false, quality: 0 };
+          }
+          return {
+            detected: true,
+            peak: best.peak,
+            xNorm: Math.max(0, Math.min(1, best.centerNorm)),
+            xMinNorm: best.s / (W - 1),
+            xMaxNorm: best.e / (W - 1),
+            clipped: best.s <= 1 || best.e >= W - 2,
+            quality: Math.min(1, best.peak / Math.max(24, minContrast * 2.2))
+          };
+        }
+
+        function retroRefineAllRecords() {
+          if (records.length < 4 || !lastOLS.periodS) return;
+          const convPeriodMs = Math.max(650, Math.min(2600, lastOLS.periodS * 1000));
+          const convOmega = (2 * Math.PI) / convPeriodMs;
+          for (let i = 0; i < records.length; i++) {
+            const rec = records[i];
+            rec.t = fitHarmonicExtremum(sampleRing, rec.approxT, convOmega, rec.sgn, convPeriodMs);
+          }
+          lastOLS = computeDualSemiPeriodOLS(records, convPeriodMs / 1000);
+          if (lastOLS.periodS > 0.65 && lastOLS.periodS < 2.6) {
+            refPeriodMs = lastOLS.periodS * 1000;
+          }
+        }
+
+        function commitPendingExtremum() {
+          if (!pendingExt) return null;
+          const ext = pendingExt;
+          pendingExt = null;
+          const omega0 = (2 * Math.PI) / refPeriodMs;
+          const tStar = fitHarmonicExtremum(sampleRing, ext.approxT, omega0, ext.sgn, refPeriodMs);
+
+          if (records.length > 0) {
+            const prev = records[records.length - 1];
+            if (ext.sgn === prev.sgn && (tStar - prev.t) < refPeriodMs * 0.70) {
+              return null;
+            }
+            const dtS = (tStar - prev.t) / 1000;
+            if (dtS <= 0.12) return null;
+            const dhRaw = dtS / (refPeriodMs * 0.0005);
+            const dh = (ext.sgn === prev.sgn)
+              ? Math.max(2, 2 * Math.round(dhRaw / 2))
+              : Math.max(1, 2 * Math.round((dhRaw - 1) / 2) + 1);
+            records.push({ t: tStar, h: prev.h + dh, sgn: ext.sgn, approxT: ext.approxT, approxX: ext.approxX });
+          } else {
+            records.push({ t: tStar, h: 0, sgn: ext.sgn, approxT: ext.approxT, approxX: ext.approxX });
+          }
+          lastCommittedApproxT = ext.approxT;
+          if (ext.sgn < 0) minExtX = ext.approxX;
+          else maxExtX = ext.approxX;
+
+          if (records.length >= 2) {
+            lastOLS = computeDualSemiPeriodOLS(records, refPeriodMs / 1000);
+            if (records.length >= 4 && lastOLS.periodS > 0.65 && lastOLS.periodS < 2.6) {
+              refPeriodMs = lastOLS.periodS * 1000;
+              if ((records.length === 8 || records.length === 16) && records.length !== lastRetroRefineCount) {
+                lastRetroRefineCount = records.length;
+                retroRefineAllRecords();
+              }
+            }
+          }
+          return records[records.length - 1];
+        }
+
+        function queueExtremum(sgn, approxT, approxX) {
+          if (pendingExt) commitPendingExtremum();
+          const minHalfMs = Math.max(220, refPeriodMs * 0.30);
+          if ((approxT - lastCommittedApproxT) < minHalfMs) return;
+          pendingExt = {
+            sgn,
+            approxT,
+            approxX,
+            finalizeAtMs: approxT + Math.min(240, refPeriodMs * 0.18)
+          };
+        }
+
+        function processPositionSample(tMs, xNorm, quality, isCounting, clipped) {
+          let committedNow = null;
+          if (pendingExt && tMs >= pendingExt.finalizeAtMs) {
+            committedNow = commitPendingExtremum();
+          }
+          if (xNorm === null || !Number.isFinite(xNorm)) {
+            return {
+              xNorm: lastValidX,
+              detected: false,
+              committedExtremum: committedNow,
+              oscillations: records.length ? Math.floor(records[records.length - 1].h / 2) : 0,
+              recordsCount: records.length,
+              ols: lastOLS,
+              minExtX,
+              maxExtX,
+              span: 0,
+              nearEdge: false
+            };
+          }
+
+          predX = xNorm;
+          lastValidX = xNorm;
+
+          if (!isCounting) {
+            return {
+              xNorm,
+              detected: true,
+              committedExtremum: null,
+              oscillations: 0,
+              recordsCount: 0,
+              ols: lastOLS,
+              minExtX: null,
+              maxExtX: null,
+              span: 0,
+              nearEdge: xNorm <= 0.06 || xNorm >= 0.94
+            };
+          }
+
+          sampleRing.push({ t: tMs, x: xNorm, q: quality || 1, clipped: !!clipped });
+          if (sampleRing.length > 1600) sampleRing.shift();
+
+          // Compute trailing 6.5s span for adaptive hysteresis as swing damps
+          let rMin = 1, rMax = 0;
+          const cutoff = tMs - 6500;
+          for (let i = sampleRing.length - 1; i >= 0; i--) {
+            if (sampleRing[i].t < cutoff) break;
+            const sx = sampleRing[i].x;
+            if (sx < rMin) rMin = sx;
+            if (sx > rMax) rMax = sx;
+          }
+          const span = Math.max(0, rMax - rMin);
+          const hyst = Math.max(0.022, Math.min(0.11, 0.24 * (span * 0.5)));
+
+          if (span >= 0.08) {
+            if (dir === 0) {
+              if (xNorm >= initHiX) { initHiX = xNorm; initHiT = tMs; }
+              if (xNorm <= initLoX) { initLoX = xNorm; initLoT = tMs; }
+              if ((initHiX - xNorm) >= hyst && (initHiX - initLoX) >= 0.05) {
+                queueExtremum(1, initHiT, initHiX);
+                dir = -1;
+                candX = xNorm;
+                candT = tMs;
+              } else if ((xNorm - initLoX) >= hyst && (initHiX - initLoX) >= 0.05) {
+                queueExtremum(-1, initLoT, initLoX);
+                dir = 1;
+                candX = xNorm;
+                candT = tMs;
+              }
+            } else if (dir === 1) {
+              if (xNorm > candX) {
+                candX = xNorm;
+                candT = tMs;
+              } else if ((candX - xNorm) >= hyst) {
+                queueExtremum(1, candT, candX);
+                dir = -1;
+                candX = xNorm;
+                candT = tMs;
+              }
+            } else {
+              if (xNorm < candX) {
+                candX = xNorm;
+                candT = tMs;
+              } else if ((xNorm - candX) >= hyst) {
+                queueExtremum(-1, candT, candX);
+                dir = 1;
+                candX = xNorm;
+                candT = tMs;
+              }
+            }
+          } else {
+            if (xNorm > initHiX) { initHiX = xNorm; initHiT = tMs; }
+            if (xNorm < initLoX) { initLoX = xNorm; initLoT = tMs; }
+          }
+
+          if (!committedNow && pendingExt && tMs >= pendingExt.finalizeAtMs) {
+            committedNow = commitPendingExtremum();
+          }
+
+          const osc = records.length ? Math.floor(records[records.length - 1].h / 2) : 0;
+          return {
+            xNorm,
+            detected: true,
+            committedExtremum: committedNow,
+            oscillations: osc,
+            recordsCount: records.length,
+            ols: lastOLS,
+            minExtX,
+            maxExtX,
+            span,
+            nearEdge: xNorm <= 0.06 || xNorm >= 0.94
+          };
+        }
+
+        function processLuminanceRow(tMs, lumRow, isCounting) {
+          for (let x = 0; x < W; x++) lumBuf[x] = lumRow[x];
+          if (bgSlots.length === 0) {
+            pushBgFrame(tMs, null, true);
+            return Object.assign(
+              processPositionSample(tMs, null, 0, isCounting, false),
+              { peakContrast: 0, xMinNorm: 0, xMaxNorm: 0 }
+            );
+          }
+
+          for (let x = 0; x < W; x++) diffBuf[x] = lumBuf[x] - bgMedian[x];
+          const globalShift = medianFloat32(diffBuf, W, sortScratch);
+          for (let x = 0; x < W; x++) residBuf[x] = Math.abs(diffBuf[x] - globalShift);
+
+          smoothBuf[0] = 0.75 * residBuf[0] + 0.25 * residBuf[1];
+          for (let x = 1; x < W - 1; x++) {
+            smoothBuf[x] = 0.25 * residBuf[x - 1] + 0.50 * residBuf[x] + 0.25 * residBuf[x + 1];
+          }
+          smoothBuf[W - 1] = 0.25 * residBuf[W - 2] + 0.75 * residBuf[W - 1];
+
+          const cl = extractClusterFromSmooth();
+          pushBgFrame(tMs, cl.detected ? cl.xNorm : null, false);
+          const state = processPositionSample(tMs, cl.detected ? cl.xNorm : null, cl.quality, isCounting, cl.clipped);
+          state.peakContrast = cl.peak;
+          state.xMinNorm = cl.xMinNorm;
+          state.xMaxNorm = cl.xMaxNorm;
+          return state;
+        }
+
+        function processFramePixels(tMs, rgba, w, h, isCounting) {
+          const cols = Math.min(W, w);
+          const rows = Math.max(1, h);
+          const inv = 1 / (4 * rows);
+          for (let x = 0; x < cols; x++) {
+            let sum = 0;
+            let idx = x * 4;
+            const stride = w * 4;
+            for (let y = 0; y < rows; y++) {
+              sum += rgba[idx] + 2 * rgba[idx + 1] + rgba[idx + 2];
+              idx += stride;
+            }
+            lumBuf[x] = sum * inv;
+          }
+          return processLuminanceRow(tMs, lumBuf, isCounting);
+        }
+
+        function finalizeRun() {
+          if (pendingExt) commitPendingExtremum();
+          retroRefineAllRecords();
+          const osc = records.length ? Math.floor(records[records.length - 1].h / 2) : 0;
+          return {
+            oscillations: osc,
+            records: records.slice(),
+            ols: lastOLS,
+            minExtX,
+            maxExtX
+          };
+        }
+
+        return {
+          setMinContrast(v) { minContrast = Math.max(6, Number(v) || 18); },
+          resetBg,
+          resetCounting,
+          processLuminanceRow,
+          processPositionSample,
+          processFramePixels,
+          finalizeRun,
+          getRecords: () => records.slice(),
+          getOLS: () => lastOLS
+        };
+      }
+      window.createExpExtremaEngine = createExpExtremaEngine;
+
+      // --- Experimental Camera State & Controller ---
+      let expMode = null;
+      let expStream = null;
+      let expRafId = null;
+      let expVfcId = null;
+      let expIsStreaming = false;
+      let expIsCounting = false;
+      let expCountdownInterval = null;
+      let expCameraInitSeq = 0;
+      let expLastRoiSyncKey = '';
+      let expEngine = null;
+      let expSmoothFps = 60;
+      let expLastFrameTime = 0;
+      let expVisualContrast = 0;
+      let expOscillations = 0;
+      let expCurrentOLSPeriodS = 0;
+      let expCurrentOLSSigmaMs = 0;
+      let expCurrentSymmetryPct = 50;
+      let expMeasurementSaved = false;
+      let expDotFlashUntil = 0;
+      let expMinFlashUntil = 0;
+      let expMaxFlashUntil = 0;
+
+      function refreshExpRacketSummary() {
+        const el = document.getElementById('exp-racket-summary');
+        if (!el) return;
+        const m = parseFloat(document.getElementById('pend-mass')?.value || '300');
+        const b = parseFloat(document.getElementById('pend-balance')?.value || '32');
+        const hng = parseFloat(document.getElementById('pend-hang')?.value || '64.3');
+        const twVal = document.getElementById('pend-tw')?.value || '';
+        const twTxt = twVal && parseFloat(twVal) > 0 ? (' · TW ' + parseFloat(twVal).toFixed(1)) : '';
+        el.innerHTML = '<span>Parametri da Misura SW: <strong style="color:#f1f5f9">'
+          + (isNaN(m) ? '--' : m.toFixed(1).replace(/\.0$/, '')) + 'g &middot; '
+          + (isNaN(b) ? '--' : b.toFixed(1)) + 'cm &middot; Y='
+          + (isNaN(hng) ? '--' : hng.toFixed(1)) + 'cm' + twTxt + '</strong></span>'
+          + '<a href="#" onclick="event.preventDefault();switchTab(\'misura-sw\')" '
+          + 'style="color:var(--accent-cyan);font-size:0.72rem;font-weight:700;text-decoration:none">Modifica &rarr;</a>';
+      }
+
+      function onExpSensChange() {
+        const val = parseFloat(document.getElementById('exp-light-sens')?.value || '18');
+        if (expEngine) expEngine.setMinContrast(val);
+      }
+
+      function cancelExpLoop() {
+        if (expRafId) { cancelAnimationFrame(expRafId); expRafId = null; }
+        if (expVfcId !== null) {
+          const v = document.getElementById('exp-video');
+          if (v && typeof v.cancelVideoFrameCallback === 'function') {
+            try { v.cancelVideoFrameCallback(expVfcId); } catch (e) { }
+          }
+          expVfcId = null;
+        }
+      }
+
+      function scheduleNextExpFrame() {
+        if (!expIsStreaming) return;
+        const video = document.getElementById('exp-video');
+        if (video && video.srcObject && typeof video.requestVideoFrameCallback === 'function') {
+          expVfcId = video.requestVideoFrameCallback((now) => {
+            expVfcId = null;
+            processExpFrame(now);
+          });
+        } else {
+          expRafId = requestAnimationFrame(processExpFrame);
+        }
+      }
+
+      function setExpHudMode(mode) {
+        const calPanel = document.getElementById('exp-cal-panel');
+        const progPanel = document.getElementById('exp-progress-panel');
+        const badge = document.getElementById('exp-preview-badge');
+        if (calPanel) calPanel.style.display = (mode === 'preview') ? 'flex' : 'none';
+        if (progPanel) progPanel.style.display = (mode === 'counting' || mode === 'done') ? 'flex' : 'none';
+        if (badge) {
+          if (mode === 'counting') {
+            badge.textContent = '\u25cf IN MISURA ESTREMI';
+            badge.style.color = '#34d399';
+            badge.style.borderColor = 'rgba(16,185,129,0.55)';
+          } else if (mode === 'done') {
+            badge.textContent = '\u2713 COMPLETATA';
+            badge.style.color = '#34d399';
+            badge.style.borderColor = 'rgba(16,185,129,0.55)';
+          } else {
+            badge.textContent = '\u25cf ANTEPRIMA';
+            badge.style.color = '#e2e8f0';
+            badge.style.borderColor = 'rgba(255,255,255,0.22)';
+          }
+        }
+      }
+
+      function mirrorExpX(xNorm) {
+        return expMode === 'camera-front' ? (1 - xNorm) : xNorm;
+      }
+
+      function updateExpMarkersUI(now, state) {
+        const dot = document.getElementById('exp-track-dot');
+        const minMk = document.getElementById('exp-ext-min');
+        const maxMk = document.getElementById('exp-ext-max');
+        if (dot) {
+          if (state.detected && state.xNorm !== null) {
+            dot.style.display = 'block';
+            dot.style.left = (mirrorExpX(state.xNorm) * 100).toFixed(1) + '%';
+            dot.classList.toggle('turning', now < expDotFlashUntil);
+          } else {
+            dot.style.display = 'none';
+          }
+        }
+        if (state.committedExtremum) {
+          expDotFlashUntil = now + 220;
+          if (state.committedExtremum.sgn < 0) expMinFlashUntil = now + 260;
+          else expMaxFlashUntil = now + 260;
+        }
+        if (minMk) {
+          if (state.minExtX !== null) {
+            minMk.style.display = 'block';
+            minMk.style.left = (mirrorExpX(state.minExtX) * 100).toFixed(1) + '%';
+            minMk.classList.toggle('flash', now < expMinFlashUntil);
+          } else {
+            minMk.style.display = 'none';
+          }
+        }
+        if (maxMk) {
+          if (state.maxExtX !== null) {
+            maxMk.style.display = 'block';
+            maxMk.style.left = (mirrorExpX(state.maxExtX) * 100).toFixed(1) + '%';
+            maxMk.classList.toggle('flash', now < expMaxFlashUntil);
+          } else {
+            maxMk.style.display = 'none';
+          }
+        }
+      }
+
+      function computeExpSWFromPeriod(periodS, nOsc) {
+        if (!periodS || periodS <= 0 || !nOsc) return NaN;
+        const m = parseFloat(document.getElementById('pend-mass')?.value);
+        const b = parseFloat(document.getElementById('pend-balance')?.value);
+        const hng = parseFloat(document.getElementById('pend-hang')?.value);
+        const twVal = document.getElementById('pend-tw')?.value || '';
+        const tw = twVal !== '' && !isNaN(+twVal) && +twVal > 0 ? +twVal : null;
+        const det = computePendulumDetails(m, b, hng, nOsc, periodS * nOsc, tw);
+        return det.valid ? det.sw : NaN;
+      }
+
+      function populateExpResultCard(osc, periodS, sigmaMs, symPct) {
+        const card = document.getElementById('exp-result-card');
+        if (!card || !osc || periodS <= 0) return;
+        const sw = computeExpSWFromPeriod(periodS, osc);
+        const swEl = document.getElementById('exp-res-sw');
+        const metaEl = document.getElementById('exp-res-meta');
+        const perEl = document.getElementById('exp-res-period');
+        const sigEl = document.getElementById('exp-res-sigma');
+        const symEl = document.getElementById('exp-res-symmetry');
+        if (swEl) swEl.textContent = !isNaN(sw) ? (sw.toFixed(1) + ' kg\u00b7cm\u00b2') : 'Param. non validi';
+        if (metaEl) metaEl.textContent = osc + ' oscillazioni complete \u00b7 ' + (periodS * osc).toFixed(3) + ' s totali';
+        if (perEl) perEl.textContent = periodS.toFixed(4) + ' s';
+        if (sigEl) sigEl.textContent = '\u00b1' + sigmaMs.toFixed(2) + ' ms';
+        if (symEl) symEl.textContent = symPct + '% / ' + (100 - symPct) + '%';
+        card.style.display = 'block';
+      }
+
+      function syncExpResultToPendulum(saveHist) {
+        if (expOscillations <= 0 || expCurrentOLSPeriodS <= 0) return;
+        const nEl = document.getElementById('pend-nswings');
+        const tEl = document.getElementById('pend-time');
+        if (nEl) nEl.value = expOscillations;
+        if (tEl) tEl.value = (expCurrentOLSPeriodS * expOscillations).toFixed(3);
+        calcPendulum(!!saveHist && !expMeasurementSaved);
+        if (saveHist) expMeasurementSaved = true;
+        populateExpResultCard(expOscillations, expCurrentOLSPeriodS, expCurrentOLSSigmaMs, expCurrentSymmetryPct);
+      }
+
+      function selectExpCamera(mode) {
+        const currentSeq = ++expCameraInitSeq;
+        if (expStream) {
+          try { expStream.getTracks().forEach(t => t.stop()); } catch (e) { }
+          expStream = null;
+        }
+        cancelExpLoop();
+        if (expCountdownInterval) { clearInterval(expCountdownInterval); expCountdownInterval = null; }
+        expIsCounting = false;
+        expIsStreaming = false;
+        expMode = mode;
+        expLastRoiSyncKey = '';
+        expOscillations = 0;
+        expCurrentOLSPeriodS = 0;
+        expCurrentOLSSigmaMs = 0;
+
+        const sensVal = parseFloat(document.getElementById('exp-light-sens')?.value || '18');
+        expEngine = createExpExtremaEngine(estimatePriorPeriodS(), { minContrast: sensVal });
+
+        document.getElementById('btn-exp-cam-front')?.classList.toggle('active-camera', mode === 'camera-front');
+        document.getElementById('btn-exp-cam-back')?.classList.toggle('active-camera', mode === 'camera-back');
+
+        const uiContainer = document.getElementById('exp-ui-container');
+        if (uiContainer) uiContainer.style.display = 'block';
+        const resCard = document.getElementById('exp-result-card');
+        if (resCard) resCard.style.display = 'none';
+        const startBox = document.getElementById('exp-start-control-box');
+        if (startBox) startBox.style.display = 'block';
+        const measActions = document.getElementById('exp-measuring-actions');
+        if (measActions) measActions.style.display = 'none';
+        const countdownEl = document.getElementById('exp-countdown');
+        if (countdownEl) countdownEl.style.display = 'none';
+        const statsEl = document.getElementById('exp-stats');
+        if (statsEl) statsEl.style.display = 'none';
+        document.getElementById('exp-ext-min').style.display = 'none';
+        document.getElementById('exp-ext-max').style.display = 'none';
+        document.getElementById('exp-track-dot').style.display = 'none';
+
+        const statusEl = document.getElementById('exp-pass-status');
+        if (statusEl) { statusEl.textContent = 'Avvio fotocamera...'; statusEl.style.color = '#38bdf8'; }
+        setExpHudMode('preview');
+
+        initExpCamera(mode, currentSeq).then(ok => {
+          if (currentSeq !== expCameraInitSeq) return;
+          if (ok) {
+            if (statusEl) {
+              statusEl.textContent = 'Inquadra entrambi gli estremi sulla linea e premi Avvia';
+              statusEl.style.color = '#38bdf8';
+            }
+          } else {
+            showAppToast('Impossibile accedere alla fotocamera. Controlla i permessi del browser.');
+            stopExpMeasurement(false);
+          }
+        });
+      }
+
+      async function initExpCamera(mode, seq) {
+        try {
+          const video = document.getElementById('exp-video');
+          const stream = await acquireCameraVideoStream(mode, video, () => !!(seq && seq !== expCameraInitSeq));
+          if (!stream) return false;
+          expStream = stream;
+          const canvas = document.getElementById('exp-canvas');
+          if (canvas) { canvas.width = EXP_STRIP_W; canvas.height = EXP_STRIP_H; }
+          expIsStreaming = true;
+          expLastFrameTime = performance.now();
+          cancelExpLoop();
+          scheduleNextExpFrame();
+          return true;
+        } catch (err) {
+          console.error('Experimental camera error', err);
+          return false;
+        }
+      }
+
+      function startExpManualCountdown() {
+        if (!expStream) { showAppToast('Attiva prima la fotocamera.'); return; }
+        document.getElementById('exp-start-control-box').style.display = 'none';
+        document.getElementById('exp-measuring-actions').style.display = 'flex';
+        document.getElementById('exp-stats').style.display = 'grid';
+        document.getElementById('exp-result-card').style.display = 'none';
+        if (expEngine) {
+          expEngine.resetBg();
+          expEngine.resetCounting(estimatePriorPeriodS());
+        }
+
+        const countdownEl = document.getElementById('exp-countdown');
+        const titleEl = document.getElementById('exp-countdown-title');
+        const valEl = document.getElementById('exp-countdown-val');
+        const msgEl = document.getElementById('exp-countdown-msg');
+        let count = 3;
+        if (countdownEl) countdownEl.style.display = 'flex';
+        if (titleEl) titleEl.textContent = 'Calibrazione Sfondo & Estremi';
+        if (valEl) { valEl.textContent = count; valEl.style.fontSize = '2.8rem'; valEl.style.color = 'var(--accent-amber)'; }
+        if (msgEl) msgEl.textContent = 'Lascia oscillare lungo la linea azzurra con entrambi gli estremi visibili';
+
+        if (expCountdownInterval) clearInterval(expCountdownInterval);
+        expCountdownInterval = setInterval(() => {
+          count--;
+          if (count > 0) {
+            if (valEl) valEl.textContent = count;
+            if (msgEl) msgEl.textContent = 'Inizio tracciamento estremi tra ' + count + 's...';
+          } else {
+            clearInterval(expCountdownInterval);
+            expCountdownInterval = null;
+            if (countdownEl) countdownEl.style.display = 'none';
+            startExpCounting();
+          }
+        }, 1000);
+      }
+
+      function startExpCounting() {
+        expIsCounting = true;
+        expMeasurementSaved = false;
+        expOscillations = 0;
+        expCurrentOLSPeriodS = 0;
+        expCurrentOLSSigmaMs = 0;
+        expCurrentSymmetryPct = 50;
+        if (expEngine) expEngine.resetCounting(estimatePriorPeriodS());
+
+        const stopMode = document.getElementById('exp-stop-mode')?.value || 'auto';
+        document.getElementById('exp-val-swings').textContent = '0';
+        document.getElementById('exp-val-swings-target').textContent = (stopMode === 'auto') ? '/ 14+' : ('/ ' + stopMode);
+        document.getElementById('exp-val-avg').textContent = '0.000 s';
+        document.getElementById('exp-val-live-sw').textContent = '---';
+        document.getElementById('exp-progress-text').textContent = (stopMode === 'auto') ? 'Progresso (min 14 osc.)' : ('Progresso (0 / ' + stopMode + ' osc.)');
+        document.getElementById('exp-progress-bar').style.width = '0%';
+        document.getElementById('exp-progress-pct').textContent = '0%';
+        document.getElementById('exp-ext-min').style.display = 'none';
+        document.getElementById('exp-ext-max').style.display = 'none';
+        setExpHudMode('counting');
+
+        const statusEl = document.getElementById('exp-pass-status');
+        if (statusEl) { statusEl.textContent = '\u23f3 In attesa del 1\u00b0 estremo...'; statusEl.style.color = '#38bdf8'; }
+        if (!expRafId && expVfcId === null) scheduleNextExpFrame();
+      }
+
+      function restartExpMeasurement() {
+        expIsCounting = false;
+        if (expCountdownInterval) { clearInterval(expCountdownInterval); expCountdownInterval = null; }
+        startExpCounting();
+      }
+
+      function handleExpMeasurementState(now, state) {
+        if (!state) return;
+        updateExpMarkersUI(now, state);
+
+        // Live contrast bar (preview calibration)
+        const contrastNow = state.peakContrast || 0;
+        const alpha = contrastNow > expVisualContrast ? 0.45 : 0.16;
+        expVisualContrast += alpha * (contrastNow - expVisualContrast);
+        const sensVal = parseFloat(document.getElementById('exp-light-sens')?.value || '18');
+        const sigBar = document.getElementById('exp-signal-bar');
+        const sigVal = document.getElementById('exp-signal-val');
+        if (sigBar) {
+          sigBar.style.width = Math.min(100, Math.round((expVisualContrast / 60) * 100)) + '%';
+          sigBar.style.background = (state.detected && contrastNow >= sensVal)
+            ? 'linear-gradient(90deg, #10b981, #34d399)'
+            : 'linear-gradient(90deg, #0891b2, #06b6d4)';
+        }
+        if (sigVal) sigVal.textContent = expVisualContrast.toFixed(0);
+
+        const edgeEl = document.getElementById('exp-edge-hint');
+        if (edgeEl) {
+          if (state.detected && state.nearEdge) {
+            edgeEl.textContent = '\u26a0\ufe0f Troppo vicino al bordo!';
+            edgeEl.style.color = '#f59e0b';
+          } else if (state.detected) {
+            edgeEl.textContent = 'Aggancio OK (' + Math.round(state.xNorm * 100) + '%)';
+            edgeEl.style.color = '#34d399';
+          } else {
+            edgeEl.textContent = '';
+          }
+        }
+
+        if (!expIsCounting) return;
+
+        if (state.committedExtremum) {
+          const ext = state.committedExtremum;
+          const statusEl = document.getElementById('exp-pass-status');
+          const osc = state.oscillations;
+          expOscillations = osc;
+          document.getElementById('exp-val-swings').textContent = osc;
+
+          const sideLbl = mirrorExpX(ext.approxX) < 0.5 ? 'SX' : 'DX';
+          if (statusEl) {
+            statusEl.textContent = osc > 0
+              ? ('Estremo ' + sideLbl + ' #' + state.recordsCount + ' \u00b7 Osc. ' + osc)
+              : ('1\u00b0 estremo ' + sideLbl + ' rilevato, oscilla verso ' + (sideLbl === 'SX' ? 'DX' : 'SX') + '...');
+            statusEl.style.color = osc > 0 ? '#10b981' : '#38bdf8';
+          }
+
+          if (state.ols && state.ols.periodS > 0) {
+            expCurrentOLSPeriodS = state.ols.periodS;
+            expCurrentOLSSigmaMs = state.ols.sigmaMs;
+            expCurrentSymmetryPct = state.ols.symmetryPct;
+            document.getElementById('exp-val-avg').textContent = expCurrentOLSPeriodS.toFixed(3) + ' s';
+            const liveSw = computeExpSWFromPeriod(expCurrentOLSPeriodS, Math.max(1, osc));
+            document.getElementById('exp-val-live-sw').textContent = !isNaN(liveSw) ? liveSw.toFixed(1) : '---';
+            const accEl = document.getElementById('exp-val-acc');
+            if (accEl) accEl.textContent = Math.round(expSmoothFps) + ' fps \u00b7 \u00b1' + expCurrentOLSSigmaMs.toFixed(1) + ' ms';
+          }
+
+          const stopMode = document.getElementById('exp-stop-mode')?.value || 'auto';
+          const fixedTarget = stopMode === 'auto' ? 0 : parseInt(stopMode, 10);
+          const denom = stopMode === 'auto' ? 18 : fixedTarget;
+          const pct = Math.min(100, Math.round((osc / Math.max(1, denom)) * 100));
+          document.getElementById('exp-progress-bar').style.width = pct + '%';
+          document.getElementById('exp-progress-pct').textContent = pct + '%';
+          if (stopMode !== 'auto') {
+            document.getElementById('exp-progress-text').textContent = 'Progresso (' + osc + ' / ' + fixedTarget + ' osc.)';
+          }
+
+          const autoDone = (stopMode === 'auto') && (
+            (osc >= 14 && expCurrentOLSSigmaMs > 0 && expCurrentOLSSigmaMs <= 0.30) ||
+            (osc >= 18 && expCurrentOLSSigmaMs > 0 && expCurrentOLSSigmaMs <= 0.55) ||
+            (osc >= 28)
+          );
+          const fixedDone = (fixedTarget > 0 && osc >= fixedTarget);
+          if (autoDone || fixedDone) {
+            completeExpMeasurement('Completato in ' + osc + ' oscillazioni (T=' + expCurrentOLSPeriodS.toFixed(4) + 's, \u00b1' + expCurrentOLSSigmaMs.toFixed(2) + 'ms)');
+          }
+        }
+      }
+
+      function processExpFrame(timestamp) {
+        if (!expIsStreaming) return;
+        const now = (typeof timestamp === 'number' && timestamp > 0) ? timestamp : performance.now();
+        if (expLastFrameTime > 0) {
+          const dt = now - expLastFrameTime;
+          if (dt > 4 && dt < 500) {
+            expSmoothFps = 0.88 * expSmoothFps + 0.12 * (1000 / dt);
+            const accEl = document.getElementById('exp-val-acc');
+            if (accEl) {
+              const jitterTxt = expOscillations >= 2 ? (' \u00b7 \u00b1' + expCurrentOLSSigmaMs.toFixed(1) + ' ms') : '';
+              accEl.textContent = Math.round(expSmoothFps) + ' fps' + jitterTxt;
+            }
+          }
+        }
+        expLastFrameTime = now;
+
+        const video = document.getElementById('exp-video');
+        const canvas = document.getElementById('exp-canvas');
+        if (!video || !canvas || !expEngine) return;
+        const vw = video.videoWidth;
+        const vh = video.videoHeight;
+        if (!vw || !vh) {
+          scheduleNextExpFrame();
+          return;
+        }
+        const preview = document.getElementById('exp-preview-container');
+        const layout = applyPreviewWidthLayout(preview, vw, vh, expLastRoiSyncKey);
+        if (layout.changed) expLastRoiSyncKey = layout.key;
+
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        const bandY = vh * 0.41;
+        const bandH = Math.max(2, vh * 0.18);
+        ctx.drawImage(video, 0, bandY, vw, bandH, 0, 0, canvas.width, canvas.height);
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const state = expEngine.processFramePixels(now, imgData.data, canvas.width, canvas.height, expIsCounting);
+        handleExpMeasurementState(now, state);
+
+        if (expIsStreaming) scheduleNextExpFrame();
+      }
+
+      function completeExpMeasurement(message) {
+        if (expEngine) {
+          const fin = expEngine.finalizeRun();
+          if (fin && fin.oscillations > 0 && fin.ols && fin.ols.periodS > 0) {
+            expOscillations = fin.oscillations;
+            expCurrentOLSPeriodS = fin.ols.periodS;
+            expCurrentOLSSigmaMs = fin.ols.sigmaMs;
+            expCurrentSymmetryPct = fin.ols.symmetryPct;
+            document.getElementById('exp-val-swings').textContent = expOscillations;
+            document.getElementById('exp-val-avg').textContent = expCurrentOLSPeriodS.toFixed(3) + ' s';
+            const liveSw = computeExpSWFromPeriod(expCurrentOLSPeriodS, expOscillations);
+            document.getElementById('exp-val-live-sw').textContent = !isNaN(liveSw) ? liveSw.toFixed(1) : '---';
+          }
+        }
+        expIsCounting = false;
+        expIsStreaming = false;
+        cancelExpLoop();
+        if (expStream) { try { expStream.getTracks().forEach(t => t.stop()); } catch (e) { } expStream = null; }
+
+        const cEl = document.getElementById('exp-countdown');
+        const cTitle = document.getElementById('exp-countdown-title');
+        const cVal = document.getElementById('exp-countdown-val');
+        const cMsg = document.getElementById('exp-countdown-msg');
+        if (cEl) cEl.style.display = 'flex';
+        if (cTitle) cTitle.textContent = 'Misurazione Completata';
+        if (cVal) { cVal.style.fontSize = '1.55rem'; cVal.style.color = 'var(--accent-green)'; cVal.textContent = '\u2705 Completata!'; }
+        if (cMsg) cMsg.textContent = message || 'Periodo calcolato dagli estremi';
+        document.getElementById('exp-progress-bar').style.width = '100%';
+        document.getElementById('exp-progress-pct').textContent = '100%';
+        setExpHudMode('done');
+        document.getElementById('btn-exp-cam-front')?.classList.remove('active-camera');
+        document.getElementById('btn-exp-cam-back')?.classList.remove('active-camera');
+        playBeep();
+        syncExpResultToPendulum(true);
+      }
+
+      function stopExpMeasurement(apply) {
+        expCameraInitSeq++;
+        if (apply && expIsCounting && expEngine) {
+          const fin = expEngine.finalizeRun();
+          if (fin && fin.oscillations > 0 && fin.ols && fin.ols.periodS > 0) {
+            expOscillations = fin.oscillations;
+            expCurrentOLSPeriodS = fin.ols.periodS;
+            expCurrentOLSSigmaMs = fin.ols.sigmaMs;
+            expCurrentSymmetryPct = fin.ols.symmetryPct;
+          }
+        }
+        expIsCounting = false;
+        expIsStreaming = false;
+        if (expCountdownInterval) { clearInterval(expCountdownInterval); expCountdownInterval = null; }
+        cancelExpLoop();
+        if (expStream) { try { expStream.getTracks().forEach(t => t.stop()); } catch (e) { } expStream = null; }
+
+        document.getElementById('btn-exp-cam-front')?.classList.remove('active-camera');
+        document.getElementById('btn-exp-cam-back')?.classList.remove('active-camera');
+        const ui = document.getElementById('exp-ui-container');
+        if (ui) ui.style.display = 'none';
+        const cEl = document.getElementById('exp-countdown');
+        if (cEl) cEl.style.display = 'none';
+        const sBox = document.getElementById('exp-start-control-box');
+        if (sBox) sBox.style.display = 'block';
+        const mAct = document.getElementById('exp-measuring-actions');
+        if (mAct) mAct.style.display = 'none';
+        const stEl = document.getElementById('exp-stats');
+        if (stEl) stEl.style.display = 'none';
+        setExpHudMode('preview');
+
+        if (apply && expOscillations > 0 && expCurrentOLSPeriodS > 0) {
+          syncExpResultToPendulum(true);
+          showAppToast('Misura Experimental applicata (' + expOscillations + ' osc.)');
+        }
       }
 
       let appToastTimer = null;
