@@ -3040,6 +3040,29 @@
       width: 4px;
     }
 
+    #exp-track-span {
+      position: absolute;
+      top: 18%;
+      bottom: 18%;
+      left: 50%;
+      width: 4%;
+      border-radius: 5px;
+      background: rgba(34, 211, 238, 0.28);
+      border-left: 2.5px solid #22d3ee;
+      border-right: 2.5px solid #22d3ee;
+      box-shadow: 0 0 10px rgba(34, 211, 238, 0.55);
+      display: none;
+      pointer-events: none;
+      transition: background-color 0.08s linear, border-color 0.08s linear, box-shadow 0.08s linear;
+    }
+
+    #exp-track-span.turning {
+      background: rgba(52, 211, 153, 0.36);
+      border-left-color: #34d399;
+      border-right-color: #34d399;
+      box-shadow: 0 0 14px rgba(52, 211, 153, 0.9);
+    }
+
     #exp-track-dot {
       position: absolute;
       top: 50%;
@@ -3180,7 +3203,7 @@
       <div id="app-version-badge"
         style="font-size:0.72rem;font-weight:600;color:var(--accent-cyan);background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.28);border-radius:999px;padding:4px 10px;white-space:nowrap;letter-spacing:0.02em"
         title="Versione e data ultimo aggiornamento">
-        v3.1 &middot; 14/11/2026 22:50
+        v3.2 &middot; 15/11/2026 16:30
       </div>
     </header>
 
@@ -4457,7 +4480,7 @@
 
           <div style="display:flex;flex-direction:column;gap:10px">
             <div style="font-size:0.75rem;color:#e2e8f0;line-height:1.42">
-              Inquadra il <strong>tappo / manico</strong> lungo la linea azzurra mantenendo entrambi gli estremi dentro la zona luminosa (lascia liberi i bordi esterni ~8% per compensare automaticamente l'esposizione). L'algoritmo isola i punti d'inversione a velocit&#xe0; nulla.
+              Inquadra il <strong>tappo / manico</strong> di lato lungo la linea azzurra con oscillazioni contenute (<strong>&plusmn;8&deg;&ndash;12&deg;</strong>) mantenendo entrambi gli estremi dentro la zona luminosa (lascia liberi i bordi esterni ~8% per compensare l'esposizione). L'algoritmo isola i punti d'inversione a velocit&#xe0; nulla.
             </div>
 
             <div
@@ -4508,6 +4531,7 @@
                   <div id="exp-center-tick"></div>
                   <div id="exp-ext-min" class="exp-ext-marker" title="Estremo Sinistro"></div>
                   <div id="exp-ext-max" class="exp-ext-marker" title="Estremo Destro"></div>
+                  <div id="exp-track-span" title="Porzione tracciata sulla linea"></div>
                   <div id="exp-track-dot" title="Posizione rilevata sulla linea"></div>
                 </div>
 
@@ -9198,22 +9222,40 @@
       }
 
       function updateExpMarkersUI(now, state) {
+        const spanEl = document.getElementById('exp-track-span');
         const dot = document.getElementById('exp-track-dot');
         const minMk = document.getElementById('exp-ext-min');
         const maxMk = document.getElementById('exp-ext-max');
-        if (dot) {
-          if (state.detected && state.xNorm !== null) {
-            dot.style.display = 'block';
-            dot.style.left = (mirrorExpX(state.xNorm) * 100).toFixed(1) + '%';
-            dot.classList.toggle('turning', now < expDotFlashUntil);
-          } else {
-            dot.style.display = 'none';
-          }
-        }
         if (state.committedExtremum) {
           expDotFlashUntil = now + 220;
           if (state.committedExtremum.sgn < 0) expMinFlashUntil = now + 260;
           else expMaxFlashUntil = now + 260;
+        }
+        const isTurning = now < expDotFlashUntil;
+        if (spanEl) {
+          if (state.detected && state.xNorm !== null) {
+            const rawMin = (state.xMinNorm !== null && state.xMinNorm !== undefined) ? state.xMinNorm : state.xNorm;
+            const rawMax = (state.xMaxNorm !== null && state.xMaxNorm !== undefined) ? state.xMaxNorm : state.xNorm;
+            const m0 = mirrorExpX(rawMin);
+            const m1 = mirrorExpX(rawMax);
+            const leftPct = Math.min(m0, m1) * 100;
+            const widthPct = Math.max(1.2, Math.abs(m1 - m0) * 100);
+            spanEl.style.display = 'block';
+            spanEl.style.left = leftPct.toFixed(1) + '%';
+            spanEl.style.width = widthPct.toFixed(1) + '%';
+            spanEl.classList.toggle('turning', isTurning);
+          } else {
+            spanEl.style.display = 'none';
+          }
+        }
+        if (dot) {
+          if (state.detected && state.xNorm !== null) {
+            dot.style.display = 'block';
+            dot.style.left = (mirrorExpX(state.xNorm) * 100).toFixed(1) + '%';
+            dot.classList.toggle('turning', isTurning);
+          } else {
+            dot.style.display = 'none';
+          }
         }
         if (minMk) {
           if (state.minExtX !== null) {
@@ -9310,6 +9352,7 @@
         if (statsEl) statsEl.style.display = 'none';
         document.getElementById('exp-ext-min').style.display = 'none';
         document.getElementById('exp-ext-max').style.display = 'none';
+        document.getElementById('exp-track-span').style.display = 'none';
         document.getElementById('exp-track-dot').style.display = 'none';
 
         const statusEl = document.getElementById('exp-pass-status');
