@@ -3203,7 +3203,7 @@
       <div id="app-version-badge"
         style="font-size:0.72rem;font-weight:600;color:var(--accent-cyan);background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.28);border-radius:999px;padding:4px 10px;white-space:nowrap;letter-spacing:0.02em"
         title="Versione e data ultimo aggiornamento">
-        v3.2 &middot; 15/11/2026 16:30
+        v3.3 &middot; 19/11/2026 23:20
       </div>
     </header>
 
@@ -3892,8 +3892,8 @@
           <div style="display:flex;flex-direction:column;gap:10px">
             <div style="font-size:0.76rem;color:#e2e8f0;line-height:1.4">
               Posiziona lo smartphone sotto la traiettoria del tappo/manico (ideale al centro, ma supporta anche
-              posizionamento <strong>off-center</strong>) e avvia oscillazioni regolari di ampiezza moderata
-              (~10&deg;&ndash;15&deg;):
+              posizionamento <strong>off-center</strong>) e avvia oscillazioni regolari di ampiezza contenuta
+              (<strong>&plusmn;8&deg;&ndash;12&deg;</strong>):
             </div>
 
             <!-- Modalità Arresto -->
@@ -4489,7 +4489,7 @@
                 Modalit&#xe0; arresto:
                 <select id="exp-stop-mode"
                   style="width:100%;margin-top:3px;padding:6px 8px;font-size:0.82rem;font-weight:600;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-card);color:#fff">
-                  <option value="auto" selected>Automatico (Alta Precisione Estremi &middot; 14&ndash;28 osc.)</option>
+                  <option value="auto" selected>Automatico (Alta Precisione Estremi &middot; 18&ndash;32 osc.)</option>
                   <option value="10">Target Fisso (10 Oscillazioni)</option>
                   <option value="20">Target Fisso (20 Oscillazioni)</option>
                   <option value="30">Target Fisso (30 Oscillazioni)</option>
@@ -4578,7 +4578,7 @@
 
                 <div id="exp-progress-panel" style="display:none;flex-direction:column;gap:4px">
                   <div class="auto-cal-bar-row">
-                    <span class="auto-progress-lbl" id="exp-progress-text">Progresso (min 14 osc.)</span>
+                    <span class="auto-progress-lbl" id="exp-progress-text">Progresso (min 18 osc.)</span>
                     <div class="auto-bar-track">
                       <div id="exp-progress-bar"></div>
                     </div>
@@ -4605,7 +4605,7 @@
                   <div style="display:inline-flex;align-items:baseline;justify-content:center;gap:3px">
                     <span id="exp-val-swings" class="auto-stat-val">0</span>
                     <span id="exp-val-swings-target"
-                      style="font-size:0.80rem;font-weight:700;color:var(--text-secondary)">/ 14+</span>
+                      style="font-size:0.80rem;font-weight:700;color:var(--text-secondary)">/ 18+</span>
                   </div>
                 </div>
 
@@ -8093,7 +8093,7 @@
             }
             if (lumDev > curPeakLumDev) curPeakLumDev = lumDev;
             const maxPulseMs = Math.min(460, autoRefPeriodS * 340);
-            const stillOccluded = curPeakLumDev >= 25 && lumDev >= curPeakLumDev * 0.85;
+            const stillOccluded = curPeakLumDev >= 18 && lumDev >= curPeakLumDev * 0.65;
             if ((now - autoPulseLastActiveTime) <= 95 && (now - autoPulseStartTime) <= maxPulseMs) {
               const lastSample = autoPulseSamples.length ? autoPulseSamples[autoPulseSamples.length - 1] : null;
               if (diffSum > 0 || (stillOccluded && (!lastSample || (now - lastSample.t) >= 28))) {
@@ -8523,14 +8523,15 @@
         return [a[0][3], a[1][3], a[2][3]];
       }
 
-      function fitHarmonicExtremum(samples, approxT, omega0, sgn, periodMs) {
+      function fitHarmonicExtremum(samples, approxT, omega0, sgn, periodMs, fallbackT) {
+        const defaultT = fallbackT !== undefined ? fallbackT : approxT;
         const winHalf = Math.min(340, periodMs * 0.24);
         const allWin = [];
         for (let i = 0; i < samples.length; i++) {
           const dt = samples[i].t - approxT;
           if (dt >= -winHalf && dt <= winHalf) allWin.push(samples[i]);
         }
-        if (allWin.length < 3) return approxT;
+        if (allWin.length < 3) return defaultT;
 
         const unclipped = allWin.filter(p => !p.clipped);
         const pts = unclipped.length >= 5 ? unclipped : allWin;
@@ -8582,7 +8583,7 @@
             }
           }
         }
-        return approxT;
+        return defaultT;
       }
 
       function createExpExtremaEngine(priorPeriodS, options) {
@@ -8615,8 +8616,9 @@
         let lastValidX = null;
         let sampleRing = [];
         let dir = 0;
-        let candX = 0, candT = 0;
-        let initHiX = -1, initHiT = 0, initLoX = 2, initLoT = 0;
+        let candX = 0, candT = 0, candTStart = 0, candTEnd = 0;
+        let initHiX = -1, initHiT = 0, initHiTStart = 0, initHiTEnd = 0;
+        let initLoX = 2, initLoT = 0, initLoTStart = 0, initLoTEnd = 0;
         let pendingExt = null;
         let lastCommittedApproxT = -1e9;
         let records = [];
@@ -8634,9 +8636,9 @@
         function resetCounting(nextPriorS) {
           sampleRing.length = 0;
           dir = 0;
-          candX = 0; candT = 0;
-          initHiX = -1; initHiT = 0;
-          initLoX = 2; initLoT = 0;
+          candX = 0; candT = 0; candTStart = 0; candTEnd = 0;
+          initHiX = -1; initHiT = 0; initHiTStart = 0; initHiTEnd = 0;
+          initLoX = 2; initLoT = 0; initLoTStart = 0; initLoTEnd = 0;
           pendingExt = null;
           lastCommittedApproxT = -1e9;
           records.length = 0;
@@ -8843,12 +8845,19 @@
         }
 
         function retroRefineAllRecords() {
-          if (records.length < 4 || !lastOLS.periodS) return;
+          if (records.length < 4 || !lastOLS.periodS || sampleRing.length < 4) return;
           const convPeriodMs = Math.max(650, Math.min(2600, lastOLS.periodS * 1000));
           const convOmega = (2 * Math.PI) / convPeriodMs;
+          const winHalf = Math.min(340, convPeriodMs * 0.24);
+          const ringFirstT = sampleRing[0].t;
+          const ringLastT = sampleRing[sampleRing.length - 1].t;
           for (let i = 0; i < records.length; i++) {
             const rec = records[i];
-            rec.t = fitHarmonicExtremum(sampleRing, rec.approxT, convOmega, rec.sgn, convPeriodMs);
+            // Never overwrite a valid converged harmonic extremum if sampleRing no longer covers both sides of its lobe
+            if (ringFirstT > rec.approxT - winHalf * 0.55 || ringLastT < rec.approxT + winHalf * 0.55) {
+              continue;
+            }
+            rec.t = fitHarmonicExtremum(sampleRing, rec.approxT, convOmega, rec.sgn, convPeriodMs, rec.t);
           }
           rebuildStepIndices(convPeriodMs);
           lastOLS = computeDualSemiPeriodOLS(records, convPeriodMs / 1000);
@@ -8957,7 +8966,7 @@
           }
 
           sampleRing.push({ t: tMs, x: xNorm, q: quality || 1, clipped: !!clipped });
-          if (sampleRing.length > 1600) sampleRing.shift();
+          if (sampleRing.length > 8000) sampleRing.shift();
 
           // Compute trailing 6.5s span for adaptive hysteresis as swing damps
           let rMin = 1, rMax = 0;
@@ -8969,47 +8978,62 @@
             if (sx > rMax) rMax = sx;
           }
           const span = Math.max(0, rMax - rMin);
-          const hyst = Math.max(0.030, Math.min(0.11, 0.28 * (span * 0.5)));
+          const hyst = Math.max(0.020, Math.min(0.11, 0.28 * (span * 0.5)));
+          const PLATEAU_EPS = 1e-4;
 
-          if (span >= 0.08) {
+          if (span >= 0.055) {
             if (dir === 0) {
-              if (xNorm >= initHiX) { initHiX = xNorm; initHiT = tMs; }
-              if (xNorm <= initLoX) { initLoX = xNorm; initLoT = tMs; }
-              if ((initHiX - xNorm) >= hyst && (initHiX - initLoX) >= 0.05) {
+              if (xNorm > initHiX + PLATEAU_EPS) {
+                initHiX = xNorm; initHiTStart = tMs; initHiTEnd = tMs; initHiT = tMs;
+              } else if (Math.abs(xNorm - initHiX) <= PLATEAU_EPS) {
+                initHiTEnd = tMs; initHiT = 0.5 * (initHiTStart + initHiTEnd);
+              }
+              if (xNorm < initLoX - PLATEAU_EPS) {
+                initLoX = xNorm; initLoTStart = tMs; initLoTEnd = tMs; initLoT = tMs;
+              } else if (Math.abs(xNorm - initLoX) <= PLATEAU_EPS) {
+                initLoTEnd = tMs; initLoT = 0.5 * (initLoTStart + initLoTEnd);
+              }
+              if ((initHiX - xNorm) >= hyst && (initHiX - initLoX) >= 0.035) {
                 queueExtremum(1, initHiT, initHiX);
                 dir = -1;
-                candX = xNorm;
-                candT = tMs;
-              } else if ((xNorm - initLoX) >= hyst && (initHiX - initLoX) >= 0.05) {
+                candX = xNorm; candTStart = tMs; candTEnd = tMs; candT = tMs;
+              } else if ((xNorm - initLoX) >= hyst && (initHiX - initLoX) >= 0.035) {
                 queueExtremum(-1, initLoT, initLoX);
                 dir = 1;
-                candX = xNorm;
-                candT = tMs;
+                candX = xNorm; candTStart = tMs; candTEnd = tMs; candT = tMs;
               }
             } else if (dir === 1) {
-              if (xNorm > candX) {
-                candX = xNorm;
-                candT = tMs;
+              if (xNorm > candX + PLATEAU_EPS) {
+                candX = xNorm; candTStart = tMs; candTEnd = tMs; candT = tMs;
+              } else if (Math.abs(xNorm - candX) <= PLATEAU_EPS) {
+                candTEnd = tMs; candT = 0.5 * (candTStart + candTEnd);
               } else if ((candX - xNorm) >= hyst) {
                 queueExtremum(1, candT, candX);
                 dir = -1;
-                candX = xNorm;
-                candT = tMs;
+                candX = xNorm; candTStart = tMs; candTEnd = tMs; candT = tMs;
               }
             } else {
-              if (xNorm < candX) {
-                candX = xNorm;
-                candT = tMs;
+              if (xNorm < candX - PLATEAU_EPS) {
+                candX = xNorm; candTStart = tMs; candTEnd = tMs; candT = tMs;
+              } else if (Math.abs(xNorm - candX) <= PLATEAU_EPS) {
+                candTEnd = tMs; candT = 0.5 * (candTStart + candTEnd);
               } else if ((xNorm - candX) >= hyst) {
                 queueExtremum(-1, candT, candX);
                 dir = 1;
-                candX = xNorm;
-                candT = tMs;
+                candX = xNorm; candTStart = tMs; candTEnd = tMs; candT = tMs;
               }
             }
           } else {
-            if (xNorm > initHiX) { initHiX = xNorm; initHiT = tMs; }
-            if (xNorm < initLoX) { initLoX = xNorm; initLoT = tMs; }
+            if (xNorm > initHiX + PLATEAU_EPS) {
+              initHiX = xNorm; initHiTStart = tMs; initHiTEnd = tMs; initHiT = tMs;
+            } else if (Math.abs(xNorm - initHiX) <= PLATEAU_EPS) {
+              initHiTEnd = tMs; initHiT = 0.5 * (initHiTStart + initHiTEnd);
+            }
+            if (xNorm < initLoX - PLATEAU_EPS) {
+              initLoX = xNorm; initLoTStart = tMs; initLoTEnd = tMs; initLoT = tMs;
+            } else if (Math.abs(xNorm - initLoX) <= PLATEAU_EPS) {
+              initLoTEnd = tMs; initLoT = 0.5 * (initLoTStart + initLoTEnd);
+            }
           }
 
           if (!committedNow && pendingExt && tMs >= pendingExt.finalizeAtMs) {
@@ -9141,6 +9165,7 @@
       let expLastFrameTime = 0;
       let expVisualContrast = 0;
       let expOscillations = 0;
+      let expAvgHistory = [];
       let expCurrentOLSPeriodS = 0;
       let expCurrentOLSSigmaMs = 0;
       let expCurrentSymmetryPct = 50;
@@ -9329,6 +9354,7 @@
         expMode = mode;
         expLastRoiSyncKey = '';
         expOscillations = 0;
+        expAvgHistory = [];
         expCurrentOLSPeriodS = 0;
         expCurrentOLSSigmaMs = 0;
 
@@ -9432,6 +9458,7 @@
         expIsCounting = true;
         expMeasurementSaved = false;
         expOscillations = 0;
+        expAvgHistory = [];
         expCurrentOLSPeriodS = 0;
         expCurrentOLSSigmaMs = 0;
         expCurrentSymmetryPct = 50;
@@ -9439,10 +9466,10 @@
 
         const stopMode = document.getElementById('exp-stop-mode')?.value || 'auto';
         document.getElementById('exp-val-swings').textContent = '0';
-        document.getElementById('exp-val-swings-target').textContent = (stopMode === 'auto') ? '/ 14+' : ('/ ' + stopMode);
+        document.getElementById('exp-val-swings-target').textContent = (stopMode === 'auto') ? '/ 18+' : ('/ ' + stopMode);
         document.getElementById('exp-val-avg').textContent = '0.000 s';
         document.getElementById('exp-val-live-sw').textContent = '---';
-        document.getElementById('exp-progress-text').textContent = (stopMode === 'auto') ? 'Progresso (min 14 osc.)' : ('Progresso (0 / ' + stopMode + ' osc.)');
+        document.getElementById('exp-progress-text').textContent = (stopMode === 'auto') ? 'Progresso (min 18 osc.)' : ('Progresso (0 / ' + stopMode + ' osc.)');
         document.getElementById('exp-progress-bar').style.width = '0%';
         document.getElementById('exp-progress-pct').textContent = '0%';
         document.getElementById('exp-ext-min').style.display = 'none';
@@ -9497,7 +9524,9 @@
         if (state.committedExtremum) {
           const ext = state.committedExtremum;
           const statusEl = document.getElementById('exp-pass-status');
+          const prevOsc = expOscillations;
           const osc = state.oscillations;
+          const completedFullOsc = osc > prevOsc;
           expOscillations = osc;
           document.getElementById('exp-val-swings').textContent = osc;
 
@@ -9513,7 +9542,7 @@
             expCurrentOLSPeriodS = state.ols.periodS;
             expCurrentOLSSigmaMs = state.ols.sigmaMs;
             expCurrentSymmetryPct = state.ols.symmetryPct;
-            document.getElementById('exp-val-avg').textContent = expCurrentOLSPeriodS.toFixed(3) + ' s';
+            document.getElementById('exp-val-avg').textContent = expCurrentOLSPeriodS.toFixed(4) + ' s';
             const liveSw = computeExpSWFromPeriod(expCurrentOLSPeriodS, Math.max(1, osc));
             document.getElementById('exp-val-live-sw').textContent = !isNaN(liveSw) ? liveSw.toFixed(1) : '---';
             const accEl = document.getElementById('exp-val-acc');
@@ -9526,15 +9555,26 @@
           const pct = Math.min(100, Math.round((osc / Math.max(1, denom)) * 100));
           document.getElementById('exp-progress-bar').style.width = pct + '%';
           document.getElementById('exp-progress-pct').textContent = pct + '%';
-          if (stopMode !== 'auto') {
-            document.getElementById('exp-progress-text').textContent = 'Progresso (' + osc + ' / ' + fixedTarget + ' osc.)';
+          const expProgTextEl = document.getElementById('exp-progress-text');
+          if (expProgTextEl) {
+            expProgTextEl.textContent = (stopMode === 'auto')
+              ? (osc < 18 ? ('Raccolta (' + osc + '/18 min)') : ('Verifica stabilit\u00e0 (' + osc + ' osc.)'))
+              : ('Progresso (' + osc + ' / ' + fixedTarget + ' osc.)');
           }
 
-          const autoDone = (stopMode === 'auto') && (
-            (osc >= 14 && expCurrentOLSSigmaMs > 0 && expCurrentOLSSigmaMs <= 0.30) ||
-            (osc >= 18 && expCurrentOLSSigmaMs > 0 && expCurrentOLSSigmaMs <= 0.55) ||
-            (osc >= 28)
-          );
+          let autoDone = false;
+          if (stopMode === 'auto' && completedFullOsc && expCurrentOLSPeriodS > 0) {
+            expAvgHistory.push(expCurrentOLSPeriodS);
+            if (expAvgHistory.length > 6) expAvgHistory.shift();
+            if (osc >= 18 && expAvgHistory.length === 6) {
+              const spread = Math.max(...expAvgHistory) - Math.min(...expAvgHistory);
+              if ((spread <= 0.00075 && expCurrentOLSSigmaMs <= 0.30) ||
+                (osc >= 24 && spread <= 0.00110 && expCurrentOLSSigmaMs <= 0.45) ||
+                (osc >= 32 && spread <= 0.00160 && expCurrentOLSSigmaMs <= 0.75)) {
+                autoDone = true;
+              }
+            }
+          }
           const fixedDone = (fixedTarget > 0 && osc >= fixedTarget);
           if (autoDone || fixedDone) {
             completeExpMeasurement('Completato in ' + osc + ' oscillazioni (T=' + expCurrentOLSPeriodS.toFixed(4) + 's, \u00b1' + expCurrentOLSSigmaMs.toFixed(2) + 'ms)');
@@ -9591,7 +9631,7 @@
             expCurrentOLSSigmaMs = fin.ols.sigmaMs;
             expCurrentSymmetryPct = fin.ols.symmetryPct;
             document.getElementById('exp-val-swings').textContent = expOscillations;
-            document.getElementById('exp-val-avg').textContent = expCurrentOLSPeriodS.toFixed(3) + ' s';
+            document.getElementById('exp-val-avg').textContent = expCurrentOLSPeriodS.toFixed(4) + ' s';
             const liveSw = computeExpSWFromPeriod(expCurrentOLSPeriodS, expOscillations);
             document.getElementById('exp-val-live-sw').textContent = !isNaN(liveSw) ? liveSw.toFixed(1) : '---';
           }
@@ -9653,6 +9693,7 @@
           syncExpResultToPendulum(true);
           showAppToast('Misura Experimental applicata (' + expOscillations + ' osc.)');
         }
+        expAvgHistory = [];
       }
 
       let appToastTimer = null;
